@@ -63,7 +63,7 @@ def add_files(folder):
 for folder in folders:
     add_files(folder)
 
-with open("index.json", "w", encoding="utf-8") as f:
+with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
 print("index.json generated successfully.")
