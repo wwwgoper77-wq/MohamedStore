@@ -18,6 +18,7 @@ data = {
 def scan_folder(folder_name, target_list):
     if os.path.exists(folder_name):
         for f in os.listdir(folder_name):
+            print("Found:", folder_name, f)
             if f.endswith('.ipk') or f.endswith('.tar.gz') or f.endswith('.zip'):
                 # استخراج الاسم الصافي للملف بدون امتدادات
                 clean_name = f.replace('.ipk', '').replace('.tar.gz', '').replace('.zip', '')
