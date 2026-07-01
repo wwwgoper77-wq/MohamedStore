@@ -1,0 +1,23 @@
+{
+    "store": "Enigma2 Store",
+    "plugins": [
+        {
+            "name": "enigma2-plugin-timeshift-delay-egami",
+            "file": "plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
+            "image": "images/enigma2-plugin-timeshift-delay-egami.png",
+            "version": 1.0
+        },
+        {
+            "name": "test.ipk",
+            "file": "plugins/test.ipk",
+            "image": "images/test.ipk.png",
+            "version": 1.0
+        },
+        {
+            "name": "enigma2-plugin-extensions-ipaudiopro",
+            "file": "plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
+            "image": "images/enigma2-plugin-extensions-ipaudiopro.png",
+            "version": 1.0
+        }
+    ]
+}
