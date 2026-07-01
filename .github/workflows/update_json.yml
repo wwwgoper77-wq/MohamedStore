@@ -1,10 +1,14 @@
 name: Auto Update JSON
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    paths:
+      - 'plugins/**'
+      - 'skins/**'
+      - 'tools/**'
+      - 'system_images/**'
+      
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
