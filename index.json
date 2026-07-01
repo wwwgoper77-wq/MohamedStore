@@ -3,40 +3,34 @@
     "plugins": [
         {
             "name": "enigma2-plugin-timeshift-delay-egami",
-            "file": "plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
-            "image": "images/enigma2-plugin-timeshift-delay-egami.png",
+            "file": "https://githubusercontent.complugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
+            "image": "https://githubusercontent.comimages/enigma2-plugin-timeshift-delay-egami.png",
             "version": "3.0"
         },
         {
             "name": "test",
-            "file": "plugins/test.ipk",
-            "image": "images/test.png",
+            "file": "https://githubusercontent.complugins/test.ipk",
+            "image": "https://githubusercontent.comimages/test.png",
             "version": "1.0"
         },
         {
             "name": "enigma2-plugin-extensions-ipaudiopro",
-            "file": "plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
-            "image": "images/enigma2-plugin-extensions-ipaudiopro.png",
+            "file": "https://githubusercontent.complugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
+            "image": "https://githubusercontent.comimages/enigma2-plugin-extensions-ipaudiopro.png",
             "version": "1.7"
         },
         {
             "name": "enigma2-plugin-skins-luka-",
-            "file": "plugins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-            "image": "images/enigma2-plugin-skins-luka-.png",
-            "version": "1.0"
-        },
-        {
-            "name": "enigma2-plugin-skins-luka-",
-            "file": "skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-            "image": "images/enigma2-plugin-skins-luka-.png",
+            "file": "https://githubusercontent.comskins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
+            "image": "https://githubusercontent.comimages/enigma2-plugin-skins-luka-.png",
             "version": "1.0"
         }
     ],
     "skins": [
         {
             "name": "enigma2-plugin-skins-luka-",
-            "file": "skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-            "image": "images/enigma2-plugin-skins-luka-.png",
+            "file": "https://githubusercontent.comskins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
+            "image": "https://githubusercontent.comimages/enigma2-plugin-skins-luka-.png",
             "version": "1.0"
         }
     ],
