@@ -24,33 +24,37 @@ def add_files(folder):
     if not os.path.isdir(folder):
         return
 
-    for f in sorted(os.listdir(folder)):
+    for filename in sorted(os.listdir(folder)):
         if not (
-            f.endswith(".ipk")
-            or f.endswith(".zip")
-            or f.endswith(".tar.gz")
+            filename.endswith(".ipk")
+            or filename.endswith(".zip")
+            or filename.endswith(".tar.gz")
         ):
             continue
 
-        filename = f
-        name = (
-            filename.replace(".ipk", "")
-            .replace(".zip", "")
-            .replace(".tar.gz", "")
-        )
+        if filename.endswith(".tar.gz"):
+            clean = filename[:-7]
+        else:
+            clean = os.path.splitext(filename)[0]
 
-        parts = name.split("_")
-        version = "1.0"
+        parts = clean.split("_")
+        version = parts[-2] if len(parts) >= 2 else "1.0"
 
-        if len(parts) > 1:
-            version = parts[1]
+        display_name = clean
+
+        if folder == "plugins":
+            display_name = (
+                clean.replace("enigma2-plugin-extensions-", "")
+                .replace("enigma2-plugin-skins-", "")
+                .replace("enigma2-plugin-", "")
+            )
 
         item = {
-            "name": parts[0],
+            "name": display_name,
             "version": version,
             "description": "",
             "file": f"{BASE_URL}/{folder}/{filename}",
-            "image": f"{BASE_URL}/images/{parts[0]}.png"
+            "image": f"{BASE_URL}/images/{display_name}.png"
         }
 
         data["categories"][folder].append(item)
