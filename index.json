@@ -20,7 +20,14 @@
             "version": 1.0
         }
     ],
-    "skins": [],
+    "skins": [
+        {
+            "name": "enigma2-plugin-skins-luka-fhd",
+            "file": "skins/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
+            "image": "images/enigma2-plugin-skins-luka-fhd.png",
+            "version": 1.0
+        }
+    ],
     "tools": [],
     "system_images": []
 }
