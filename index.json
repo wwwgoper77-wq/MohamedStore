@@ -18,6 +18,12 @@
             "file": "plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
             "image": "images/enigma2-plugin-extensions-ipaudiopro.png",
             "version": "1.7"
+        },
+        {
+            "name": "enigma2-plugin-skins-luka-",
+            "file": "skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
+            "image": "images/enigma2-plugin-skins-luka-.png",
+            "version": "1.0"
         }
     ],
     "skins": [
