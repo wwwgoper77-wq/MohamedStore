@@ -4,18 +4,18 @@
     "categories": {
         "plugins": [
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro",
-                "version": "1.7",
+                "name": "ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1",
+                "version": "py3.12",
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
-                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-extensions-ipaudiopro.png"
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.png"
             },
             {
-                "name": "enigma2-plugin-timeshift-delay-egami",
+                "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
-                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-timeshift-delay-egami.png"
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/timeshift-delay-egami_3.0_all.png"
             },
             {
                 "name": "test",
@@ -27,11 +27,11 @@
         ],
         "skins": [
             {
-                "name": "enigma2-plugin-skins-luka-",
+                "name": "enigma2-plugin-skins-luka-_1.0_egami",
                 "version": "1.0",
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-skins-luka-.png"
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-skins-luka-_1.0_egami.png"
             }
         ],
         "tools": [],
