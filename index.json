@@ -5,19 +5,19 @@
             "name": "enigma2-plugin-timeshift-delay-egami",
             "file": "plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
             "image": "images/enigma2-plugin-timeshift-delay-egami.png",
-            "version": 1.0
+            "version": "3.0"
         },
         {
-            "name": "test",
+            "name": "test.ipk",
             "file": "plugins/test.ipk",
-            "image": "images/test.png",
+            "image": "images/test.ipk.png",
             "version": 1.0
         },
         {
             "name": "enigma2-plugin-extensions-ipaudiopro",
             "file": "plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
             "image": "images/enigma2-plugin-extensions-ipaudiopro.png",
-            "version": 1.0
+            "version": "1.7"
         }
     ],
     "skins": [
@@ -25,7 +25,7 @@
             "name": "enigma2-plugin-skins-luka-fhd",
             "file": "skins/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
             "image": "images/enigma2-plugin-skins-luka-fhd.png",
-            "version": 1.0
+            "version": "1.0"
         }
     ],
     "tools": [],
