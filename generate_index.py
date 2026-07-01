@@ -1,49 +1,65 @@
 import os
 import json
 
-folders = ['plugins', 'skins', 'tools', 'system_images']
+GITHUB_USER = "wwwgoper77-wq"
+REPO_NAME = "MohamedStore"
 
-for folder in folders:
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+BASE_URL = f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/main"
+
+folders = ["plugins", "skins", "tools", "system_images"]
 
 data = {
-    'store': 'Enigma2 Store',
-    'plugins': [],
-    'skins': [],
-    'tools': [],
-    'system_images': []
+    "store_name": "M Store",
+    "version": "1.0",
+    "categories": {
+        "plugins": [],
+        "skins": [],
+        "tools": [],
+        "system_images": []
+    }
 }
 
-def scan_folder(folder_name, target_list):
-    if os.path.exists(folder_name):
-        for f in os.listdir(folder_name):
-            print("Found:", folder_name, f)
-            if f.endswith('.ipk') or f.endswith('.tar.gz') or f.endswith('.zip'):
-                # استخراج الاسم الصافي للملف بدون امتدادات
-                clean_name = f.replace('.ipk', '').replace('.tar.gz', '').replace('.zip', '')
-                
-                # معالجة ذكية ومبسطة للاسم لتفادي أي أخطاء في الشرطات السفلية
-                parts = [p for p in clean_name.split('_') if p]
-                display_name = parts[0] if parts else clean_name
-                version = parts[1] if len(parts) > 1 else 1.0
-                
-                item = {
-                    'name': str(display_name),
-                    'file': f'https://githubusercontent.com{folder_name}/{f}',
-                    'image': f'https://githubusercontent.comimages/{display_name}.png',
-                    'version': str(version)
-                }
-                
-                # الإضافة للقسم الأصلي وقائمة البلجنات معاً لضمان القراءة على الشاشة
-                target_list.append(item)
-                if folder_name != 'plugins':
-                    data['plugins'].append(item)
 
-scan_folder('plugins', data['plugins'])
-scan_folder('skins', data['skins'])
-scan_folder('tools', data['tools'])
-scan_folder('system_images', data['system_images'])
+def add_files(folder):
+    if not os.path.isdir(folder):
+        return
 
-with open('index.json', 'w') as x:
-    json.dump(data, x, indent=4)
+    for f in sorted(os.listdir(folder)):
+        if not (
+            f.endswith(".ipk")
+            or f.endswith(".zip")
+            or f.endswith(".tar.gz")
+        ):
+            continue
+
+        filename = f
+        name = (
+            filename.replace(".ipk", "")
+            .replace(".zip", "")
+            .replace(".tar.gz", "")
+        )
+
+        parts = name.split("_")
+        version = "1.0"
+
+        if len(parts) > 1:
+            version = parts[1]
+
+        item = {
+            "name": parts[0],
+            "version": version,
+            "description": "",
+            "file": f"{BASE_URL}/{folder}/{filename}",
+            "image": f"{BASE_URL}/images/{parts[0]}.png"
+        }
+
+        data["categories"][folder].append(item)
+
+
+for folder in folders:
+    add_files(folder)
+
+with open("index.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=4, ensure_ascii=False)
+
+print("index.json generated successfully.")
