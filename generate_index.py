@@ -19,23 +19,23 @@ def scan_folder(folder_name, target_list):
     if os.path.exists(folder_name):
         for f in os.listdir(folder_name):
             if f.endswith('.ipk') or f.endswith('.tar.gz') or f.endswith('.zip'):
-                # تنظيف الاسم برمجياً ليكون نصاً صافياً ومقبولاً للمتجر
-                base_name = f.replace('.ipk', '').replace('.tar.gz', '').replace('.zip', '')
-                parts = base_name.split('_')
-                display_name = parts[0] if parts else base_name
-                version = parts[1] if len(parts) > 1 else '1.0'
+                # استخراج الاسم الصافي للملف بدون امتدادات
+                clean_name = f.replace('.ipk', '').replace('.tar.gz', '').replace('.zip', '')
+                
+                # معالجة ذكية ومبسطة للاسم لتفادي أي أخطاء في الشرطات السفلية
+                parts = [p for p in clean_name.split('_') if p]
+                display_name = parts[0] if parts else clean_name
+                version = parts[1] if len(parts) > 1 else 1.0
                 
                 item = {
                     'name': str(display_name),
-                    'file': f"{folder_name}/{f}",
-                    'image': f"images/{display_name}.png",
+                    'file': f'https://githubusercontent.com{folder_name}/{f}',
+                    'image': f'https://githubusercontent.comimages/{display_name}.png',
                     'version': str(version)
                 }
                 
-                # إضافة العنصر لقسمه الأصلي
+                # الإضافة للقسم الأصلي وقائمة البلجنات معاً لضمان القراءة على الشاشة
                 target_list.append(item)
-                
-                # إدراج نسخة في قائمة البلجنات لضمان ظهورها الفوري على الشاشة
                 if folder_name != 'plugins':
                     data['plugins'].append(item)
 
