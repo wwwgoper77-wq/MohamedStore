@@ -1,24 +1,29 @@
-name: Auto Update Plugin Index
-
+name: Update JSON File
 on:
-  push:
-    paths:
-      - 'plugins/**'
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
-  build:
+  update-json:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.x'
-      - name: Generate index
-        run: python generate_index.py
-      - name: Commit changes
+          node-version: '20'
+
+      - name: Update data
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.json
-          git commit -m "update index" || echo "no changes"
+          node your_script.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git git add .
+          git commit -m "Auto update json file"
           git push
