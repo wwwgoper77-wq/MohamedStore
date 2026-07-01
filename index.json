@@ -21,6 +21,12 @@
         },
         {
             "name": "enigma2-plugin-skins-luka-",
+            "file": "plugins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
+            "image": "images/enigma2-plugin-skins-luka-.png",
+            "version": "1.0"
+        },
+        {
+            "name": "enigma2-plugin-skins-luka-",
             "file": "skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
             "image": "images/enigma2-plugin-skins-luka-.png",
             "version": "1.0"
