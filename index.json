@@ -1,39 +1,40 @@
 {
-    "store": "Enigma2 Store",
-    "plugins": [
-        {
-            "name": "enigma2-plugin-timeshift-delay-egami",
-            "file": "https://githubusercontent.complugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
-            "image": "https://githubusercontent.comimages/enigma2-plugin-timeshift-delay-egami.png",
-            "version": "3.0"
-        },
-        {
-            "name": "test",
-            "file": "https://githubusercontent.complugins/test.ipk",
-            "image": "https://githubusercontent.comimages/test.png",
-            "version": "1.0"
-        },
-        {
-            "name": "enigma2-plugin-extensions-ipaudiopro",
-            "file": "https://githubusercontent.complugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
-            "image": "https://githubusercontent.comimages/enigma2-plugin-extensions-ipaudiopro.png",
-            "version": "1.7"
-        },
-        {
-            "name": "enigma2-plugin-skins-luka-",
-            "file": "https://githubusercontent.comskins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-            "image": "https://githubusercontent.comimages/enigma2-plugin-skins-luka-.png",
-            "version": "1.0"
-        }
-    ],
-    "skins": [
-        {
-            "name": "enigma2-plugin-skins-luka-",
-            "file": "https://githubusercontent.comskins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-            "image": "https://githubusercontent.comimages/enigma2-plugin-skins-luka-.png",
-            "version": "1.0"
-        }
-    ],
-    "tools": [],
-    "system_images": []
+    "store_name": "M Store",
+    "version": "1.0",
+    "categories": {
+        "plugins": [
+            {
+                "name": "enigma2-plugin-extensions-ipaudiopro",
+                "version": "1.7",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-extensions-ipaudiopro.png"
+            },
+            {
+                "name": "enigma2-plugin-timeshift-delay-egami",
+                "version": "3.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-timeshift-delay-egami.png"
+            },
+            {
+                "name": "test",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/test.ipk",
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/test.png"
+            }
+        ],
+        "skins": [
+            {
+                "name": "enigma2-plugin-skins-luka-",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-skins-luka-.png"
+            }
+        ],
+        "tools": [],
+        "system_images": []
+    }
 }
