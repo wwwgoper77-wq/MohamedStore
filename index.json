@@ -8,9 +8,9 @@
             "version": 1.0
         },
         {
-            "name": "test.ipk",
+            "name": "test",
             "file": "plugins/test.ipk",
-            "image": "images/test.ipk.png",
+            "image": "images/test.png",
             "version": 1.0
         },
         {
@@ -19,5 +19,8 @@
             "image": "images/enigma2-plugin-extensions-ipaudiopro.png",
             "version": 1.0
         }
-    ]
+    ],
+    "skins": [],
+    "tools": [],
+    "system_images": []
 }
