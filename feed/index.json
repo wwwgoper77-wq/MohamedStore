@@ -25,15 +25,7 @@
                 "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/timeshift-delay-egami_3.0_all.png"
             }
         ],
-        "skins": [
-            {
-                "name": "enigma2-plugin-skins-luka-_1.0_egami",
-                "version": "1.0",
-                "description": "",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/enigma2-plugin-skins-luka-_1.0_egami.ipk",
-                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/enigma2-plugin-skins-luka-_1.0_egami.png"
-            }
-        ],
+        "skins": [],
         "tools": [],
         "system_images": []
     }
