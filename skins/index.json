@@ -1,0 +1,12 @@
+{
+    "folders": [
+        {
+            "name": "Egami",
+            "index": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/index.json"
+        },
+        {
+            "name": "OpenATV",
+            "index": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/index.json"
+        }
+    ]
+}
