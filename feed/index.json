@@ -11,6 +11,13 @@
                 "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.png"
             },
             {
+                "name": "subssupportpro_1.0.0_all",
+                "version": "1.0.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-subssupportpro_1.0.0_all.ipk",
+                "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/subssupportpro_1.0.0_all.png"
+            },
+            {
                 "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
                 "description": "",
