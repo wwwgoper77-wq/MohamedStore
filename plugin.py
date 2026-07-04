@@ -58,7 +58,7 @@ except ImportError:
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 PLUGIN_VERSION = "1.0"
-ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons"
+ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images"
 
 def get_category_icon_path(category_id):
     cat_lower = str(category_id).lower().replace("_", "").replace(" ", "")
