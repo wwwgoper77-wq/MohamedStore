@@ -17,82 +17,165 @@ data = {
     }
 }
 
+
+def image_url(prefix):
+    """
+    Search automatically for an image beginning with prefix.
+    Example:
+    ipaudiopro.png
+    ipaudiopro-icon.png
+    ipaudiopro_v2.png
+    """
+    if not os.path.isdir("images"):
+        return ""
+
+    prefix = prefix.lower()
+
+    for file in sorted(os.listdir("images")):
+        if file.lower().startswith(prefix) and file.lower().endswith(".png"):
+            return f"{BASE_URL}/images/{file}"
+
+    return ""
+
+
+# -------------------------------------------------
 # Plugins
+# -------------------------------------------------
+
 if os.path.isdir("plugins"):
+
     for filename in sorted(os.listdir("plugins")):
-        if filename.endswith(".ipk"):
-            clean = os.path.splitext(filename)[0]
-            version = clean.split("_")[-2] if "_" in clean else "1.0"
 
-            data["categories"]["plugins"].append({
-                "name": clean.replace("enigma2-plugin-", ""),
-                "version": version,
-                "description": "",
-                "file": f"{BASE_URL}/plugins/{filename}",
-                "image": ""
-            })
+        if not filename.endswith(".ipk"):
+            continue
 
-# Skins (supports subfolders)
+        clean = os.path.splitext(filename)[0]
+
+        version = clean.split("_")[-2] if "_" in clean else "1.0"
+
+        display = clean.replace("enigma2-plugin-", "")
+
+        image_name = display
+        image_name = image_name.replace("extensions-", "")
+        image_name = image_name.replace("skins-", "")
+        image_name = image_name.split("_")[0]
+
+        data["categories"]["plugins"].append({
+            "name": display,
+            "version": version,
+            "description": "",
+            "file": f"{BASE_URL}/plugins/{filename}",
+            "image": image_url(image_name)
+        })
+
+
+# -------------------------------------------------
+# Skins
+# -------------------------------------------------
+
 if os.path.isdir("skins"):
-    for image_name in sorted(os.listdir("skins")):
 
-        image_path = os.path.join("skins", image_name)
+    for folder in sorted(os.listdir("skins")):
 
-        if not os.path.isdir(image_path):
+        folder_path = os.path.join("skins", folder)
+
+        if not os.path.isdir(folder_path):
             continue
 
         items = []
 
-        for filename in sorted(os.listdir(image_path)):
-            if filename.endswith(".ipk"):
+        for filename in sorted(os.listdir(folder_path)):
 
-                clean = os.path.splitext(filename)[0]
-                version = clean.split("_")[-2] if "_" in clean else "1.0"
+            if not filename.endswith(".ipk"):
+                continue
 
-                items.append({
-                    "name": clean,
-                    "version": version,
-                    "description": image_name + " Skin",
-                    "file": f"{BASE_URL}/skins/{image_name}/{filename}",
-                    "image": ""
-                })
+            clean = os.path.splitext(filename)[0]
+
+            version = clean.split("_")[-2] if "_" in clean else "1.0"
+
+            image_name = clean.replace("enigma2-plugin-skins-", "")
+            image_name = image_name.split("_")[0]
+
+            items.append({
+                "name": clean,
+                "version": version,
+                "description": folder + " Skin",
+                "file": f"{BASE_URL}/skins/{folder}/{filename}",
+                "image": image_url(image_name)
+            })
 
         data["categories"]["skins"].append({
-            "name": image_name,
+            "name": folder,
             "items": items
         })
 
+
+# -------------------------------------------------
 # Tools
+# -------------------------------------------------
+
 if os.path.isdir("tools"):
+
     for filename in sorted(os.listdir("tools")):
-        if filename.endswith(".ipk"):
-            clean = os.path.splitext(filename)[0]
 
-            data["categories"]["tools"].append({
-                "name": clean,
-                "version": "1.0",
-                "description": "",
-                "file": f"{BASE_URL}/tools/{filename}",
-                "image": ""
-            })
+        if not filename.endswith(".ipk"):
+            continue
 
-# Images
+        clean = os.path.splitext(filename)[0]
+
+        version = clean.split("_")[-2] if "_" in clean else "1.0"
+
+        image_name = clean.split("_")[0]
+
+        data["categories"]["tools"].append({
+            "name": clean,
+            "version": version,
+            "description": "",
+            "file": f"{BASE_URL}/tools/{filename}",
+            "image": image_url(image_name)
+        })
+
+
+# -------------------------------------------------
+# System Images
+# -------------------------------------------------
+
 if os.path.isdir("system_images"):
+
     for filename in sorted(os.listdir("system_images")):
-        if filename.endswith(".zip"):
+
+        if not (
+            filename.endswith(".zip")
+            or filename.endswith(".tar.gz")
+            or filename.endswith(".img")
+        ):
+            continue
+
+        if filename.endswith(".tar.gz"):
+            clean = filename[:-7]
+        else:
             clean = os.path.splitext(filename)[0]
 
-            data["categories"]["system_images"].append({
-                "name": clean,
-                "version": "1.0",
-                "description": "",
-                "file": f"{BASE_URL}/system_images/{filename}",
-                "image": ""
-            })
+        version = clean.split("_")[-2] if "_" in clean else "1.0"
+
+        image_name = clean.split("_")[0]
+
+        data["categories"]["system_images"].append({
+            "name": clean,
+            "version": version,
+            "description": "",
+            "file": f"{BASE_URL}/system_images/{filename}",
+            "image": image_url(image_name)
+        })
+
+
+# -------------------------------------------------
+# Save JSON
+# -------------------------------------------------
 
 os.makedirs("feed", exist_ok=True)
 
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("Done")
+print("feed/index.json generated successfully.")
