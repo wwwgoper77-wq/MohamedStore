@@ -65,7 +65,12 @@ if os.path.isdir("plugins"):
             "version": version,
             "description": "",
             "file": f"{BASE_URL}/plugins/{filename}",
-            "image": image_url(image_name)
+           "image": image_url(
+    display.split("_")[0]
+    .replace("extensions-", "")
+    .replace("skins-", "")
+    .replace("plugin-", "")
+) 
         })
 
 
