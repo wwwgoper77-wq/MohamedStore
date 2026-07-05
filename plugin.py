@@ -69,7 +69,7 @@ PLUGIN_VERSION = "1.0"
 ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images"
 
 # Safe cache directory for downloaded thumbnails
-CACHE_DIR = "/tmp/MStoreCache"
+CACHE_DIR = "/tmp/MohamedStoreCache"
 if not os.path.exists(CACHE_DIR):
     try:
         os.makedirs(CACHE_DIR)
@@ -119,7 +119,15 @@ def get_cache_path(url):
     if not url:
         return ""
     try:
-        url_bytes = url.encode('utf-8') if isinstance(url, str) else url
+        # Compatibility with Python 2 and 3 for hashlib
+        if sys.version_info >= (3, 0):
+            url_bytes = url.encode('utf-8') if isinstance(url, str) else url
+        else:
+            try:
+                url_bytes = url.encode('utf-8') if isinstance(url, unicode) else str(url)
+            except NameError:
+                url_bytes = url.encode('utf-8') if isinstance(url, str) else url
+                
         h = hashlib.md5(url_bytes).hexdigest()
         ext = os.path.splitext(url)[1]
         if not ext or len(ext) > 5 or '?' in ext:
@@ -382,8 +390,7 @@ class MohamedStore(Screen):
         try:
             if self.need_refresh:
                 self.need_refresh = False
-                if self.active_focus == "items":
-                    self.update_items_list()
+                self.update_items_list()
         except Exception as e:
             print("[MohamedStore] trigger_refresh error: " + str(e))
 
@@ -455,7 +462,7 @@ class MohamedStore(Screen):
             if not os.path.exists(icon_path):
                 icon_path = category_icon
         else:
-            if image_url:
+            if image_url and image_url.startswith("https://raw.githubusercontent.com/"):
                 local_path = get_cache_path(image_url)
                 if local_path and os.path.exists(local_path) and os.path.getsize(local_path) > 0:
                     icon_path = local_path
@@ -473,6 +480,14 @@ class MohamedStore(Screen):
                     pixmap = loadPNG(icon_path)
             except Exception as e:
                 print("[MohamedStore] Error loading package PNG: " + str(e))
+
+        # Requirement 8: If the image cannot be downloaded or loaded, display a default placeholder icon.
+        if not pixmap and category_icon and category_icon != icon_path:
+            try:
+                if loadPNG:
+                    pixmap = loadPNG(category_icon)
+            except Exception as e:
+                print("[MohamedStore] Error loading default placeholder: " + str(e))
 
         res = [index]
         
