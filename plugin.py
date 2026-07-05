@@ -15,6 +15,13 @@ from Components.Console import Console
 import json
 import os
 import sys
+import hashlib
+import threading
+
+try:
+    import queue
+except ImportError:
+    import Queue as queue
 
 # Try importing standby and main loop controllers
 try:
@@ -50,15 +57,125 @@ except ImportError:
     MultiContentEntryPixmapAlphaTest = None
 
 try:
-    from enigma import RT_VALIGN_CENTER
+    from enigma import RT_VALIGN_CENTER, eTimer
 except ImportError:
     RT_VALIGN_CENTER = 4
+    eTimer = None
 
 # Core configuration variables
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 PLUGIN_VERSION = "1.0"
 ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images"
+
+# Safe cache directory for downloaded thumbnails
+CACHE_DIR = "/tmp/MStoreCache"
+if not os.path.exists(CACHE_DIR):
+    try:
+        os.makedirs(CACHE_DIR)
+    except:
+        pass
+
+def download_url_to_file(url, local_path):
+    # Try Python internal download first
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import ssl
+            context = ssl._create_unverified_context()
+        else:
+            import urllib2
+            import ssl
+            try:
+                context = ssl._create_unverified_context()
+            except AttributeError:
+                context = None
+        
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        if context:
+            response = urllib2.urlopen(req, timeout=8, context=context)
+        else:
+            response = urllib2.urlopen(req, timeout=8)
+        
+        with open(local_path, "wb") as f:
+            f.write(response.read())
+        if os.path.exists(local_path) and os.path.getsize(local_path) > 0:
+            return True
+    except Exception as e:
+        print("[MohamedStore] Python download failed, trying wget/curl: " + str(e))
+    
+    # Fallback to wget/curl
+    try:
+        cmd = "wget --no-check-certificate -q -O '{dest}' '{url}' || curl -k -s -L -o '{dest}' '{url}'".format(dest=local_path, url=url)
+        os.system(cmd)
+        if os.path.exists(local_path) and os.path.getsize(local_path) > 0:
+            return True
+    except Exception as e:
+        print("[MohamedStore] wget/curl fallback failed: " + str(e))
+    
+    return False
+
+def get_cache_path(url):
+    if not url:
+        return ""
+    try:
+        url_bytes = url.encode('utf-8') if isinstance(url, str) else url
+        h = hashlib.md5(url_bytes).hexdigest()
+        ext = os.path.splitext(url)[1]
+        if not ext or len(ext) > 5 or '?' in ext:
+            ext = ".png"
+        return os.path.join(CACHE_DIR, h + ext)
+    except Exception as e:
+        print("[MohamedStore] get_cache_path error: " + str(e))
+        return ""
+
+class ImageDownloader(object):
+    def __init__(self, on_downloaded_callback):
+        self.queue = queue.Queue()
+        self.on_downloaded_callback = on_downloaded_callback
+        self.thread = None
+        self.running = False
+        self.downloaded_urls = set()
+
+    def start(self):
+        if not self.running:
+            self.running = True
+            self.thread = threading.Thread(target=self._worker)
+            self.thread.daemon = True
+            self.thread.start()
+
+    def stop(self):
+        self.running = False
+        self.queue.put((None, None))
+
+    def add_task(self, url, local_path):
+        if url in self.downloaded_urls:
+            return
+        self.queue.put((url, local_path))
+
+    def _worker(self):
+        while self.running:
+            try:
+                url, local_path = self.queue.get(timeout=1)
+                if url is None:
+                    break
+                
+                if not os.path.exists(local_path) or os.path.getsize(local_path) == 0:
+                    success = download_url_to_file(url, local_path)
+                    if success:
+                        self.downloaded_urls.add(url)
+                        if self.on_downloaded_callback:
+                            try:
+                                self.on_downloaded_callback()
+                            except Exception as ex:
+                                print("[MohamedStore] Callback error: " + str(ex))
+                else:
+                    self.downloaded_urls.add(url)
+                self.queue.task_done()
+            except queue.Empty:
+                continue
+            except Exception as e:
+                print("[MohamedStore] Worker error: " + str(e))
 
 def get_category_icon_path(category_id):
     cat_lower = str(category_id).lower().replace("_", "").replace(" ", "")
@@ -184,7 +301,29 @@ class MohamedStore(Screen):
         else:
             self["categories_list"] = MenuList([])
             
-        self["items_list"] = MenuList([])
+        # Safe MultiContent initialization for items list
+        self.items_list_has_multicontent = False
+        if HAS_MULTICONTENT and eListboxPythonMultiContent:
+            try:
+                try:
+                    self["items_list"] = MenuList([], content=eListboxPythonMultiContent)
+                except TypeError:
+                    self["items_list"] = MenuList([])
+                    self["items_list"].l = eListboxPythonMultiContent()
+                
+                if gFont:
+                    try:
+                        self["items_list"].l.setFont(0, gFont("Regular", 20))
+                    except Exception as fe:
+                        print("[MohamedStore] Failed to set font for items: " + str(fe))
+                self["items_list"].l.setBuildFunc(self.build_item_entry)
+                self.items_list_has_multicontent = True
+            except Exception as e:
+                print("[MohamedStore] Failed to init items MenuList with eListboxPythonMultiContent: " + str(e))
+                self["items_list"] = MenuList([])
+        else:
+            self["items_list"] = MenuList([])
+            
         self["description"] = Label("Checking for updates...")
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
@@ -196,6 +335,29 @@ class MohamedStore(Screen):
         self.active_focus = "categories"
         self.my_console = Console()
         
+        # Initialize background image downloader and safe refresh timer
+        self.downloader = ImageDownloader(self.on_image_downloaded)
+        self.downloader.start()
+        
+        self.need_refresh = False
+        if eTimer:
+            self.refresh_timer = eTimer()
+            try:
+                self.refresh_timer_conn = self.refresh_timer.timeout.connect(self.trigger_refresh)
+            except AttributeError:
+                try:
+                    self.refresh_timer.callback.append(self.trigger_refresh)
+                except Exception as te:
+                    print("[MohamedStore] Failed to append timer callback: " + str(te))
+            
+            # Start polling timer (recurring every 250ms)
+            try:
+                self.refresh_timer.start(250, False)
+            except Exception as se:
+                print("[MohamedStore] Failed to start timer: " + str(se))
+        else:
+            self.refresh_timer = None
+
         self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
             "cancel": self.go_back,
             "red": self.close,
@@ -211,6 +373,32 @@ class MohamedStore(Screen):
         self["items_list"].onSelectionChanged.append(self.item_changed)
         
         self.onLayoutFinish.append(self.check_for_updates)
+        self.onClose.append(self.cleanup)
+
+    def on_image_downloaded(self):
+        self.need_refresh = True
+
+    def trigger_refresh(self):
+        try:
+            if self.need_refresh:
+                self.need_refresh = False
+                if self.active_focus == "items":
+                    self.update_items_list()
+        except Exception as e:
+            print("[MohamedStore] trigger_refresh error: " + str(e))
+
+    def cleanup(self):
+        try:
+            if hasattr(self, "downloader") and self.downloader:
+                self.downloader.stop()
+        except Exception as e:
+            print("[MohamedStore] cleanup downloader error: " + str(e))
+        
+        try:
+            if hasattr(self, "refresh_timer") and self.refresh_timer:
+                self.refresh_timer.stop()
+        except Exception as e:
+            print("[MohamedStore] cleanup timer error: " + str(e))
 
     def build_category_entry(self, category_id, display_name):
         """
@@ -243,6 +431,63 @@ class MohamedStore(Screen):
             # Fix: Pass the registered font index (0) as an integer instead of the gFont object directly
             # This completely avoids "TypeError: 'gFont' object cannot be interpreted as an integer" in modern Enigma2 images
             res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 50), font=0, flags=align, text=display_name))
+            
+        return res
+
+    def build_item_entry(self, index, display_name, image_url, is_folder):
+        """
+        Build function called dynamically by Enigma2 for each list item in Items.
+        """
+        icon_path = None
+        
+        # Get category icon as fallback
+        cat_idx = self["categories_list"].getSelectionIndex()
+        selected_cat = self.categories[cat_idx] if (cat_idx >= 0 and cat_idx < len(self.categories)) else None
+        category_icon = get_category_icon_path(selected_cat) if selected_cat else None
+        if not category_icon:
+            # Absolute fallback to standard plugin image if category icon doesn't exist
+            category_icon = os.path.join(ICON_FOLDER, "plugins.png")
+            if not os.path.exists(category_icon):
+                category_icon = None
+
+        if is_folder:
+            icon_path = os.path.join(ICON_FOLDER, "tools.png")
+            if not os.path.exists(icon_path):
+                icon_path = category_icon
+        else:
+            if image_url:
+                local_path = get_cache_path(image_url)
+                if local_path and os.path.exists(local_path) and os.path.getsize(local_path) > 0:
+                    icon_path = local_path
+                else:
+                    if local_path:
+                        self.downloader.add_task(image_url, local_path)
+                    icon_path = category_icon
+            else:
+                icon_path = category_icon
+
+        pixmap = None
+        if icon_path:
+            try:
+                if loadPNG:
+                    pixmap = loadPNG(icon_path)
+            except Exception as e:
+                print("[MohamedStore] Error loading package PNG: " + str(e))
+
+        res = [index]
+        
+        if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
+            # Render thumbnail beautifully inside the 55px height list item
+            res.append(MultiContentEntryPixmapAlphaTest(pos=(10, 7), size=(40, 40), png=pixmap))
+            text_x = 62
+            text_w = 470 - 62 - 10
+        else:
+            text_x = 10
+            text_w = 470 - 10 - 10
+
+        if HAS_MULTICONTENT and MultiContentEntryText:
+            align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 55), font=0, flags=align, text=display_name))
             
         return res
 
@@ -411,14 +656,21 @@ class MohamedStore(Screen):
                 self["description"].setText("No items found in this section.")
                 return
             
-            list_names = []
-            for item in self.visible_items:
-                if "items" in item and isinstance(item["items"], list):
-                    list_names.append("> " + str(item.get("name", "Unknown Folder")))
+            list_data = []
+            for idx, item in enumerate(self.visible_items):
+                is_folder = "items" in item and isinstance(item["items"], list)
+                if is_folder:
+                    display_name = "> " + str(item.get("name", "Unknown Folder"))
                 else:
-                    list_names.append("%s  (v%s)" % (str(item.get("name", "Unknown")), str(item.get("version", "1.0"))))
+                    display_name = "%s  (v%s)" % (str(item.get("name", "Unknown")), str(item.get("version", "1.0")))
+                
+                if self.items_list_has_multicontent:
+                    image_url = item.get("image", "").strip()
+                    list_data.append((idx, display_name, image_url, is_folder))
+                else:
+                    list_data.append(display_name)
             
-            self["items_list"].setList(list_names)
+            self["items_list"].setList(list_data)
             self.item_changed()
         except Exception as e:
             self["description"].setText("Update Items List Error: " + str(e))
