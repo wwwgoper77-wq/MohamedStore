@@ -17,6 +17,25 @@ data = {
     }
 }
 
+# -------- Preserve old descriptions --------
+old_descriptions = {}
+
+try:
+    if os.path.exists("feed/index.json"):
+        with open("feed/index.json","r",encoding="utf-8") as f:
+            old = json.load(f)
+
+        for cat, items in old.get("categories", {}).items():
+            if cat == "skins":
+                for folder in items:
+                    for it in folder.get("items", []):
+                        old_descriptions[it.get("name","")] = it.get("description","")
+            else:
+                for it in items:
+                    old_descriptions[it.get("name","")] = it.get("description","")
+except:
+    pass
+
 
 def image_url(prefix):
     """
@@ -63,7 +82,7 @@ if os.path.isdir("plugins"):
         data["categories"]["plugins"].append({
             "name": display,
             "version": version,
-            "description": "",
+            "description": old_descriptions.get(display,""),
             "file": f"{BASE_URL}/plugins/{filename}",
            "image": image_url(
     display.split("_")[0]
@@ -135,7 +154,7 @@ if os.path.isdir("tools"):
         data["categories"]["tools"].append({
             "name": clean,
             "version": version,
-            "description": "",
+            "description": old_descriptions.get(display,""),
             "file": f"{BASE_URL}/tools/{filename}",
             "image": image_url(image_name)
         })
@@ -168,7 +187,7 @@ if os.path.isdir("system_images"):
         data["categories"]["system_images"].append({
             "name": clean,
             "version": version,
-            "description": "",
+            "description": old_descriptions.get(display,""),
             "file": f"{BASE_URL}/system_images/{filename}",
             "image": image_url(image_name)
         })
