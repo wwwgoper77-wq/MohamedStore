@@ -6,7 +6,7 @@
             {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1",
                 "version": "py3.12",
-                "description": "",
+                "description": "إضافة لإصلاح مشكلة تأخير التايم شفت.",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
                 "image": ""
             },
