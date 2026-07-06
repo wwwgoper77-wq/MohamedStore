@@ -224,7 +224,7 @@ class MohamedStore(Screen):
             self["categories_list"] = MenuList([])
             
         self["items_list"] = MenuList([])
-        self["description"] = Label("")
+        self["description"] = Label("Checking for updates...")
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
         
@@ -233,8 +233,6 @@ class MohamedStore(Screen):
         self.visible_items = []
         self.current_path = []  # Keeps track of the nested folder objects we are currently inside
         self.active_focus = "categories"
-        self.last_description = ""
-        self.current_selected_key = None
         self.my_console = Console()
         
         self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
@@ -330,6 +328,7 @@ class MohamedStore(Screen):
 
     def updateAnswer(self, answer):
         if answer:
+            self["description"].setText("Downloading and installing self-update...\nPlease wait...")
             update_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/MohamedStore/plugin.py"
             dest_path = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/plugin.py"
             temp_path = "/tmp/plugin.py"
@@ -359,10 +358,8 @@ class MohamedStore(Screen):
         else:
             error = result.strip() if result else "Unknown network or file validation error"
             print("[MohamedStore] Self-Update Failed: " + str(error))
-            self.session.open(
-                MessageBox,
-                "Self-Update Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error),
-                MessageBox.TYPE_ERROR
+            self["description"].setText(
+                "Self-Update Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
             )
 
     def restartGUICallback(self, answer):
@@ -387,7 +384,7 @@ class MohamedStore(Screen):
         try:
             data = load_json(STORE_URL)
             if not data or "categories" not in data:
-                self.session.open(MessageBox, "Failed to load store data from GitHub.", MessageBox.TYPE_ERROR)
+                self["description"].setText("Failed to load store data from GitHub.")
                 return
             
             store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.0"))
@@ -412,9 +409,9 @@ class MohamedStore(Screen):
                 self.current_path = []
                 self.category_changed()
             else:
-                self.session.open(MessageBox, "Store is empty.", MessageBox.TYPE_INFO)
+                self["description"].setText("Store is empty.")
         except Exception as e:
-            self.session.open(MessageBox, "Load Store Error: " + str(e), MessageBox.TYPE_ERROR)
+            self["description"].setText("Load Store Error: " + str(e))
 
     def category_changed(self):
         try:
@@ -435,7 +432,7 @@ class MohamedStore(Screen):
             
             self.update_items_list()
         except Exception as e:
-            self.session.open(MessageBox, "Category Change Error: " + str(e), MessageBox.TYPE_ERROR)
+            self["description"].setText("Category Change Error: " + str(e))
 
     def rebuild_visible_items(self):
         try:
@@ -457,7 +454,7 @@ class MohamedStore(Screen):
         try:
             if not isinstance(self.visible_items, list):
                 self["items_list"].setList([])
-                self.session.open(MessageBox, "No items found in this section.", MessageBox.TYPE_INFO)
+                self["description"].setText("No items found in this section.")
                 return
             
             list_names = []
@@ -468,12 +465,9 @@ class MohamedStore(Screen):
                     list_names.append("%s  (v%s)" % (str(item.get("name", "Unknown")), str(item.get("version", "1.0"))))
             
             self["items_list"].setList(list_names)
-            # Avoid calling self.item_changed() immediately if the listbox doesn't have a valid selected item
-            idx = self["items_list"].getSelectionIndex()
-            if idx >= 0 and idx < len(self.visible_items):
-                self.item_changed()
+            self.item_changed()
         except Exception as e:
-            self.session.open(MessageBox, "Update Items List Error: " + str(e), MessageBox.TYPE_ERROR)
+            self["description"].setText("Update Items List Error: " + str(e))
 
     def item_changed(self):
         try:
@@ -482,32 +476,16 @@ class MohamedStore(Screen):
                 return
             
             item = self.visible_items[idx]
-            
-            # Compute a stable, unique identifier (key) for the selected item
             cat_idx = self["categories_list"].getSelectionIndex()
-            cat_name = str(self.categories[cat_idx]) if (cat_idx >= 0 and cat_idx < len(self.categories)) else ""
-            path_names = [str(f.get("name", "")) for f in self.current_path]
+            cat_name = str(self.categories[cat_idx]).replace("_", " ").capitalize() if cat_idx >= 0 else "Unknown"
             
-            item_name = str(item.get("name", ""))
-            item_file = str(item.get("file", ""))
-            item_ver = str(item.get("version", ""))
-            item_desc = str(item.get("description", ""))
-            
-            selection_key = (cat_name, tuple(path_names), idx, item_name, item_file, item_ver, item_desc)
-            
-            if hasattr(self, "current_selected_key") and self.current_selected_key == selection_key:
-                return
-            
-            self.current_selected_key = selection_key
-            
-            cat_name_display = cat_name.replace("_", " ").capitalize() if cat_name else "Unknown"
-            path_parts = [cat_name_display]
+            path_parts = [cat_name]
             for folder in self.current_path:
                 path_parts.append(str(folder.get("name", "")))
             path_str = " > ".join(path_parts)
             
             if "items" in item and isinstance(item["items"], list):
-                info_text = "Section: %s\n\nFolder: %s" % (
+                info_text = "Section: %s\n\nFolder: %s\n\nPress OK to view packages inside this folder." % (
                     path_str,
                     str(item.get("name", ""))
                 )
@@ -518,15 +496,14 @@ class MohamedStore(Screen):
                     str(item.get("version", "")),
                     str(item.get("description", "No description available."))
                 )
-            self.last_description = info_text
             self["description"].setText(info_text)
         except Exception as e:
-            self.session.open(MessageBox, "Item Change Error: " + str(e), MessageBox.TYPE_ERROR)
+            self["description"].setText("Item Change Error: " + str(e))
 
     def switch_to_items(self):
         if self.visible_items:
             self.active_focus = "items"
-            self.item_changed()
+            self["description"].setText("Navigating: Items List\n\nPress OK or Green to Install.")
 
     def switch_to_categories(self):
         if self.active_focus == "items" and len(self.current_path) > 0:
@@ -537,7 +514,6 @@ class MohamedStore(Screen):
             self.active_focus = "categories"
             self.current_path = []
             self.category_changed()
-        self.item_changed()
 
     def go_up(self):
         try:
@@ -545,7 +521,6 @@ class MohamedStore(Screen):
                 self["categories_list"].up()
             else:
                 self["items_list"].up()
-            self.item_changed()
         except:
             pass
 
@@ -555,7 +530,6 @@ class MohamedStore(Screen):
                 self["categories_list"].down()
             else:
                 self["items_list"].down()
-            self.item_changed()
         except:
             pass
 
@@ -570,7 +544,6 @@ class MohamedStore(Screen):
                     self.current_path.append(item)
                     self.rebuild_visible_items()
                     self.update_items_list()
-                    self.item_changed()
                 else:
                     self.download()
 
@@ -579,10 +552,8 @@ class MohamedStore(Screen):
             self.current_path.pop()
             self.rebuild_visible_items()
             self.update_items_list()
-            self.item_changed()
         elif self.active_focus == "items" and len(self.current_path) == 0:
             self.switch_to_categories()
-            self.item_changed()
         else:
             self.close()
 
@@ -600,19 +571,21 @@ class MohamedStore(Screen):
                 
                 url = item.get("file", "").strip()
                 if not url:
-                    self.session.open(MessageBox, "Error: Download URL is missing in JSON.", MessageBox.TYPE_ERROR)
+                    self["description"].setText("Error: Download URL is missing in JSON.")
                     return
                 
+                self["description"].setText("Downloading and installing %s...\nPlease wait..." % str(item.get("name", "")))
+                
                 if url.endswith(".deb"):
-                     cmd = "(wget --no-check-certificate -O /tmp/addon.deb '{url}' || curl -k -L -o /tmp/addon.deb '{url}') && dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.deb '{url}' || curl -k -L -o /tmp/addon.deb '{url}') && dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
                 else:
-                     cmd = "(wget --no-check-certificate -O /tmp/addon.ipk '{url}' || curl -k -L -o /tmp/addon.ipk '{url}') && opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.ipk '{url}' || curl -k -L -o /tmp/addon.ipk '{url}') && opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
                 cmd = cmd.format(url=url)
                     
                 self.my_console.ePopen(cmd + " 2>&1", self.download_finished)
         except Exception as e:
             print("[MohamedStore] Download Error: " + str(e))
-            self.session.open(MessageBox, "Execution error: " + str(e), MessageBox.TYPE_ERROR)
+            self["description"].setText("Execution error, check system log.")
 
     def download_finished(self, result, retval, extra_args=None):
         if retval == 0:
@@ -620,10 +593,8 @@ class MohamedStore(Screen):
         else:
             error = result.strip() if result else "Unknown error"
             print("[MohamedStore] Install output:\n" + str(error))
-            self.session.open(
-                MessageBox,
-                "Installation Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error),
-                MessageBox.TYPE_ERROR
+            self["description"].setText(
+                "Installation Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
             )
 
     def restartCallback(self, answer):
@@ -641,6 +612,8 @@ class MohamedStore(Screen):
                         enigma.eApp.getInstance().quit(3)
                     except:
                         pass
+        else:
+            self["description"].setText("Installation completed successfully. Restart skipped.")
 
 # Descriptor hooks for Enigma2
 def main(session, **kwargs):
