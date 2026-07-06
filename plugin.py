@@ -122,8 +122,6 @@ def load_json(url):
 class MohamedStore(Screen):
     # Redesigned skin with OLED Obsidian Dark (#0C0D12), Slate card container background (#151720),
     # sleek 1px slate borders (#222634), and modern Electric Blue accents (#0088FF)
-    # Optimized layout boundaries with user-requested larger TV font sizes:
-    # Title: 34, Category names: 28, Packages: 26, Description: 24, Footer keys: 24
     skin = """
 <screen name="MohamedStore" position="center,center" size="1280,720" title="Mohamed Store" flags="wfNoBorder">
     <!-- Screen Background (OLED Dark Obsidian Fallback) -->
@@ -138,8 +136,8 @@ class MohamedStore(Screen):
     <eLabel position="1249,30" size="1,90" backgroundColor="#222634" /> <!-- Right Border -->
     <eLabel position="30,119" size="1220,1" backgroundColor="#222634" /> <!-- Bottom Border -->
     
-    <eLabel position="60,48" size="400,50" text="MOHAMED STORE" font="Regular;34" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" />
-    <eLabel position="440,60" size="500,30" text="Premium Addon Repository" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
+    <eLabel position="60,48" size="400,50" text="MOHAMED STORE" font="Regular;32" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" />
+    <eLabel position="340,60" size="500,30" text="Premium Addon Repository" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
     <eLabel position="1100,60" size="120,30" text="v1.0" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" halign="right" />
 
     <!-- ==================== CATEGORIES PANEL ==================== -->
@@ -150,7 +148,7 @@ class MohamedStore(Screen):
     <eLabel position="30,579" size="300,1" backgroundColor="#222634" /> <!-- Bottom Border -->
     
     <eLabel position="50,155" size="260,30" text="CATEGORIES" font="Regular;16" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
-    <widget name="categories_list" position="45,195" size="270,365" itemHeight="60" scrollbarMode="showOnDemand" foregroundColor="#FFFFFF" backgroundColor="#20151720" selectionColor="#0088FF" selectionFontColor="#FFFFFF" font="Regular;28" />
+    <widget name="categories_list" position="45,195" size="270,365" itemHeight="50" scrollbarMode="showOnDemand" foregroundColor="#FFFFFF" backgroundColor="#20151720" selectionColor="#0088FF" selectionFontColor="#FFFFFF" font="Regular;20" />
 
     <!-- ==================== PACKAGES PANEL ==================== -->
     <eLabel position="350,140" size="520,440" backgroundColor="#20151720" zPosition="-1" />
@@ -160,7 +158,7 @@ class MohamedStore(Screen):
     <eLabel position="350,579" size="520,1" backgroundColor="#222634" /> <!-- Bottom Border -->
     
     <eLabel position="370,155" size="480,30" text="AVAILABLE PACKAGES" font="Regular;16" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
-    <widget name="items_list" position="365,195" size="490,365" itemHeight="60" scrollbarMode="showOnDemand" foregroundColor="#FFFFFF" backgroundColor="#20151720" selectionColor="#0088FF" selectionFontColor="#FFFFFF" font="Regular;26" />
+    <widget name="items_list" position="365,195" size="490,365" itemHeight="55" scrollbarMode="showOnDemand" foregroundColor="#FFFFFF" backgroundColor="#20151720" selectionColor="#0088FF" selectionFontColor="#FFFFFF" font="Regular;20" />
 
     <!-- ==================== DETAILS PANEL ==================== -->
     <eLabel position="890,140" size="360,440" backgroundColor="#20151720" zPosition="-1" />
@@ -170,7 +168,7 @@ class MohamedStore(Screen):
     <eLabel position="890,579" size="360,1" backgroundColor="#222634" /> <!-- Bottom Border -->
     
     <eLabel position="910,155" size="320,30" text="DETAILS" font="Regular;16" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
-    <widget name="description" position="910,195" size="320,365" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" valign="top" />
+    <widget name="description" position="910,195" size="320,365" font="Regular;18" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" valign="top" />
 
     <!-- ==================== FOOTER PANEL ==================== -->
     <eLabel position="30,600" size="1220,90" backgroundColor="#20151720" zPosition="-1" />
@@ -181,19 +179,19 @@ class MohamedStore(Screen):
     
     <!-- Red = Exit -->
     <eLabel position="60,638" size="14,14" backgroundColor="#E74C3C" />
-    <widget name="key_red" position="85,622" size="240,40" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
+    <widget name="key_red" position="85,630" size="180,30" font="Regular;20" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
 
     <!-- Green = Install -->
     <eLabel position="350,638" size="14,14" backgroundColor="#2ECC71" />
-    <widget name="key_green" position="375,622" size="240,40" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
+    <widget name="key_green" position="375,630" size="180,30" font="Regular;20" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
 
     <!-- Yellow = Refresh (Static visual button) -->
     <eLabel position="640,638" size="14,14" backgroundColor="#F1C40F" />
-    <eLabel position="665,622" size="240,40" text="Refresh" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
+    <eLabel position="665,630" size="180,30" text="Refresh" font="Regular;20" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
 
     <!-- Blue = Update (Static visual button) -->
     <eLabel position="930,638" size="14,14" backgroundColor="#0088FF" />
-    <eLabel position="955,622" size="240,40" text="Update" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
+    <eLabel position="955,630" size="180,30" text="Update" font="Regular;20" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" halign="left" />
 </screen>
 """
 
@@ -212,7 +210,7 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["categories_list"].l.setFont(0, gFont("Regular", 28))
+                        self["categories_list"].l.setFont(0, gFont("Regular", 22))
                     except Exception as fe:
                         print("[MohamedStore] Failed to set font: " + str(fe))
                 self["categories_list"].l.setBuildFunc(self.build_category_entry)
@@ -277,7 +275,7 @@ class MohamedStore(Screen):
         res = [category_id]  # First element is selection user-data (key)
         
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
-            res.append(MultiContentEntryPixmapAlphaTest(pos=(12, 14), size=(32, 32), png=pixmap))
+            res.append(MultiContentEntryPixmapAlphaTest(pos=(12, 9), size=(32, 32), png=pixmap))
             text_x = 54
             text_w = 206 # Adjusted for the new 270 width of categories_list (270 - 54 - 10)
         else:
@@ -288,7 +286,7 @@ class MohamedStore(Screen):
             align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
             # Fix: Pass the registered font index (0) as an integer instead of the gFont object directly
             # This completely avoids "TypeError: 'gFont' object cannot be interpreted as an integer" in modern Enigma2 images
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 60), font=0, flags=align, text=display_name))
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 50), font=0, flags=align, text=display_name))
             
         return res
 
