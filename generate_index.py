@@ -84,7 +84,7 @@ if os.path.isdir("plugins"):
         data["categories"]["plugins"].append({
             "name": display,
             "version": version,
-            "description": old_descriptions.get(clean,""),
+            "description": old_descriptions.get(display, ""),
             "file": f"{BASE_URL}/plugins/{filename}",
            "image": image_url(
     display.split("_")[0]
@@ -125,7 +125,7 @@ if os.path.isdir("skins"):
             items.append({
                 "name": clean,
                 "version": version,
-                "description": folder + " Skin",
+                "description": old_descriptions.get(clean, folder + " Skin"),
                 "file": f"{BASE_URL}/skins/{folder}/{filename}",
                 "image": image_url(image_name)
             })
