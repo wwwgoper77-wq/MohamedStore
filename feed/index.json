@@ -20,7 +20,7 @@
             {
                 "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
-                "description": "إضافة لإصلاح مشكلة تأخير التايم شفت." ,
+                "description": "عداد ثواني خاصية تايم شفت لصورة ايجامي فقط." ,
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             }
