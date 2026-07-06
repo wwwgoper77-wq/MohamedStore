@@ -20,7 +20,7 @@
             {
                 "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
-                "description": "عداد ثواني تايم شفت خاص بصورة ايجامي."
+                "description": "عداد ثواني تايم شفت خاص بصورة ايجامي.",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             }
