@@ -13,6 +13,7 @@ rm -rf "$PLUGIN_DIR"
 # Create folders
 mkdir -p "$PLUGIN_DIR"
 mkdir -p "$PLUGIN_DIR/images"
+mkdir -p "$PLUGIN_DIR/images/Icons"
 
 echo "Downloading plugin files..."
 
@@ -24,12 +25,14 @@ wget -O "$PLUGIN_DIR/__init__.py" "$BASE_URL/__init__.py"
 # Images
 wget -O "$PLUGIN_DIR/images/logo.png" "$BASE_URL/images/logo.png"
 wget -O "$PLUGIN_DIR/images/background.png" "$BASE_URL/images/background.png"
-wget -O "$PLUGIN_DIR/images/plugins.png" "$BASE_URL/images/plugins.png"
-wget -O "$PLUGIN_DIR/images/skins.png" "$BASE_URL/images/skins.png"
-wget -O "$PLUGIN_DIR/images/tools.png" "$BASE_URL/images/tools.png"
-wget -O "$PLUGIN_DIR/images/system_images.png" "$BASE_URL/images/system_images.png"
 wget -O "$PLUGIN_DIR/images/ipaudiopro.png" "$BASE_URL/images/ipaudiopro.png"
 wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay.png"
+
+# Category Icons
+wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
+wget -O "$PLUGIN_DIR/images/Icons/skins.png" "$BASE_URL/images/Icons/skins.png"
+wget -O "$PLUGIN_DIR/images/Icons/tools.png" "$BASE_URL/images/Icons/tools.png"
+wget -O "$PLUGIN_DIR/images/Icons/system_images.png" "$BASE_URL/images/Icons/system_images.png"
 
 # Delete Python cache
 find "$PLUGIN_DIR" -name "*.pyc" -delete 2>/dev/null
