@@ -6,14 +6,14 @@
             {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1",
                 "version": "py3.12",
-                "description": "بلجن صوتيات.",
+                "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
                 "image": ""
             },
             {
                 "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
-                "description": "عداد ثواني تايم شفت خاصة صورة ايجامي.",
+                "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             }
@@ -45,6 +45,8 @@
             }
         ],
         "tools": [],
-        "system_images": []
+        "system_images": [],
+        "picons": [],
+        "channels": []
     }
 }
