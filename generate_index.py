@@ -13,7 +13,9 @@ data = {
         "plugins": [],
         "skins": [],
         "tools": [],
-        "system_images": []
+        "system_images": [],
+        "picons": [],
+        "channels": []
     }
 }
 
@@ -82,7 +84,7 @@ if os.path.isdir("plugins"):
         data["categories"]["plugins"].append({
             "name": display,
             "version": version,
-            "description": old_descriptions.get(display,""),
+            "description": old_descriptions.get(clean,""),
             "file": f"{BASE_URL}/plugins/{filename}",
            "image": image_url(
     display.split("_")[0]
@@ -154,7 +156,7 @@ if os.path.isdir("tools"):
         data["categories"]["tools"].append({
             "name": clean,
             "version": version,
-            "description": old_descriptions.get(display,""),
+            "description": old_descriptions.get(clean,""),
             "file": f"{BASE_URL}/tools/{filename}",
             "image": image_url(image_name)
         })
@@ -187,11 +189,38 @@ if os.path.isdir("system_images"):
         data["categories"]["system_images"].append({
             "name": clean,
             "version": version,
-            "description": old_descriptions.get(display,""),
+            "description": old_descriptions.get(clean,""),
             "file": f"{BASE_URL}/system_images/{filename}",
             "image": image_url(image_name)
         })
 
+
+
+# Picons
+if os.path.isdir("picons"):
+    for filename in sorted(os.listdir("picons")):
+        if filename.endswith((".ipk",".zip")):
+            clean=os.path.splitext(filename)[0]
+            data["categories"]["picons"].append({
+                "name":clean,
+                "version":"1.0",
+                "description":old_descriptions.get(clean,""),
+                "file":f"{BASE_URL}/picons/{filename}",
+                "image":image_url(clean.split("_")[0])
+            })
+
+# Channels
+if os.path.isdir("channels"):
+    for filename in sorted(os.listdir("channels")):
+        if filename.endswith((".ipk",".zip",".tv")):
+            clean=os.path.splitext(filename)[0]
+            data["categories"]["channels"].append({
+                "name":clean,
+                "version":"1.0",
+                "description":old_descriptions.get(clean,""),
+                "file":f"{BASE_URL}/channels/{filename}",
+                "image":image_url(clean.split("_")[0])
+            })
 
 # -------------------------------------------------
 # Save JSON
