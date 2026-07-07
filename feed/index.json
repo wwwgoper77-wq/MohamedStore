@@ -18,6 +18,13 @@
                 "image": ""
             },
             {
+                "name": "FootOnSat",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FootOnSat.sh",
+                "image": ""
+            },
+            {
                 "name": "IPAudio",
                 "version": "1.0",
                 "description": "",
