@@ -54,6 +54,14 @@
         "tools": [],
         "system_images": [],
         "picons": [],
-        "channels": []
+        "channels": [
+            {
+                "name": "channels_backup_MNASR_20260527",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_MNASR_20260527.tar.gz",
+                "image": ""
+            }
+        ]
     }
 }
