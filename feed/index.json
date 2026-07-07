@@ -25,6 +25,13 @@
                 "image": ""
             },
             {
+                "name": "IPToSAT",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPToSAT.sh",
+                "image": ""
+            },
+            {
                 "name": "Multi-StalkerPro",
                 "version": "1.0",
                 "description": "",
