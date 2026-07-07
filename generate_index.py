@@ -59,6 +59,10 @@ def image_url(prefix):
     return ""
 
 
+# صيغ ملفات التثبيت المدعومة بالكامل
+EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv")
+
+
 # -------------------------------------------------
 # Plugins
 # -------------------------------------------------
@@ -67,10 +71,13 @@ if os.path.isdir("plugins"):
 
     for filename in sorted(os.listdir("plugins")):
 
-        if not filename.endswith(".ipk"):
+        if not filename.endswith(EXTENSIONS):
             continue
 
-        clean = os.path.splitext(filename)[0]
+        if filename.endswith(".tar.gz"):
+            clean = filename[:-7]
+        else:
+            clean = os.path.splitext(filename)[0]
 
         version = clean.split("_")[-2] if "_" in clean else "1.0"
 
@@ -112,10 +119,13 @@ if os.path.isdir("skins"):
 
         for filename in sorted(os.listdir(folder_path)):
 
-            if not filename.endswith(".ipk"):
+            if not filename.endswith(EXTENSIONS):
                 continue
 
-            clean = os.path.splitext(filename)[0]
+            if filename.endswith(".tar.gz"):
+                clean = filename[:-7]
+            else:
+                clean = os.path.splitext(filename)[0]
 
             version = clean.split("_")[-2] if "_" in clean else "1.0"
 
@@ -144,10 +154,13 @@ if os.path.isdir("tools"):
 
     for filename in sorted(os.listdir("tools")):
 
-        if not filename.endswith(".ipk"):
+        if not filename.endswith(EXTENSIONS):
             continue
 
-        clean = os.path.splitext(filename)[0]
+        if filename.endswith(".tar.gz"):
+            clean = filename[:-7]
+        else:
+            clean = os.path.splitext(filename)[0]
 
         version = clean.split("_")[-2] if "_" in clean else "1.0"
 
@@ -195,12 +208,14 @@ if os.path.isdir("system_images"):
         })
 
 
-
 # Picons
 if os.path.isdir("picons"):
     for filename in sorted(os.listdir("picons")):
-        if filename.endswith((".ipk",".zip")):
-            clean=os.path.splitext(filename)[0]
+        if filename.endswith(EXTENSIONS):
+            if filename.endswith(".tar.gz"):
+                clean = filename[:-7]
+            else:
+                clean = os.path.splitext(filename)[0]
             data["categories"]["picons"].append({
                 "name":clean,
                 "version":"1.0",
@@ -212,8 +227,11 @@ if os.path.isdir("picons"):
 # Channels
 if os.path.isdir("channels"):
     for filename in sorted(os.listdir("channels")):
-        if filename.endswith((".ipk",".zip",".tv")):
-            clean=os.path.splitext(filename)[0]
+        if filename.endswith(EXTENSIONS):
+            if filename.endswith(".tar.gz"):
+                clean = filename[:-7]
+            else:
+                clean = os.path.splitext(filename)[0]
             data["categories"]["channels"].append({
                 "name":clean,
                 "version":"1.0",
