@@ -11,6 +11,13 @@
                 "image": ""
             },
             {
+                "name": "E2iPlayer",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2iPlayer.sh",
+                "image": ""
+            },
+            {
                 "name": "IPAudio",
                 "version": "1.0",
                 "description": "",
