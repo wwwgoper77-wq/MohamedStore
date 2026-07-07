@@ -58,7 +58,7 @@ except ImportError:
 # Core configuration variables
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
-PLUGIN_VERSION = "1.0"
+PLUGIN_VERSION = "1.1"
 
 # Robust path resolution to locate images relative to plugin root on any image/installation
 try:
@@ -580,11 +580,51 @@ class MohamedStore(Screen):
                 
                 self["description"].setText("Downloading and installing %s...\nPlease wait..." % str(item.get("name", "")))
                 
-                if url.endswith(".deb"):
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.deb '{url}' || curl -k -L -o /tmp/addon.deb '{url}') && dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
+                # Determine file extension and format-specific commands
+                pure_url = url.split('?')[0]
+                ext = ""
+                if pure_url.endswith(".tar.gz"):
+                    ext = ".tar.gz"
                 else:
+                    _, ext_part = os.path.splitext(pure_url)
+                    ext = ext_part.lower()
+
+                # Extract filename for custom operations (like .tv bouquets)
+                filename = pure_url.split('/')[-1]
+                if not filename:
+                    filename = "addon" + ext
+
+                cmd = ""
+                if ext == ".deb":
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.deb '{url}' || curl -k -L -o /tmp/addon.deb '{url}') && dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
+                elif ext == ".ipk":
                     cmd = "(wget --no-check-certificate -O /tmp/addon.ipk '{url}' || curl -k -L -o /tmp/addon.ipk '{url}') && opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
-                cmd = cmd.format(url=url)
+                elif ext == ".sh":
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.sh '{url}' || curl -k -L -o /tmp/addon.sh '{url}') && chmod +x /tmp/addon.sh && /tmp/addon.sh && rm -f /tmp/addon.sh"
+                elif ext == ".zip":
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.zip '{url}' || curl -k -L -o /tmp/addon.zip '{url}') && unzip -o /tmp/addon.zip -d / && rm -f /tmp/addon.zip"
+                elif ext in [".tar.gz", ".tgz"]:
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.tar.gz '{url}' || curl -k -L -o /tmp/addon.tar.gz '{url}') && tar -xzf /tmp/addon.tar.gz -C / && rm -f /tmp/addon.tar.gz"
+                elif ext == ".tar":
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.tar '{url}' || curl -k -L -o /tmp/addon.tar '{url}') && tar -xf /tmp/addon.tar -C / && rm -f /tmp/addon.tar"
+                elif ext == ".tv":
+                    cmd = (
+                        "(wget --no-check-certificate -O '/etc/enigma2/{filename}' '{url}' || "
+                        "curl -k -L -o '/etc/enigma2/{filename}' '{url}') && "
+                        "if ! grep -q '{filename}' /etc/enigma2/bouquets.tv; then "
+                        "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"{filename}\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
+                        "fi && "
+                        "(wget -qO - http://127.0.0.1/web/servicelistreload?mode=0 || "
+                        "curl -s http://127.0.0.1/web/servicelistreload?mode=0 || "
+                        "enigma2-web-reload || true)"
+                    )
+                elif ext == ".py":
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.py '{url}' || curl -k -L -o /tmp/addon.py '{url}') && (python /tmp/addon.py || python3 /tmp/addon.py) && rm -f /tmp/addon.py"
+                else:
+                    # Fallback default: download as ipk
+                    cmd = "(wget --no-check-certificate -O /tmp/addon.ipk '{url}' || curl -k -L -o /tmp/addon.ipk '{url}') && opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
+                
+                cmd = cmd.format(url=url, filename=filename)
                     
                 self.my_console.ePopen(cmd + " 2>&1", self.download_finished)
         except Exception as e:
