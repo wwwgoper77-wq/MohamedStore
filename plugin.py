@@ -79,6 +79,10 @@ def get_category_icon_path(category_id):
         filename = "tools.png"
     elif "image" in cat_lower or "system" in cat_lower:
         filename = "system_images.png"
+    elif "picon" in cat_lower:
+        filename = "picons.png"
+    elif "channel" in cat_lower:
+        filename = "channels.png"
     else:
         filename = None
         
