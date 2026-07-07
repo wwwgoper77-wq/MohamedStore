@@ -56,6 +56,13 @@
         "picons": [],
         "channels": [
             {
+                "name": "VuPlus_Enigma2_ChannelList_12Sats",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/VuPlus_Enigma2_ChannelList_12Sats.zip",
+                "image": ""
+            },
+            {
                 "name": "channels_backup_MNASR_20260527",
                 "version": "1.0",
                 "description": "",
