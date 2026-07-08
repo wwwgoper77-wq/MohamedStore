@@ -55,17 +55,10 @@
         "system_images": [],
         "picons": [
             {
-                "name": "Picon",
+                "name": "enigma2-plugin-picons-panel-custom_1.0_all",
                 "version": "1.0",
                 "description": "",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon.zip",
-                "image": ""
-            },
-            {
-                "name": "mmk_16.0E_220x132_trs",
-                "version": "1.0",
-                "description": "",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/mmk_16.0E_220x132_trs.zip",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/enigma2-plugin-picons-panel-custom_1.0_all.ipk",
                 "image": ""
             }
         ],
