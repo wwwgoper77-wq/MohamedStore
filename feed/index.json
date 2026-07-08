@@ -60,6 +60,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon.zip",
                 "image": ""
+            },
+            {
+                "name": "mmk_16.0E_220x132_trs",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/mmk_16.0E_220x132_trs.zip",
+                "image": ""
             }
         ],
         "channels": [
