@@ -5,8 +5,6 @@ GITHUB_USER = "wwwgoper77-wq"
 REPO_NAME = "MohamedStore"
 
 BASE_URL = f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/main"
-# الرابط المباشر لتحميل ملفات الـ Releases الكبيرة تلقائياً من جيتهاب
-RELEASE_BASE_URL = f"https://github.com/{GITHUB_USER}/{REPO_NAME}/releases/latest/download"
 
 data = {
     "store_name": "M Store",
@@ -211,20 +209,45 @@ if os.path.isdir("system_images"):
 
 
 # Picons
-if os.path.isdir("picons"):
-    for filename in sorted(os.listdir("picons")):
-        if filename.endswith(EXTENSIONS):
-            if filename.endswith(".tar.gz"):
-                clean = filename[:-7]
-            else:
-                clean = os.path.splitext(filename)[0]
-            data["categories"]["picons"].append({
-                "name":clean,
-                "version":"1.0",
-                "description":old_descriptions.get(clean,""),
-                "file":f"{RELEASE_BASE_URL}/{filename}",
-                "image":image_url(clean.split("_")[0])
-            })
+picons_list = []
+try:
+    import urllib.request
+    import urllib.error
+    
+    releases_url = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    }
+    # Use GITHUB_TOKEN or GH_TOKEN to raise rate limits when running in GitHub Actions
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token:
+        headers["Authorization"] = f"token {token}"
+        
+    req = urllib.request.Request(releases_url, headers=headers)
+    with urllib.request.urlopen(req, timeout=15) as response:
+        releases = json.loads(response.read().decode("utf-8"))
+        for release in releases:
+            for asset in release.get("assets", []):
+                filename = asset.get("name", "")
+                if filename.endswith(EXTENSIONS):
+                    if filename.endswith(".tar.gz"):
+                        clean = filename[:-7]
+                    else:
+                        clean = os.path.splitext(filename)[0]
+                    
+                    picons_list.append({
+                        "name": clean,
+                        "version": "1.0",
+                        "description": old_descriptions.get(clean, ""),
+                        "file": asset.get("browser_download_url", ""),
+                        "image": image_url(clean.split("_")[0])
+                    })
+except Exception as e:
+    print(f"Warning: Could not fetch picons from GitHub Releases: {e}")
+
+picons_list.sort(key=lambda x: x["name"])
+data["categories"]["picons"] = picons_list
+
 
 # Channels
 if os.path.isdir("channels"):
