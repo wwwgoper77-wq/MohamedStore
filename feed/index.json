@@ -53,7 +53,15 @@
         ],
         "tools": [],
         "system_images": [],
-        "picons": [],
+        "picons": [
+            {
+                "name": "Picon 7.ow",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon 7.ow.zip",
+                "image": ""
+            }
+        ],
         "channels": [
             {
                 "name": "channels_backup_MNASR_20260527",
