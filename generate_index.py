@@ -5,6 +5,8 @@ GITHUB_USER = "wwwgoper77-wq"
 REPO_NAME = "MohamedStore"
 
 BASE_URL = f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/main"
+# الرابط المباشر لتحميل ملفات الـ Releases الكبيرة تلقائياً من جيتهاب
+RELEASE_BASE_URL = f"https://github.com/{GITHUB_USER}/{REPO_NAME}/releases/latest/download"
 
 data = {
     "store_name": "M Store",
@@ -220,7 +222,7 @@ if os.path.isdir("picons"):
                 "name":clean,
                 "version":"1.0",
                 "description":old_descriptions.get(clean,""),
-                "file":f"{BASE_URL}/picons/{filename}",
+                "file":f"{RELEASE_BASE_URL}/{filename}",
                 "image":image_url(clean.split("_")[0])
             })
 
