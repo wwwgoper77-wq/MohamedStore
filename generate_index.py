@@ -214,39 +214,50 @@ picons_dict = {}
 # 1. Read Picons from GitHub Releases
 try:
     import urllib.request
-    import json
+    import re
     
-    headers = {"User-Agent": "Mozilla/5.0"}
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("INPUT_GITHUB_TOKEN")
-    if token:
-        headers["Authorization"] = f"token {token}"
-        
+    url = f"https://github.com/{GITHUB_USER}/{REPO_NAME}/releases"
     req = urllib.request.Request(
-        f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases",
-        headers=headers
+        url,
+        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     )
     with urllib.request.urlopen(req, timeout=10) as response:
-        releases = json.loads(response.read().decode())
+        html = response.read().decode("utf-8")
         
-    for release in releases:
-        for asset in release.get("assets", []):
-            filename = asset.get("name")
-            if filename and filename.endswith(EXTENSIONS):
-                if filename.endswith(".tar.gz"):
-                    clean = filename[:-7]
-                else:
-                    clean = os.path.splitext(filename)[0]
+    links = re.findall(r'href=["\']([^"\']*/releases/download/[^"\']*)["\']', html)
+    
+    for link in links:
+        parts = link.split("/releases/download/")
+        if len(parts) == 2:
+            subparts = parts[1].split("/")
+            if len(subparts) >= 2:
+                tag = subparts[0]
+                filename = "/".join(subparts[1:])
                 
-                # Store or overwrite picons info with GitHub Releases data
-                picons_dict[filename] = {
-                    "name": clean,
-                    "version": "1.0",
-                    "description": old_descriptions.get(clean, ""),
-                    "file": asset.get("browser_download_url"),
-                    "image": image_url(clean.split("_")[0])
-                }
+                # Check for query parameters or fragments and clean them
+                if "?" in filename:
+                    filename = filename.split("?")[0]
+                if "#" in filename:
+                    filename = filename.split("#")[0]
+                    
+                if filename and filename.endswith(EXTENSIONS):
+                    if filename.endswith(".tar.gz"):
+                        clean = filename[:-7]
+                    else:
+                        clean = os.path.splitext(filename)[0]
+                    
+                    download_url = f"https://github.com/{GITHUB_USER}/{REPO_NAME}/releases/download/{tag}/{filename}"
+                    
+                    # Store or overwrite picons info with GitHub Releases data
+                    picons_dict[filename] = {
+                        "name": clean,
+                        "version": "1.0",
+                        "description": old_descriptions.get(clean, ""),
+                        "file": download_url,
+                        "image": image_url(clean.split("_")[0])
+                    }
 except Exception as e:
-    print(f"Warning: Could not fetch Picons from GitHub Releases: {e}")
+    print(f"Warning: Could not fetch Picons from GitHub Releases HTML: {e}")
 
 # 2. Read Picons from local picons folder
 if os.path.isdir("picons"):
