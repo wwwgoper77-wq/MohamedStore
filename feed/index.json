@@ -51,7 +51,15 @@
                 "items": []
             }
         ],
-        "tools": [],
+        "tools": [
+            {
+                "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
+                "version": "V10.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
+                "image": ""
+            }
+        ],
         "system_images": [],
         "picons": [
             {
