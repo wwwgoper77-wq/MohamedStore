@@ -20,7 +20,7 @@
             {
                 "name": "Temperature",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن يوضح درجة حرارة الهارد",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Temperature.sh",
                 "image": ""
             },
