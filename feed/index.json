@@ -58,6 +58,20 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-softcam-ncam_1.8_all",
+                "version": "1.8",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcam-ncam_1.8_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-softcam-oscam_11726_all",
+                "version": "11726",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcam-oscam_11726_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
