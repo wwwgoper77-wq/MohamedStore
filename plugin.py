@@ -16,6 +16,8 @@ from Components.Console import Console
 import json
 import os
 import sys
+import threading
+import time
 
 # Try importing standby and main loop controllers safely
 try:
@@ -27,6 +29,11 @@ try:
     import enigma
 except ImportError:
     enigma = None
+
+try:
+    from enigma import eTimer
+except ImportError:
+    eTimer = None
 
 # Try importing Enigma2 MultiContent classes safely
 try:
@@ -54,6 +61,11 @@ try:
     from enigma import RT_VALIGN_CENTER
 except ImportError:
     RT_VALIGN_CENTER = 4
+
+try:
+    from Components.ProgressBar import ProgressBar
+except ImportError:
+    ProgressBar = None
 
 # Core configuration variables
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
@@ -123,6 +135,7 @@ def load_json(url):
         print("[MohamedStore] load_json error: " + str(e))
         return None
 
+
 class MohamedStore(Screen):
     # Redesigned skin with OLED Obsidian Dark (#0C0D12), Slate card container background (#151720),
     # sleek 1px slate borders (#222634), and modern Electric Blue accents (#0088FF)
@@ -144,7 +157,7 @@ class MohamedStore(Screen):
     
     <eLabel position="60,48" size="400,50" text="MOHAMED STORE" font="Regular;34" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" />
     <eLabel position="440,60" size="500,30" text="Premium Addon Repository" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
-    <eLabel position="1100,60" size="120,30" text="v1.0" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" halign="right" />
+    <eLabel position="1100,60" size="120,30" text="v1.1" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" halign="right" />
 
     <!-- ==================== CATEGORIES PANEL ==================== -->
     <eLabel position="30,140" size="300,440" backgroundColor="#20151720" zPosition="-1" />
@@ -174,7 +187,14 @@ class MohamedStore(Screen):
     <eLabel position="890,579" size="360,1" backgroundColor="#222634" /> <!-- Bottom Border -->
     
     <eLabel position="910,155" size="320,30" text="DETAILS" font="Regular;16" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" />
-    <widget name="description" position="910,195" size="320,365" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" valign="top" />
+    <widget name="description" position="910,195" size="320,230" font="Regular;24" foregroundColor="#FFFFFF" backgroundColor="#20151720" transparent="1" valign="top" />
+
+    <!-- ==================== DOWNLOAD PROGRESS WIDGETS ==================== -->
+    <widget name="progress" position="910,440" size="320,15" borderWidth="1" borderColor="#222634" backgroundColor="#0C0D12" />
+    <widget name="percentage" position="910,465" size="80,25" font="Regular;18" foregroundColor="#0088FF" backgroundColor="#20151720" transparent="1" halign="left" />
+    <widget name="speed" position="1110,465" size="120,25" font="Regular;18" foregroundColor="#2ECC71" backgroundColor="#20151720" transparent="1" halign="right" />
+    <widget name="size" position="910,495" size="320,25" font="Regular;18" foregroundColor="#A8ADB7" backgroundColor="#20151720" transparent="1" halign="center" />
+    <widget name="status" position="910,525" size="320,25" font="Regular;18" foregroundColor="#E74C3C" backgroundColor="#20151720" transparent="1" halign="center" />
 
     <!-- ==================== FOOTER PANEL ==================== -->
     <eLabel position="30,600" size="1220,90" backgroundColor="#20151720" zPosition="-1" />
@@ -232,6 +252,48 @@ class MohamedStore(Screen):
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
         
+        # Download progress widgets
+        if ProgressBar:
+            self["progress"] = ProgressBar()
+        else:
+            self["progress"] = Label("")
+        self["percentage"] = Label("")
+        self["speed"] = Label("")
+        self["size"] = Label("")
+        self["status"] = Label("")
+
+        try:
+            self["progress"].hide()
+            self["percentage"].hide()
+            self["speed"].hide()
+            self["size"].hide()
+            self["status"].hide()
+        except:
+            pass
+
+        self.download_in_progress = False
+        self.download_url = ""
+        self.download_dest_path = ""
+        self.download_aborted = False
+        self.download_completed = False
+        self.download_error_msg = ""
+        self.download_total_bytes = 0
+        self.downloaded_bytes = 0
+        self.download_start_time = 0
+        self.download_last_update_bytes = 0
+        self.download_last_update_time = 0
+        self.download_current_speed = 0.0
+
+        self.download_timer = eTimer()
+        if self.download_timer:
+            try:
+                self.download_timer_conn = self.download_timer.timeout.connect(self.update_download_ui)
+            except AttributeError:
+                try:
+                    self.download_timer.callback.append(self.update_download_ui)
+                except:
+                    pass
+        
         self.store_data = {}
         self.categories = []
         self.visible_items = []
@@ -239,9 +301,12 @@ class MohamedStore(Screen):
         self.active_focus = "categories"
         self.my_console = Console()
         
+        self.install_cmd = ""
+        self.install_item_name = ""
+        
         self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
             "cancel": self.go_back,
-            "red": self.close,
+            "red": self.red_key_pressed,
             "green": self.download,
             "ok": self.press_ok,
             "up": self.go_up,
@@ -278,20 +343,18 @@ class MohamedStore(Screen):
             except Exception as e:
                 print("[MohamedStore] Error loading PNG: " + str(e))
 
-        res = [category_id]  # First element is selection user-data (key)
+        res = [category_id]
         
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
             res.append(MultiContentEntryPixmapAlphaTest(pos=(12, 14), size=(32, 32), png=pixmap))
             text_x = 54
-            text_w = 206 # Adjusted for the new 270 width of categories_list (270 - 54 - 10)
+            text_w = 206
         else:
             text_x = 12
-            text_w = 248 # Adjusted for the new 270 width of categories_list (270 - 12 - 10)
+            text_w = 248
 
         if HAS_MULTICONTENT and MultiContentEntryText:
             align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
-            # Fix: Pass the registered font index (0) as an integer instead of the gFont object directly
-            # This completely avoids "TypeError: 'gFont' object cannot be interpreted as an integer" in modern Enigma2 images
             res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 60), font=0, flags=align, text=display_name))
             
         return res
@@ -337,7 +400,6 @@ class MohamedStore(Screen):
             dest_path = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/plugin.py"
             temp_path = "/tmp/plugin.py"
             
-            # Robust, secure update command:
             cmd = (
                 "rm -f {temp_path} && "
                 "(wget --no-check-certificate -O {temp_path} '{update_url}' || curl -k -L -o {temp_path} '{update_url}') && "
@@ -391,7 +453,7 @@ class MohamedStore(Screen):
                 self["description"].setText("Failed to load store data from GitHub.")
                 return
             
-            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.0"))
+            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.1"))
             self.setTitle(store_title)
             
             self.store_data = data["categories"]
@@ -504,12 +566,22 @@ class MohamedStore(Screen):
         except Exception as e:
             self["description"].setText("Item Change Error: " + str(e))
 
+    def red_key_pressed(self):
+        if self.download_in_progress:
+            self.cancel_active_download()
+        else:
+            self.close()
+
     def switch_to_items(self):
+        if self.download_in_progress:
+            return
         if self.visible_items:
             self.active_focus = "items"
             self["description"].setText("Navigating: Items List\n\nPress OK or Green to Install.")
 
     def switch_to_categories(self):
+        if self.download_in_progress:
+            return
         if self.active_focus == "items" and len(self.current_path) > 0:
             self.current_path.pop()
             self.rebuild_visible_items()
@@ -520,6 +592,8 @@ class MohamedStore(Screen):
             self.category_changed()
 
     def go_up(self):
+        if self.download_in_progress:
+            return
         try:
             if self.active_focus == "categories":
                 self["categories_list"].up()
@@ -529,6 +603,8 @@ class MohamedStore(Screen):
             pass
 
     def go_down(self):
+        if self.download_in_progress:
+            return
         try:
             if self.active_focus == "categories":
                 self["categories_list"].down()
@@ -538,6 +614,8 @@ class MohamedStore(Screen):
             pass
 
     def press_ok(self):
+        if self.download_in_progress:
+            return
         if self.active_focus == "categories":
             self.switch_to_items()
         else:
@@ -552,6 +630,9 @@ class MohamedStore(Screen):
                     self.download()
 
     def go_back(self):
+        if self.download_in_progress:
+            self.cancel_active_download()
+            return
         if self.active_focus == "items" and len(self.current_path) > 0:
             self.current_path.pop()
             self.rebuild_visible_items()
@@ -562,6 +643,8 @@ class MohamedStore(Screen):
             self.close()
 
     def download(self):
+        if self.download_in_progress:
+            return
         try:
             idx = self["items_list"].getSelectionIndex()
             if idx >= 0 and idx < len(self.visible_items) and self.visible_items:
@@ -578,8 +661,6 @@ class MohamedStore(Screen):
                     self["description"].setText("Error: Download URL is missing in JSON.")
                     return
                 
-                self["description"].setText("Downloading and installing %s...\nPlease wait..." % str(item.get("name", "")))
-                
                 # Determine file extension and format-specific commands
                 pure_url = url.split('?')[0]
                 ext = ""
@@ -594,23 +675,29 @@ class MohamedStore(Screen):
                 if not filename:
                     filename = "addon" + ext
 
+                dest_path = ""
                 cmd = ""
                 if ext == ".deb":
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.deb '{url}' || curl -k -L -o /tmp/addon.deb '{url}') && dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
+                    dest_path = "/tmp/addon.deb"
+                    cmd = "dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
                 elif ext == ".ipk":
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.ipk '{url}' || curl -k -L -o /tmp/addon.ipk '{url}') && opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
+                    dest_path = "/tmp/addon.ipk"
+                    cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
                 elif ext == ".sh":
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.sh '{url}' || curl -k -L -o /tmp/addon.sh '{url}') && chmod +x /tmp/addon.sh && /tmp/addon.sh && rm -f /tmp/addon.sh"
+                    dest_path = "/tmp/addon.sh"
+                    cmd = "chmod +x /tmp/addon.sh && /tmp/addon.sh && rm -f /tmp/addon.sh"
                 elif ext == ".zip":
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.zip '{url}' || curl -k -L -o /tmp/addon.zip '{url}') && unzip -o /tmp/addon.zip -d / && rm -f /tmp/addon.zip"
+                    dest_path = "/tmp/addon.zip"
+                    cmd = "unzip -o /tmp/addon.zip -d / && rm -f /tmp/addon.zip"
                 elif ext in [".tar.gz", ".tgz"]:
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.tar.gz '{url}' || curl -k -L -o /tmp/addon.tar.gz '{url}') && tar -xzf /tmp/addon.tar.gz -C / && rm -f /tmp/addon.tar.gz"
+                    dest_path = "/tmp/addon.tar.gz"
+                    cmd = "tar -xzf /tmp/addon.tar.gz -C / && rm -f /tmp/addon.tar.gz"
                 elif ext == ".tar":
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.tar '{url}' || curl -k -L -o /tmp/addon.tar '{url}') && tar -xf /tmp/addon.tar -C / && rm -f /tmp/addon.tar"
+                    dest_path = "/tmp/addon.tar"
+                    cmd = "tar -xf /tmp/addon.tar -C / && rm -f /tmp/addon.tar"
                 elif ext == ".tv":
+                    dest_path = os.path.join("/etc/enigma2", filename)
                     cmd = (
-                        "(wget --no-check-certificate -O '/etc/enigma2/{filename}' '{url}' || "
-                        "curl -k -L -o '/etc/enigma2/{filename}' '{url}') && "
                         "if ! grep -q '{filename}' /etc/enigma2/bouquets.tv; then "
                         "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"{filename}\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
                         "fi && "
@@ -619,17 +706,258 @@ class MohamedStore(Screen):
                         "enigma2-web-reload || true)"
                     )
                 elif ext == ".py":
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.py '{url}' || curl -k -L -o /tmp/addon.py '{url}') && (python /tmp/addon.py || python3 /tmp/addon.py) && rm -f /tmp/addon.py"
+                    dest_path = "/tmp/addon.py"
+                    cmd = "(python /tmp/addon.py || python3 /tmp/addon.py) && rm -f /tmp/addon.py"
                 else:
-                    # Fallback default: download as ipk
-                    cmd = "(wget --no-check-certificate -O /tmp/addon.ipk '{url}' || curl -k -L -o /tmp/addon.ipk '{url}') && opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
+                    dest_path = "/tmp/addon.ipk"
+                    cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
                 
-                cmd = cmd.format(url=url, filename=filename)
+                cmd = cmd.format(filename=filename)
+                self.install_cmd = cmd
+                self.install_item_name = str(item.get("name", ""))
+                
+                self.download_url = url
+                self.download_dest_path = dest_path
+                self.download_aborted = False
+                self.download_completed = False
+                self.download_error_msg = ""
+                self.download_total_bytes = 0
+                self.downloaded_bytes = 0
+                self.download_start_time = time.time()
+                self.download_last_update_bytes = 0
+                self.download_last_update_time = self.download_start_time
+                self.download_current_speed = 0.0
+                
+                self["description"].setText("Downloading: %s\n\nPress RED or BACK to cancel." % self.install_item_name)
+                self["key_red"].setText("Cancel")
+                
+                # Show progress widgets
+                try:
+                    self["progress"].show()
+                    self["percentage"].show()
+                    self["speed"].show()
+                    self["size"].show()
+                    self["status"].show()
                     
-                self.my_console.ePopen(cmd + " 2>&1", self.download_finished)
+                    self["progress"].setValue(0)
+                    self["percentage"].setText("0%")
+                    self["speed"].setText("0 KB/s")
+                    self["size"].setText("0 MB / 0 MB")
+                    self["status"].setText(os.path.basename(dest_path))
+                except:
+                    pass
+                
+                self.download_in_progress = True
+                
+                if self.download_timer:
+                    self.download_timer.start(100, False)
+                    
+                self.download_thread_obj = threading.Thread(target=self.start_download_thread)
+                self.download_thread_obj.daemon = True
+                self.download_thread_obj.start()
+                
         except Exception as e:
             print("[MohamedStore] Download Error: " + str(e))
             self["description"].setText("Execution error, check system log.")
+
+    def start_download_thread(self):
+        try:
+            if sys.version_info >= (3, 0):
+                import urllib.request as urllib2
+                import ssl
+                context = ssl._create_unverified_context()
+            else:
+                import urllib2
+                import ssl
+                try:
+                    context = ssl._create_unverified_context()
+                except AttributeError:
+                    context = None
+                    
+            url = self.download_url
+            try:
+                if sys.version_info >= (3, 0):
+                    from urllib.parse import quote as urllib_quote
+                    url = str(url)
+                else:
+                    from urllib import quote as urllib_quote
+                    if isinstance(url, unicode):
+                        url = url.encode('utf-8')
+                url = urllib_quote(url, safe='/:?=&%')
+            except Exception as qe:
+                print("[MohamedStore] Quote error: " + str(qe))
+                url = url.replace(" ", "%20")
+                
+            req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+            if context:
+                try:
+                    opener = urllib2.build_opener(urllib2.HTTPSHandler(context=context))
+                except Exception as oe:
+                    print("[MohamedStore] Failed to build opener with context: " + str(oe))
+                    opener = urllib2.build_opener()
+            else:
+                opener = urllib2.build_opener()
+                
+            response = opener.open(req, timeout=12)
+                
+            try:
+                self.download_total_bytes = int(response.info().get('Content-Length', 0))
+            except:
+                self.download_total_bytes = 0
+                
+            dir_name = os.path.dirname(self.download_dest_path)
+            if dir_name and not os.path.exists(dir_name):
+                try:
+                    os.makedirs(dir_name)
+                except:
+                    pass
+                
+            self.download_start_time = time.time()
+            self.download_last_update_time = self.download_start_time
+            self.download_last_update_bytes = 0
+            
+            with open(self.download_dest_path, 'wb') as f:
+                while not self.download_aborted:
+                    chunk = response.read(16384)
+                    if not chunk:
+                        break
+                    f.write(chunk)
+                    self.downloaded_bytes += len(chunk)
+                    
+            if self.download_aborted:
+                if os.path.exists(self.download_dest_path):
+                    try:
+                        os.remove(self.download_dest_path)
+                    except:
+                        pass
+            else:
+                self.download_completed = True
+        except Exception as e:
+            self.download_error_msg = str(e)
+            if os.path.exists(self.download_dest_path):
+                try:
+                    os.remove(self.download_dest_path)
+                except:
+                    pass
+
+    def update_download_ui(self):
+        if not self.download_in_progress:
+            return
+            
+        now = time.time()
+        elapsed = now - self.download_last_update_time
+        if elapsed >= 0.5:
+            diff_bytes = self.downloaded_bytes - self.download_last_update_bytes
+            self.download_current_speed = float(diff_bytes) / elapsed
+            self.download_last_update_bytes = self.downloaded_bytes
+            self.download_last_update_time = now
+            
+        if self.download_total_bytes > 0:
+            pct = int(float(self.downloaded_bytes) / self.download_total_bytes * 100)
+            pct = min(100, max(0, pct))
+            if ProgressBar:
+                try:
+                    self["progress"].setValue(pct)
+                except:
+                    pass
+            self["percentage"].setText("%d%%" % pct)
+            
+            dl_mb = float(self.downloaded_bytes) / (1024 * 1024)
+            tot_mb = float(self.download_total_bytes) / (1024 * 1024)
+            self["size"].setText("%.2f MB / %.2f MB" % (dl_mb, tot_mb))
+        else:
+            if ProgressBar:
+                try:
+                    self["progress"].setValue(0)
+                except:
+                    pass
+            self["percentage"].setText("---")
+            dl_kb = float(self.downloaded_bytes) / 1024
+            self["size"].setText("%.1f KB / Unknown" % dl_kb)
+            
+        if self.download_current_speed > 1024 * 1024:
+            speed_str = "%.2f MB/s" % (self.download_current_speed / (1024 * 1024))
+        else:
+            speed_str = "%.1f KB/s" % (self.download_current_speed / 1024)
+        self["speed"].setText(speed_str)
+        
+        if self.download_completed:
+            self.download_in_progress = False
+            if self.download_timer:
+                self.download_timer.stop()
+            
+            # Hide the progress widgets
+            try:
+                self["progress"].hide()
+                self["percentage"].hide()
+                self["speed"].hide()
+                self["size"].hide()
+                self["status"].hide()
+            except:
+                pass
+                
+            self["key_red"].setText("Exit")
+            self["description"].setText("Download completed successfully!")
+            
+            # Show MessageBox with YES/NO for installation
+            self.session.openWithCallback(
+                self.install_confirmation_callback,
+                MessageBox,
+                "Download completed successfully.\n\nDo you want to install it now?",
+                MessageBox.TYPE_YESNO
+            )
+            
+        elif self.download_error_msg:
+            self.download_in_progress = False
+            if self.download_timer:
+                self.download_timer.stop()
+                
+            # Hide the progress widgets
+            try:
+                self["progress"].hide()
+                self["percentage"].hide()
+                self["speed"].hide()
+                self["size"].hide()
+                self["status"].hide()
+            except:
+                pass
+                
+            self["key_red"].setText("Exit")
+            self["description"].setText("Download failed: " + self.download_error_msg)
+
+    def cancel_active_download(self):
+        self.download_aborted = True
+        self.download_in_progress = False
+        if self.download_timer:
+            self.download_timer.stop()
+        
+        # Hide the progress widgets
+        try:
+            self["progress"].hide()
+            self["percentage"].hide()
+            self["speed"].hide()
+            self["size"].hide()
+            self["status"].hide()
+        except:
+            pass
+            
+        self["key_red"].setText("Exit")
+        self["description"].setText("Download cancelled by user.")
+        
+        # Clean up any partial download file
+        if self.download_dest_path and os.path.exists(self.download_dest_path):
+            try:
+                os.remove(self.download_dest_path)
+            except:
+                pass
+
+    def install_confirmation_callback(self, answer):
+        if answer:
+            self["description"].setText("Installing %s...\nPlease wait..." % self.install_item_name)
+            self.my_console.ePopen(self.install_cmd + " 2>&1", self.download_finished)
+        else:
+            self["description"].setText("Installation completed successfully. Restart skipped.")
+            self.item_changed()
 
     def download_finished(self, result, retval, extra_args=None):
         if retval == 0:
