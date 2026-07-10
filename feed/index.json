@@ -53,6 +53,13 @@
         ],
         "tools": [
             {
+                "name": "Ncam v15.8",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/Ncam v15.8.sh",
+                "image": ""
+            },
+            {
                 "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
                 "version": "V10.0-r0",
                 "description": "",
