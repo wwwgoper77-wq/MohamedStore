@@ -58,6 +58,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all",
+                "version": "11965-803",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
