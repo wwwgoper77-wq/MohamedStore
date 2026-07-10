@@ -65,6 +65,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-plugin-softcams-oscam_11886-emu-r803_all",
+                "version": "11886-emu-r803",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11886-emu-r803_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
