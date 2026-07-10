@@ -94,7 +94,22 @@
             },
             {
                 "name": "OpenBlack",
-                "items": []
+                "items": [
+                    {
+                        "name": "enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all",
+                        "version": "v2",
+                        "description": "OpenBlack Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all",
+                        "version": "20191029",
+                        "description": "OpenBlack Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all.ipk",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenP",
