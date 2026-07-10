@@ -63,6 +63,13 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all",
+                        "version": "full.1.5.Rev.dragon",
+                        "description": "OpenATV Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
                         "version": "1.0",
                         "description": "OpenATV Skin",
