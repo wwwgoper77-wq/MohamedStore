@@ -74,6 +74,13 @@
                 "description": "",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
                 "image": ""
+            },
+            {
+                "name": "picon_26",
+                "version": "1.0",
+                "description": "",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
+                "image": ""
             }
         ],
         "channels": [
