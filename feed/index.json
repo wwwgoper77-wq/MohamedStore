@@ -13,7 +13,7 @@
             {
                 "name": "MixAudio",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن صوتيات فقط بايثون 3.13 3.14",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MixAudio.sh",
                 "image": ""
             },
