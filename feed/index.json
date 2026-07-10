@@ -117,6 +117,13 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all",
+                        "version": "20191029",
+                        "description": "OpenBlack Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all",
                         "version": "v1",
                         "description": "OpenBlack Skin",
