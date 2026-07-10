@@ -119,6 +119,13 @@
                         "description": "Egami Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all",
+                        "version": "openpli8.3-r1.00",
+                        "description": "OpenP Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk",
+                        "image": ""
                     }
                 ]
             }
