@@ -103,6 +103,13 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skins-mxgraphite_mod.fhroma_all",
+                        "version": "mod.fhroma",
+                        "description": "OpenBlack Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-mxgraphite_mod.fhroma_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all",
                         "version": "20191029",
                         "description": "OpenBlack Skin",
