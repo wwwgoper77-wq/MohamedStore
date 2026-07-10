@@ -86,6 +86,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all",
+                "version": "11.715-emu-r798-arm+mips",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
