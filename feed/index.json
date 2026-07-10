@@ -67,6 +67,13 @@
                 "image": ""
             },
             {
+                "name": "enigma2-plugin-softcams-oscam_11878-emu-r802_all",
+                "version": "11878-emu-r802",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11878-emu-r802_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "enigma2-plugin-softcams-oscam_11886-emu-r803_all",
                 "version": "11886-emu-r803",
                 "description": "",
