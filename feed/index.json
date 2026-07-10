@@ -42,6 +42,13 @@
                         "description": "Egami Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
+                        "version": "By",
+                        "description": "Egami Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
+                        "image": ""
                     }
                 ]
             },
