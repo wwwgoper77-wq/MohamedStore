@@ -58,6 +58,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-softcams-cccam-all-images_2.3.2-emu-r3-arm+mips_all",
+                "version": "2.3.2-emu-r3-arm+mips",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-cccam-all-images_2.3.2-emu-r3-arm+mips_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
