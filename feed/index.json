@@ -93,6 +93,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all",
+                "version": "11791-emu-801-arm+mips",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
