@@ -129,6 +129,13 @@
                         "description": "OpenBlack Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "skin-enigma2-alienaware-obh4_all",
+                        "version": "skin-enigma2-alienaware-obh4",
+                        "description": "OpenBlack Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/skin-enigma2-alienaware-obh4_all.ipk",
+                        "image": ""
                     }
                 ]
             },
