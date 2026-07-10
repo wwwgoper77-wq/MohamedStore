@@ -79,6 +79,13 @@
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11886-emu-r803_all.ipk",
                 "image": ""
+            },
+            {
+                "name": "enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all",
+                "version": "11725-V9-Kitte888-V23Rev",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all.ipk",
+                "image": ""
             }
         ],
         "system_images": [],
