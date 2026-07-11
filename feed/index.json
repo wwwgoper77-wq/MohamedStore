@@ -37,17 +37,29 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all",
-                        "version": "BlackHole",
-                        "description": "Egami Skin",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all.ipk",
-                        "image": ""
-                    },
-                    {
                         "name": "enigma2-plugin-skins-luka-fhd_1.0_egami",
                         "version": "1.0",
                         "description": "Egami Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
+                        "version": "By",
+                        "description": "Egami Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "General",
+                "items": [
+                    {
+                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all",
+                        "version": "BlackHole",
+                        "description": "Egami Skin",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all.ipk",
                         "image": ""
                     }
                 ]
@@ -142,6 +154,27 @@
             {
                 "name": "OpenP",
                 "items": [
+                    {
+                        "name": "Copper-FHD-v1.0-MNASR",
+                        "version": "1.0",
+                        "description": "OpenATV Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/Copper-FHD-v1.0-MNASR.tar.gz",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
+                        "version": "1.0",
+                        "description": "OpenATV Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
+                        "version": "By",
+                        "description": "Egami Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
+                        "image": ""
+                    },
                     {
                         "name": "enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all",
                         "version": "openpli8.3-r1.00",
