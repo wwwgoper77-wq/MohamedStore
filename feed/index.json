@@ -18,10 +18,10 @@
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1",
-                "version": "py3.12",
-                "description": "بلجن صوتيات",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.12_ff7.1.ipk",
+                "name": "ipaudio pro_1.7",
+                "version": "enigma2-plugin-ipaudio pro",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-ipaudio pro_1.7.ipk",
                 "image": ""
             },
             {
