@@ -107,11 +107,11 @@ try:
 
             # --- Route to Skins (Dynamic Folder via Filename Naming Convention: FolderName--filename.ext) ---
             elif "skin" in lower_filename:
-                # Detect folder name using '--' separator, fallback to 'General' if not provided
+                # Detect folder name using '--' separator, fallback to 'بقية الصور' if not provided
                 if "--" in filename:
                     folder_name, actual_filename = filename.split("--", 1)
                 else:
-                    folder_name, actual_filename = "General", filename
+                    folder_name, actual_filename = "بقية الصور", filename
 
                 if actual_filename.endswith(".tar.gz"):
                     clean = actual_filename[:-7]
