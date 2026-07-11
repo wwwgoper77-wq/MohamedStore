@@ -64,6 +64,35 @@ def image_url(prefix):
 EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv")
 
 
+# -------- Fetch GitHub Releases once --------
+releases = []
+try:
+    api = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
+
+    req = urllib.request.Request(
+        api,
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "application/vnd.github+json"
+        }
+    )
+
+    with urllib.request.urlopen(req, timeout=20) as response:
+        releases = json.loads(response.read().decode("utf-8"))
+except Exception as e:
+    print("GitHub Releases Fetch Error:", e)
+
+# Map asset names to their download URLs
+release_assets = {}
+try:
+    for release in releases:
+        for asset in release.get("assets", []):
+            filename = asset["name"]
+            release_assets[filename] = asset["browser_download_url"]
+except Exception as e:
+    print("Error mapping releases:", e)
+
+
 # -------------------------------------------------
 # Plugins
 # -------------------------------------------------
@@ -89,17 +118,23 @@ if os.path.isdir("plugins"):
         image_name = image_name.replace("skins-", "")
         image_name = image_name.split("_")[0]
 
+        # Dual-source lookup
+        if filename in release_assets:
+            file_url = release_assets[filename]
+        else:
+            file_url = f"{BASE_URL}/plugins/{filename}"
+
         data["categories"]["plugins"].append({
             "name": display,
             "version": version,
             "description": old_descriptions.get(display, ""),
-            "file": f"{BASE_URL}/plugins/{filename}",
-           "image": image_url(
-    display.split("_")[0]
-    .replace("extensions-", "")
-    .replace("skins-", "")
-    .replace("plugin-", "")
-) 
+            "file": file_url,
+            "image": image_url(
+                display.split("_")[0]
+                .replace("extensions-", "")
+                .replace("skins-", "")
+                .replace("plugin-", "")
+            ) 
         })
 
 
@@ -133,11 +168,17 @@ if os.path.isdir("skins"):
             image_name = clean.replace("enigma2-plugin-skins-", "")
             image_name = image_name.split("_")[0]
 
+            # Dual-source lookup
+            if filename in release_assets:
+                file_url = release_assets[filename]
+            else:
+                file_url = f"{BASE_URL}/skins/{folder}/{filename}"
+
             items.append({
                 "name": clean,
                 "version": version,
                 "description": old_descriptions.get(clean, folder + " Skin"),
-                "file": f"{BASE_URL}/skins/{folder}/{filename}",
+                "file": file_url,
                 "image": image_url(image_name)
             })
 
@@ -167,11 +208,17 @@ if os.path.isdir("tools"):
 
         image_name = clean.split("_")[0]
 
+        # Dual-source lookup
+        if filename in release_assets:
+            file_url = release_assets[filename]
+        else:
+            file_url = f"{BASE_URL}/tools/{filename}"
+
         data["categories"]["tools"].append({
             "name": clean,
             "version": version,
             "description": old_descriptions.get(clean,""),
-            "file": f"{BASE_URL}/tools/{filename}",
+            "file": file_url,
             "image": image_url(image_name)
         })
 
@@ -200,11 +247,17 @@ if os.path.isdir("system_images"):
 
         image_name = clean.split("_")[0]
 
+        # Dual-source lookup
+        if filename in release_assets:
+            file_url = release_assets[filename]
+        else:
+            file_url = f"{BASE_URL}/system_images/{filename}"
+
         data["categories"]["system_images"].append({
             "name": clean,
             "version": version,
             "description": old_descriptions.get(clean,""),
-            "file": f"{BASE_URL}/system_images/{filename}",
+            "file": file_url,
             "image": image_url(image_name)
         })
 
@@ -215,21 +268,8 @@ if os.path.isdir("system_images"):
 
 picons_dict = {}
 
-# 1- Read from GitHub Releases API
+# 1- Process already fetched releases for Picons
 try:
-    api = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
-
-    req = urllib.request.Request(
-        api,
-        headers={
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/vnd.github+json"
-        }
-    )
-
-    with urllib.request.urlopen(req, timeout=20) as response:
-        releases = json.loads(response.read().decode("utf-8"))
-
     for release in releases:
         for asset in release.get("assets", []):
 
@@ -256,7 +296,7 @@ try:
             }
 
 except Exception as e:
-    print("GitHub Releases:", e)
+    print("GitHub Releases Picons Error:", e)
 
 # 2- Read local picons folder
 if os.path.isdir("picons"):
@@ -272,11 +312,17 @@ if os.path.isdir("picons"):
             clean = os.path.splitext(filename)[0]
 
         if filename not in picons_dict:
+            # Dual-source lookup
+            if filename in release_assets:
+                file_url = release_assets[filename]
+            else:
+                file_url = f"{BASE_URL}/picons/{filename}"
+
             picons_dict[filename] = {
                 "name": clean,
                 "version": "1.0",
                 "description": old_descriptions.get(clean, ""),
-                "file": f"{BASE_URL}/picons/{filename}",
+                "file": file_url,
                 "image": image_url(clean.split("_")[0])
             }
 
@@ -284,7 +330,10 @@ for filename in sorted(picons_dict):
     data["categories"]["picons"].append(picons_dict[filename])
 
 
+# -------------------------------------------------
 # Channels
+# -------------------------------------------------
+
 if os.path.isdir("channels"):
     for filename in sorted(os.listdir("channels")):
         if filename.endswith(EXTENSIONS):
@@ -292,13 +341,21 @@ if os.path.isdir("channels"):
                 clean = filename[:-7]
             else:
                 clean = os.path.splitext(filename)[0]
+
+            # Dual-source lookup
+            if filename in release_assets:
+                file_url = release_assets[filename]
+            else:
+                file_url = f"{BASE_URL}/channels/{filename}"
+
             data["categories"]["channels"].append({
-                "name":clean,
-                "version":"1.0",
-                "description":old_descriptions.get(clean,""),
-                "file":f"{BASE_URL}/channels/{filename}",
-                "image":image_url(clean.split("_")[0])
+                "name": clean,
+                "version": "1.0",
+                "description": old_descriptions.get(clean,""),
+                "file": file_url,
+                "image": image_url(clean.split("_")[0])
             })
+
 
 # -------------------------------------------------
 # Save JSON
