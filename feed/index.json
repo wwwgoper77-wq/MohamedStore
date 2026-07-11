@@ -18,10 +18,10 @@
                 "image": ""
             },
             {
-                "name": "ipaudio pro_1.7",
-                "version": "enigma2-plugin-ipaudio pro",
-                "description": "بلجن صوتيات بايثون 3.12",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-ipaudio pro_1.7.ipk",
+                "name": "ipaudiopro_1.7",
+                "version": "enigma2-plugin-ipaudiopro",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-ipaudiopro_1.7.ipk",
                 "image": ""
             },
             {
