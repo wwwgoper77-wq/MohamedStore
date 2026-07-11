@@ -53,18 +53,6 @@
                 ]
             },
             {
-                "name": "General",
-                "items": [
-                    {
-                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all",
-                        "version": "BlackHole",
-                        "description": "Egami Skin",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all.ipk",
-                        "image": ""
-                    }
-                ]
-            },
-            {
                 "name": "OpenATV",
                 "items": [
                     {
