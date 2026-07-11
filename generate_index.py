@@ -208,6 +208,51 @@ for filename in sorted(plugin_filenames):
 # Skins
 # -------------------------------------------------
 
+def get_skin_folder_for_release(filename, existing_folders):
+    if not existing_folders:
+        return "Egami"  # Absolute fallback
+    
+    fn_lower = filename.lower()
+    
+    # 1. High-priority Egami indicators (since they are specific skin series)
+    if any(kw in fn_lower for kw in ["gradient", "fhroma", "army", "egami"]):
+        for folder in existing_folders:
+            if folder.lower() == "egami":
+                return folder
+                
+    # 2. Substring matching of folder name (case-insensitive)
+    for folder in sorted(existing_folders):
+        fol_lower = folder.lower()
+        if fol_lower in fn_lower:
+            return folder
+            
+    # 3. Keyword matching for common images/groups
+    mapping = {
+        "atv": ["openatv", "atv"],
+        "black": ["openblack", "black", "obh", "bh", "blackhole"],
+        "pli": ["openp", "openpli", "pli"],
+    }
+    
+    for key, keywords in mapping.items():
+        for kw in keywords:
+            if kw in fn_lower:
+                for folder in existing_folders:
+                    if key in folder.lower() or folder.lower() in keywords:
+                        return folder
+                        
+    # 4. Fallback to Egami if it exists, otherwise first folder alphabetically
+    for folder in existing_folders:
+        if folder.lower() == "egami":
+            return folder
+            
+    return sorted(existing_folders)[0]
+
+existing_folders = []
+if os.path.isdir("skins"):
+    for folder in os.listdir("skins"):
+        if os.path.isdir(os.path.join("skins", folder)):
+            existing_folders.append(folder)
+
 local_skin_folders = {}
 if os.path.isdir("skins"):
     for folder in os.listdir("skins"):
@@ -230,15 +275,7 @@ for filename in release_assets:
             if filename in local_skin_folders:
                 folder = local_skin_folders[filename]
             else:
-                clean_skin_name = filename.replace("enigma2-plugin-skins-", "")
-                if "_" in clean_skin_name:
-                    folder_name = clean_skin_name.split("_")[0]
-                else:
-                    if filename.endswith(".tar.gz"):
-                        folder_name = clean_skin_name[:-7]
-                    else:
-                        folder_name = os.path.splitext(clean_skin_name)[0]
-                folder = folder_name.capitalize()
+                folder = get_skin_folder_for_release(filename, existing_folders)
             skin_tuples.add((folder, filename))
 
 skins_grouped = {}
