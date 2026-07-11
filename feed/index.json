@@ -37,10 +37,10 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "enigma2-plugin-OpenBlack.skin-armynextgengradient.mod.fhroma_BlackHole_all",
+                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all",
                         "version": "BlackHole",
                         "description": "Egami Skin",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/enigma2-plugin-OpenBlack.skin-armynextgengradient.mod.fhroma_BlackHole_all.ipk",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all.ipk",
                         "image": ""
                     },
                     {
