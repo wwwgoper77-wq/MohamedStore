@@ -18,6 +18,13 @@
                 "image": ""
             },
             {
+                "name": "ipaudio pro_1.7",
+                "version": "enigma2-plugin-ipaudio pro",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-ipaudio pro_1.7.ipk",
+                "image": ""
+            },
+            {
                 "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
                 "description": "عداد ثواني تايم شفت صورة ايجامي فقط.",
