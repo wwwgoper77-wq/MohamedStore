@@ -41,13 +41,6 @@ except:
 
 
 def image_url(prefix):
-    """
-    Search automatically for an image beginning with prefix.
-    Example:
-    ipaudiopro.png
-    ipaudiopro-icon.png
-    ipaudiopro_v2.png
-    """
     if not os.path.isdir("images"):
         return ""
 
@@ -63,9 +56,17 @@ def image_url(prefix):
 # صيغ ملفات التثبيت المدعومة بالكامل
 EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv")
 
+# Intermediate dictionaries to combine API and Local items before building the final JSON
+plugins_dict = {}
+tools_dict = {}
+system_images_dict = {}
+picons_dict = {}
+channels_dict = {}
+skins_dict = {} # Structure: { "FolderName": { "filename": {item_data} } }
 
-# -------- Fetch GitHub Releases once --------
-releases = []
+# -------------------------------------------------
+# 1- Read from GitHub Releases API (All Categories)
+# -------------------------------------------------
 try:
     api = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
 
@@ -79,396 +80,279 @@ try:
 
     with urllib.request.urlopen(req, timeout=20) as response:
         releases = json.loads(response.read().decode("utf-8"))
-except Exception as e:
-    print("GitHub Releases Fetch Error:", e)
 
-# Map asset names to their download URLs
-release_assets = {}
-try:
     for release in releases:
         for asset in release.get("assets", []):
             filename = asset["name"]
-            release_assets[filename] = asset["browser_download_url"]
-except Exception as e:
-    print("Error mapping releases:", e)
 
+            if not filename.endswith(EXTENSIONS):
+                continue
 
-# -------- Map local files to categories for Release Asset Classification --------
-local_filename_category = {}
+            lower_filename = filename.lower()
 
-if os.path.isdir("plugins"):
-    for fn in os.listdir("plugins"):
-        local_filename_category[fn] = "plugins"
+            # --- Route to Picons ---
+            if "picon" in lower_filename:
+                if filename.endswith(".tar.gz"):
+                    clean = filename[:-7]
+                else:
+                    clean = os.path.splitext(filename)[0]
 
-if os.path.isdir("skins"):
-    for folder in os.listdir("skins"):
-        folder_path = os.path.join("skins", folder)
-        if os.path.isdir(folder_path):
-            for fn in os.listdir(folder_path):
-                local_filename_category[fn] = "skins"
+                picons_dict[filename] = {
+                    "name": clean,
+                    "version": "1.0",
+                    "description": old_descriptions.get(clean, ""),
+                    "file": asset["browser_download_url"],
+                    "image": image_url(clean.split("_")[0])
+                }
 
-if os.path.isdir("tools"):
-    for fn in os.listdir("tools"):
-        local_filename_category[fn] = "tools"
+            # --- Route to Skins (Dynamic Folder via Filename Naming Convention: FolderName--filename.ext) ---
+            elif "skin" in lower_filename:
+                # Detect folder name using '--' separator, fallback to 'General' if not provided
+                if "--" in filename:
+                    folder_name, actual_filename = filename.split("--", 1)
+                else:
+                    folder_name, actual_filename = "General", filename
 
-if os.path.isdir("system_images"):
-    for fn in os.listdir("system_images"):
-        local_filename_category[fn] = "system_images"
+                if actual_filename.endswith(".tar.gz"):
+                    clean = actual_filename[:-7]
+                else:
+                    clean = os.path.splitext(actual_filename)[0]
 
-if os.path.isdir("picons"):
-    for fn in os.listdir("picons"):
-        local_filename_category[fn] = "picons"
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                image_name = clean.replace("enigma2-plugin-skins-", "").split("_")[0]
 
-if os.path.isdir("channels"):
-    for fn in os.listdir("channels"):
-        local_filename_category[fn] = "channels"
+                if folder_name not in skins_dict:
+                    skins_dict[folder_name] = {}
 
+                skins_dict[folder_name][filename] = {
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean, folder_name + " Skin"),
+                    "file": asset["browser_download_url"],
+                    "image": image_url(image_name)
+                }
 
-def classify_release_asset(filename):
-    """
-    Returns the category name based on the filename characteristics or local folders mapping.
-    """
-    # First, check if mapped to a category via local folders
-    if filename in local_filename_category:
-        return local_filename_category[filename]
+            # --- Route to Tools ---
+            elif "tool" in lower_filename:
+                if filename.endswith(".tar.gz"):
+                    clean = filename[:-7]
+                else:
+                    clean = os.path.splitext(filename)[0]
 
-    fn_lower = filename.lower()
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                image_name = clean.split("_")[0]
 
-    # 1. Picons
-    if "picon" in fn_lower or "220x132" in fn_lower or "100x60" in fn_lower or "400x240" in fn_lower:
-        return "picons"
+                tools_dict[filename] = {
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean,""),
+                    "file": asset["browser_download_url"],
+                    "image": image_url(image_name)
+                }
 
-    # 2. Skins
-    if "skin" in fn_lower:
-        return "skins"
+            # --- Route to System Images ---
+            elif any(ext in lower_filename for ext in [".img", "system"]):
+                if not (filename.endswith(".zip") or filename.endswith(".tar.gz") or filename.endswith(".img")):
+                    continue
+                if filename.endswith(".tar.gz"):
+                    clean = filename[:-7]
+                else:
+                    clean = os.path.splitext(filename)[0]
 
-    # 3. Channels
-    if any(x in fn_lower for x in ["channel", "setting", "sat", "bouq", "transponder"]):
-        return "channels"
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                image_name = clean.split("_")[0]
 
-    # 4. Plugins
-    if "plugin" in fn_lower:
-        return "plugins"
+                system_images_dict[filename] = {
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean,""),
+                    "file": asset["browser_download_url"],
+                    "image": image_url(image_name)
+                }
 
-    # 5. System Images
-    if any(x in fn_lower for x in ["image", "system", "backup", "flash"]) or fn_lower.endswith(".img"):
-        return "system_images"
+            # --- Route to Channels ---
+            elif "channel" in lower_filename:
+                if filename.endswith(".tar.gz"):
+                    clean = filename[:-7]
+                else:
+                    clean = os.path.splitext(filename)[0]
 
-    # Fallback to tools
-    return "tools"
+                channels_dict[filename] = {
+                    "name": clean,
+                    "version": "1.0",
+                    "description": old_descriptions.get(clean,""),
+                    "file": asset["browser_download_url"],
+                    "image": image_url(clean.split("_")[0])
+                }
 
-
-# -------------------------------------------------
-# Plugins
-# -------------------------------------------------
-
-plugin_filenames = set()
-if os.path.isdir("plugins"):
-    for filename in os.listdir("plugins"):
-        if filename.endswith(EXTENSIONS):
-            plugin_filenames.add(filename)
-
-# Add Release assets that classify as plugins
-for filename in release_assets:
-    if filename.endswith(EXTENSIONS):
-        if classify_release_asset(filename) == "plugins":
-            plugin_filenames.add(filename)
-
-for filename in sorted(plugin_filenames):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    version = clean.split("_")[-2] if "_" in clean else "1.0"
-
-    display = clean.replace("enigma2-plugin-", "")
-
-    # Dual-source lookup
-    if filename in release_assets:
-        file_url = release_assets[filename]
-    else:
-        file_url = f"{BASE_URL}/plugins/{filename}"
-
-    data["categories"]["plugins"].append({
-        "name": display,
-        "version": version,
-        "description": old_descriptions.get(display, ""),
-        "file": file_url,
-        "image": image_url(
-            display.split("_")[0]
-            .replace("extensions-", "")
-            .replace("skins-", "")
-            .replace("plugin-", "")
-        ) 
-    })
-
-
-# -------------------------------------------------
-# Skins
-# -------------------------------------------------
-
-def get_skin_folder_for_release(filename, existing_folders):
-    if not existing_folders:
-        return "Egami"  # Absolute fallback
-    
-    fn_lower = filename.lower()
-    
-    # 1. High-priority Egami indicators (since they are specific skin series)
-    if any(kw in fn_lower for kw in ["gradient", "fhroma", "army", "egami"]):
-        for folder in existing_folders:
-            if folder.lower() == "egami":
-                return folder
-                
-    # 2. Substring matching of folder name (case-insensitive)
-    for folder in sorted(existing_folders):
-        fol_lower = folder.lower()
-        if fol_lower in fn_lower:
-            return folder
-            
-    # 3. Keyword matching for common images/groups
-    mapping = {
-        "atv": ["openatv", "atv"],
-        "black": ["openblack", "black", "obh", "bh", "blackhole"],
-        "pli": ["openp", "openpli", "pli"],
-    }
-    
-    for key, keywords in mapping.items():
-        for kw in keywords:
-            if kw in fn_lower:
-                for folder in existing_folders:
-                    if key in folder.lower() or folder.lower() in keywords:
-                        return folder
-                        
-    # 4. Fallback to Egami if it exists, otherwise first folder alphabetically
-    for folder in existing_folders:
-        if folder.lower() == "egami":
-            return folder
-            
-    return sorted(existing_folders)[0]
-
-existing_folders = []
-if os.path.isdir("skins"):
-    for folder in os.listdir("skins"):
-        if os.path.isdir(os.path.join("skins", folder)):
-            existing_folders.append(folder)
-
-local_skin_folders = {}
-if os.path.isdir("skins"):
-    for folder in os.listdir("skins"):
-        folder_path = os.path.join("skins", folder)
-        if os.path.isdir(folder_path):
-            for filename in os.listdir(folder_path):
-                if filename.endswith(EXTENSIONS):
-                    local_skin_folders[filename] = folder
-
-skin_tuples = set()
-
-# 1. From local folders
-for filename, folder in local_skin_folders.items():
-    skin_tuples.add((folder, filename))
-
-# 2. From Release assets
-for filename in release_assets:
-    if filename.endswith(EXTENSIONS):
-        if classify_release_asset(filename) == "skins":
-            if filename in local_skin_folders:
-                folder = local_skin_folders[filename]
+            # --- Default Fallback: Route to Plugins ---
             else:
-                folder = get_skin_folder_for_release(filename, existing_folders)
-            skin_tuples.add((folder, filename))
+                if filename.endswith(".tar.gz"):
+                    clean = filename[:-7]
+                else:
+                    clean = os.path.splitext(filename)[0]
 
-skins_grouped = {}
-for folder, filename in sorted(skin_tuples):
-    if folder not in skins_grouped:
-        skins_grouped[folder] = []
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                display = clean.replace("enigma2-plugin-", "")
 
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
+                image_name = display.replace("extensions-", "").replace("skins-", "").split("_")[0]
 
-    version = clean.split("_")[-2] if "_" in clean else "1.0"
+                plugins_dict[filename] = {
+                    "name": display,
+                    "version": version,
+                    "description": old_descriptions.get(display, ""),
+                    "file": asset["browser_download_url"],
+                    "image": image_url(display.split("_")[0].replace("extensions-", "").replace("skins-", "").replace("plugin-", ""))
+                }
 
-    image_name = clean.replace("enigma2-plugin-skins-", "")
-    image_name = image_name.split("_")[0]
-
-    if filename in release_assets:
-        file_url = release_assets[filename]
-    else:
-        file_url = f"{BASE_URL}/skins/{folder}/{filename}"
-
-    skins_grouped[folder].append({
-        "name": clean,
-        "version": version,
-        "description": old_descriptions.get(clean, folder + " Skin"),
-        "file": file_url,
-        "image": image_url(image_name)
-    })
-
-for folder in sorted(skins_grouped.keys()):
-    data["categories"]["skins"].append({
-        "name": folder,
-        "items": sorted(skins_grouped[folder], key=lambda x: x["name"])
-    })
+except Exception as e:
+    print("GitHub Releases Error:", e)
 
 
 # -------------------------------------------------
-# Tools
+# 2- Read Local Folders & Merge
 # -------------------------------------------------
 
-tool_filenames = set()
+# Plugins Local
+if os.path.isdir("plugins"):
+    for filename in sorted(os.listdir("plugins")):
+        if not filename.endswith(EXTENSIONS): continue
+        clean = filename[:-7] if filename.endswith(".tar.gz") else os.path.splitext(filename)[0]
+        version = clean.split("_")[-2] if "_" in clean else "1.0"
+        display = clean.replace("enigma2-plugin-", "")
+
+        if filename not in plugins_dict:
+            plugins_dict[filename] = {
+                "name": display,
+                "version": version,
+                "description": old_descriptions.get(display, ""),
+                "file": f"{BASE_URL}/plugins/{filename}",
+                "image": image_url(display.split("_")[0].replace("extensions-", "").replace("skins-", "").replace("plugin-", ""))
+            }
+
+# Skins Local
+if os.path.isdir("skins"):
+    for folder in sorted(os.listdir("skins")):
+        folder_path = os.path.join("skins", folder)
+        if not os.path.isdir(folder_path): continue
+        
+        if folder not in skins_dict:
+            skins_dict[folder] = {}
+
+        for filename in sorted(os.listdir(folder_path)):
+            if not filename.endswith(EXTENSIONS): continue
+            clean = filename[:-7] if filename.endswith(".tar.gz") else os.path.splitext(filename)[0]
+            version = clean.split("_")[-2] if "_" in clean else "1.0"
+            image_name = clean.replace("enigma2-plugin-skins-", "").split("_")[0]
+
+            if filename not in skins_dict[folder]:
+                skins_dict[folder][filename] = {
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean, folder + " Skin"),
+                    "file": f"{BASE_URL}/skins/{folder}/{filename}",
+                    "image": image_url(image_name)
+                }
+
+# Tools Local
 if os.path.isdir("tools"):
-    for filename in os.listdir("tools"):
-        if filename.endswith(EXTENSIONS):
-            tool_filenames.add(filename)
+    for filename in sorted(os.listdir("tools")):
+        if not filename.endswith(EXTENSIONS): continue
+        clean = filename[:-7] if filename.endswith(".tar.gz") else os.path.splitext(filename)[0]
+        version = clean.split("_")[-2] if "_" in clean else "1.0"
+        image_name = clean.split("_")[0]
 
-for filename in release_assets:
-    if filename.endswith(EXTENSIONS):
-        if classify_release_asset(filename) == "tools":
-            tool_filenames.add(filename)
+        if filename not in tools_dict:
+            tools_dict[filename] = {
+                "name": clean,
+                "version": version,
+                "description": old_descriptions.get(clean,""),
+                "file": f"{BASE_URL}/tools/{filename}",
+                "image": image_url(image_name)
+            }
 
-for filename in sorted(tool_filenames):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    version = clean.split("_")[-2] if "_" in clean else "1.0"
-
-    image_name = clean.split("_")[0]
-
-    # Dual-source lookup
-    if filename in release_assets:
-        file_url = release_assets[filename]
-    else:
-        file_url = f"{BASE_URL}/tools/{filename}"
-
-    data["categories"]["tools"].append({
-        "name": clean,
-        "version": version,
-        "description": old_descriptions.get(clean,""),
-        "file": file_url,
-        "image": image_url(image_name)
-    })
-
-
-# -------------------------------------------------
-# System Images
-# -------------------------------------------------
-
-system_image_filenames = set()
+# System Images Local
 if os.path.isdir("system_images"):
-    for filename in os.listdir("system_images"):
-        if filename.endswith((".zip", ".tar.gz", ".img")):
-            system_image_filenames.add(filename)
+    for filename in sorted(os.listdir("system_images")):
+        if not (filename.endswith(".zip") or filename.endswith(".tar.gz") or filename.endswith(".img")): continue
+        clean = filename[:-7] if filename.endswith(".tar.gz") else os.path.splitext(filename)[0]
+        version = clean.split("_")[-2] if "_" in clean else "1.0"
+        image_name = clean.split("_")[0]
 
-for filename in release_assets:
-    if filename.endswith((".zip", ".tar.gz", ".img")):
-        if classify_release_asset(filename) == "system_images":
-            system_image_filenames.add(filename)
+        if filename not in system_images_dict:
+            system_images_dict[filename] = {
+                "name": clean,
+                "version": version,
+                "description": old_descriptions.get(clean,""),
+                "file": f"{BASE_URL}/system_images/{filename}",
+                "image": image_url(image_name)
+            }
 
-for filename in sorted(system_image_filenames):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    version = clean.split("_")[-2] if "_" in clean else "1.0"
-
-    image_name = clean.split("_")[0]
-
-    # Dual-source lookup
-    if filename in release_assets:
-        file_url = release_assets[filename]
-    else:
-        file_url = f"{BASE_URL}/system_images/{filename}"
-
-    data["categories"]["system_images"].append({
-        "name": clean,
-        "version": version,
-        "description": old_descriptions.get(clean,""),
-        "file": file_url,
-        "image": image_url(image_name)
-    })
-
-
-# -------------------------------------------------
-# Picons
-# -------------------------------------------------
-
-picon_filenames = set()
+# Picons Local
 if os.path.isdir("picons"):
-    for filename in os.listdir("picons"):
-        if filename.endswith(EXTENSIONS):
-            picon_filenames.add(filename)
+    for filename in sorted(os.listdir("picons")):
+        if not filename.endswith(EXTENSIONS): continue
+        clean = filename[:-7] if filename.endswith(".tar.gz") else os.path.splitext(filename)[0]
 
-for filename in release_assets:
-    if filename.endswith(EXTENSIONS):
-        if classify_release_asset(filename) == "picons":
-            picon_filenames.add(filename)
+        if filename not in picons_dict:
+            picons_dict[filename] = {
+                "name": clean,
+                "version": "1.0",
+                "description": old_descriptions.get(clean, ""),
+                "file": f"{BASE_URL}/picons/{filename}",
+                "image": image_url(clean.split("_")[0])
+            }
 
-for filename in sorted(picon_filenames):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    # Dual-source lookup
-    if filename in release_assets:
-        file_url = release_assets[filename]
-    else:
-        file_url = f"{BASE_URL}/picons/{filename}"
-
-    data["categories"]["picons"].append({
-        "name": clean,
-        "version": "1.0",
-        "description": old_descriptions.get(clean, ""),
-        "file": file_url,
-        "image": image_url(clean.split("_")[0])
-    })
-
-
-# -------------------------------------------------
-# Channels
-# -------------------------------------------------
-
-channel_filenames = set()
+# Channels Local
 if os.path.isdir("channels"):
-    for filename in os.listdir("channels"):
-        if filename.endswith(EXTENSIONS):
-            channel_filenames.add(filename)
+    for filename in sorted(os.listdir("channels")):
+        if not filename.endswith(EXTENSIONS): continue
+        clean = filename[:-7] if filename.endswith(".tar.gz") else os.path.splitext(filename)[0]
 
-for filename in release_assets:
-    if filename.endswith(EXTENSIONS):
-        if classify_release_asset(filename) == "channels":
-            channel_filenames.add(filename)
+        if filename not in channels_dict:
+            channels_dict[filename] = {
+                "name": clean,
+                "version": "1.0",
+                "description": old_descriptions.get(clean,""),
+                "file": f"{BASE_URL}/channels/{filename}",
+                "image": image_url(clean.split("_")[0])
+            }
 
-for filename in sorted(channel_filenames):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
 
-    # Dual-source lookup
-    if filename in release_assets:
-        file_url = release_assets[filename]
-    else:
-        file_url = f"{BASE_URL}/channels/{filename}"
+# -------------------------------------------------
+# 3- Compile data into JSON Structure
+# -------------------------------------------------
 
-    data["categories"]["channels"].append({
-        "name": clean,
-        "version": "1.0",
-        "description": old_descriptions.get(clean,""),
-        "file": file_url,
-        "image": image_url(clean.split("_")[0])
-    })
+for filename in sorted(plugins_dict):
+    data["categories"]["plugins"].append(plugins_dict[filename])
 
+for filename in sorted(tools_dict):
+    data["categories"]["tools"].append(tools_dict[filename])
+
+for filename in sorted(system_images_dict):
+    data["categories"]["system_images"].append(system_images_dict[filename])
+
+for filename in sorted(picons_dict):
+    data["categories"]["picons"].append(picons_dict[filename])
+
+for filename in sorted(channels_dict):
+    data["categories"]["channels"].append(channels_dict[filename])
+
+# Build grouped skins
+for folder in sorted(skins_dict):
+    folder_items = []
+    for filename in sorted(skins_dict[folder]):
+        folder_items.append(skins_dict[folder][filename])
+    
+    if folder_items:
+        data["categories"]["skins"].append({
+            "name": folder,
+            "items": folder_items
+        })
 
 # -------------------------------------------------
 # Save JSON
 # -------------------------------------------------
-
 os.makedirs("feed", exist_ok=True)
 
 with open("feed/index.json", "w", encoding="utf-8") as f:
