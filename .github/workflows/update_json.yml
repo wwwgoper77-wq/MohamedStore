@@ -8,14 +8,7 @@ on:
       - 'tools/**'
       - 'system_images/**'
       
-  release:
-    types: [published, created]
-      
   workflow_dispatch:
-
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,15 +25,10 @@ jobs:
       - name: Generate index
         run: python generate_index.py
 
-      - name: Update Release Assets in Index
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python update_release_json.py
-
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Auto-update json index with release assets" || echo "No changes to commit"
+          git commit -m "Auto-update json index" || echo "No changes to commit"
           git push
