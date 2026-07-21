@@ -25,6 +25,11 @@ jobs:
       - name: Generate index
         run: python generate_index.py
 
+      - name: Update Release Assets in Index
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python update_release_json.py
+
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
