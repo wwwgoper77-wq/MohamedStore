@@ -61,7 +61,7 @@ EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", "
 
 
 # -------------------------------------------------
-# Global Release Assets Fetcher (لجلب ملفات الـ Release وتوزيعها تلقائياً)
+# Global Release Assets Fetcher
 # -------------------------------------------------
 
 release_assets_pool = []
@@ -99,10 +99,13 @@ if os.path.isdir("plugins"):
         if filename.endswith(EXTENSIONS):
             plugins_list.append(filename)
 
-# إضافة ملفات البلجِن من الـ Release إن وجدت
 for asset in release_assets_pool:
     fname = asset["filename"]
-    if "plugin" in fname.lower() or "ipa" in fname.lower() or "timeshift" in fname.lower() or "audi" in fname.lower():
+    lower_f = fname.lower()
+    # استبعاد السكينات والصور من البلجِنات
+    if "skin" in lower_f or "picon" in lower_f or "channel" in lower_f:
+        continue
+    if "plugin" in lower_f or "ipa" in lower_f or "timeshift" in lower_f or "audi" in lower_f or "panel" in lower_f:
         if fname not in plugins_list:
             plugins_list.append(fname)
 
@@ -115,7 +118,6 @@ for filename in sorted(plugins_list):
     version = clean.split("_")[-2] if "_" in clean else "1.0"
     display = clean.replace("enigma2-plugin-", "")
 
-    # التحقق هل الملف محلي أم من الـ Release
     file_path_url = f"{BASE_URL}/plugins/{filename}"
     for asset in release_assets_pool:
         if asset["filename"] == filename:
@@ -186,7 +188,10 @@ if os.path.isdir("tools"):
 
 for asset in release_assets_pool:
     fname = asset["filename"]
-    if "ncam" in fname.lower() or "oscam" in fname.lower() or "tool" in fname.lower() or "script" in fname.lower():
+    lower_f = fname.lower()
+    if "skin" in lower_f or "picon" in lower_f or "channel" in lower_f or "image" in lower_f:
+        continue
+    if "ncam" in lower_f or "oscam" in lower_f or "tool" in lower_f or "script" in lower_f or "softcam" in lower_f:
         if fname not in tools_list:
             tools_list.append(fname)
 
@@ -215,7 +220,7 @@ for filename in sorted(tools_list):
 
 
 # -------------------------------------------------
-# System Images
+# System Images (محدث ليكون دقيقاً تماماً ولا يلتقط السكينات)
 # -------------------------------------------------
 
 sys_list = []
@@ -226,7 +231,12 @@ if os.path.isdir("system_images"):
 
 for asset in release_assets_pool:
     fname = asset["filename"]
-    if any(img_kw in fname.lower() for img_kw in ["egami", "openatv", "blackhole", "vti", "pure2", "image", "vu+"]):
+    lower_f = fname.lower()
+    # تأكيد صارم: يجب أن يكون الملف صورة نظام حقيقية ولا يحتوي على كلمة skin
+    if "skin" in lower_f or "picon" in lower_f or "plugin" in lower_f or "tool" in lower_f:
+        continue
+    
+    if any(img_kw in lower_f for img_kw in ["egami", "openatv", "blackhole", "vti", "pure2", "openpli", "openblack", "vu+"]):
         if fname not in sys_list:
             sys_list.append(fname)
 
@@ -260,7 +270,6 @@ for filename in sorted(sys_list):
 
 picons_dict = {}
 
-# 1- Read from GitHub Releases Assets Pool
 for asset in release_assets_pool:
     filename = asset["filename"]
     if "picon" not in filename.lower():
@@ -279,7 +288,6 @@ for asset in release_assets_pool:
         "image": image_url(clean.split("_")[0])
     }
 
-# 2- Read local picons folder
 if os.path.isdir("picons"):
     for filename in sorted(os.listdir("picons")):
         if not filename.endswith(EXTENSIONS):
@@ -315,7 +323,10 @@ if os.path.isdir("channels"):
 
 for asset in release_assets_pool:
     fname = asset["filename"]
-    if "channel" in fname.lower() or "backup" in fname.lower():
+    lower_f = fname.lower()
+    if "skin" in lower_f or "picon" in lower_f or "plugin" in lower_f:
+        continue
+    if "channel" in lower_f or "backup" in lower_f or "settings" in lower_f:
         if fname not in channels_list:
             channels_list.append(fname)
 
