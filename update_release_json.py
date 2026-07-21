@@ -22,16 +22,17 @@ try:
             with open(json_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
         else:
-            data = {"categories": {}}
+            data = {"store_name": "M Store", "version": "1.0", "categories": {}}
 
         categories = data.setdefault("categories", {})
         
-        # التأكد من وجود الأقسام الأساسية مع الحفاظ على محتوياتها القديمة إن وجدت
-        categories.setdefault("system_images", [])
+        # التأكد من وجود الأقسام الرئيسية بنفس هيكلتك
         categories.setdefault("plugins", [])
-        categories.setdefault("skins", [])
-        categories.setdefault("picons", [])
         categories.setdefault("tools", [])
+        categories.setdefault("picons", [])
+        categories.setdefault("channels", [])
+        categories.setdefault("system_images", [])
+        categories.setdefault("skins", [])
 
         if assets:
             for asset in assets:
@@ -39,8 +40,8 @@ try:
                 download_url = asset["browser_download_url"]
                 lower_name = file_name.lower()
 
-                # تحديد القسم المناسب تلقائياً حسب نوع الملف
-                target_category = "plugins"
+                # تحديد القسم المناسب بناءً على اسم الملف
+                target_category = "plugins" # افتراضي
                 
                 if any(ext in lower_name for ext in ["egami", "openatv", "blackhole", "vti", "pure2", "img", "nfi"]) and ("vu" in lower_name or "solo" in lower_name or "duo" in lower_name or "image" in lower_name):
                     target_category = "system_images"
@@ -48,25 +49,40 @@ try:
                     target_category = "skins"
                 elif "picon" in lower_name:
                     target_category = "picons"
-                elif "tool" in lower_name or "script" in lower_name:
+                elif "channel" in lower_name or "backup" in lower_name:
+                    target_category = "channels"
+                elif "tool" in lower_name or "script" in lower_name or "ncam" in lower_name or "oscam" in lower_name:
                     target_category = "tools"
 
-                # منع تكرار نفس رابط الـ Release إذا كان مسجلاً مسبقاً
-                existing_urls = [item.get("url") for item in categories.get(target_category, [])]
-                if download_url not in existing_urls:
-                    new_item = {
-                        "name": file_name,
-                        "version": "1.0",
-                        "description": f"Auto-sorted release item for {target_category}",
-                        "url": download_url
-                    }
-                    categories[target_category].append(new_item)
-                    print(f"Added '{file_name}' to category: '{target_category}'")
+                # بناء العنصر بنفس الهيكل والخصائص المعتمدة لديك (name, version, description, file, image)
+                new_item = {
+                    "name": file_name,
+                    "version": "1.0",
+                    "description": "",
+                    "file": download_url,
+                    "image": ""
+                }
 
-        # حفظ الملف بنجاح مع دمج الملفات القديمة والجديدة
+                # التعامل مع الأقسام العادية (plugins, tools, picons, channels, system_images)
+                if target_category != "skins":
+                    existing_files = [item.get("file") for item in categories.get(target_category, [])]
+                    if download_url not in existing_files:
+                        categories[target_category].append(new_item)
+                        print(f"Added '{file_name}' to category: '{target_category}'")
+                else:
+                    # تخصيص للسكينات إذا تم رفعها للريليس، يتم وضعها تحت أول مجموعة أو إنشاء مجموعة عامة
+                    # للتأكد من عدم ضياعها، سنضيفها تحت قسم Skuins العام أو أول عنصر فرعي
+                    skins_list = categories.get("skins", [])
+                    if skins_list and isinstance(skins_list[0], dict) and "items" in skins_list[0]:
+                        existing_files = [item.get("file") for item in skins_list[0]["items"]]
+                        if download_url not in existing_files:
+                            skins_list[0]["items"].append(new_item)
+                            print(f"Added release skin '{file_name}' to first skin group.")
+
+        # حفظ الملف بالهيكل الصحيح والترميز المطلوب
         with open(json_file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ensure_ascii=False if hasattr(json, 'ensure_ascii') else 4) # تم ضبط الترميز ليدعم العربية
+            json.dump(data, f, indent=4, ensure_ascii=False)
             
-        print("Successfully updated index.json while keeping local files intact!")
+        print("Successfully updated index.json with exact schema matching!")
 except Exception as e:
     print(f"Error updating JSON: {e}")
