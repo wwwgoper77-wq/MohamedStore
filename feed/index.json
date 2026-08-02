@@ -256,14 +256,14 @@
             {
                 "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
                 "version": "S",
-                "description": "",
+                "description": "صورة نظام خاصة لجهاز vu zero 4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
                 "image": ""
             },
             {
                 "name": "vuzero4k-PurE2-7.6-20260217_usb",
                 "version": "vuzero4k-PurE2-7.6-20260217",
-                "description": "",
+                "description": "صورة نظام خاصة لجهاز vu zero 4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
                 "image": ""
             }
