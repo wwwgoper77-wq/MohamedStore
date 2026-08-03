@@ -20,14 +20,14 @@
             {
                 "name": "FuryBiss",
                 "version": "1.0",
-                "description": "",
+                "description": "مفتاح شفرة بيس بايثون 3.13.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FuryBiss.zip",
                 "image": ""
             },
             {
                 "name": "IPStreamer",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن صوتيات بايثون 3.13.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPStreamer.zip",
                 "image": ""
             },
