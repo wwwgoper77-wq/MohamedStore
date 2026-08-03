@@ -20,7 +20,7 @@
             {
                 "name": "MC STREAM",
                 "version": "1.0",
-                "description": "عن طريق المتصفح او يدوي بلجن يقبل ملفات m3u ",
+                "description": "بلجن تشغيل ملفات m3u برمجة محمد العراقي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MCM3U.zip",
                 "image": ""
             },
