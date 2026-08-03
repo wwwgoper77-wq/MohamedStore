@@ -13,14 +13,14 @@
             {
                 "name": "MC oscam",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن سيسكام مجاني ومدفوع اشتراك بتاعك برمجة محمد العراقي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
             {
                 "name": "MC stream",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن مشغل ملفات برمجة محمد العراقي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
