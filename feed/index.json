@@ -18,6 +18,20 @@
                 "image": ""
             },
             {
+                "name": "FuryBiss",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FuryBiss.zip",
+                "image": ""
+            },
+            {
+                "name": "IPStreamer",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPStreamer.zip",
+                "image": ""
+            },
+            {
                 "name": "MC oscam",
                 "version": "1.0",
                 "description": "بلجن سيسكام مجاني ومدفوع اشتراك بتاعك برمجة محمد العراقي",
