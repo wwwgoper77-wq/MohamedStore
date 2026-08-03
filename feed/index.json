@@ -11,6 +11,20 @@
                 "image": ""
             },
             {
+                "name": "CCCAM MO",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CCCAM MO.zip",
+                "image": ""
+            },
+            {
+                "name": "MCM3U",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MCM3U.zip",
+                "image": ""
+            },
+            {
                 "name": "MixAudio",
                 "version": "1.0",
                 "description": "بلجن صوتيات فقط بايثون 3.13 3.14",
