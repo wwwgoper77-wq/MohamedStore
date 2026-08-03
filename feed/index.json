@@ -11,16 +11,16 @@
                 "image": ""
             },
             {
-                "name": "MC OSCAM",
+                "name": "CCCAM MO",
                 "version": "1.0",
-                "description": "بلجن سيسكام مجاني ومدفوع(الخاص بك ) برمجة محمد العراقي",
+                "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CCCAM MO.zip",
                 "image": ""
             },
             {
-                "name": "MC STREAM",
+                "name": "MCM3U",
                 "version": "1.0",
-                "description": "بلجن تشغيل ملفات m3u برمجة محمد العراقي",
+                "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MCM3U.zip",
                 "image": ""
             },
