@@ -25,6 +25,13 @@
                 "image": ""
             },
             {
+                "name": "FootOnSat.plugin",
+                "version": "1.0",
+                "description": "",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
+                "image": ""
+            },
+            {
                 "name": "FuryBiss",
                 "version": "1.0",
                 "description": "مفتاح شفرة بيس بايثون 3.13.12",
