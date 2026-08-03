@@ -11,6 +11,20 @@
                 "image": ""
             },
             {
+                "name": "MC oscam",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
+                "image": ""
+            },
+            {
+                "name": "MC stream",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
+                "image": ""
+            },
+            {
                 "name": "MixAudio",
                 "version": "1.0",
                 "description": "بلجن صوتيات فقط بايثون 3.13 3.14",
