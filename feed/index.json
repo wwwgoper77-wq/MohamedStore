@@ -13,21 +13,21 @@
             {
                 "name": "ArabicSavior",
                 "version": "1.0",
-                "description": "ابلجن اصلاج اللغة العربية بايثون 3.13.12",
+                "description": "بلجن اصلاح اللغة العربية بايثون 3.13.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
                 "image": ""
             },
             {
                 "name": "E2BissKeyEditor",
                 "version": "1.0",
-                "description": "ابلجن ادخال شفرة بيس بايثون 3.13.12",
+                "description": "بلجن ادخال شفرة بيس بايثون 3.13.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2BissKeyEditor.zip",
                 "image": ""
             },
             {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن اوقات المباريات بايثون 3.13.12",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             },
