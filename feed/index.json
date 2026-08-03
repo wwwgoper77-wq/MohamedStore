@@ -11,6 +11,13 @@
                 "image": ""
             },
             {
+                "name": "E2BissKeyEditor",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2BissKeyEditor.zip",
+                "image": ""
+            },
+            {
                 "name": "MC oscam",
                 "version": "1.0",
                 "description": "بلجن سيسكام مجاني ومدفوع اشتراك بتاعك برمجة محمد العراقي",
@@ -29,6 +36,13 @@
                 "version": "1.0",
                 "description": "بلجن صوتيات فقط بايثون 3.13 3.14",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MixAudio.sh",
+                "image": ""
+            },
+            {
+                "name": "YouTube",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/YouTube.zip",
                 "image": ""
             },
             {
