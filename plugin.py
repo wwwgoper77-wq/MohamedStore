@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # ==========================================
-# Mohamed Store - Modern Grid Dashboard Edition v1.3
+# Mohamed Store - Modern Grid Dashboard Edition v1.3.1
 # Python 2 & Python 3 fully compatible
+# Multi-Content Item & Category Icon Rendering Supported
 # ==========================================
 
 from Plugins.Plugin import PluginDescriptor
@@ -64,7 +65,7 @@ except ImportError:
 
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
-PLUGIN_VERSION = "1.3"
+PLUGIN_VERSION = "1.3.1"
 
 try:
     PLUGIN_DIR = os.path.dirname(__file__)
@@ -75,16 +76,16 @@ FALLBACK_ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/
 
 BUILTIN_SYSTEM_TOOLS = [
     {
-        "name": u"\u0625\u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u064a\u0627\u062a",
+        "name": u"\u0625\u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u062a",
         "type": "tool",
         "cmd": "opkg update && opkg install --force-reinstall python-requests curl ffmpeg python-json python-codecs openssl",
         "description": u"\u062a\u062d\u062f\u062b \u062d\u0632\u0645 \u0627\u0644\u0646\u0638\u0627\u0645 \u0648\u0625\u0639\u0627\u062f\u0629 \u062a\u062b\u0628\u064a\u062a \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0627\u0644\u0646\u0627\u0642\u0635\u0629."
     },
     {
-        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
+        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
         "type": "tool",
         "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
-        "description": u"\u062d\u0630\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0645\u0624\u0642\u062a\u0629 \u0645\u0646 \u0645\u062c\u0644\u062f /tmp."
+        "description": u"\u062d\u0630\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
     },
     {
         "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
@@ -119,6 +120,72 @@ def get_category_icon_path(category_id):
         if os.path.exists(fallback_path):
             return fallback_path
     return None
+
+
+def get_item_icon_path(item, category_id):
+    if not isinstance(item, dict):
+        return get_category_icon_path(category_id)
+
+    # 1. Direct explicit icon/image/thumbnail property check
+    for key in ("icon", "image", "thumbnail"):
+        val = item.get(key)
+        if val and isinstance(val, (str, getattr(sys, 'unicode', str))):
+            val = val.strip()
+            if os.path.isabs(val) and os.path.exists(val):
+                return val
+            path1 = os.path.join(ICON_FOLDER, val)
+            if os.path.exists(path1):
+                return path1
+            path2 = os.path.join(FALLBACK_ICON_FOLDER, val)
+            if os.path.exists(path2):
+                return path2
+
+    # 2. Check icon file matching item id or name (e.g. skin_blackharmony.png)
+    item_id = item.get("id") or item.get("name") or ""
+    if item_id:
+        clean_name = str(item_id).lower().replace(" ", "_").replace("-", "_") + ".png"
+        path1 = os.path.join(ICON_FOLDER, clean_name)
+        if os.path.exists(path1):
+            return path1
+        path2 = os.path.join(FALLBACK_ICON_FOLDER, clean_name)
+        if os.path.exists(path2):
+            return path2
+
+    # 3. Check for specific folder or tool icons
+    if "items" in item and isinstance(item["items"], list):
+        for folder_icon in ("folder.png", "subfolder.png", "directory.png"):
+            path1 = os.path.join(ICON_FOLDER, folder_icon)
+            if os.path.exists(path1):
+                return path1
+            path2 = os.path.join(FALLBACK_ICON_FOLDER, folder_icon)
+            if os.path.exists(path2):
+                return path2
+
+    if item.get("type") == "tool":
+        for tool_icon in ("tools.png", "tool.png"):
+            path1 = os.path.join(ICON_FOLDER, tool_icon)
+            if os.path.exists(path1):
+                return path1
+            path2 = os.path.join(FALLBACK_ICON_FOLDER, tool_icon)
+            if os.path.exists(path2):
+                return path2
+
+    # 4. Fallback to category icon
+    cat_icon = get_category_icon_path(category_id)
+    if cat_icon:
+        return cat_icon
+
+    # 5. Generic package fallback
+    for generic in ("package.png", "default.png", "plugins.png"):
+        path1 = os.path.join(ICON_FOLDER, generic)
+        if os.path.exists(path1):
+            return path1
+        path2 = os.path.join(FALLBACK_ICON_FOLDER, generic)
+        if os.path.exists(path2):
+            return path2
+
+    return None
+
 
 def load_json(url):
     try:
@@ -165,36 +232,36 @@ class MohamedStore(Screen):
     <ePixmap position="35,25" size="230,50" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" transparent="1" alphatest="blend" />
     <eLabel position="285,34" size="260,35" text="MOHAMED STORE" font="Regular;28" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <widget name="device_label" position="560,34" size="940,35" font="Regular;24" foregroundColor="#c084fc" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="1550,30" size="130,40" text=" v1.3 " font="Regular;26" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+    <eLabel position="1550,30" size="130,40" text=" v1.3.1 " font="Regular;26" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
 
     <!-- LEFT PANEL: CATEGORIES -->
     <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
     <eLabel position="20,112" size="380,2" backgroundColor="#be185d" zPosition="0" />
     <eLabel position="20,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
     <eLabel position="396,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;26" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="32,166" size="356,2" backgroundColor="#be185d" />
     
-    <widget name="categories_list" position="25,176" size="370,616" itemHeight="72" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;28" />
+    <widget name="categories_list" position="25,176" size="370,616" itemHeight="80" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;32" />
 
     <!-- CENTER PANEL: PACKAGES -->
     <eLabel position="412,112" size="780,688" backgroundColor="#0f111a" zPosition="-1" />
     <eLabel position="412,112" size="780,2" backgroundColor="#be185d" zPosition="0" />
     <eLabel position="412,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
     <eLabel position="1188,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="428,126" size="748,35" text="AVAILABLE PACKAGES" font="Regular;26" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="428,126" size="748,35" text="AVAILABLE PACKAGES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="428,166" size="748,2" backgroundColor="#be185d" />
-    <widget name="items_list" position="417,176" size="768,616" itemHeight="60" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;28" />
+    <widget name="items_list" position="417,176" size="768,616" itemHeight="76" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;32" />
 
     <!-- RIGHT PANEL: DETAILS & PROGRESS BOX -->
     <eLabel position="1204,112" size="500,688" backgroundColor="#0f111a" zPosition="-1" />
     <eLabel position="1204,112" size="500,2" backgroundColor="#be185d" zPosition="0" />
     <eLabel position="1204,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
     <eLabel position="1700,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;26" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="1222,166" size="464,2" backgroundColor="#be185d" />
     
-    <widget name="description" position="1222,178" size="464,380" font="Regular;26" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
+    <widget name="description" position="1222,178" size="464,380" font="Regular;30" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
 
     <eLabel position="1220,568" size="468,222" backgroundColor="#05070c" zPosition="1" />
     <eLabel position="1220,568" size="468,2" backgroundColor="#be185d" zPosition="2" />
@@ -203,10 +270,10 @@ class MohamedStore(Screen):
     <eLabel position="1220,788" size="468,2" backgroundColor="#be185d" zPosition="2" />
     
     <widget name="progress" position="1238,584" size="432,16" borderWidth="2" borderColor="#be185d" backgroundColor="#0f111a" zPosition="3" />
-    <widget name="percentage" position="1238,610" size="130,32" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
-    <widget name="speed" position="1406,610" size="264,32" font="Regular;24" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
-    <widget name="size" position="1238,652" size="432,32" font="Regular;22" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
-    <widget name="status" position="1238,695" size="432,45" font="Regular;22" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
+    <widget name="percentage" position="1238,610" size="130,32" font="Regular;28" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
+    <widget name="speed" position="1406,610" size="264,32" font="Regular;28" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
+    <widget name="size" position="1238,652" size="432,32" font="Regular;26" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
+    <widget name="status" position="1238,695" size="432,45" font="Regular;26" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
 
     <!-- FOOTER BAR -->
     <eLabel position="20,812" size="1684,93" backgroundColor="#0f111a" zPosition="-1" />
@@ -217,25 +284,26 @@ class MohamedStore(Screen):
 
     <eLabel position="40,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="40,824" size="6,68" backgroundColor="#ef4444" zPosition="2" />
-    <widget name="key_red" position="58,824" size="365,68" font="Regular;30" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_red" position="58,824" size="365,68" font="Regular;32" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
     <eLabel position="451,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="451,824" size="6,68" backgroundColor="#22c55e" zPosition="2" />
-    <widget name="key_green" position="469,824" size="365,68" font="Regular;30" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_green" position="469,824" size="365,68" font="Regular;32" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
     <eLabel position="862,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="862,824" size="6,68" backgroundColor="#eab308" zPosition="2" />
-    <eLabel position="880,824" size="365,68" text="Refresh Store" font="Regular;30" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_yellow" position="880,824" size="365,68" font="Regular;32" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
     <eLabel position="1273,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="1273,824" size="6,68" backgroundColor="#c084fc" zPosition="2" />
-    <eLabel position="1291,824" size="365,68" text="Check Update" font="Regular;30" foregroundColor="#c084fc" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <eLabel position="1273,824" size="6,68" backgroundColor="#3b82f6" zPosition="2" />
+    <widget name="key_blue" position="1291,824" size="365,68" font="Regular;32" foregroundColor="#60a5fa" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 </screen>
 """
 
     def __init__(self, session):
         Screen.__init__(self, session)
         
+        # Setup Categories List MultiContent
         self.categories_list_has_multicontent = False
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
@@ -247,22 +315,46 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["categories_list"].l.setFont(0, gFont("Regular", 28))
+                        self["categories_list"].l.setFont(0, gFont("Regular", 32))
                     except Exception as fe:
-                        print("[MohamedStore] Failed to set font: " + str(fe))
+                        print("[MohamedStore] Failed to set font for categories_list: " + str(fe))
                 self["categories_list"].l.setBuildFunc(self.build_category_entry)
                 self.categories_list_has_multicontent = True
             except Exception as e:
-                print("[MohamedStore] Failed to init MenuList with eListboxPythonMultiContent: " + str(e))
+                print("[MohamedStore] Failed to init categories_list with eListboxPythonMultiContent: " + str(e))
                 self["categories_list"] = MenuList([])
         else:
             self["categories_list"] = MenuList([])
-            
-        self["items_list"] = MenuList([])
+
+        # Setup Items List MultiContent (NEW in v1.3.1 for item icons)
+        self.items_list_has_multicontent = False
+        if HAS_MULTICONTENT and eListboxPythonMultiContent:
+            try:
+                try:
+                    self["items_list"] = MenuList([], content=eListboxPythonMultiContent)
+                except TypeError:
+                    self["items_list"] = MenuList([])
+                    self["items_list"].l = eListboxPythonMultiContent()
+                
+                if gFont:
+                    try:
+                        self["items_list"].l.setFont(0, gFont("Regular", 32))
+                    except Exception as fe:
+                        print("[MohamedStore] Failed to set font for items_list: " + str(fe))
+                self["items_list"].l.setBuildFunc(self.build_item_entry)
+                self.items_list_has_multicontent = True
+            except Exception as e:
+                print("[MohamedStore] Failed to init items_list with eListboxPythonMultiContent: " + str(e))
+                self["items_list"] = MenuList([])
+        else:
+            self["items_list"] = MenuList([])
+
         self["description"] = Label("Checking for updates...")
         self["device_label"] = Label(self.get_device_and_image_info())
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
+        self["key_yellow"] = Label("Refresh Store")
+        self["key_blue"] = Label("Update Store")
         
         if ProgressBar:
             self["progress"] = ProgressBar()
@@ -319,6 +411,8 @@ class MohamedStore(Screen):
             "cancel": self.go_back,
             "red": self.red_key_pressed,
             "green": self.download,
+            "yellow": self.load_store,
+            "blue": self.run_update,
             "ok": self.press_ok,
             "up": self.go_up,
             "down": self.go_down,
@@ -374,13 +468,13 @@ class MohamedStore(Screen):
                 if loadPNG:
                     pixmap = loadPNG(icon_path)
             except Exception as e:
-                print("[MohamedStore] Error loading PNG: " + str(e))
+                print("[MohamedStore] Error loading category PNG: " + str(e))
 
         res = [category_id]
         
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
-            res.append(MultiContentEntryPixmapAlphaTest(pos=(14, 14), size=(44, 44), png=pixmap))
-            text_x = 72
+            res.append(MultiContentEntryPixmapAlphaTest(pos=(12, 12), size=(56, 56), png=pixmap))
+            text_x = 80
             text_w = 280
         else:
             text_x = 15
@@ -388,7 +482,49 @@ class MohamedStore(Screen):
 
         if HAS_MULTICONTENT and MultiContentEntryText:
             align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 72), font=0, flags=align, text=display_name))
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 80), font=0, flags=align, text=display_name))
+            
+        return res
+
+    def build_item_entry(self, *args):
+        """
+        Renders item entry with custom thumbnail/icon image next to name.
+        """
+        if len(args) == 1 and isinstance(args[0], tuple):
+            item, display_text, category_id = args[0]
+        elif len(args) >= 3:
+            item, display_text, category_id = args[0], args[1], args[2]
+        elif len(args) == 2:
+            item, display_text = args[0], args[1]
+            category_id = "unknown"
+        else:
+            item = {}
+            display_text = "Unknown Item"
+            category_id = "unknown"
+
+        icon_path = get_item_icon_path(item, category_id)
+        pixmap = None
+        if icon_path:
+            try:
+                if loadPNG:
+                    pixmap = loadPNG(icon_path)
+            except Exception as e:
+                print("[MohamedStore] Error loading item PNG: " + str(e))
+
+        res = [item]
+        
+        # Item height in skin is 76px.
+        if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
+            res.append(MultiContentEntryPixmapAlphaTest(pos=(10, 10), size=(56, 56), png=pixmap))
+            text_x = 78
+            text_w = 670
+        else:
+            text_x = 15
+            text_w = 740
+
+        if HAS_MULTICONTENT and MultiContentEntryText:
+            align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 76), font=0, flags=align, text=display_text))
             
         return res
 
@@ -416,7 +552,7 @@ class MohamedStore(Screen):
                     self.session.openWithCallback(
                         self.updateAnswer,
                         MessageBox,
-                        "A new version of Mohamed Store is available.\nDo you want to update now?",
+                        "A new update is available. Do you want to update?",
                         MessageBox.TYPE_YESNO
                     )
                     return
@@ -425,27 +561,79 @@ class MohamedStore(Screen):
             
         self.load_store()
 
+    def run_update(self):
+        self.update_progress_val = 0
+        self.update_start_time = time.time()
+        
+        self["description"].setText("Updating system, please wait...")
+        
+        try:
+            self["progress"].show()
+            self["percentage"].show()
+            self["speed"].show()
+            self["size"].show()
+            self["status"].show()
+            
+            self["progress"].setValue(0)
+            self["percentage"].setText("0%")
+            self["speed"].setText("Updating")
+            self["size"].setText("0s")
+            self["status"].setText("Updating system...")
+        except:
+            pass
+
+        self.update_timer = eTimer()
+        if self.update_timer:
+            try:
+                self.update_timer_conn = self.update_timer.timeout.connect(self.tick_update_progress)
+            except AttributeError:
+                try:
+                    self.update_timer.callback.append(self.tick_update_progress)
+                except:
+                    pass
+            self.update_timer.start(250, False)
+
+        cmd = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
+        self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
+
+    def tick_update_progress(self):
+        elapsed = int(time.time() - self.update_start_time)
+        if self.update_progress_val < 95:
+            self.update_progress_val += 3
+            if self.update_progress_val > 95:
+                self.update_progress_val = 95
+        
+        try:
+            if ProgressBar:
+                self["progress"].setValue(self.update_progress_val)
+            self["percentage"].setText("%d%%" % self.update_progress_val)
+            self["size"].setText("%ds" % elapsed)
+            self["speed"].setText("Updating")
+            self["status"].setText("Updating system (%d%%)..." % self.update_progress_val)
+        except:
+            pass
+
     def updateAnswer(self, answer):
         if answer:
-            self["description"].setText("Downloading and installing self-update...\nPlease wait...")
-            update_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/MohamedStore/plugin.py"
-            dest_path = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/plugin.py"
-            temp_path = "/tmp/plugin.py"
-            
-            cmd = (
-                "rm -f {temp_path} && "
-                "(wget --no-check-certificate -O {temp_path} '{update_url}' || curl -k -L -o {temp_path} '{update_url}') && "
-                "[ -s {temp_path} ] && grep -q 'class MohamedStore' {temp_path} && "
-                "mv -f {temp_path} {dest_path} && "
-                "rm -f {dest_path}c {dest_path}o && "
-                "rm -rf /usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/__pycache__"
-            ).format(temp_path=temp_path, update_url=update_url, dest_path=dest_path)
-            
-            self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
+            self.run_update()
         else:
             self.load_store()
 
     def update_finished(self, result, retval, extra_args=None):
+        if hasattr(self, 'update_timer') and self.update_timer:
+            try:
+                self.update_timer.stop()
+            except:
+                pass
+        
+        try:
+            if ProgressBar:
+                self["progress"].setValue(100)
+            self["percentage"].setText("100%")
+            self["status"].setText("Update Complete!")
+        except:
+            pass
+
         if retval == 0:
             self.session.openWithCallback(
                 self.restartGUICallback,
@@ -458,6 +646,14 @@ class MohamedStore(Screen):
             self["description"].setText(
                 "Self-Update Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
             )
+            try:
+                self["progress"].hide()
+                self["percentage"].hide()
+                self["speed"].hide()
+                self["size"].hide()
+                self["status"].hide()
+            except:
+                pass
 
     def restartGUICallback(self, answer):
         if answer:
@@ -484,7 +680,7 @@ class MohamedStore(Screen):
                 self["description"].setText("Failed to load store data from GitHub.")
                 return
             
-            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3"))
+            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.1"))
             self.setTitle(store_title)
             
             self.store_data = data["categories"]
@@ -565,16 +761,28 @@ class MohamedStore(Screen):
                 self["description"].setText("No items found in this section.")
                 return
             
-            list_names = []
+            cat_idx = self["categories_list"].getSelectionIndex()
+            category_id = self.categories[cat_idx] if (cat_idx >= 0 and cat_idx < len(self.categories)) else "unknown"
+
+            display_items = []
             for item in self.visible_items:
                 if "items" in item and isinstance(item["items"], list):
-                    list_names.append("> " + str(item.get("name", "Unknown Folder")))
+                    display_text = "> " + str(item.get("name", "Unknown Folder"))
                 elif item.get("type") == "tool":
-                    list_names.append(item.get("name", "Unknown Tool"))
+                    display_text = str(item.get("name", "Unknown Tool"))
                 else:
-                    list_names.append("%s  (v%s)" % (str(item.get("name", "Unknown")), str(item.get("version", "1.0"))))
+                    ver = item.get("version")
+                    if ver:
+                        display_text = "%s  (v%s)" % (str(item.get("name", "Unknown")), str(ver))
+                    else:
+                        display_text = str(item.get("name", "Unknown"))
+
+                if self.items_list_has_multicontent:
+                    display_items.append((item, display_text, category_id))
+                else:
+                    display_items.append(display_text)
             
-            self["items_list"].setList(list_names)
+            self["items_list"].setList(display_items)
             self.item_changed()
         except Exception as e:
             self["description"].setText("Update Items List Error: " + str(e))
@@ -1043,7 +1251,7 @@ class MohamedStore(Screen):
                 if TryQuitMainloop:
                     self.session.open(TryQuitMainloop, 3)
                 else:
-                    enigma.quitMainloop(3)
+                    enigma2.quitMainloop(3) if 'enigma2' in globals() else enigma.quitMainloop(3)
             except:
                 try:
                     enigma.quitMainloop(3)
@@ -1053,7 +1261,7 @@ class MohamedStore(Screen):
                     except:
                         pass
         else:
-            self["description"].HeaderText = "Installation completed successfully. Restart skipped."
+            self["description"].setText("Installation completed successfully. Restart skipped.")
 
 def main(session, **kwargs):
     session.open(MohamedStore)
