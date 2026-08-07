@@ -130,7 +130,7 @@
                     {
                         "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
                         "version": "By",
-                        "description": "Egami Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     }
@@ -142,7 +142,7 @@
                     {
                         "name": "Copper-FHD-v1.0-MNASR",
                         "version": "1.0",
-                        "description": "OpenATV Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/Copper-FHD-v1.0-MNASR.tar.gz",
                         "image": ""
                     },
@@ -156,7 +156,7 @@
                     {
                         "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
                         "version": "1.0",
-                        "description": "OpenATV Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
@@ -170,7 +170,7 @@
                     {
                         "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
                         "version": "By",
-                        "description": "OpenATV Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     }
