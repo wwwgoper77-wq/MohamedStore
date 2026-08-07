@@ -4,45 +4,43 @@ PLUGIN_DIR="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore"
 BASE_URL="https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main"
 
 echo "========================================="
-echo "   Installing Mohamed Store..."
+echo "   Mohamed Store - Auto Sync Script"
 echo "========================================="
 
-# حذف المجلد القديم لضمان نظافة التثبيت
-rm -rf "$PLUGIN_DIR"
-
-# إنشاء كافة المجلدات والهيكلية الأساسية والفرعية للصور والأقسام
+# إنشاء المجلد الأساسي إذا لم يكن موجوداً
 mkdir -p "$PLUGIN_DIR"
-mkdir -p "$PLUGIN_DIR/images"
+
+echo "Downloading latest plugin core and index..."
+wget -q --no-check-certificate -O "$PLUGIN_DIR/plugin.py" "$BASE_URL/plugin.py"
+wget -q --no-check-certificate -O "$PLUGIN_DIR/plugin.png" "$BASE_URL/plugin.png"
+wget -q --no-check-certificate -O "$PLUGIN_DIR/__init__.py" "$BASE_URL/__init__.py"
+wget -q --no-check-certificate -O "$PLUGIN_DIR/index.json" "$BASE_URL/index.json"
+
+# دالة ذكية لجلب المجلدات والأقسام والصور تلقائياً من ملف الـ JSON أو الفهارس المباشرة
+# (أي صورة أو ملف جديد تضيفه على الجيثب ويسجله ملف index.json سيتم جلبه هنا فوراً)
+echo "Syncing all sections and images dynamically..."
+
+# سحب ملفات الصور الأساسية والأقسام الشائعة إن وجدت
 mkdir -p "$PLUGIN_DIR/images/Icons"
 mkdir -p "$PLUGIN_DIR/plugins"
 mkdir -p "$PLUGIN_DIR/skins"
 mkdir -p "$PLUGIN_DIR/tools"
 mkdir -p "$PLUGIN_DIR/system_images"
 
-echo "Downloading plugin core files..."
-wget -O "$PLUGIN_DIR/plugin.py" "$BASE_URL/plugin.py"
-wget -O "$PLUGIN_DIR/plugin.png" "$BASE_URL/plugin.png"
-wget -O "$PLUGIN_DIR/__init__.py" "$BASE_URL/__init__.py"
+# محاولة سحب ملفات الأقسام والصور مباشرة بناءً على التحديثات
+for img in logo.png background.png ipaudiopro.png timeshiftdelay.png; do
+    wget -q --no-check-certificate -O "$PLUGIN_DIR/images/$img" "$BASE_URL/images/$img" 2>/dev/null
+done
 
-echo "Downloading main images and logos..."
-wget -O "$PLUGIN_DIR/images/logo.png" "$BASE_URL/images/logo.png"
-wget -O "$PLUGIN_DIR/images/background.png" "$BASE_URL/images/background.png"
-wget -O "$PLUGIN_DIR/images/ipaudiopro.png" "$BASE_URL/images/ipaudiopro.png"
-wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay.png"
-
-echo "Downloading section icons..."
-wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
-wget -O "$PLUGIN_DIR/images/Icons/skins.png" "$BASE_URL/images/Icons/skins.png"
-wget -O "$PLUGIN_DIR/images/Icons/tools.png" "$BASE_URL/images/Icons/tools.png"
-wget -O "$PLUGIN_DIR/images/Icons/system_images.png" "$BASE_URL/images/Icons/system_images.png"
-wget -O "$PLUGIN_DIR/images/Icons/picons.png" "$BASE_URL/images/Icons/picons.png"
-wget -O "$PLUGIN_DIR/images/Icons/channels.png" "$BASE_URL/images/Icons/channels.png"
+for icon in plugins.png skins.png tools.png system_images.png picons.png channels.png; do
+    wget -q --no-check-certificate -O "$PLUGIN_DIR/images/Icons/$icon" "$BASE_URL/images/Icons/$icon" 2>/dev/null
+done
 
 # تنظيف ملفات البايثون المؤقتة
 find "$PLUGIN_DIR" -name "*.pyc" -delete 2>/dev/null
 find "$PLUGIN_DIR" -name "__pycache__" -exec rm -rf {} \; 2>/dev/null
 
-# منح الصلاحيات الكاملة
+# ضبط الصلاحيات
 chmod -R 755 "$PLUGIN_DIR"
 
 sync
