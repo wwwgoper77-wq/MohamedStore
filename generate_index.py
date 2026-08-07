@@ -29,14 +29,13 @@ try:
             old = json.load(f)
 
         for cat, items in old.get("categories", {}).items():
-            if isinstance(items, list):
-                for entry in items:
-                    if isinstance(entry, dict) and "items" in entry and isinstance(entry["items"], list):
-                        for it in entry["items"]:
-                            if isinstance(it, dict):
-                                old_descriptions[it.get("name","")] = it.get("description","")
-                    elif isinstance(entry, dict):
-                        old_descriptions[entry.get("name","")] = entry.get("description","")
+            if cat == "skins":
+                for folder in items:
+                    for it in folder.get("items", []):
+                        old_descriptions[it.get("name","")] = it.get("description","")
+            else:
+                for it in items:
+                    old_descriptions[it.get("name","")] = it.get("description","")
 except:
     pass
 
@@ -221,122 +220,48 @@ for filename in sorted(tools_list):
 
 
 # -------------------------------------------------
-# System Images (دعم المجلدات الفرعية للأجهزة والصور مثل OpenATV, EGAMI, إلخ)
+# System Images (محدث ليكون دقيقاً تماماً ولا يلتقط السكينات)
 # -------------------------------------------------
 
-sys_folders = {}
-flat_sys_items = []
-
+sys_list = []
 if os.path.isdir("system_images"):
-    # 1. فحص المجلدات الفرعية داخل system_images
-    for entry in sorted(os.listdir("system_images")):
-        entry_path = os.path.join("system_images", entry)
-        if os.path.isdir(entry_path):
-            folder = entry
-            items = []
-            for filename in sorted(os.listdir(entry_path)):
-                if filename.endswith((".zip", ".tar.gz", ".img", ".nfi")):
-                    if filename.endswith(".tar.gz"):
-                        clean = filename[:-7]
-                    else:
-                        clean = os.path.splitext(filename)[0]
+    for filename in sorted(os.listdir("system_images")):
+        if filename.endswith((".zip", ".tar.gz", ".img", ".nfi")):
+            sys_list.append(filename)
 
-                    version = clean.split("_")[-2] if "_" in clean else "1.0"
-                    image_name = clean.split("_")[0]
-
-                    file_path_url = f"{BASE_URL}/system_images/{folder}/{filename}"
-                    for asset in release_assets_pool:
-                        if asset["filename"] == filename:
-                            file_path_url = asset["url"]
-                            break
-
-                    items.append({
-                        "name": clean,
-                        "version": version,
-                        "description": old_descriptions.get(clean, f"{folder} System Image"),
-                        "file": file_path_url,
-                        "image": image_url(image_name)
-                    })
-
-            sys_folders[folder] = items
-
-        elif os.path.isfile(entry_path) and entry.endswith((".zip", ".tar.gz", ".img", ".nfi")):
-            filename = entry
-            if filename.endswith(".tar.gz"):
-                clean = filename[:-7]
-            else:
-                clean = os.path.splitext(filename)[0]
-
-            version = clean.split("_")[-2] if "_" in clean else "1.0"
-            image_name = clean.split("_")[0]
-
-            file_path_url = f"{BASE_URL}/system_images/{filename}"
-            for asset in release_assets_pool:
-                if asset["filename"] == filename:
-                    file_path_url = asset["url"]
-                    break
-
-            flat_sys_items.append({
-                "name": clean,
-                "version": version,
-                "description": old_descriptions.get(clean, ""),
-                "file": file_path_url,
-                "image": image_url(image_name)
-            })
-
-# 2. فحص GitHub Releases المتاحة وصورة النظام
 for asset in release_assets_pool:
     fname = asset["filename"]
     lower_f = fname.lower()
+    # تأكيد صارم: يجب أن يكون الملف صورة نظام حقيقية ولا يحتوي على كلمة skin
     if "skin" in lower_f or "picon" in lower_f or "plugin" in lower_f or "tool" in lower_f:
         continue
     
     if any(img_kw in lower_f for img_kw in ["egami", "openatv", "blackhole", "vti", "pure2", "openpli", "openblack", "vu+"]):
-        if fname.endswith((".zip", ".tar.gz", ".img", ".nfi")):
-            if fname.endswith(".tar.gz"):
-                clean = fname[:-7]
-            else:
-                clean = os.path.splitext(fname)[0]
+        if fname not in sys_list:
+            sys_list.append(fname)
 
-            added = False
-            for folder, f_items in sys_folders.items():
-                if any(it["name"] == clean for it in f_items):
-                    added = True
-                    break
-            if not added and any(it["name"] == clean for it in flat_sys_items):
-                added = True
+for filename in sorted(sys_list):
+    if filename.endswith(".tar.gz"):
+        clean = filename[:-7]
+    else:
+        clean = os.path.splitext(filename)[0]
 
-            if not added:
-                target_folder = None
-                for folder in sys_folders:
-                    if folder.lower() in lower_f:
-                        target_folder = folder
-                        break
-                
-                version = clean.split("_")[-2] if "_" in clean else "1.0"
-                image_name = clean.split("_")[0]
-                item_obj = {
-                    "name": clean,
-                    "version": version,
-                    "description": old_descriptions.get(clean, ""),
-                    "file": asset["url"],
-                    "image": image_url(image_name)
-                }
+    version = clean.split("_")[-2] if "_" in clean else "1.0"
+    image_name = clean.split("_")[0]
 
-                if target_folder:
-                    sys_folders[target_folder].append(item_obj)
-                else:
-                    flat_sys_items.append(item_obj)
+    file_path_url = f"{BASE_URL}/system_images/{filename}"
+    for asset in release_assets_pool:
+        if asset["filename"] == filename:
+            file_path_url = asset["url"]
+            break
 
-for folder in sorted(sys_folders.keys()):
-    if sys_folders[folder]:
-        data["categories"]["system_images"].append({
-            "name": folder,
-            "items": sys_folders[folder]
-        })
-
-for item in flat_sys_items:
-    data["categories"]["system_images"].append(item)
+    data["categories"]["system_images"].append({
+        "name": clean,
+        "version": version,
+        "description": old_descriptions.get(clean,""),
+        "file": file_path_url,
+        "image": image_url(image_name)
+    })
 
 
 # -------------------------------------------------
