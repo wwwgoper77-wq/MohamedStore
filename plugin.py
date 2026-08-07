@@ -3,6 +3,7 @@
 # Mohamed Store - Modern Grid Dashboard Edition v1.3.1
 # Python 2 & Python 3 fully compatible
 # Multi-Content Item & Category Icon Rendering Supported
+# Updated Blue Key with Telnet Install Script Execution
 # ==========================================
 
 from Plugins.Plugin import PluginDescriptor
@@ -65,6 +66,7 @@ except ImportError:
 
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
+UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
 PLUGIN_VERSION = "1.3.1"
 
 try:
@@ -85,7 +87,7 @@ BUILTIN_SYSTEM_TOOLS = [
         "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
         "type": "tool",
         "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
-        "description": u"\u062d\u0630\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
+        "description": u"\u062d\u0632\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
     },
     {
         "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
@@ -282,21 +284,25 @@ class MohamedStore(Screen):
     <eLabel position="1700,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
     <eLabel position="20,903" size="1684,2" backgroundColor="#be185d" zPosition="1" />
 
+    <!-- Red Button: Exit -->
     <eLabel position="40,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="40,824" size="6,68" backgroundColor="#ef4444" zPosition="2" />
     <widget name="key_red" position="58,824" size="365,68" font="Regular;32" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
+    <!-- Green Button: Install -->
     <eLabel position="451,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="451,824" size="6,68" backgroundColor="#22c55e" zPosition="2" />
     <widget name="key_green" position="469,824" size="365,68" font="Regular;32" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
+    <!-- Yellow Button: Refresh Store -->
     <eLabel position="862,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="862,824" size="6,68" backgroundColor="#eab308" zPosition="2" />
-    <eLabel position="880,824" size="365,68" text="Refresh Store" font="Regular;32" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_yellow" position="880,824" size="365,68" font="Regular;32" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
+    <!-- Blue Button: Update Script -->
     <eLabel position="1273,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="1273,824" size="6,68" backgroundColor="#c084fc" zPosition="2" />
-    <eLabel position="1291,824" size="365,68" text="Check Update" font="Regular;32" foregroundColor="#c084fc" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <eLabel position="1273,824" size="6,68" backgroundColor="#2563eb" zPosition="2" />
+    <widget name="key_blue" position="1291,824" size="365,68" font="Regular;32" foregroundColor="#60a5fa" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 </screen>
 """
 
@@ -326,7 +332,7 @@ class MohamedStore(Screen):
         else:
             self["categories_list"] = MenuList([])
 
-        # Setup Items List MultiContent (NEW in v1.3.1 for item icons)
+        # Setup Items List MultiContent
         self.items_list_has_multicontent = False
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
@@ -353,6 +359,8 @@ class MohamedStore(Screen):
         self["device_label"] = Label(self.get_device_and_image_info())
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
+        self["key_yellow"] = Label("Refresh Store")
+        self["key_blue"] = Label("Update Store")
         
         if ProgressBar:
             self["progress"] = ProgressBar()
@@ -409,6 +417,8 @@ class MohamedStore(Screen):
             "cancel": self.go_back,
             "red": self.red_key_pressed,
             "green": self.download,
+            "yellow": self.load_store,
+            "blue": self.manual_update,
             "ok": self.press_ok,
             "up": self.go_up,
             "down": self.go_down,
@@ -483,9 +493,6 @@ class MohamedStore(Screen):
         return res
 
     def build_item_entry(self, *args):
-        """
-        Renders item entry with custom thumbnail/icon image next to name.
-        """
         if len(args) == 1 and isinstance(args[0], tuple):
             item, display_text, category_id = args[0]
         elif len(args) >= 3:
@@ -509,7 +516,6 @@ class MohamedStore(Screen):
 
         res = [item]
         
-        # Item height in skin is 76px.
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
             res.append(MultiContentEntryPixmapAlphaTest(pos=(10, 10), size=(56, 56), png=pixmap))
             text_x = 78
@@ -557,22 +563,26 @@ class MohamedStore(Screen):
             
         self.load_store()
 
+    def manual_update(self):
+        self.session.openWithCallback(
+            self.run_install_script,
+            MessageBox,
+            "Do you want to update Mohamed Store using online script?",
+            MessageBox.TYPE_YESNO
+        )
+
+    def run_install_script(self, answer):
+        if answer:
+            self["description"].setText("Updating Mohamed Store via Online Script...\nPlease wait...")
+            cmd = UPDATE_SCRIPT_CMD
+            self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
+        else:
+            self.load_store()
+
     def updateAnswer(self, answer):
         if answer:
-            self["description"].setText("Downloading and installing self-update...\nPlease wait...")
-            update_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/MohamedStore/plugin.py"
-            dest_path = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/plugin.py"
-            temp_path = "/tmp/plugin.py"
-            
-            cmd = (
-                "rm -f {temp_path} && "
-                "(wget --no-check-certificate -O {temp_path} '{update_url}' || curl -k -L -o {temp_path} '{update_url}') && "
-                "[ -s {temp_path} ] && grep -q 'class MohamedStore' {temp_path} && "
-                "mv -f {temp_path} {dest_path} && "
-                "rm -f {dest_path}c {dest_path}o && "
-                "rm -rf /usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/__pycache__"
-            ).format(temp_path=temp_path, update_url=update_url, dest_path=dest_path)
-            
+            self["description"].setText("Downloading and installing update via script...\nPlease wait...")
+            cmd = UPDATE_SCRIPT_CMD
             self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
         else:
             self.load_store()
@@ -582,11 +592,11 @@ class MohamedStore(Screen):
             self.session.openWithCallback(
                 self.restartGUICallback,
                 MessageBox,
-                "Mohamed Store updated successfully!\n\nRestart GUI now?",
+                "Mohamed Store updated successfully via script!\n\nRestart GUI now?",
                 MessageBox.TYPE_YESNO
             )
         else:
-            error = result.strip() if result else "Unknown network or file validation error"
+            error = result.strip() if result else "Unknown network or execution error"
             self["description"].setText(
                 "Self-Update Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
             )
