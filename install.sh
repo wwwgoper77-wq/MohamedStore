@@ -7,33 +7,42 @@ echo "========================================="
 echo "   Installing Mohamed Store..."
 echo "========================================="
 
-# حذف المجلد القديم بالكامل لضمان نظافة التثبيت
+# حذف المجلد القديم لضمان نظافة التثبيت
 rm -rf "$PLUGIN_DIR"
-mkdir -p "$PLUGIN_DIR"
 
-echo "Downloading plugin core..."
+# إنشاء كافة المجلدات والهيكلية الأساسية والفرعية للصور والأقسام
+mkdir -p "$PLUGIN_DIR"
+mkdir -p "$PLUGIN_DIR/images"
+mkdir -p "$PLUGIN_DIR/images/Icons"
+mkdir -p "$PLUGIN_DIR/plugins"
+mkdir -p "$PLUGIN_DIR/skins"
+mkdir -p "$PLUGIN_DIR/tools"
+mkdir -p "$PLUGIN_DIR/system_images"
+
+echo "Downloading plugin core files..."
 wget -O "$PLUGIN_DIR/plugin.py" "$BASE_URL/plugin.py"
 wget -O "$PLUGIN_DIR/plugin.png" "$BASE_URL/plugin.png"
 wget -O "$PLUGIN_DIR/__init__.py" "$BASE_URL/__init__.py"
 
-echo "Downloading all files and sections archive..."
-# سحب الملف المضغوط الذي يجمعه GitHub Actions
-wget -q --no-check-certificate -O "/tmp/store_files.tar.gz" "$BASE_URL/store_files.tar.gz"
+echo "Downloading main images and logos..."
+wget -O "$PLUGIN_DIR/images/logo.png" "$BASE_URL/images/logo.png"
+wget -O "$PLUGIN_DIR/images/background.png" "$BASE_URL/images/background.png"
+wget -O "$PLUGIN_DIR/images/ipaudiopro.png" "$BASE_URL/images/ipaudiopro.png"
+wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay.png"
 
-if [ -s "/tmp/store_files.tar.gz" ]; then
-    # فك الضغط مباشرة داخل مجلد البلاجن
-    tar -xzf "/tmp/store_files.tar.gz" -C "$PLUGIN_DIR/"
-    rm -f "/tmp/store_files.tar.gz"
-    echo "All files and sections extracted successfully."
-else
-    echo "Error: Failed to download archive!"
-fi
+echo "Downloading section icons..."
+wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
+wget -O "$PLUGIN_DIR/images/Icons/skins.png" "$BASE_URL/images/Icons/skins.png"
+wget -O "$PLUGIN_DIR/images/Icons/tools.png" "$BASE_URL/images/Icons/tools.png"
+wget -O "$PLUGIN_DIR/images/Icons/system_images.png" "$BASE_URL/images/Icons/system_images.png"
+wget -O "$PLUGIN_DIR/images/Icons/picons.png" "$BASE_URL/images/Icons/picons.png"
+wget -O "$PLUGIN_DIR/images/Icons/channels.png" "$BASE_URL/images/Icons/channels.png"
 
-# تنظيف الملفات المؤقتة وبقايا البايثون
+# تنظيف ملفات البايثون المؤقتة
 find "$PLUGIN_DIR" -name "*.pyc" -delete 2>/dev/null
 find "$PLUGIN_DIR" -name "__pycache__" -exec rm -rf {} \; 2>/dev/null
 
-# منح الصلاحيات الصحيحة للمجلدات والملفات
+# منح الصلاحيات الكاملة
 chmod -R 755 "$PLUGIN_DIR"
 
 sync
