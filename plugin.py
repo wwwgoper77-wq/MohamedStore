@@ -381,6 +381,7 @@ class MohamedStore(Screen):
             pass
 
         self.download_in_progress = False
+        self.download_is_update_script = False
         self.download_url = ""
         self.download_dest_path = ""
         self.download_aborted = False
@@ -573,21 +574,70 @@ class MohamedStore(Screen):
 
     def run_install_script(self, answer):
         if answer:
-            self["description"].setText("Updating Mohamed Store via Online Script...\nPlease wait...")
-            cmd = UPDATE_SCRIPT_CMD
-            self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
+            self.start_script_update()
         else:
             self.load_store()
 
     def updateAnswer(self, answer):
         if answer:
-            self["description"].setText("Downloading and installing update via script...\nPlease wait...")
-            cmd = UPDATE_SCRIPT_CMD
-            self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
+            self.start_script_update()
         else:
             self.load_store()
 
+    def start_script_update(self):
+        self.install_cmd = "chmod +x /tmp/install.sh && /tmp/install.sh && rm -f /tmp/install.sh"
+        self.install_item_name = "Mohamed Store Update Script"
+        self.download_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh"
+        self.download_dest_path = "/tmp/install.sh"
+        self.download_is_update_script = True
+        self.download_aborted = False
+        self.download_completed = False
+        self.download_error_msg = ""
+        self.download_total_bytes = 0
+        self.downloaded_bytes = 0
+        self.download_start_time = time.time()
+        self.download_last_update_bytes = 0
+        self.download_last_update_time = self.download_start_time
+        self.download_current_speed = 0.0
+
+        self["description"].setText("Downloading update script...\nProgress & counter active.\nPress RED or BACK to cancel.")
+        self["key_red"].setText("Cancel")
+
+        try:
+            self["progress"].show()
+            self["percentage"].show()
+            self["speed"].show()
+            self["size"].show()
+            self["status"].show()
+
+            self["progress"].setValue(0)
+            self["percentage"].setText("0%")
+            self["speed"].setText("0 KB/s")
+            self["size"].setText("Downloading script...")
+            self["status"].setText("Updating plugin...")
+        except:
+            pass
+
+        self.download_in_progress = True
+
+        if self.download_timer:
+            self.download_timer.start(100, False)
+
+        self.download_thread_obj = threading.Thread(target=self.start_download_thread)
+        self.download_thread_obj.daemon = True
+        self.download_thread_obj.start()
+
     def update_finished(self, result, retval, extra_args=None):
+        try:
+            self["progress"].hide()
+            self["percentage"].hide()
+            self["speed"].hide()
+            self["size"].hide()
+            self["status"].hide()
+        except:
+            pass
+        self["key_red"].setText("Exit")
+
         if retval == 0:
             self.session.openWithCallback(
                 self.restartGUICallback,
@@ -935,6 +985,7 @@ class MohamedStore(Screen):
                 
                 self.download_url = url
                 self.download_dest_path = dest_path
+                self.download_is_update_script = False
                 self.download_aborted = False
                 self.download_completed = False
                 self.download_error_msg = ""
@@ -1110,24 +1161,35 @@ class MohamedStore(Screen):
             if self.download_timer:
                 self.download_timer.stop()
             
-            try:
-                self["progress"].hide()
-                self["percentage"].hide()
-                self["speed"].hide()
-                self["size"].hide()
-                self["status"].hide()
-            except:
-                pass
+            if self.download_is_update_script:
+                self.download_is_update_script = False
+                self["description"].setText("Executing Mohamed Store Update Script...\nPlease wait...")
+                try:
+                    self["progress"].setValue(100)
+                    self["percentage"].setText("100%")
+                    self["status"].setText("Executing install.sh...")
+                except:
+                    pass
+                self.my_console.ePopen(self.install_cmd + " 2>&1", self.update_finished)
+            else:
+                try:
+                    self["progress"].hide()
+                    self["percentage"].hide()
+                    self["speed"].hide()
+                    self["size"].hide()
+                    self["status"].hide()
+                except:
+                    pass
+                    
+                self["key_red"].setText("Exit")
+                self["description"].setText("Download completed successfully!")
                 
-            self["key_red"].setText("Exit")
-            self["description"].setText("Download completed successfully!")
-            
-            self.session.openWithCallback(
-                self.install_confirmation_callback,
-                MessageBox,
-                "Download completed successfully.\n\nDo you want to install it now?",
-                MessageBox.TYPE_YESNO
-            )
+                self.session.openWithCallback(
+                    self.install_confirmation_callback,
+                    MessageBox,
+                    "Download completed successfully.\n\nDo you want to install it now?",
+                    MessageBox.TYPE_YESNO
+                )
             
         elif self.download_error_msg:
             self.download_in_progress = False
