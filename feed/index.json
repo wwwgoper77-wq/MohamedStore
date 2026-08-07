@@ -67,6 +67,13 @@
                 "image": ""
             },
             {
+                "name": "RaedQuickSignal",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
+                "image": ""
+            },
+            {
                 "name": "YouTube",
                 "version": "1.0",
                 "description": "يوتيوب بلجن بايثون 3.13.12 ",
