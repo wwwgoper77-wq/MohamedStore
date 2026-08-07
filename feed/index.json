@@ -27,7 +27,7 @@
             {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن جدول مباريات بايثون 3.13.12",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             },
@@ -342,49 +342,49 @@
             {
                 "name": "picon-13E",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات هوت بيرد 13 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon-13E.zip",
                 "image": ""
             },
             {
                 "name": "picon_16.0E",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات قمر 16 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
                 "image": ""
             },
             {
                 "name": "picon_26",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات قمر بدر",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
                 "image": ""
             },
             {
                 "name": "picon_39E",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات قمر هيلاسات ",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_39E.zip",
                 "image": ""
             },
             {
                 "name": "picon_8.0W",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات قمر 8 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_8.0W.zip",
                 "image": ""
             },
             {
                 "name": "picon_AL.part1",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات كاملة قمر متحرك",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part1.zip",
                 "image": ""
             },
             {
                 "name": "picon_AL.part2",
                 "version": "1.0",
-                "description": "",
+                "description": "بيكونات كاملة قمر متحرك",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part2.zip",
                 "image": ""
             }
