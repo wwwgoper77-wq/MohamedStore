@@ -64,7 +64,6 @@ except ImportError:
     ProgressBar = None
 
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
-DATA_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/data.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 PLUGIN_VERSION = "1.3.1"
 
@@ -188,21 +187,7 @@ def get_item_icon_path(item, category_id):
     return None
 
 
-def load_json(url_or_path):
-    if not url_or_path:
-        return None
-
-    # Handle local file path directly
-    if not url_or_path.startswith("http://") and not url_or_path.startswith("https://"):
-        if os.path.exists(url_or_path):
-            try:
-                with open(url_or_path, "r") as f:
-                    content = f.read()
-                return json.loads(content)
-            except Exception as e:
-                print("[MohamedStore] load_json local file error: " + str(e))
-        return None
-
+def load_json(url):
     try:
         if sys.version_info >= (3, 0):
             import urllib.request as urllib2
@@ -216,7 +201,7 @@ def load_json(url_or_path):
             except AttributeError:
                 context = None
         
-        req = urllib2.Request(url_or_path, headers={'User-Agent': 'Mozilla/5.0'})
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         if context:
             response = urllib2.urlopen(req, timeout=12, context=context)
         else:
@@ -224,38 +209,9 @@ def load_json(url_or_path):
         data = response.read()
         if isinstance(data, bytes):
             data = data.decode('utf-8')
-
-        parsed = json.loads(data)
-
-        # Cache downloaded content to /tmp for fast offline fallback and DCC inspection
-        try:
-            if "version.json" in url_or_path:
-                with open("/tmp/version.json", "w") as f:
-                    f.write(data)
-            elif "data.json" in url_or_path or "index.json" in url_or_path or "feed" in url_or_path:
-                with open("/tmp/data.json", "w") as f:
-                    f.write(data)
-        except Exception as se:
-            print("[MohamedStore] Cache write error: " + str(se))
-
-        return parsed
+        return json.loads(data)
     except Exception as e:
         print("[MohamedStore] load_json error: " + str(e))
-
-        # Fallback to local /tmp files if remote fetch fails
-        if "version.json" in url_or_path and os.path.exists("/tmp/version.json"):
-            try:
-                with open("/tmp/version.json", "r") as f:
-                    return json.loads(f.read())
-            except:
-                pass
-        elif ("data.json" in url_or_path or "index.json" in url_or_path or "feed" in url_or_path) and os.path.exists("/tmp/data.json"):
-            try:
-                with open("/tmp/data.json", "r") as f:
-                    return json.loads(f.read())
-            except:
-                pass
-
         return None
 
 
@@ -276,7 +232,7 @@ class MohamedStore(Screen):
     <ePixmap position="35,25" size="230,50" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" transparent="1" alphatest="blend" />
     <eLabel position="285,34" size="260,35" text="MOHAMED STORE" font="Regular;28" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <widget name="device_label" position="560,34" size="940,35" font="Regular;24" foregroundColor="#c084fc" backgroundColor="#0f111a" transparent="1" />
-    <widget name="version_label" position="1550,30" size="130,40" font="Regular;26" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+    <eLabel position="1550,30" size="130,40" text=" v1.3.1 " font="Regular;26" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
 
     <!-- LEFT PANEL: CATEGORIES -->
     <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
@@ -336,11 +292,11 @@ class MohamedStore(Screen):
 
     <eLabel position="862,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="862,824" size="6,68" backgroundColor="#eab308" zPosition="2" />
-    <widget name="key_yellow" position="880,824" size="365,68" font="Regular;32" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <eLabel position="880,824" size="365,68" text="Refresh Store" font="Regular;32" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
     <eLabel position="1273,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="1273,824" size="6,68" backgroundColor="#3b82f6" zPosition="2" />
-    <widget name="key_blue" position="1291,824" size="365,68" font="Regular;32" foregroundColor="#60a5fa" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+    <eLabel position="1273,824" size="6,68" backgroundColor="#c084fc" zPosition="2" />
+    <eLabel position="1291,824" size="365,68" text="Check Update" font="Regular;32" foregroundColor="#c084fc" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 </screen>
 """
 
@@ -393,14 +349,10 @@ class MohamedStore(Screen):
         else:
             self["items_list"] = MenuList([])
 
-        self.current_version = PLUGIN_VERSION
-        self["version_label"] = Label(" v" + self.current_version + " ")
         self["description"] = Label("Checking for updates...")
         self["device_label"] = Label(self.get_device_and_image_info())
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
-        self["key_yellow"] = Label("Refresh Store")
-        self["key_blue"] = Label("Update Store")
         
         if ProgressBar:
             self["progress"] = ProgressBar()
@@ -457,8 +409,6 @@ class MohamedStore(Screen):
             "cancel": self.go_back,
             "red": self.red_key_pressed,
             "green": self.download,
-            "yellow": self.load_store,
-            "blue": self.run_update,
             "ok": self.press_ok,
             "up": self.go_up,
             "down": self.go_down,
@@ -592,124 +542,47 @@ class MohamedStore(Screen):
     def check_for_updates(self):
         try:
             ver_data = load_json(VERSION_URL)
-            if ver_data and ("plugin_version" in ver_data or "version" in ver_data):
-                online_version = str(ver_data.get("plugin_version") or ver_data.get("version"))
-                if online_version:
-                    if self.is_newer_version(online_version, self.current_version):
-                        self.session.openWithCallback(
-                            self.updateAnswer,
-                            MessageBox,
-                            "A new update is available. Do you want to update?",
-                            MessageBox.TYPE_YESNO
-                        )
-                        return
+            if ver_data and "plugin_version" in ver_data:
+                online_version = str(ver_data["plugin_version"])
+                if self.is_newer_version(online_version, PLUGIN_VERSION):
+                    self.session.openWithCallback(
+                        self.updateAnswer,
+                        MessageBox,
+                        "A new version of Mohamed Store is available.\nDo you want to update now?",
+                        MessageBox.TYPE_YESNO
+                    )
+                    return
         except Exception as e:
             print("[MohamedStore] Update Check Exception: " + str(e))
             
         self.load_store()
 
-    def run_update(self):
-        self.update_progress_val = 0
-        self.update_start_time = time.time()
-        
-        self["description"].setText("Updating system, please wait...")
-        
-        try:
-            self["progress"].show()
-            self["percentage"].show()
-            self["speed"].show()
-            self["size"].show()
-            self["status"].show()
-            
-            self["progress"].setValue(0)
-            self["percentage"].setText("0%")
-            self["speed"].setText("Updating")
-            self["size"].setText("0s")
-            self["status"].setText("Updating system...")
-        except:
-            pass
-
-        self.update_timer = eTimer()
-        if self.update_timer:
-            try:
-                self.update_timer_conn = self.update_timer.timeout.connect(self.tick_update_progress)
-            except AttributeError:
-                try:
-                    self.update_timer.callback.append(self.tick_update_progress)
-                except:
-                    pass
-            self.update_timer.start(250, False)
-
-        plugin_dir = PLUGIN_DIR if PLUGIN_DIR else "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore"
-        base_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main"
-
-        cmd = (
-            'PDIR="%s"; ' % plugin_dir +
-            'BURL="%s"; ' % base_url +
-            'mkdir -p "$PDIR/images/Icons"; '
-            'wget -qO /tmp/version.json "$BURL/version.json" || true; '
-            'wget -qO /tmp/data.json "$BURL/data.json" || wget -qO /tmp/data.json "$BURL/feed/index.json" || true; '
-            'wget -qO "$PDIR/plugin.py" "$BURL/plugin.py"; '
-            'wget -qO "$PDIR/plugin.png" "$BURL/plugin.png" || true; '
-            'wget -qO "$PDIR/__init__.py" "$BURL/__init__.py" || true; '
-            'wget -qO "$PDIR/images/logo.png" "$BURL/images/logo.png" || true; '
-            'wget -qO "$PDIR/images/background.png" "$BURL/images/background.png" || true; '
-            'wget -qO "$PDIR/images/ipaudiopro.png" "$BURL/images/ipaudiopro.png" || true; '
-            'wget -qO "$PDIR/images/timeshiftdelay.png" "$BURL/images/timeshiftdelay.png" || true; '
-            'wget -qO "$PDIR/images/Icons/plugins.png" "$BURL/images/Icons/plugins.png" || true; '
-            'wget -qO "$PDIR/images/Icons/skins.png" "$BURL/images/Icons/skins.png" || true; '
-            'wget -qO "$PDIR/images/Icons/tools.png" "$BURL/images/Icons/tools.png" || true; '
-            'wget -qO "$PDIR/images/Icons/system_images.png" "$BURL/images/Icons/system_images.png" || true; '
-            'wget -qO "$PDIR/images/Icons/picons.png" "$BURL/images/Icons/picons.png" || true; '
-            'wget -qO "$PDIR/images/Icons/channels.png" "$BURL/images/Icons/channels.png" || true; '
-            'wget -O - "$BURL/install.sh" | sh || true'
-        )
-        self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
-
-    def tick_update_progress(self):
-        elapsed = int(time.time() - self.update_start_time)
-        if self.update_progress_val < 95:
-            self.update_progress_val += 3
-            if self.update_progress_val > 95:
-                self.update_progress_val = 95
-        
-        try:
-            if ProgressBar:
-                self["progress"].setValue(self.update_progress_val)
-            self["percentage"].setText("%d%%" % self.update_progress_val)
-            self["size"].setText("%ds" % elapsed)
-            self["speed"].setText("Updating")
-            self["status"].setText("Updating system (%d%%)..." % self.update_progress_val)
-        except:
-            pass
-
     def updateAnswer(self, answer):
         if answer:
-            self.run_update()
+            self["description"].setText("Downloading and installing self-update...\nPlease wait...")
+            update_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/MohamedStore/plugin.py"
+            dest_path = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/plugin.py"
+            temp_path = "/tmp/plugin.py"
+            
+            cmd = (
+                "rm -f {temp_path} && "
+                "(wget --no-check-certificate -O {temp_path} '{update_url}' || curl -k -L -o {temp_path} '{update_url}') && "
+                "[ -s {temp_path} ] && grep -q 'class MohamedStore' {temp_path} && "
+                "mv -f {temp_path} {dest_path} && "
+                "rm -f {dest_path}c {dest_path}o && "
+                "rm -rf /usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/__pycache__"
+            ).format(temp_path=temp_path, update_url=update_url, dest_path=dest_path)
+            
+            self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
         else:
             self.load_store()
 
     def update_finished(self, result, retval, extra_args=None):
-        if hasattr(self, 'update_timer') and self.update_timer:
-            try:
-                self.update_timer.stop()
-            except:
-                pass
-        
-        try:
-            if ProgressBar:
-                self["progress"].setValue(100)
-            self["percentage"].setText("100%")
-            self["status"].setText("Update Complete!")
-        except:
-            pass
-
         if retval == 0:
-            self.load_store()
             self.session.openWithCallback(
                 self.restartGUICallback,
                 MessageBox,
-                "Mohamed Store updated successfully!\nVersion v" + str(self.current_version) + " loaded.\n\nRestart GUI now?",
+                "Mohamed Store updated successfully!\n\nRestart GUI now?",
                 MessageBox.TYPE_YESNO
             )
         else:
@@ -717,14 +590,6 @@ class MohamedStore(Screen):
             self["description"].setText(
                 "Self-Update Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
             )
-            try:
-                self["progress"].hide()
-                self["percentage"].hide()
-                self["speed"].hide()
-                self["size"].hide()
-                self["status"].hide()
-            except:
-                pass
 
     def restartGUICallback(self, answer):
         if answer:
@@ -746,22 +611,12 @@ class MohamedStore(Screen):
 
     def load_store(self):
         try:
-            ver_data = load_json(VERSION_URL) or load_json("/tmp/version.json")
-            if ver_data and ("plugin_version" in ver_data or "version" in ver_data):
-                online_ver = str(ver_data.get("plugin_version") or ver_data.get("version"))
-                if online_ver:
-                    self.current_version = online_ver
-                    try:
-                        self["version_label"].setText(" v" + self.current_version + " ")
-                    except:
-                        pass
-
-            data = load_json(DATA_URL) or load_json(STORE_URL) or load_json("/tmp/data.json")
+            data = load_json(STORE_URL)
             if not data or "categories" not in data:
                 self["description"].setText("Failed to load store data from GitHub.")
                 return
             
-            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", self.current_version))
+            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.1"))
             self.setTitle(store_title)
             
             self.store_data = data["categories"]
