@@ -7,30 +7,28 @@ echo "========================================="
 echo "   Installing Mohamed Store..."
 echo "========================================="
 
+# حذف المجلد القديم لضمان نظافة التثبيت
 rm -rf "$PLUGIN_DIR"
-
 mkdir -p "$PLUGIN_DIR"
-mkdir -p "$PLUGIN_DIR/images"
-mkdir -p "$PLUGIN_DIR/images/Icons"
 
-echo "Downloading plugin files..."
-
+echo "Downloading plugin core..."
 wget -O "$PLUGIN_DIR/plugin.py" "$BASE_URL/plugin.py"
 wget -O "$PLUGIN_DIR/plugin.png" "$BASE_URL/plugin.png"
 wget -O "$PLUGIN_DIR/__init__.py" "$BASE_URL/__init__.py"
 
-wget -O "$PLUGIN_DIR/images/logo.png" "$BASE_URL/images/logo.png"
-wget -O "$PLUGIN_DIR/images/background.png" "$BASE_URL/images/background.png"
-wget -O "$PLUGIN_DIR/images/ipaudiopro.png" "$BASE_URL/images/ipaudiopro.png"
-wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay.png"
+echo "Downloading all updated files & assets from repository..."
+# سحب الملف المضغوط الشامل الذي يجهزه الـ GitHub Actions
+wget -q --no-check-certificate -O "/tmp/store_files.tar.gz" "$BASE_URL/store_files.tar.gz"
 
-wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
-wget -O "$PLUGIN_DIR/images/Icons/skins.png" "$BASE_URL/images/Icons/skins.png"
-wget -O "$PLUGIN_DIR/images/Icons/tools.png" "$BASE_URL/images/Icons/tools.png"
-wget -O "$PLUGIN_DIR/images/Icons/system_images.png" "$BASE_URL/images/Icons/system_images.png"
-wget -O "$PLUGIN_DIR/images/Icons/picons.png" "$BASE_URL/images/Icons/picons.png"
-wget -O "$PLUGIN_DIR/images/Icons/channels.png" "$BASE_URL/images/Icons/channels.png"
+if [ -s "/tmp/store_files.tar.gz" ]; then
+    tar -xzf "/tmp/store_files.tar.gz" -C "$PLUGIN_DIR/"
+    rm -f "/tmp/store_files.tar.gz"
+    echo "All files extracted successfully."
+else
+    echo "Error: Failed to download archive! Ensure Actions is running on GitHub."
+fi
 
+# تنظيف الملفات المؤقتة
 find "$PLUGIN_DIR" -name "*.pyc" -delete 2>/dev/null
 find "$PLUGIN_DIR" -name "__pycache__" -exec rm -rf {} \; 2>/dev/null
 
