@@ -41,29 +41,22 @@ except:
 
 
 def image_url(prefix):
-    """
-    Search automatically for an image beginning with prefix.
-    """
     if not os.path.isdir("images"):
         return ""
-
     prefix = prefix.lower()
-
     for file in sorted(os.listdir("images")):
         if file.lower().startswith(prefix) and file.lower().endswith(".png"):
             return f"{BASE_URL}/images/{file}"
-
     return ""
 
 
-# صيغ ملفات التثبيت المدعومة بالكامل
-EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv", ".img", ".nfi")
+# صيغ ملفات التثبيت العامة
+EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv", ".img", ".nfi", ".tar.xz")
 
 
 # -------------------------------------------------
 # Global Release Assets Fetcher
 # -------------------------------------------------
-
 release_assets_pool = []
 try:
     api = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
@@ -89,10 +82,199 @@ except Exception as e:
     print("GitHub Releases Fetch Error:", e)
 
 
-# -------------------------------------------------
-# Plugins
-# -------------------------------------------------
+# دالة مساعدة لتنظيف اسم الملف وإزالة الامتدادات المركبة
+def clean_filename(filename):
+    if filename.endswith(".tar.gz"):
+        return filename[:-7]
+    elif filename.endswith(".tar.xz"):
+        return filename[:-7]
+    else:
+        return os.path.splitext(filename)[0]
 
+
+# -------------------------------------------------
+# 1. System Images (صور النظام حصراً)
+# -------------------------------------------------
+sys_list = []
+if os.path.isdir("system_images"):
+    for filename in sorted(os.listdir("system_images")):
+        if filename.endswith((".zip", ".tar.gz", ".img", ".nfi", ".tar.xz")):
+            sys_list.append(filename)
+
+for asset in release_assets_pool:
+    fname = asset["filename"]
+    lower_f = fname.lower()
+    # استبعاد أي شيء ليس صورة نظام
+    if any(k in lower_f for k in ["skin", "picon", "plugin", "tool", "channel", "settings", "backup", "ncam", "oscam", "softcam", "script"]):
+        continue
+    # قبول ملفات الصور
+    if any(img_kw in lower_f for img_kw in ["egami", "openatv", "blackhole", "vti", "pure2", "openpli", "openblack", "vu+", "image", "firmware", "rootfs"]):
+        if fname not in sys_list:
+            sys_list.append(fname)
+
+for filename in sorted(sys_list):
+    clean = clean_filename(filename)
+    version = clean.split("_")[-2] if "_" in clean else "1.0"
+    image_name = clean.split("_")[0]
+
+    file_path_url = f"{BASE_URL}/system_images/{filename}"
+    for asset in release_assets_pool:
+        if asset["filename"] == filename:
+            file_path_url = asset["url"]
+            break
+
+    data["categories"]["system_images"].append({
+        "name": clean,
+        "version": version,
+        "description": old_descriptions.get(clean,""),
+        "file": file_path_url,
+        "image": image_url(image_name)
+    })
+
+
+# -------------------------------------------------
+# 2. Skins (السكينات)
+# -------------------------------------------------
+if os.path.isdir("skins"):
+    for folder in sorted(os.listdir("skins")):
+        folder_path = os.path.join("skins", folder)
+        if not os.path.isdir(folder_path):
+            continue
+
+        items = []
+        for filename in sorted(os.listdir(folder_path)):
+            if not filename.endswith(EXTENSIONS):
+                continue
+            clean = clean_filename(filename)
+            version = clean.split("_")[-2] if "_" in clean else "1.0"
+            image_name = clean.replace("enigma2-plugin-skins-", "").split("_")[0]
+
+            items.append({
+                "name": clean,
+                "version": version,
+                "description": old_descriptions.get(clean, folder + " Skin"),
+                "file": f"{BASE_URL}/skins/{folder}/{filename}",
+                "image": image_url(image_name)
+            })
+
+        data["categories"]["skins"].append({
+            "name": folder,
+            "items": items
+        })
+
+
+# -------------------------------------------------
+# 3. Picons (البيكونات)
+# -------------------------------------------------
+picons_dict = {}
+
+for asset in release_assets_pool:
+    filename = asset["filename"]
+    if "picon" not in filename.lower():
+        continue
+    clean = clean_filename(filename)
+    picons_dict[filename] = {
+        "name": clean,
+        "version": "1.0",
+        "description": old_descriptions.get(clean, ""),
+        "file": asset["url"],
+        "image": image_url(clean.split("_")[0])
+    }
+
+if os.path.isdir("picons"):
+    for filename in sorted(os.listdir("picons")):
+        if not filename.endswith(EXTENSIONS):
+            continue
+        clean = clean_filename(filename)
+        if filename not in picons_dict:
+            picons_dict[filename] = {
+                "name": clean,
+                "version": "1.0",
+                "description": old_descriptions.get(clean, ""),
+                "file": f"{BASE_URL}/picons/{filename}",
+                "image": image_url(clean.split("_")[0])
+            }
+
+for filename in sorted(picons_dict):
+    data["categories"]["picons"].append(picons_dict[filename])
+
+
+# -------------------------------------------------
+# 4. Channels & Settings (القنوات والملفات المفضلة)
+# -------------------------------------------------
+channels_list = []
+if os.path.isdir("channels"):
+    for filename in sorted(os.listdir("channels")):
+        if filename.endswith(EXTENSIONS):
+            channels_list.append(filename)
+
+for asset in release_assets_pool:
+    fname = asset["filename"]
+    lower_f = fname.lower()
+    if any(k in lower_f for k in ["skin", "picon", "plugin", "image", "egami", "openatv"]):
+        continue
+    if any(k in lower_f for k in ["channel", "backup", "settings", "setting", "bouquets", "satellites"]):
+        if fname not in channels_list:
+            channels_list.append(fname)
+
+for filename in sorted(channels_list):
+    clean = clean_filename(filename)
+    file_path_url = f"{BASE_URL}/channels/{filename}"
+    for asset in release_assets_pool:
+        if asset["filename"] == filename:
+            file_path_url = asset["url"]
+            break
+
+    data["categories"]["channels"].append({
+        "name": clean,
+        "version": "1.0",
+        "description": old_descriptions.get(clean,""),
+        "file": file_path_url,
+        "image": image_url(clean.split("_")[0])
+    })
+
+
+# -------------------------------------------------
+# 5. Tools (الأدوات والايميو والسكربتات)
+# -------------------------------------------------
+tools_list = []
+if os.path.isdir("tools"):
+    for filename in sorted(os.listdir("tools")):
+        if filename.endswith(EXTENSIONS):
+            tools_list.append(filename)
+
+for asset in release_assets_pool:
+    fname = asset["filename"]
+    lower_f = fname.lower()
+    if any(k in lower_f for k in ["skin", "picon", "channel", "image", "settings", "backup"]):
+        continue
+    if any(k in lower_f for k in ["ncam", "oscam", "tool", "script", "softcam", "emu", "tweaks", "extnumber"]):
+        if fname not in tools_list:
+            tools_list.append(fname)
+
+for filename in sorted(tools_list):
+    clean = clean_filename(filename)
+    version = clean.split("_")[-2] if "_" in clean else "1.0"
+    image_name = clean.split("_")[0]
+
+    file_path_url = f"{BASE_URL}/tools/{filename}"
+    for asset in release_assets_pool:
+        if asset["filename"] == filename:
+            file_path_url = asset["url"]
+            break
+
+    data["categories"]["tools"].append({
+        "name": clean,
+        "version": version,
+        "description": old_descriptions.get(clean,""),
+        "file": file_path_url,
+        "image": image_url(image_name)
+    })
+
+
+# -------------------------------------------------
+# 6. Plugins (الإضافات العامة)
+# -------------------------------------------------
 plugins_list = []
 if os.path.isdir("plugins"):
     for filename in sorted(os.listdir("plugins")):
@@ -102,19 +284,16 @@ if os.path.isdir("plugins"):
 for asset in release_assets_pool:
     fname = asset["filename"]
     lower_f = fname.lower()
-    # استبعاد السكينات والصور من البلجِنات
-    if "skin" in lower_f or "picon" in lower_f or "channel" in lower_f:
+    # استبعاد أي شيء ينتمي للأقسام المذكورة أعلاه بصرامة
+    if any(k in lower_f for k in ["skin", "picon", "channel", "image", "settings", "backup", "ncam", "oscam", "softcam", "script", "egami", "openatv"]):
         continue
-    if "plugin" in lower_f or "ipa" in lower_f or "timeshift" in lower_f or "audi" in lower_f or "panel" in lower_f:
+    
+    if any(k in lower_f for k in ["plugin", "ipa", "timeshift", "audi", "panel", "weather", "tmdb", "subs", "e2player", "multiepg"]):
         if fname not in plugins_list:
             plugins_list.append(fname)
 
 for filename in sorted(plugins_list):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
+    clean = clean_filename(filename)
     version = clean.split("_")[-2] if "_" in clean else "1.0"
     display = clean.replace("enigma2-plugin-", "")
 
@@ -139,222 +318,8 @@ for filename in sorted(plugins_list):
 
 
 # -------------------------------------------------
-# Skins
-# -------------------------------------------------
-
-if os.path.isdir("skins"):
-    for folder in sorted(os.listdir("skins")):
-        folder_path = os.path.join("skins", folder)
-        if not os.path.isdir(folder_path):
-            continue
-
-        items = []
-        for filename in sorted(os.listdir(folder_path)):
-            if not filename.endswith(EXTENSIONS):
-                continue
-
-            if filename.endswith(".tar.gz"):
-                clean = filename[:-7]
-            else:
-                clean = os.path.splitext(filename)[0]
-
-            version = clean.split("_")[-2] if "_" in clean else "1.0"
-            image_name = clean.replace("enigma2-plugin-skins-", "")
-            image_name = image_name.split("_")[0]
-
-            items.append({
-                "name": clean,
-                "version": version,
-                "description": old_descriptions.get(clean, folder + " Skin"),
-                "file": f"{BASE_URL}/skins/{folder}/{filename}",
-                "image": image_url(image_name)
-            })
-
-        data["categories"]["skins"].append({
-            "name": folder,
-            "items": items
-        })
-
-
-# -------------------------------------------------
-# Tools
-# -------------------------------------------------
-
-tools_list = []
-if os.path.isdir("tools"):
-    for filename in sorted(os.listdir("tools")):
-        if filename.endswith(EXTENSIONS):
-            tools_list.append(filename)
-
-for asset in release_assets_pool:
-    fname = asset["filename"]
-    lower_f = fname.lower()
-    if "skin" in lower_f or "picon" in lower_f or "channel" in lower_f or "image" in lower_f:
-        continue
-    if "ncam" in lower_f or "oscam" in lower_f or "tool" in lower_f or "script" in lower_f or "softcam" in lower_f:
-        if fname not in tools_list:
-            tools_list.append(fname)
-
-for filename in sorted(tools_list):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    version = clean.split("_")[-2] if "_" in clean else "1.0"
-    image_name = clean.split("_")[0]
-
-    file_path_url = f"{BASE_URL}/tools/{filename}"
-    for asset in release_assets_pool:
-        if asset["filename"] == filename:
-            file_path_url = asset["url"]
-            break
-
-    data["categories"]["tools"].append({
-        "name": clean,
-        "version": version,
-        "description": old_descriptions.get(clean,""),
-        "file": file_path_url,
-        "image": image_url(image_name)
-    })
-
-
-# -------------------------------------------------
-# System Images (محدث ليكون دقيقاً تماماً ولا يلتقط السكينات)
-# -------------------------------------------------
-
-sys_list = []
-if os.path.isdir("system_images"):
-    for filename in sorted(os.listdir("system_images")):
-        if filename.endswith((".zip", ".tar.gz", ".img", ".nfi")):
-            sys_list.append(filename)
-
-for asset in release_assets_pool:
-    fname = asset["filename"]
-    lower_f = fname.lower()
-    # تأكيد صارم: يجب أن يكون الملف صورة نظام حقيقية ولا يحتوي على كلمة skin
-    if "skin" in lower_f or "picon" in lower_f or "plugin" in lower_f or "tool" in lower_f:
-        continue
-    
-    if any(img_kw in lower_f for img_kw in ["egami", "openatv", "blackhole", "vti", "pure2", "openpli", "openblack", "vu+"]):
-        if fname not in sys_list:
-            sys_list.append(fname)
-
-for filename in sorted(sys_list):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    version = clean.split("_")[-2] if "_" in clean else "1.0"
-    image_name = clean.split("_")[0]
-
-    file_path_url = f"{BASE_URL}/system_images/{filename}"
-    for asset in release_assets_pool:
-        if asset["filename"] == filename:
-            file_path_url = asset["url"]
-            break
-
-    data["categories"]["system_images"].append({
-        "name": clean,
-        "version": version,
-        "description": old_descriptions.get(clean,""),
-        "file": file_path_url,
-        "image": image_url(image_name)
-    })
-
-
-# -------------------------------------------------
-# Picons
-# -------------------------------------------------
-
-picons_dict = {}
-
-for asset in release_assets_pool:
-    filename = asset["filename"]
-    if "picon" not in filename.lower():
-        continue
-
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    picons_dict[filename] = {
-        "name": clean,
-        "version": "1.0",
-        "description": old_descriptions.get(clean, ""),
-        "file": asset["url"],
-        "image": image_url(clean.split("_")[0])
-    }
-
-if os.path.isdir("picons"):
-    for filename in sorted(os.listdir("picons")):
-        if not filename.endswith(EXTENSIONS):
-            continue
-
-        if filename.endswith(".tar.gz"):
-            clean = filename[:-7]
-        else:
-            clean = os.path.splitext(filename)[0]
-
-        if filename not in picons_dict:
-            picons_dict[filename] = {
-                "name": clean,
-                "version": "1.0",
-                "description": old_descriptions.get(clean, ""),
-                "file": f"{BASE_URL}/picons/{filename}",
-                "image": image_url(clean.split("_")[0])
-            }
-
-for filename in sorted(picons_dict):
-    data["categories"]["picons"].append(picons_dict[filename])
-
-
-# -------------------------------------------------
-# Channels
-# -------------------------------------------------
-
-channels_list = []
-if os.path.isdir("channels"):
-    for filename in sorted(os.listdir("channels")):
-        if filename.endswith(EXTENSIONS):
-            channels_list.append(filename)
-
-for asset in release_assets_pool:
-    fname = asset["filename"]
-    lower_f = fname.lower()
-    if "skin" in lower_f or "picon" in lower_f or "plugin" in lower_f:
-        continue
-    if "channel" in lower_f or "backup" in lower_f or "settings" in lower_f:
-        if fname not in channels_list:
-            channels_list.append(fname)
-
-for filename in sorted(channels_list):
-    if filename.endswith(".tar.gz"):
-        clean = filename[:-7]
-    else:
-        clean = os.path.splitext(filename)[0]
-
-    file_path_url = f"{BASE_URL}/channels/{filename}"
-    for asset in release_assets_pool:
-        if asset["filename"] == filename:
-            file_path_url = asset["url"]
-            break
-
-    data["categories"]["channels"].append({
-        "name": clean,
-        "version": "1.0",
-        "description": old_descriptions.get(clean,""),
-        "file": file_path_url,
-        "image": image_url(clean.split("_")[0])
-    })
-
-
-# -------------------------------------------------
 # Save JSON
 # -------------------------------------------------
-
 os.makedirs("feed", exist_ok=True)
 
 with open("feed/index.json", "w", encoding="utf-8") as f:
