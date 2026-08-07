@@ -7,7 +7,7 @@ echo "========================================="
 echo "   Installing Mohamed Store..."
 echo "========================================="
 
-# حذف المجلد القديم لضمان نظافة التثبيت
+# حذف المجلد القديم بالكامل لضمان نظافة التثبيت
 rm -rf "$PLUGIN_DIR"
 mkdir -p "$PLUGIN_DIR"
 
@@ -16,22 +16,24 @@ wget -O "$PLUGIN_DIR/plugin.py" "$BASE_URL/plugin.py"
 wget -O "$PLUGIN_DIR/plugin.png" "$BASE_URL/plugin.png"
 wget -O "$PLUGIN_DIR/__init__.py" "$BASE_URL/__init__.py"
 
-echo "Downloading all updated files & assets from repository..."
-# سحب الملف المضغوط الشامل الذي يجهزه الـ GitHub Actions
+echo "Downloading all files and sections archive..."
+# سحب الملف المضغوط الذي يجمعه GitHub Actions
 wget -q --no-check-certificate -O "/tmp/store_files.tar.gz" "$BASE_URL/store_files.tar.gz"
 
 if [ -s "/tmp/store_files.tar.gz" ]; then
+    # فك الضغط مباشرة داخل مجلد البلاجن
     tar -xzf "/tmp/store_files.tar.gz" -C "$PLUGIN_DIR/"
     rm -f "/tmp/store_files.tar.gz"
-    echo "All files extracted successfully."
+    echo "All files and sections extracted successfully."
 else
-    echo "Error: Failed to download archive! Ensure Actions is running on GitHub."
+    echo "Error: Failed to download archive!"
 fi
 
-# تنظيف الملفات المؤقتة
+# تنظيف الملفات المؤقتة وبقايا البايثون
 find "$PLUGIN_DIR" -name "*.pyc" -delete 2>/dev/null
 find "$PLUGIN_DIR" -name "__pycache__" -exec rm -rf {} \; 2>/dev/null
 
+# منح الصلاحيات الصحيحة للمجلدات والملفات
 chmod -R 755 "$PLUGIN_DIR"
 
 sync
