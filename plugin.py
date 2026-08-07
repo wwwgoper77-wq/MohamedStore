@@ -78,22 +78,22 @@ FALLBACK_ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/
 
 BUILTIN_SYSTEM_TOOLS = [
     {
-        "name": u"ط¥طµظ„ط§ط­ ط§ظ„ظ…ظƒطھط¨ط§طھ ظˆط§ظ„ط§ط¹طھظ…ط§ط¯ط§طھ",
+        "name": u"\u0625\u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u062a",
         "type": "tool",
         "cmd": "opkg update && opkg install --force-reinstall python-requests curl ffmpeg python-json python-codecs openssl",
-        "description": u"طھط­ط¯ط« ط­ط²ظ… ط§ظ„ظ†ط¸ط§ظ… ظˆط¥ط¹ط§ط¯ط© طھط«ط¨ظٹطھ ط§ظ„ظ…ظƒطھط¨ط§طھ ط§ظ„ط£ط³ط§ط³ظٹط© ط§ظ„ظ†ط§ظ‚طµط©."
+        "description": u"\u062a\u062d\u062f\u062b \u062d\u0632\u0645 \u0627\u0644\u0646\u0638\u0627\u0645 \u0648\u0625\u0639\u0627\u062f\u0629 \u062a\u062b\u0628\u064a\u062a \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0627\u0644\u0646\u0627\u0642\u0635\u0629."
     },
     {
-        "name": u"طھظ†ط¸ظٹظپ ط§ظ„ط°ط§ظƒط±ط© ظˆط§ظ„ظ…ظ„ظپط§طھ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹط© ط§ظ„ظ…ط¤ظ‚طھط©",
+        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
         "type": "tool",
         "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
-        "description": u"ط­ط°ظپ ط¬ظ…ظٹط¹ ظ…ظ„ظپط§طھ ط§ظ„طھط«ط¨ظٹطھ ظˆط§ظ„ظ…ظ„ظپط§طھ ط§ظ„ط£ط³ط§ط³ظٹط© ظ…ظ† /tmp."
+        "description": u"\u062d\u0632\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
     },
     {
-        "name": u"ط¥ط¹ط§ط¯ط© طھط´ط؛ظٹظ„ ط§ظ„ظˆط§ط¬ظ‡ط© (Restart GUI)",
+        "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
         "type": "tool",
         "cmd": "restart_gui",
-        "description": u"ط¥ط¹ط§ط¯ط© طھط´ط؛ظٹظ„ ظˆط§ط¬ظ‡ط© ط§ظ„ط³ظٹط³طھظ…."
+        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u0633\u062a\u0645."
     }
 ]
 
@@ -289,7 +289,7 @@ class MohamedStore(Screen):
     <eLabel position="40,824" size="6,68" backgroundColor="#ef4444" zPosition="2" />
     <widget name="key_red" position="58,824" size="365,68" font="Regular;32" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
 
-    <!-- Green Button: Install / Open -->
+    <!-- Green Button: Install -->
     <eLabel position="451,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
     <eLabel position="451,824" size="6,68" backgroundColor="#22c55e" zPosition="2" />
     <widget name="key_green" position="469,824" size="365,68" font="Regular;32" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
@@ -433,7 +433,7 @@ class MohamedStore(Screen):
         self.onLayoutFinish.append(self.check_for_updates)
 
     def get_device_and_image_info(self):
-        device_name = "VU+ Zero 4K"
+        device_name = "Enigma2 Box"
         image_name = "EGAMI"
         try:
             if os.path.exists("/proc/stb/info/model"):
@@ -806,8 +806,8 @@ class MohamedStore(Screen):
                     str(item.get("description", "System tool execution."))
                 )
             elif "items" in item and isinstance(item["items"], list):
-                self["key_green"].setText("Open")
-                info_text = "Section: %s\n\nFolder: %s\n\nPress OK or Green to view items inside this folder." % (
+                self["key_green"].setText("Install")
+                info_text = "Section: %s\n\nFolder: %s\n\nPress OK to view packages inside this folder." % (
                     path_str,
                     str(item.get("name", ""))
                 )
@@ -964,14 +964,22 @@ class MohamedStore(Screen):
                     cmd = "tar -xf /tmp/addon.tar -C / && rm -f /tmp/addon.tar"
                 elif ext == ".tv":
                     dest_path = os.path.join("/etc/enigma2", filename)
-                    cmd = "if ! grep -q '" + filename + "' /etc/enigma2/bouquets.tv; then echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "" + filename + "" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; fi && (wget -qO - http://127.0.0.1/web/servicelistreload?mode=0 || curl -s http://127.0.0.1/web/servicelistreload?mode=0 || true)"
+                    cmd = (
+                        "if ! grep -q '{filename}' /etc/enigma2/bouquets.tv; then "
+                        "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"{filename}\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
+                        "fi && "
+                        "(wget -qO - http://127.0.0.1/web/servicelistreload?mode=0 || "
+                        "curl -s http://127.0.0.1/web/servicelistreload?mode=0 || "
+                        "enigma2-web-reload || true)"
+                    )
                 elif ext == ".py":
                     dest_path = "/tmp/addon.py"
                     cmd = "(python /tmp/addon.py || python3 /tmp/addon.py) && rm -f /tmp/addon.py"
                 else:
                     dest_path = "/tmp/addon.ipk"
                     cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
-
+                
+                cmd = cmd.format(filename=filename)
                 self.install_cmd = cmd
                 self.install_item_name = str(item.get("name", ""))
                 
@@ -1250,12 +1258,11 @@ class MohamedStore(Screen):
             try:
                 if TryQuitMainloop:
                     self.session.open(TryQuitMainloop, 3)
-                elif enigma:
-                    enigma.quitMainloop(3)
+                else:
+                    enigma2.quitMainloop(3) if 'enigma2' in globals() else enigma.quitMainloop(3)
             except:
                 try:
-                    if enigma:
-                        enigma.quitMainloop(3)
+                    enigma.quitMainloop(3)
                 except:
                     try:
                         enigma.eApp.getInstance().quit(3)
