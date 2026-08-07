@@ -319,21 +319,21 @@
             {
                 "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
                 "version": "S",
-                "description": "",
+                "description": "صورة egami لجهاز vuzero4k  ",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
                 "image": ""
             },
             {
                 "name": "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb",
                 "version": "images-vuzero4k-8c6baf54",
-                "description": "",
+                "description": "openbh صورة لجهاز vuzero4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip",
                 "image": ""
             },
             {
                 "name": "vuzero4k-PurE2-7.6-20260217_usb",
                 "version": "vuzero4k-PurE2-7.6-20260217",
-                "description": "",
+                "description": "PurE2 صورة لجهاز vuzero4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
                 "image": ""
             }
