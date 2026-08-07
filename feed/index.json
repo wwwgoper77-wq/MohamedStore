@@ -324,6 +324,13 @@
                 "image": ""
             },
             {
+                "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
+                "version": "images-vuduo4k-8c6baf54",
+                "description": "",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip",
+                "image": ""
+            },
+            {
                 "name": "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb",
                 "version": "images-vusolo4k-8c6baf54",
                 "description": "صورة openbh جهاز vusolo4k",
