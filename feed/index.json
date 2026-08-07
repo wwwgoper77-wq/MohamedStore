@@ -326,21 +326,21 @@
             {
                 "name": "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb",
                 "version": "images-vusolo4k-8c6baf54",
-                "description": "صورة openbh جهاز vusolo4k  ",
+                "description": "صورة openbh جهاز vusolo4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip",
                 "image": ""
             },
             {
                 "name": "openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb",
                 "version": "images-vuuno4k-8c6baf54",
-                "description": "صورة openbh جهاز vuuno4k ",
+                "description": "صورة openbh جهاز vuuno4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip",
                 "image": ""
             },
             {
                 "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
                 "version": "images-vuuno4kse-8c6baf54",
-                "description": "صورة openbh جهاز vuuno4kse ",
+                "description": "صورة openbh جهاز vuuno4kse",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip",
                 "image": ""
             },
