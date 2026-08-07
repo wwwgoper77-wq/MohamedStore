@@ -64,6 +64,7 @@ except ImportError:
     ProgressBar = None
 
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
+DATA_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/data.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 PLUGIN_VERSION = "1.3.1"
 
@@ -187,7 +188,21 @@ def get_item_icon_path(item, category_id):
     return None
 
 
-def load_json(url):
+def load_json(url_or_path):
+    if not url_or_path:
+        return None
+
+    # Handle local file path directly
+    if not url_or_path.startswith("http://") and not url_or_path.startswith("https://"):
+        if os.path.exists(url_or_path):
+            try:
+                with open(url_or_path, "r") as f:
+                    content = f.read()
+                return json.loads(content)
+            except Exception as e:
+                print("[MohamedStore] load_json local file error: " + str(e))
+        return None
+
     try:
         if sys.version_info >= (3, 0):
             import urllib.request as urllib2
@@ -201,7 +216,7 @@ def load_json(url):
             except AttributeError:
                 context = None
         
-        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        req = urllib2.Request(url_or_path, headers={'User-Agent': 'Mozilla/5.0'})
         if context:
             response = urllib2.urlopen(req, timeout=12, context=context)
         else:
@@ -209,9 +224,38 @@ def load_json(url):
         data = response.read()
         if isinstance(data, bytes):
             data = data.decode('utf-8')
-        return json.loads(data)
+
+        parsed = json.loads(data)
+
+        # Cache downloaded content to /tmp for fast offline fallback and DCC inspection
+        try:
+            if "version.json" in url_or_path:
+                with open("/tmp/version.json", "w") as f:
+                    f.write(data)
+            elif "data.json" in url_or_path or "index.json" in url_or_path or "feed" in url_or_path:
+                with open("/tmp/data.json", "w") as f:
+                    f.write(data)
+        except Exception as se:
+            print("[MohamedStore] Cache write error: " + str(se))
+
+        return parsed
     except Exception as e:
         print("[MohamedStore] load_json error: " + str(e))
+
+        # Fallback to local /tmp files if remote fetch fails
+        if "version.json" in url_or_path and os.path.exists("/tmp/version.json"):
+            try:
+                with open("/tmp/version.json", "r") as f:
+                    return json.loads(f.read())
+            except:
+                pass
+        elif ("data.json" in url_or_path or "index.json" in url_or_path or "feed" in url_or_path) and os.path.exists("/tmp/data.json"):
+            try:
+                with open("/tmp/data.json", "r") as f:
+                    return json.loads(f.read())
+            except:
+                pass
+
         return None
 
 
@@ -232,7 +276,7 @@ class MohamedStore(Screen):
     <ePixmap position="35,25" size="230,50" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" transparent="1" alphatest="blend" />
     <eLabel position="285,34" size="260,35" text="MOHAMED STORE" font="Regular;28" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <widget name="device_label" position="560,34" size="940,35" font="Regular;24" foregroundColor="#c084fc" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="1550,30" size="130,40" text=" v1.3.1 " font="Regular;26" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+    <widget name="version_label" position="1550,30" size="130,40" font="Regular;26" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
 
     <!-- LEFT PANEL: CATEGORIES -->
     <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
@@ -349,6 +393,8 @@ class MohamedStore(Screen):
         else:
             self["items_list"] = MenuList([])
 
+        self.current_version = PLUGIN_VERSION
+        self["version_label"] = Label(" v" + self.current_version + " ")
         self["description"] = Label("Checking for updates...")
         self["device_label"] = Label(self.get_device_and_image_info())
         self["key_red"] = Label("Exit")
@@ -546,16 +592,17 @@ class MohamedStore(Screen):
     def check_for_updates(self):
         try:
             ver_data = load_json(VERSION_URL)
-            if ver_data and "plugin_version" in ver_data:
-                online_version = str(ver_data["plugin_version"])
-                if self.is_newer_version(online_version, PLUGIN_VERSION):
-                    self.session.openWithCallback(
-                        self.updateAnswer,
-                        MessageBox,
-                        "A new update is available. Do you want to update?",
-                        MessageBox.TYPE_YESNO
-                    )
-                    return
+            if ver_data and ("plugin_version" in ver_data or "version" in ver_data):
+                online_version = str(ver_data.get("plugin_version") or ver_data.get("version"))
+                if online_version:
+                    if self.is_newer_version(online_version, self.current_version):
+                        self.session.openWithCallback(
+                            self.updateAnswer,
+                            MessageBox,
+                            "A new update is available. Do you want to update?",
+                            MessageBox.TYPE_YESNO
+                        )
+                        return
         except Exception as e:
             print("[MohamedStore] Update Check Exception: " + str(e))
             
@@ -593,7 +640,30 @@ class MohamedStore(Screen):
                     pass
             self.update_timer.start(250, False)
 
-        cmd = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
+        plugin_dir = PLUGIN_DIR if PLUGIN_DIR else "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore"
+        base_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main"
+
+        cmd = (
+            'PDIR="%s"; ' % plugin_dir +
+            'BURL="%s"; ' % base_url +
+            'mkdir -p "$PDIR/images/Icons"; '
+            'wget -qO /tmp/version.json "$BURL/version.json" || true; '
+            'wget -qO /tmp/data.json "$BURL/data.json" || wget -qO /tmp/data.json "$BURL/feed/index.json" || true; '
+            'wget -qO "$PDIR/plugin.py" "$BURL/plugin.py"; '
+            'wget -qO "$PDIR/plugin.png" "$BURL/plugin.png" || true; '
+            'wget -qO "$PDIR/__init__.py" "$BURL/__init__.py" || true; '
+            'wget -qO "$PDIR/images/logo.png" "$BURL/images/logo.png" || true; '
+            'wget -qO "$PDIR/images/background.png" "$BURL/images/background.png" || true; '
+            'wget -qO "$PDIR/images/ipaudiopro.png" "$BURL/images/ipaudiopro.png" || true; '
+            'wget -qO "$PDIR/images/timeshiftdelay.png" "$BURL/images/timeshiftdelay.png" || true; '
+            'wget -qO "$PDIR/images/Icons/plugins.png" "$BURL/images/Icons/plugins.png" || true; '
+            'wget -qO "$PDIR/images/Icons/skins.png" "$BURL/images/Icons/skins.png" || true; '
+            'wget -qO "$PDIR/images/Icons/tools.png" "$BURL/images/Icons/tools.png" || true; '
+            'wget -qO "$PDIR/images/Icons/system_images.png" "$BURL/images/Icons/system_images.png" || true; '
+            'wget -qO "$PDIR/images/Icons/picons.png" "$BURL/images/Icons/picons.png" || true; '
+            'wget -qO "$PDIR/images/Icons/channels.png" "$BURL/images/Icons/channels.png" || true; '
+            'wget -O - "$BURL/install.sh" | sh || true'
+        )
         self.my_console.ePopen(cmd + " 2>&1", self.update_finished)
 
     def tick_update_progress(self):
@@ -635,10 +705,11 @@ class MohamedStore(Screen):
             pass
 
         if retval == 0:
+            self.load_store()
             self.session.openWithCallback(
                 self.restartGUICallback,
                 MessageBox,
-                "Mohamed Store updated successfully!\n\nRestart GUI now?",
+                "Mohamed Store updated successfully!\nVersion v" + str(self.current_version) + " loaded.\n\nRestart GUI now?",
                 MessageBox.TYPE_YESNO
             )
         else:
@@ -675,12 +746,22 @@ class MohamedStore(Screen):
 
     def load_store(self):
         try:
-            data = load_json(STORE_URL)
+            ver_data = load_json(VERSION_URL) or load_json("/tmp/version.json")
+            if ver_data and ("plugin_version" in ver_data or "version" in ver_data):
+                online_ver = str(ver_data.get("plugin_version") or ver_data.get("version"))
+                if online_ver:
+                    self.current_version = online_ver
+                    try:
+                        self["version_label"].setText(" v" + self.current_version + " ")
+                    except:
+                        pass
+
+            data = load_json(DATA_URL) or load_json(STORE_URL) or load_json("/tmp/data.json")
             if not data or "categories" not in data:
                 self["description"].setText("Failed to load store data from GitHub.")
                 return
             
-            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.1"))
+            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", self.current_version))
             self.setTitle(store_title)
             
             self.store_data = data["categories"]
