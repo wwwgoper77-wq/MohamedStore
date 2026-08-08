@@ -67,6 +67,13 @@
                 "image": ""
             },
             {
+                "name": "MyTranslator",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
+                "image": ""
+            },
+            {
                 "name": "RaedQuickSignal",
                 "version": "1.0",
                 "description": "بلجن مستكشف اشارة بايثون 3.12.13",
