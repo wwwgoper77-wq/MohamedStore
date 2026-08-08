@@ -69,7 +69,7 @@
             {
                 "name": "MyTranslator",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن ترجمة بايثون 3.13.3.14",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
                 "image": ""
             },
