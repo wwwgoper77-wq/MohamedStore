@@ -333,7 +333,7 @@
             {
                 "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
                 "version": "images-vuduo4kse-8c6baf54",
-                "description": "",
+                "description": "صورة openbh لجهاز vuduo4kse",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip",
                 "image": ""
             },
@@ -368,7 +368,7 @@
             {
                 "name": "openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb",
                 "version": "images.-vuultimo4k-8c6baf54",
-                "description": "",
+                "description": "openbh لجهاز vuultimo4k صورة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip",
                 "image": ""
             },
