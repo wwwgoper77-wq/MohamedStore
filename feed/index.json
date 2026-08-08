@@ -104,7 +104,7 @@
             {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
                 "version": "py3.14",
-                "description": "",
+                "description": "بلجن صوتيات بايثون 3.14",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
