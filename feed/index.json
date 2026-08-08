@@ -83,14 +83,14 @@
             {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
                 "version": "py2.7",
-                "description": "",
+                "description": "بلجن صوتيات بايثون 2.7",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
                 "image": ""
             },
             {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
                 "version": "py3.11",
-                "description": "",
+                "description": "بلجن صوتيات بايثون 3.11",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1.ipk",
                 "image": ""
             },
@@ -104,7 +104,7 @@
             {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
                 "version": "py3.9",
-                "description": "",
+                "description": "بلجن صوتيات بايثون 3.9",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3.ipk",
                 "image": ""
             },
