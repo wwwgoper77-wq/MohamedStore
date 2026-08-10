@@ -130,6 +130,13 @@
                 "image": ""
             },
             {
+                "name": "extensions-uninstaller_1.0_all",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-uninstaller_1.0_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "timeshift-delay-egami_3.0_all",
                 "version": "3.0",
                 "description": "عداد ثواني تايم شفت صورة ايجامي فقط بايثون 3.13.12",
