@@ -132,7 +132,7 @@
             {
                 "name": "extensions-uninstaller_1.0_all",
                 "version": "1.0",
-                "description": "",
+                "description": "حذف البلجنات والسكنات  بايثون 3",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-uninstaller_1.0_all.ipk",
                 "image": ""
             },
