@@ -81,6 +81,13 @@
                 "image": ""
             },
             {
+                "name": "TranslatorProAI",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TranslatorProAI.zip",
+                "image": ""
+            },
+            {
                 "name": "YouTube",
                 "version": "1.0",
                 "description": "بلجن يوتيوب بايثون 3.13.12",
