@@ -25,6 +25,13 @@
                 "image": ""
             },
             {
+                "name": "EPGTranslator",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGTranslator.zip",
+                "image": ""
+            },
+            {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
                 "description": "بلجن جدول مباريات بايثون 3.13.12",
@@ -78,6 +85,13 @@
                 "version": "1.0",
                 "description": "بلجن مستكشف اشارة بايثون 3.12.13",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
+                "image": ""
+            },
+            {
+                "name": "TMBD",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TMBD.zip",
                 "image": ""
             },
             {
