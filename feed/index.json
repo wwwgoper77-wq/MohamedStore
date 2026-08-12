@@ -123,6 +123,13 @@
                 "image": ""
             },
             {
+                "name": "Zoom",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
+                "image": ""
+            },
+            {
                 "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
                 "version": "py2.7",
                 "description": "بلجن صوتيات بايثون 2.7",
