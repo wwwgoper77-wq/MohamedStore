@@ -1,6 +1,7 @@
 {
-    "store_name": "M Store - تحت الصيانة",
+    "store_name": "M Store",
     "version": "1.0",
+    "maintenance_message": "عذراً، المتجر متوقف حالياً لإجراء صيانة عامة. يرجى المحاولة لاحقاً.",
     "categories": {
         "plugins": [],
         "skins": [],
