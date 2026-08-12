@@ -1,9 +1,16 @@
 {
     "store_name": "M Store",
     "version": "1.0",
-    "maintenance_message": "عذراً، المتجر متوقف حالياً لإجراء صيانة عامة. يرجى المحاولة لاحقاً.",
     "categories": {
-        "plugins": [],
+        "plugins": [
+            {
+                "name": "--- ⚠️ المتجر تحت الصيانة حالياً ⚠️ ---",
+                "version": "1.0",
+                "description": "يرجى الانتظار، جاري تحديث السيرفرات والملفات وتعود قريباً.",
+                "file": "",
+                "image": ""
+            }
+        ],
         "skins": [],
         "tools": [],
         "system_images": [],
