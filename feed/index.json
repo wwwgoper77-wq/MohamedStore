@@ -25,6 +25,13 @@
                 "image": ""
             },
             {
+                "name": "EPGGrabber",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGGrabber.zip",
+                "image": ""
+            },
+            {
                 "name": "EPGTranslator",
                 "version": "1.0",
                 "description": "",
@@ -85,6 +92,13 @@
                 "version": "1.0",
                 "description": "بلجن مستكشف اشارة بايثون 3.12.13",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
+                "image": ""
+            },
+            {
+                "name": "SubsSupport",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SubsSupport.zip",
                 "image": ""
             },
             {
