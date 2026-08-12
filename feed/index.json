@@ -415,6 +415,13 @@
                 "image": ""
             },
             {
+                "name": "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb",
+                "version": "system",
+                "description": "",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip",
+                "image": ""
+            },
+            {
                 "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
                 "version": "images-vuduo4k-8c6baf54",
                 "description": "صورة openbh  لجهاز vuduo4k",
