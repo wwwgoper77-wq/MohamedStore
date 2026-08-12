@@ -60,6 +60,13 @@
                 "image": ""
             },
             {
+                "name": "InternetSpeed",
+                "version": "1.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/InternetSpeed.zip",
+                "image": ""
+            },
+            {
                 "name": "MC oscam",
                 "version": "1.0",
                 "description": "بلجن اوسكام مدمج مجاني مدفوع بايثون 3.13.12",
