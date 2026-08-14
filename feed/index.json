@@ -417,7 +417,7 @@
             {
                 "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
                 "version": "system",
-                "description": "",
+                "description": "نسخة بيتا صورة openatv لجهاز vuduo4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
                 "image": ""
             },
