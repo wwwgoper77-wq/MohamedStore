@@ -429,10 +429,24 @@
                 "image": ""
             },
             {
+                "name": "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb",
+                "version": "system",
+                "description": "",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip",
+                "image": ""
+            },
+            {
                 "name": "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb",
                 "version": "system",
                 "description": "نسخة بيتا صورة openatv لجهاز vuuno4k",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip",
+                "image": ""
+            },
+            {
+                "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
+                "version": "system",
+                "description": "",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip",
                 "image": ""
             },
             {
