@@ -30,6 +30,7 @@ wget -O "$PLUGIN_DIR/images/background.png" "$BASE_URL/images/background.png"
 wget -O "$PLUGIN_DIR/images/ipaudiopro.png" "$BASE_URL/images/ipaudiopro.png"
 wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay.png"
 wget -O "$PLUGIN_DIR/images/avatar.png" "$BASE_URL/images/avatar.png"
+wget -O "$PLUGIN_DIR/images/qrcode.png" "$BASE_URL/images/qrcode.png"
 
 echo "Downloading section icons..."
 wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
