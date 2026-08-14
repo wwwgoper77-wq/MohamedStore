@@ -2,7 +2,8 @@
 # ==========================================
 # Mohamed Store - Modern Grid Dashboard Edition v1.3.2
 # Python 2 & Python 3 fully compatible
-# Instant-Open Local Cache Engine + Background Sync
+# Multi-Content Item & Category Icon Rendering Supported
+# Instant-Open Local Cache + Enhanced IP / Telemetry Engine
 # ==========================================
 
 from Plugins.Plugin import PluginDescriptor
@@ -15,6 +16,9 @@ from Components.Console import Console
 import json
 import os
 import sys
+import socket
+import struct
+import fcntl
 import threading
 import time
 
@@ -99,6 +103,57 @@ BUILTIN_SYSTEM_TOOLS = [
         "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u0633\u062a\u0645."
     }
 ]
+
+def get_real_box_ip():
+    """Detect real local IP address using multiple Enigma2/Linux fallbacks."""
+    # Method 1: Scanning active interfaces via SIOCGIFADDR
+    interfaces = ["eth0", "wlan0", "eth1", "ra0", "wlan1", "lan0", "enp3s0"]
+    for ifname in interfaces:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            ifname_bytes = ifname.encode('utf-8') if sys.version_info >= (3, 0) else ifname
+            ip = socket.inet_ntoa(fcntl.ioctl(
+                s.fileno(),
+                0x8915,  # SIOCGIFADDR
+                struct.pack('256s', ifname_bytes[:15])
+            )[20:24])
+            s.close()
+            if ip and not ip.startswith("127."):
+                return ip
+        except Exception:
+            pass
+
+    # Method 2: Fast socket route detection
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.settimeout(0.2)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        if ip and not ip.startswith("127."):
+            return ip
+    except Exception:
+        pass
+
+    # Method 3: Parsing /proc/net/fib_trie or /sbin/ip
+    try:
+        import subprocess
+        output = subprocess.check_output(["ip", "route", "get", "1"]).decode('utf-8', 'ignore')
+        for part in output.split():
+            if part.count('.') == 3 and not part.startswith("127."):
+                return part
+    except Exception:
+        pass
+
+    # Method 4: Hostname resolution fallback
+    try:
+        ip = socket.gethostbyname(socket.gethostname())
+        if ip and not ip.startswith("127."):
+            return ip
+    except Exception:
+        pass
+
+    return "192.168.1.1"
 
 def get_category_icon_path(category_id):
     cat_lower = str(category_id).lower().replace("_", "").replace(" ", "")
@@ -427,8 +482,11 @@ class MohamedStore(Screen):
         self["sys_temp"] = Label(telemetry.get("temp", "Temp: N/A"))
         self["sys_ram"] = Label(telemetry.get("ram", "RAM: OK"))
         self["sys_flash"] = Label(telemetry.get("flash", "Flash: OK"))
-        self["sys_ip"] = Label(telemetry.get("ip", "IP: Online"))
-        self["sys_net"] = Label(telemetry.get("net", "Net: Online"))
+        
+        # Immediate Local IP detection
+        real_ip = get_real_box_ip()
+        self["sys_ip"] = Label("IP: %s" % real_ip)
+        self["sys_net"] = Label("Net: Online")
         
         self["facebook_title"] = Label(u"\u062a\u0627\u0628\u0639\u0646\u0627 \u0639\u0644\u0649 \u0641\u064a\u0633\u0628\u0648\u0643")
         self["facebook_label"] = Label("https://www.facebook.com/share/1G8inRhUib/")
@@ -541,6 +599,13 @@ class MohamedStore(Screen):
         t.start()
 
     def async_network_fetch(self):
+        # Refresh real IP just in case network became active later
+        try:
+            current_ip = get_real_box_ip()
+            self["sys_ip"].setText("IP: %s" % current_ip)
+        except:
+            pass
+
         try:
             data = load_json_network(STORE_URL)
             if data and "categories" in data:
