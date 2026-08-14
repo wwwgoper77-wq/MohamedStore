@@ -4,6 +4,7 @@
 # Python 2 & Python 3 fully compatible
 # Multi-Content Item & Category Icon Rendering Supported
 # Updated Blue Key with Telnet Install Script Execution
+# Layout Updated: Compact Download Box & Facebook Box Integration
 # ==========================================
 
 from Plugins.Plugin import PluginDescriptor
@@ -67,6 +68,7 @@ except ImportError:
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
+FACEBOOK_URL = "https://www.facebook.com/share/1G8inRhUib/"
 PLUGIN_VERSION = "1.3.1"
 
 try:
@@ -255,7 +257,7 @@ class MohamedStore(Screen):
     <eLabel position="428,166" size="748,2" backgroundColor="#be185d" />
     <widget name="items_list" position="417,176" size="768,616" itemHeight="76" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;32" />
 
-    <!-- RIGHT PANEL: DETAILS & PROGRESS BOX -->
+    <!-- RIGHT PANEL: DETAILS & COMPACT PROGRESS / FACEBOOK -->
     <eLabel position="1204,112" size="500,688" backgroundColor="#0f111a" zPosition="-1" />
     <eLabel position="1204,112" size="500,2" backgroundColor="#be185d" zPosition="0" />
     <eLabel position="1204,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
@@ -263,19 +265,33 @@ class MohamedStore(Screen):
     <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="1222,166" size="464,2" backgroundColor="#be185d" />
     
-    <widget name="description" position="1222,178" size="464,380" font="Regular;30" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
+    <!-- Item Description -->
+    <widget name="description" position="1222,178" size="464,338" font="Regular;28" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
 
-    <eLabel position="1220,568" size="468,222" backgroundColor="#05070c" zPosition="1" />
-    <eLabel position="1220,568" size="468,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1220,568" size="2,222" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="1686,568" size="2,222" backgroundColor="#e11d48" zPosition="2" />
+    <!-- FACEBOOK INFO BOX (Directly above Download Box) -->
+    <eLabel position="1220,530" size="468,118" backgroundColor="#05070c" zPosition="1" />
+    <eLabel position="1220,530" size="468,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1220,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="1686,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="1220,646" size="468,2" backgroundColor="#be185d" zPosition="2" />
+    
+    <ePixmap position="1234,542" size="92,92" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" transparent="1" alphatest="blend" />
+    <ePixmap position="1338,548" size="26,26" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/facebook.png" zPosition="3" transparent="1" alphatest="blend" />
+    <widget name="facebook_title" position="1372,546" size="300,28" font="Regular;24" foregroundColor="#60a5fa" backgroundColor="#05070c" transparent="1" zPosition="3" />
+    <widget name="facebook_label" position="1338,582" size="334,48" text="fb.com/share/1G8inRhUib" font="Regular;20" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" />
+
+    <!-- COMPACT DOWNLOAD / PROGRESS BOX -->
+    <eLabel position="1220,658" size="468,132" backgroundColor="#05070c" zPosition="1" />
+    <eLabel position="1220,658" size="468,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1220,658" size="2,132" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="1686,658" size="2,132" backgroundColor="#e11d48" zPosition="2" />
     <eLabel position="1220,788" size="468,2" backgroundColor="#be185d" zPosition="2" />
     
-    <widget name="progress" position="1238,584" size="432,16" borderWidth="2" borderColor="#be185d" backgroundColor="#0f111a" zPosition="3" />
-    <widget name="percentage" position="1238,610" size="130,32" font="Regular;28" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
-    <widget name="speed" position="1406,610" size="264,32" font="Regular;28" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
-    <widget name="size" position="1238,652" size="432,32" font="Regular;26" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
-    <widget name="status" position="1238,695" size="432,45" font="Regular;26" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
+    <widget name="progress" position="1238,670" size="432,14" borderWidth="2" borderColor="#be185d" backgroundColor="#0f111a" zPosition="3" />
+    <widget name="percentage" position="1238,690" size="120,24" font="Regular;22" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
+    <widget name="speed" position="1378,690" size="292,24" font="Regular;22" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
+    <widget name="size" position="1238,720" size="432,24" font="Regular;20" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
+    <widget name="status" position="1238,748" size="432,32" font="Regular;20" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
 
     <!-- FOOTER BAR -->
     <eLabel position="20,812" size="1684,93" backgroundColor="#0f111a" zPosition="-1" />
@@ -357,6 +373,8 @@ class MohamedStore(Screen):
 
         self["description"] = Label("Checking for updates...")
         self["device_label"] = Label(self.get_device_and_image_info())
+        self["facebook_title"] = Label(u"\u062a\u0627\u0628\u0639\u0646\u0627 \u0639\u0644\u0649 \u0641\u064a\u0633\u0628\u0648\u0643")
+        self["facebook_label"] = Label("fb.com/share/1G8inRhUib")
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
         self["key_yellow"] = Label("Refresh Store")
