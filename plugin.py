@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 # ==========================================
-# Mohamed Store - Modern Grid Dashboard Edition v1.3.1
+# Mohamed Store - Modern Grid Dashboard Edition v1.3.2
 # Python 2 & Python 3 fully compatible
-# Multi-Content Item & Category Icon Rendering Supported
-# Updated Blue Key with Telnet Install Script Execution
-# Layout Updated: Compact Download Box & Facebook Box Integration
+# Instant-Open Local Cache Engine + Background Sync
 # ==========================================
 
 from Plugins.Plugin import PluginDescriptor
@@ -36,11 +34,12 @@ except ImportError:
     eTimer = None
 
 try:
-    from enigma import gFont, RT_HALIGN_LEFT, eListboxPythonMultiContent
+    from enigma import gFont, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eListboxPythonMultiContent
     HAS_MULTICONTENT = True
 except ImportError:
     gFont = None
     RT_HALIGN_LEFT = 0
+    RT_HALIGN_RIGHT = 2
     eListboxPythonMultiContent = None
     HAS_MULTICONTENT = False
 
@@ -69,12 +68,14 @@ VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
 FACEBOOK_URL = "https://www.facebook.com/share/1G8inRhUib/"
-PLUGIN_VERSION = "1.3.1"
+PLUGIN_VERSION = "1.3.2"
 
 try:
     PLUGIN_DIR = os.path.dirname(__file__)
 except NameError:
     PLUGIN_DIR = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore"
+
+CACHE_FILE = os.path.join(PLUGIN_DIR, "store_cache.json")
 ICON_FOLDER = os.path.join(PLUGIN_DIR, "images", "Icons")
 FALLBACK_ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons"
 
@@ -111,8 +112,10 @@ def get_category_icon_path(category_id):
         filename = "system_images.png"
     elif "picon" in cat_lower:
         filename = "picons.png"
-    elif "channel" in cat_lower:
+    elif "channel" in cat_lower or "setting" in cat_lower:
         filename = "channels.png"
+    elif "softcam" in cat_lower or "cam" in cat_lower or "emu" in cat_lower:
+        filename = "softcam.png"
     else:
         filename = None
         
@@ -130,7 +133,6 @@ def get_item_icon_path(item, category_id):
     if not isinstance(item, dict):
         return get_category_icon_path(category_id)
 
-    # 1. Direct explicit icon/image/thumbnail property check
     for key in ("icon", "image", "thumbnail"):
         val = item.get(key)
         if val and isinstance(val, (str, getattr(sys, 'unicode', str))):
@@ -144,7 +146,6 @@ def get_item_icon_path(item, category_id):
             if os.path.exists(path2):
                 return path2
 
-    # 2. Check icon file matching item id or name (e.g. skin_blackharmony.png)
     item_id = item.get("id") or item.get("name") or ""
     if item_id:
         clean_name = str(item_id).lower().replace(" ", "_").replace("-", "_") + ".png"
@@ -155,7 +156,6 @@ def get_item_icon_path(item, category_id):
         if os.path.exists(path2):
             return path2
 
-    # 3. Check for specific folder or tool icons
     if "items" in item and isinstance(item["items"], list):
         for folder_icon in ("folder.png", "subfolder.png", "directory.png"):
             path1 = os.path.join(ICON_FOLDER, folder_icon)
@@ -174,12 +174,10 @@ def get_item_icon_path(item, category_id):
             if os.path.exists(path2):
                 return path2
 
-    # 4. Fallback to category icon
     cat_icon = get_category_icon_path(category_id)
     if cat_icon:
         return cat_icon
 
-    # 5. Generic package fallback
     for generic in ("package.png", "default.png", "plugins.png"):
         path1 = os.path.join(ICON_FOLDER, generic)
         if os.path.exists(path1):
@@ -191,7 +189,19 @@ def get_item_icon_path(item, category_id):
     return None
 
 
-def load_json(url):
+def count_items_recursive(items_list):
+    if not isinstance(items_list, list):
+        return 0
+    count = 0
+    for it in items_list:
+        if isinstance(it, dict) and "items" in it and isinstance(it["items"], list):
+            count += count_items_recursive(it["items"])
+        else:
+            count += 1
+    return count
+
+
+def load_json_network(url):
     try:
         if sys.version_info >= (3, 0):
             import urllib.request as urllib2
@@ -205,17 +215,17 @@ def load_json(url):
             except AttributeError:
                 context = None
         
-        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
         if context:
-            response = urllib2.urlopen(req, timeout=12, context=context)
+            response = urllib2.urlopen(req, timeout=5, context=context)
         else:
-            response = urllib2.urlopen(req, timeout=12)
+            response = urllib2.urlopen(req, timeout=5)
         data = response.read()
         if isinstance(data, bytes):
             data = data.decode('utf-8')
         return json.loads(data)
     except Exception as e:
-        print("[MohamedStore] load_json error: " + str(e))
+        print("[MohamedStore] network error: " + str(e))
         return None
 
 
@@ -233,12 +243,12 @@ class MohamedStore(Screen):
     <eLabel position="1700,15" size="4,80" backgroundColor="#e11d48" zPosition="1" />
     <eLabel position="20,95" size="1684,2" backgroundColor="#e11d48" />
     
-    <!-- BRAND / LOGO AREA (x: 32 to 440) -->
+    <!-- BRAND / LOGO AREA -->
     <ePixmap position="32,24" size="190,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" transparent="1" alphatest="blend" />
     <eLabel position="230,22" size="210,30" text="MOHAMED STORE" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="230,52" size="70,22" text=" v1.3.1 " font="Regular;16" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+    <eLabel position="230,52" size="70,22" text=" v1.3.2 " font="Regular;16" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
 
-    <!-- CHIP 1: DEVICE & IMAGE (x: 450, w: 310) -->
+    <!-- CHIP 1: DEVICE & IMAGE -->
     <eLabel position="450,22" size="310,66" backgroundColor="#070913" zPosition="1" />
     <eLabel position="450,22" size="310,2" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="450,22" size="3,66" backgroundColor="#60a5fa" zPosition="2" />
@@ -246,7 +256,7 @@ class MohamedStore(Screen):
     <widget name="sys_device" position="460,26" size="290,26" font="Regular;20" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
     <widget name="sys_image" position="460,54" size="290,26" font="Regular;18" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
 
-    <!-- CHIP 2: CPU & TEMP (x: 770, w: 280) -->
+    <!-- CHIP 2: CPU & TEMP -->
     <eLabel position="770,22" size="280,66" backgroundColor="#070913" zPosition="1" />
     <eLabel position="770,22" size="280,2" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="770,22" size="3,66" backgroundColor="#f43f5e" zPosition="2" />
@@ -254,7 +264,7 @@ class MohamedStore(Screen):
     <widget name="sys_cpu" position="780,26" size="260,26" font="Regular;20" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
     <widget name="sys_temp" position="780,54" size="260,26" font="Regular;18" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
 
-    <!-- CHIP 3: RAM & FLASH (x: 1060, w: 310) -->
+    <!-- CHIP 3: RAM & FLASH -->
     <eLabel position="1060,22" size="310,66" backgroundColor="#070913" zPosition="1" />
     <eLabel position="1060,22" size="310,2" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="1060,22" size="3,66" backgroundColor="#34d399" zPosition="2" />
@@ -262,7 +272,7 @@ class MohamedStore(Screen):
     <widget name="sys_ram" position="1070,26" size="290,26" font="Regular;20" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
     <widget name="sys_flash" position="1070,54" size="290,26" font="Regular;18" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
 
-    <!-- CHIP 4: IP & NETWORK (x: 1380, w: 305) -->
+    <!-- CHIP 4: IP & NETWORK -->
     <eLabel position="1380,22" size="305,66" backgroundColor="#070913" zPosition="1" />
     <eLabel position="1380,22" size="305,2" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="1380,22" size="3,66" backgroundColor="#38bdf8" zPosition="2" />
@@ -278,7 +288,7 @@ class MohamedStore(Screen):
     <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="32,166" size="356,2" backgroundColor="#be185d" />
     
-    <widget name="categories_list" position="25,176" size="370,616" itemHeight="80" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;32" />
+    <widget name="categories_list" position="25,176" size="370,616" itemHeight="80" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;30" />
 
     <!-- CENTER PANEL: PACKAGES -->
     <eLabel position="412,112" size="780,688" backgroundColor="#0f111a" zPosition="-1" />
@@ -300,17 +310,23 @@ class MohamedStore(Screen):
     <!-- Item Description -->
     <widget name="description" position="1222,178" size="464,338" font="Regular;28" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
 
-    <!-- FACEBOOK INFO BOX (Directly above Download Box) -->
+    <!-- FACEBOOK INFO BOX (Avatar + QR Barcode Side-by-Side + Facebook Link) -->
     <eLabel position="1220,530" size="468,118" backgroundColor="#05070c" zPosition="1" />
     <eLabel position="1220,530" size="468,2" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="1220,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
     <eLabel position="1686,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
     <eLabel position="1220,646" size="468,2" backgroundColor="#be185d" zPosition="2" />
     
-    <ePixmap position="1234,542" size="92,92" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" transparent="1" alphatest="blend" />
-    <ePixmap position="1338,548" size="26,26" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/facebook.png" zPosition="3" transparent="1" alphatest="blend" />
-    <widget name="facebook_title" position="1372,546" size="300,28" font="Regular;24" foregroundColor="#60a5fa" backgroundColor="#05070c" transparent="1" zPosition="3" />
-    <widget name="facebook_label" position="1338,582" size="334,48" text="fb.com/share/1G8inRhUib" font="Regular;20" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" />
+    <!-- Image 1: Avatar -->
+    <ePixmap position="1230,544" size="88,88" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" transparent="1" alphatest="blend" />
+    
+    <!-- Image 2: QR Barcode -->
+    <ePixmap position="1326,544" size="88,88" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/qrcode.png" zPosition="3" transparent="1" alphatest="blend" />
+    
+    <!-- Facebook Title & Link -->
+    <ePixmap position="1424,548" size="24,24" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/facebook.png" zPosition="3" transparent="1" alphatest="blend" />
+    <widget name="facebook_title" position="1454,546" size="224,26" font="Regular;22" foregroundColor="#60a5fa" backgroundColor="#05070c" transparent="1" zPosition="3" />
+    <widget name="facebook_label" position="1424,578" size="254,50" text="https://www.facebook.com/share/1G8inRhUib/" font="Regular;18" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" />
 
     <!-- COMPACT DOWNLOAD / PROGRESS BOX -->
     <eLabel position="1220,658" size="468,132" backgroundColor="#05070c" zPosition="1" />
@@ -357,7 +373,6 @@ class MohamedStore(Screen):
     def __init__(self, session):
         Screen.__init__(self, session)
         
-        # Setup Categories List MultiContent
         self.categories_list_has_multicontent = False
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
@@ -369,7 +384,8 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["categories_list"].l.setFont(0, gFont("Regular", 32))
+                        self["categories_list"].l.setFont(0, gFont("Regular", 30))
+                        self["categories_list"].l.setFont(1, gFont("Regular", 22))
                     except Exception as fe:
                         print("[MohamedStore] Failed to set font for categories_list: " + str(fe))
                 self["categories_list"].l.setBuildFunc(self.build_category_entry)
@@ -380,7 +396,6 @@ class MohamedStore(Screen):
         else:
             self["categories_list"] = MenuList([])
 
-        # Setup Items List MultiContent
         self.items_list_has_multicontent = False
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
@@ -403,9 +418,8 @@ class MohamedStore(Screen):
         else:
             self["items_list"] = MenuList([])
 
-        self["description"] = Label("Checking for updates...")
+        self["description"] = Label("Loading...")
         
-        # Live System Telemetry Labels
         telemetry = self.get_system_telemetry_info()
         self["sys_device"] = Label(telemetry.get("device", "Box: Enigma2"))
         self["sys_image"] = Label(telemetry.get("image", "OS: EGAMI"))
@@ -413,11 +427,11 @@ class MohamedStore(Screen):
         self["sys_temp"] = Label(telemetry.get("temp", "Temp: N/A"))
         self["sys_ram"] = Label(telemetry.get("ram", "RAM: OK"))
         self["sys_flash"] = Label(telemetry.get("flash", "Flash: OK"))
-        self["sys_ip"] = Label(telemetry.get("ip", "IP: --"))
+        self["sys_ip"] = Label(telemetry.get("ip", "IP: Online"))
         self["sys_net"] = Label(telemetry.get("net", "Net: Online"))
         
         self["facebook_title"] = Label(u"\u062a\u0627\u0628\u0639\u0646\u0627 \u0639\u0644\u0649 \u0641\u064a\u0633\u0628\u0648\u0643")
-        self["facebook_label"] = Label("fb.com/share/1G8inRhUib")
+        self["facebook_label"] = Label("https://www.facebook.com/share/1G8inRhUib/")
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
         self["key_yellow"] = Label("Refresh Store")
@@ -491,11 +505,92 @@ class MohamedStore(Screen):
         self["categories_list"].onSelectionChanged.append(self.category_changed)
         self["items_list"].onSelectionChanged.append(self.item_changed)
         
-        self.onLayoutFinish.append(self.check_for_updates)
+        # 1. Load Instant Cache IMMEDIATELY on init
+        self.load_local_cache()
 
-    def get_device_and_image_info(self):
-        telemetry = self.get_system_telemetry_info()
-        return "%s | %s" % (telemetry.get("device", "Enigma2 Box"), telemetry.get("image", "EGAMI"))
+        # 2. Sync online in background after launch
+        self.bg_sync_timer = eTimer()
+        try:
+            self.bg_sync_timer_conn = self.bg_sync_timer.timeout.connect(self.start_background_sync)
+        except AttributeError:
+            try:
+                self.bg_sync_timer.callback.append(self.start_background_sync)
+            except:
+                pass
+        self.onLayoutFinish.append(self.schedule_bg_sync)
+
+    def load_local_cache(self):
+        try:
+            if os.path.exists(CACHE_FILE):
+                with open(CACHE_FILE, "r") as f:
+                    cached_data = json.load(f)
+                    if cached_data and "categories" in cached_data:
+                        self.apply_store_data(cached_data)
+                        return True
+        except Exception as e:
+            print("[MohamedStore] Cache load error: " + str(e))
+        return False
+
+    def schedule_bg_sync(self):
+        if self.bg_sync_timer:
+            self.bg_sync_timer.start(100, True)
+
+    def start_background_sync(self):
+        t = threading.Thread(target=self.async_network_fetch)
+        t.daemon = True
+        t.start()
+
+    def async_network_fetch(self):
+        try:
+            data = load_json_network(STORE_URL)
+            if data and "categories" in data:
+                self.apply_store_data(data)
+                try:
+                    with open(CACHE_FILE, "w") as f:
+                        json.dump(data, f)
+                except Exception as e:
+                    pass
+            elif not self.categories:
+                self["description"].setText("Failed to connect to GitHub feed.")
+        except Exception as e:
+            print("[MohamedStore] Background sync error: " + str(e))
+
+    def apply_store_data(self, data):
+        try:
+            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.2"))
+            self.setTitle(store_title)
+            
+            self.store_data = data["categories"]
+            if isinstance(self.store_data, dict):
+                self.categories = list(self.store_data.keys())
+            else:
+                self.categories = []
+            
+            if "tools" not in self.categories:
+                self.categories.append("tools")
+            
+            if self.categories:
+                display_cats = []
+                for cat in self.categories:
+                    cat_clean_name = str(cat).replace("_", " ").capitalize()
+                    
+                    if cat == "tools":
+                        remote_tools = self.store_data.get("tools", [])
+                        count = len(BUILTIN_SYSTEM_TOOLS) + (len(remote_tools) if isinstance(remote_tools, list) else 0)
+                    else:
+                        cat_content = self.store_data.get(cat, [])
+                        count = count_items_recursive(cat_content)
+                    
+                    if self.categories_list_has_multicontent:
+                        display_cats.append((cat, cat_clean_name, count))
+                    else:
+                        display_cats.append("%s (%d)" % (cat_clean_name, count))
+                        
+                self["categories_list"].setList(display_cats)
+                self.current_path = []
+                self.category_changed()
+        except Exception as e:
+            print("[MohamedStore] apply_store_data error: " + str(e))
 
     def get_system_telemetry_info(self):
         info = {
@@ -509,7 +604,6 @@ class MohamedStore(Screen):
             "net": "Net: Online"
         }
         
-        # 1. Device & Image Detection
         try:
             device_name = "Enigma2"
             image_name = "EGAMI"
@@ -538,9 +632,8 @@ class MohamedStore(Screen):
             info["device"] = "Box: %s" % device_name
             info["image"] = "OS: %s" % image_name
         except Exception as e:
-            print("[MohamedStore] Telemetry device error: " + str(e))
+            pass
 
-        # 2. CPU Load & Temperature
         try:
             temp_val = None
             for temp_path in (
@@ -572,11 +665,9 @@ class MohamedStore(Screen):
             else:
                 info["cpu"] = "CPU: Ready"
         except Exception as e:
-            print("[MohamedStore] Telemetry CPU error: " + str(e))
+            pass
 
-        # 3. RAM & Flash Storage
         try:
-            # RAM calculation
             if os.path.exists("/proc/meminfo"):
                 mem_total = 0
                 mem_free = 0
@@ -603,7 +694,6 @@ class MohamedStore(Screen):
                 else:
                     info["ram"] = "RAM: 38% (1.2G Free)"
 
-            # Flash Storage calculation
             stat = os.statvfs('/')
             free_bytes = stat.f_bavail * stat.f_frsize
             free_gb = float(free_bytes) / (1024.0 * 1024.0 * 1024.0)
@@ -613,32 +703,23 @@ class MohamedStore(Screen):
                 free_mb = float(free_bytes) / (1024.0 * 1024.0)
                 info["flash"] = "Flash: %d MB Free" % int(free_mb)
         except Exception as e:
-            print("[MohamedStore] Telemetry RAM/Flash error: " + str(e))
-            if info["ram"] == "RAM: --":
-                info["ram"] = "RAM: 38% (1.2G Free)"
-            if info["flash"] == "Flash: --":
-                info["flash"] = "Flash: 3.8 GB Free"
-
-        # 4. Network IP & Internet Status
-        try:
-            import socket
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.settimeout(0.8)
-            s.connect(("8.8.8.8", 80))
-            ip_addr = s.getsockname()[0]
-            s.close()
-            info["ip"] = "IP: %s" % ip_addr
-            info["net"] = "Net: Online"
-        except Exception:
-            info["ip"] = "IP: 192.168.1.50"
-            info["net"] = "Net: Online"
+            pass
 
         return info
 
     def build_category_entry(self, *args):
+        count = 0
         if len(args) == 1 and isinstance(args[0], tuple):
-            category_id, display_name = args[0]
-        elif len(args) >= 2:
+            if len(args[0]) >= 3:
+                category_id, display_name, count = args[0][0], args[0][1], args[0][2]
+            elif len(args[0]) == 2:
+                category_id, display_name = args[0][0], args[0][1]
+            else:
+                category_id = args[0][0]
+                display_name = str(category_id)
+        elif len(args) >= 3:
+            category_id, display_name, count = args[0], args[1], args[2]
+        elif len(args) == 2:
             category_id, display_name = args[0], args[1]
         else:
             category_id = "unknown"
@@ -651,21 +732,25 @@ class MohamedStore(Screen):
                 if loadPNG:
                     pixmap = loadPNG(icon_path)
             except Exception as e:
-                print("[MohamedStore] Error loading category PNG: " + str(e))
+                pass
 
         res = [category_id]
         
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
             res.append(MultiContentEntryPixmapAlphaTest(pos=(12, 12), size=(56, 56), png=pixmap))
-            text_x = 80
-            text_w = 280
+            text_x = 76
+            text_w = 210
         else:
             text_x = 15
-            text_w = 340
+            text_w = 270
 
         if HAS_MULTICONTENT and MultiContentEntryText:
-            align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 80), font=0, flags=align, text=display_name))
+            align_left = RT_HALIGN_LEFT | RT_VALIGN_CENTER
+            align_right = RT_HALIGN_RIGHT | RT_VALIGN_CENTER
+            
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 80), font=0, flags=align_left, text=str(display_name)))
+            count_str = "[%d]" % int(count) if count is not None else "[0]"
+            res.append(MultiContentEntryText(pos=(286, 0), size=(74, 80), font=0, flags=align_right, text=count_str))
             
         return res
 
@@ -689,7 +774,7 @@ class MohamedStore(Screen):
                 if loadPNG:
                     pixmap = loadPNG(icon_path)
             except Exception as e:
-                print("[MohamedStore] Error loading item PNG: " + str(e))
+                pass
 
         res = [item]
         
@@ -707,38 +792,11 @@ class MohamedStore(Screen):
             
         return res
 
-    def is_newer_version(self, online, current):
-        try:
-            online_parts = [int(x) for x in online.split('.')]
-            current_parts = [int(x) for x in current.split('.')]
-            max_len = max(len(online_parts), len(current_parts))
-            online_parts += [0] * (max_len - len(online_parts))
-            current_parts += [0] * (max_len - len(current_parts))
-            return online_parts > current_parts
-        except Exception as e:
-            print("[MohamedStore] Version Check Parsing Error: " + str(e))
-            try:
-                return float(online) > float(current)
-            except:
-                return online != current
-
-    def check_for_updates(self):
-        try:
-            ver_data = load_json(VERSION_URL)
-            if ver_data and "plugin_version" in ver_data:
-                online_version = str(ver_data["plugin_version"])
-                if self.is_newer_version(online_version, PLUGIN_VERSION):
-                    self.session.openWithCallback(
-                        self.updateAnswer,
-                        MessageBox,
-                        "A new version of Mohamed Store is available.\nDo you want to update now?",
-                        MessageBox.TYPE_YESNO
-                    )
-                    return
-        except Exception as e:
-            print("[MohamedStore] Update Check Exception: " + str(e))
-            
-        self.load_store()
+    def load_store(self):
+        self["description"].setText("Refreshing feed from GitHub...")
+        t = threading.Thread(target=self.async_network_fetch)
+        t.daemon = True
+        t.start()
 
     def manual_update(self):
         self.session.openWithCallback(
@@ -749,12 +807,6 @@ class MohamedStore(Screen):
         )
 
     def run_install_script(self, answer):
-        if answer:
-            self.start_script_update()
-        else:
-            self.load_store()
-
-    def updateAnswer(self, answer):
         if answer:
             self.start_script_update()
         else:
@@ -845,42 +897,6 @@ class MohamedStore(Screen):
         else:
             self.load_store()
 
-    def load_store(self):
-        try:
-            data = load_json(STORE_URL)
-            if not data or "categories" not in data:
-                self["description"].setText("Failed to load store data from GitHub.")
-                return
-            
-            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.1"))
-            self.setTitle(store_title)
-            
-            self.store_data = data["categories"]
-            if isinstance(self.store_data, dict):
-                self.categories = list(self.store_data.keys())
-            else:
-                self.categories = []
-            
-            if "tools" not in self.categories:
-                self.categories.append("tools")
-            
-            if self.categories:
-                display_cats = []
-                for cat in self.categories:
-                    display_name = str(cat).replace("_", " ").capitalize()
-                    if self.categories_list_has_multicontent:
-                        display_cats.append((cat, display_name))
-                    else:
-                        display_cats.append(display_name)
-                        
-                self["categories_list"].setList(display_cats)
-                self.current_path = []
-                self.category_changed()
-            else:
-                self["description"].setText("Store is empty.")
-        except Exception as e:
-            self["description"].setText("Load Store Error: " + str(e))
-
     def category_changed(self):
         try:
             if self.active_focus == "categories":
@@ -923,7 +939,6 @@ class MohamedStore(Screen):
                 items = folder.get("items", [])
             self.visible_items = items
         except Exception as e:
-            print("[MohamedStore] rebuild_visible_items error: " + str(e))
             self.visible_items = []
 
     def update_items_list(self):
@@ -939,7 +954,8 @@ class MohamedStore(Screen):
             display_items = []
             for item in self.visible_items:
                 if "items" in item and isinstance(item["items"], list):
-                    display_text = "> " + str(item.get("name", "Unknown Folder"))
+                    folder_count = count_items_recursive(item["items"])
+                    display_text = "> %s  (%d)" % (str(item.get("name", "Unknown Folder")), folder_count)
                 elif item.get("type") == "tool":
                     display_text = str(item.get("name", "Unknown Tool"))
                 else:
@@ -983,9 +999,11 @@ class MohamedStore(Screen):
                 )
             elif "items" in item and isinstance(item["items"], list):
                 self["key_green"].setText("Install")
-                info_text = "Section: %s\n\nFolder: %s\n\nPress OK to view packages inside this folder." % (
+                sub_count = count_items_recursive(item["items"])
+                info_text = "Section: %s\n\nFolder: %s\nPackages inside: %d\n\nPress OK to view packages inside this folder." % (
                     path_str,
-                    str(item.get("name", ""))
+                    str(item.get("name", "")),
+                    sub_count
                 )
             else:
                 self["key_green"].setText("Install")
@@ -1236,7 +1254,6 @@ class MohamedStore(Screen):
                         url = url.encode('utf-8')
                 url = urllib_quote(url, safe='/:?=&%')
             except Exception as qe:
-                print("[MohamedStore] Quote error: " + str(qe))
                 url = url.replace(" ", "%20")
                 
             req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
@@ -1244,7 +1261,6 @@ class MohamedStore(Screen):
                 try:
                     opener = urllib2.build_opener(urllib2.HTTPSHandler(context=context))
                 except Exception as oe:
-                    print("[MohamedStore] Failed to build opener with context: " + str(oe))
                     opener = urllib2.build_opener()
             else:
                 opener = urllib2.build_opener()
