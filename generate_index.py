@@ -139,7 +139,7 @@ for filename in sorted(sys_list):
 
 
 # -------------------------------------------------
-# 2. Skins (السكينات)
+# 2. Skins (السكينات - دعم كافة المجلدات الحالية والجديدة)
 # -------------------------------------------------
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -153,14 +153,18 @@ if os.path.isdir("skins"):
                 continue
             clean = clean_filename(filename)
             version = clean.split("_")[-2] if "_" in clean else "1.0"
-            image_name = clean.replace("enigma2-plugin-skins-", "").split("_")[0]
+            display = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
+            image_name = display.split("_")[0]
+
+            # البحث عن صورة مخصصة للسكين، وإذا لم توجد توضع صورة skins.png
+            img = image_url(image_name) or image_url(clean.split("_")[0]) or image_url("skins")
 
             items.append({
                 "name": clean,
                 "version": version,
                 "description": old_descriptions.get(clean, folder + " Skin"),
                 "file": f"{BASE_URL}/skins/{folder}/{filename}",
-                "image": image_url(image_name)
+                "image": img
             })
 
         data["categories"]["skins"].append({
@@ -350,7 +354,15 @@ for asset in release_assets_pool:
 for filename in sorted(novaler_list):
     clean = clean_filename(filename)
     version = clean.split("_")[-2] if "_" in clean else "1.0"
-    image_name = clean.split("_")[0]
+    display = (
+        clean.replace("enigma2-plugin-extensions-", "")
+        .replace("enigma2-plugin-", "")
+        .replace("extensions-", "")
+    )
+    image_name = display.split("_")[0]
+
+    # جلب صورة novaler.png تلقائياً
+    img = image_url("novaler") or image_url("noflayer") or image_url(image_name)
 
     file_path_url = f"{BASE_URL}/{novaler_folder}/{filename}"
     for asset in release_assets_pool:
@@ -363,7 +375,7 @@ for filename in sorted(novaler_list):
         "version": version,
         "description": old_descriptions.get(clean, ""),
         "file": file_path_url,
-        "image": image_url(image_name)
+        "image": img
     })
 
 
