@@ -171,16 +171,29 @@ def get_category_icon_path(category_id):
         filename = "channels.png"
     elif "softcam" in cat_lower or "cam" in cat_lower or "emu" in cat_lower:
         filename = "softcam.png"
+    elif "noflayer" in cat_lower or "novaler" in cat_lower or "novalayer" in cat_lower:
+        filename = "novaler.png"
     else:
         filename = None
         
     if filename:
-        full_path = os.path.join(ICON_FOLDER, filename)
-        if os.path.exists(full_path):
-            return full_path
-        fallback_path = os.path.join(FALLBACK_ICON_FOLDER, filename)
-        if os.path.exists(fallback_path):
-            return fallback_path
+        search_folders = [
+            ICON_FOLDER,
+            FALLBACK_ICON_FOLDER,
+            os.path.join(PLUGIN_DIR, "images"),
+            os.path.join(PLUGIN_DIR, "images", "Icons"),
+            os.path.join(PLUGIN_DIR, "images", "icons"),
+            "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images",
+            "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons",
+            "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/icons"
+        ]
+        candidates = [filename, "novaler.png", "noflayer.png"] if ("noval" in str(filename) or "nofla" in str(filename)) else [filename]
+        
+        for folder in search_folders:
+            for name in candidates:
+                full_p = os.path.join(folder, name)
+                if os.path.exists(full_p):
+                    return full_p
     return None
 
 
@@ -200,6 +213,9 @@ def get_item_icon_path(item, category_id):
             path2 = os.path.join(FALLBACK_ICON_FOLDER, val)
             if os.path.exists(path2):
                 return path2
+            path3 = os.path.join(PLUGIN_DIR, "images", val)
+            if os.path.exists(path3):
+                return path3
 
     item_id = item.get("id") or item.get("name") or ""
     if item_id:
@@ -210,6 +226,9 @@ def get_item_icon_path(item, category_id):
         path2 = os.path.join(FALLBACK_ICON_FOLDER, clean_name)
         if os.path.exists(path2):
             return path2
+        path3 = os.path.join(PLUGIN_DIR, "images", clean_name)
+        if os.path.exists(path3):
+            return path3
 
     if "items" in item and isinstance(item["items"], list):
         for folder_icon in ("folder.png", "subfolder.png", "directory.png"):
