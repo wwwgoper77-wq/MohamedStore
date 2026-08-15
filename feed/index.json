@@ -348,6 +348,10 @@
                 ]
             },
             {
+                "name": "OpenSPA",
+                "items": []
+            },
+            {
                 "name": "Pure2",
                 "items": []
             }
