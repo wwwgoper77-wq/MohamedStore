@@ -16,7 +16,8 @@ data = {
         "tools": [],
         "system_images": [],
         "picons": [],
-        "channels": []
+        "channels": [],
+        "novaler": []
     }
 }
 
@@ -314,6 +315,50 @@ for filename in sorted(plugins_list):
             .replace("skins-", "")
             .replace("plugin-", "")
         )
+    })
+
+
+# -------------------------------------------------
+# 7. Novaler (قسم نوفالير)
+# -------------------------------------------------
+novaler_list = []
+novaler_folder = "novaler" if os.path.isdir("novaler") else "Novaler" if os.path.isdir("Novaler") else "novaler"
+
+if os.path.isdir("novaler"):
+    for filename in sorted(os.listdir("novaler")):
+        if filename.endswith(EXTENSIONS):
+            novaler_list.append(filename)
+elif os.path.isdir("Novaler"):
+    for filename in sorted(os.listdir("Novaler")):
+        if filename.endswith(EXTENSIONS):
+            novaler_list.append(filename)
+
+for asset in release_assets_pool:
+    fname = asset["filename"]
+    lower_f = fname.lower()
+    if any(k in lower_f for k in ["skin", "picon", "channel", "image", "settings", "backup"]):
+        continue
+    if "novaler" in lower_f or "noflayer" in lower_f:
+        if fname not in novaler_list:
+            novaler_list.append(fname)
+
+for filename in sorted(novaler_list):
+    clean = clean_filename(filename)
+    version = clean.split("_")[-2] if "_" in clean else "1.0"
+    image_name = clean.split("_")[0]
+
+    file_path_url = f"{BASE_URL}/{novaler_folder}/{filename}"
+    for asset in release_assets_pool:
+        if asset["filename"] == filename:
+            file_path_url = asset["url"]
+            break
+
+    data["categories"]["novaler"].append({
+        "name": clean,
+        "version": version,
+        "description": old_descriptions.get(clean, ""),
+        "file": file_path_url,
+        "image": image_url(image_name)
     })
 
 
