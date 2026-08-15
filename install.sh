@@ -4,7 +4,7 @@ PLUGIN_DIR="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore"
 BASE_URL="https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main"
 
 echo "========================================="
-echo "   Installing Mohamed Store..."
+echo "    Installing Mohamed Store..."
 echo "========================================="
 
 # حذف المجلد القديم لضمان نظافة التثبيت
@@ -18,6 +18,7 @@ mkdir -p "$PLUGIN_DIR/plugins"
 mkdir -p "$PLUGIN_DIR/skins"
 mkdir -p "$PLUGIN_DIR/tools"
 mkdir -p "$PLUGIN_DIR/system_images"
+mkdir -p "$PLUGIN_DIR/novaler"
 
 echo "Downloading plugin core files..."
 wget -O "$PLUGIN_DIR/plugin.py" "$BASE_URL/plugin.py"
@@ -31,6 +32,7 @@ wget -O "$PLUGIN_DIR/images/ipaudiopro.png" "$BASE_URL/images/ipaudiopro.png"
 wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay.png"
 wget -O "$PLUGIN_DIR/images/avatar.png" "$BASE_URL/images/avatar.png"
 wget -O "$PLUGIN_DIR/images/qrcode.png" "$BASE_URL/images/qrcode.png"
+wget -O "$PLUGIN_DIR/images/novaler.png" "$BASE_URL/images/novaler.png"
 
 echo "Downloading section icons..."
 wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
@@ -39,6 +41,7 @@ wget -O "$PLUGIN_DIR/images/Icons/tools.png" "$BASE_URL/images/Icons/tools.png"
 wget -O "$PLUGIN_DIR/images/Icons/system_images.png" "$BASE_URL/images/Icons/system_images.png"
 wget -O "$PLUGIN_DIR/images/Icons/picons.png" "$BASE_URL/images/Icons/picons.png"
 wget -O "$PLUGIN_DIR/images/Icons/channels.png" "$BASE_URL/images/Icons/channels.png"
+wget -O "$PLUGIN_DIR/images/Icons/novaler.png" "$BASE_URL/images/Icons/novaler.png"
 
 # تنظيف ملفات البايثون المؤقتة
 find "$PLUGIN_DIR" -name "*.pyc" -delete 2>/dev/null
