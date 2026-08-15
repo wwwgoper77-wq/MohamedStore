@@ -42,12 +42,17 @@ except:
 
 
 def image_url(prefix):
-    if not os.path.isdir("images"):
-        return ""
     prefix = prefix.lower()
-    for file in sorted(os.listdir("images")):
-        if file.lower().startswith(prefix) and file.lower().endswith(".png"):
-            return f"{BASE_URL}/images/{file}"
+    # 1. البحث في مجلد Icons أولاً
+    if os.path.isdir("Icons"):
+        for file in sorted(os.listdir("Icons")):
+            if file.lower().startswith(prefix) and file.lower().endswith(".png"):
+                return f"{BASE_URL}/Icons/{file}"
+    # 2. البحث في مجلد images ثانياً إذا لم توجد في Icons
+    if os.path.isdir("images"):
+        for file in sorted(os.listdir("images")):
+            if file.lower().startswith(prefix) and file.lower().endswith(".png"):
+                return f"{BASE_URL}/images/{file}"
     return ""
 
 
