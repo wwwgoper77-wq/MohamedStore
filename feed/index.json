@@ -546,6 +546,18 @@
                 ]
             },
             {
+                "name": "Other Images",
+                "items": [
+                    {
+                        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
+                        "version": "system",
+                        "description": "Other Images Firmware Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
+                        "image": ""
+                    }
+                ]
+            },
+            {
                 "name": "Pure2 Images",
                 "items": [
                     {
