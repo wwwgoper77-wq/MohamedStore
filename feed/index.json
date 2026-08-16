@@ -629,52 +629,8 @@
                 ]
             },
             {
-                "name": "README.md",
-                "items": []
-            },
-            {
                 "name": "VTI",
                 "items": []
-            },
-            {
-                "name": "ZERO 4K",
-                "items": [
-                    {
-                        "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
-                        "version": "S",
-                        "description": "صورة egami لجهاز vuzero4k  ",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
-                        "version": "system",
-                        "description": "نسخة بيتا لصورة openatv لجهاز vuzero4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb",
-                        "version": "images-vuzero4k-8c6baf54",
-                        "description": "openbh صورة لجهاز vuzero4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
-                        "version": "system",
-                        "description": "Other Images Firmware Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "vuzero4k-PurE2-7.6-20260217_usb",
-                        "version": "vuzero4k-PurE2-7.6-20260217",
-                        "description": "PurE2 صورة لجهاز vuzero4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
-                        "image": ""
-                    }
-                ]
             }
         ],
         "picons": [
