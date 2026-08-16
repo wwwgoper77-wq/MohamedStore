@@ -229,15 +229,7 @@
             },
             {
                 "name": "Novaler",
-                "items": [
-                    {
-                        "name": "Novaler (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for Novaler.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenATV",
@@ -328,39 +320,15 @@
             },
             {
                 "name": "OpenDroid",
-                "items": [
-                    {
-                        "name": "OpenDroid (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for OpenDroid.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenEight",
-                "items": [
-                    {
-                        "name": "OpenEight (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for OpenEight.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenHDF",
-                "items": [
-                    {
-                        "name": "OpenHDF (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for OpenHDF.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenP",
@@ -397,51 +365,19 @@
             },
             {
                 "name": "OpenSPA",
-                "items": [
-                    {
-                        "name": "OpenSPA (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for OpenSPA.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenVision",
-                "items": [
-                    {
-                        "name": "OpenVision (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for OpenVision.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Pure2",
-                "items": [
-                    {
-                        "name": "Pure2 (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for Pure2.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "VTI",
-                "items": [
-                    {
-                        "name": "VTI (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No skins uploaded yet for VTI.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             }
         ],
         "tools": [
@@ -505,15 +441,7 @@
         "system_images": [
             {
                 "name": "Backups",
-                "items": [
-                    {
-                        "name": "Backups (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for Backups.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Egami",
@@ -529,15 +457,7 @@
             },
             {
                 "name": "Novaler",
-                "items": [
-                    {
-                        "name": "Novaler (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for Novaler.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenATV",
@@ -647,75 +567,27 @@
             },
             {
                 "name": "OpenEight",
-                "items": [
-                    {
-                        "name": "OpenEight (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for OpenEight.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenHDF",
-                "items": [
-                    {
-                        "name": "OpenHDF (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for OpenHDF.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenPLi",
-                "items": [
-                    {
-                        "name": "OpenPLi (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for OpenPLi.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenSPA",
-                "items": [
-                    {
-                        "name": "OpenSPA (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for OpenSPA.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenViX",
-                "items": [
-                    {
-                        "name": "OpenViX (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for OpenViX.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenVision",
-                "items": [
-                    {
-                        "name": "OpenVision (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for OpenVision.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Pure2",
@@ -731,15 +603,7 @@
             },
             {
                 "name": "VTI",
-                "items": [
-                    {
-                        "name": "VTI (Coming Soon)",
-                        "version": "1.0",
-                        "description": "No firmware images uploaded yet for VTI.",
-                        "file": "",
-                        "image": ""
-                    }
-                ]
+                "items": []
             }
         ],
         "picons": [
