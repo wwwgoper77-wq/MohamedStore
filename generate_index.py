@@ -44,12 +44,10 @@ except:
 
 def image_url(prefix):
     prefix = prefix.lower()
-    # 1. البحث في مجلد Icons أولاً
     if os.path.isdir("Icons"):
         for file in sorted(os.listdir("Icons")):
             if file.lower().startswith(prefix) and file.lower().endswith(".png"):
                 return f"{BASE_URL}/Icons/{file}"
-    # 2. البحث في مجلد images ثانياً إذا لم توجد في Icons
     if os.path.isdir("images"):
         for file in sorted(os.listdir("images")):
             if file.lower().startswith(prefix) and file.lower().endswith(".png"):
@@ -62,34 +60,47 @@ EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", "
 
 
 # -------------------------------------------------
-# Global Release Assets Fetcher
+# 1. جلب شجرة المستودع بالكامل من GitHub ديناميكياً
+# -------------------------------------------------
+github_tree_paths = []
+try:
+    api_tree = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/git/trees/main?recursive=1"
+    req = urllib.request.Request(
+        api_tree,
+        headers={"User-Agent": "Mozilla/5.0", "Accept": "application/vnd.github+json"}
+    )
+    with urllib.request.urlopen(req, timeout=15) as response:
+        tree_data = json.loads(response.read().decode("utf-8"))
+        for item in tree_data.get("tree", []):
+            github_tree_paths.append(item.get("path", ""))
+except Exception as e:
+    print("GitHub Tree Fetch Info:", e)
+
+
+# -------------------------------------------------
+# 2. جلب ملفات الـ Releases
 # -------------------------------------------------
 release_assets_pool = []
 try:
-    api = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
+    api_rel = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
     req = urllib.request.Request(
-        api,
-        headers={
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/vnd.github+json"
-        }
+        api_rel,
+        headers={"User-Agent": "Mozilla/5.0", "Accept": "application/vnd.github+json"}
     )
     with urllib.request.urlopen(req, timeout=20) as response:
         releases = json.loads(response.read().decode("utf-8"))
-
-    for release in releases:
-        for asset in release.get("assets", []):
-            filename = asset["name"]
-            if filename.endswith(EXTENSIONS):
-                release_assets_pool.append({
-                    "filename": filename,
-                    "url": asset["browser_download_url"]
-                })
+        for release in releases:
+            for asset in release.get("assets", []):
+                filename = asset["name"]
+                if filename.endswith(EXTENSIONS):
+                    release_assets_pool.append({
+                        "filename": filename,
+                        "url": asset["browser_download_url"]
+                    })
 except Exception as e:
-    print("GitHub Releases Fetch Error:", e)
+    print("GitHub Releases Fetch Info:", e)
 
 
-# دالة مساعدة لتنظيف اسم الملف وإزالة الامتدادات المركبة
 def clean_filename(filename):
     if filename.endswith(".tar.gz"):
         return filename[:-7]
@@ -99,97 +110,124 @@ def clean_filename(filename):
         return os.path.splitext(filename)[0]
 
 
+# دالة ذكية لاكتشاف كافة المجلدات التابعة لأي قسم تلقائياً
+def discover_category_folders(section_name):
+    folders = set()
+    
+    # من المجلد المحلي
+    if os.path.isdir(section_name):
+        for f in os.listdir(section_name):
+            if os.path.isdir(os.path.join(section_name, f)):
+                folders.add(f)
+                
+    # من شجرة GitHub
+    prefix = f"{section_name}/"
+    for p in github_tree_paths:
+        if p.startswith(prefix):
+            parts = p[len(prefix):].split("/")
+            if len(parts) >= 1 and parts[0]:
+                # إذا كان مجلداً فرعياً
+                if len(parts) > 1 or not any(parts[0].endswith(ext) for ext in EXTENSIONS):
+                    folders.add(parts[0])
+                    
+    return sorted(list(folders))
+
+
 # -------------------------------------------------
-# 1. System Images (صور النظام)
+# 1. System Images (ديناميكي 100% لأي مجلد جديد)
 # -------------------------------------------------
-if os.path.isdir("system_images"):
-    for folder in sorted(os.listdir("system_images")):
-        folder_path = os.path.join("system_images", folder)
-        
-        # إذا كان مجلداً (مثل OpenDroid, Egami, OpenATV ...)
-        if os.path.isdir(folder_path):
-            folder_items = []
-            
-            # قراءة الملفات من المجلد المحلي
-            for filename in sorted(os.listdir(folder_path)):
-                if not filename.endswith(EXTENSIONS):
-                    continue
-                clean = clean_filename(filename)
-                version = clean.split("_")[-2] if "_" in clean else "1.0"
-                image_name = clean.split("_")[0]
-                img = image_url(image_name) or image_url(folder) or image_url("system_images")
+sys_folders = discover_category_folders("system_images")
 
-                file_path_url = f"{BASE_URL}/system_images/{folder}/{filename}"
-                for asset in release_assets_pool:
-                    if asset["filename"] == filename:
-                        file_path_url = asset["url"]
-                        break
-
-                folder_items.append({
-                    "name": clean,
-                    "version": version,
-                    "description": old_descriptions.get(clean, f"{folder} Firmware Image"),
-                    "file": file_path_url,
-                    "image": img
-                })
-
-            # فحص إذا كان هناك ملفات في Releases تخص هذا المجلد
-            folder_lower = folder.lower().replace("_", "").replace(" ", "")
-            for asset in release_assets_pool:
-                fname = asset["filename"]
-                fname_lower = fname.lower()
-                if any(k in fname_lower for k in ["skin", "picon", "plugin", "tool", "channel", "settings", "backup"]):
-                    continue
-                if folder_lower in fname_lower:
-                    if not any(it["file"] == asset["url"] for it in folder_items):
-                        clean = clean_filename(fname)
-                        version = clean.split("_")[-2] if "_" in clean else "1.0"
-                        folder_items.append({
-                            "name": clean,
-                            "version": version,
-                            "description": old_descriptions.get(clean, f"{folder} Firmware Image"),
-                            "file": asset["url"],
-                            "image": image_url(clean.split("_")[0]) or image_url(folder) or image_url("system_images")
-                        })
-            
-            # إضافة المجلد حتى لو كان فارغاً تماماً []
-            data["categories"]["system_images"].append({
-                "name": folder.replace("_", " "),
-                "items": folder_items
-            })
-        
-        # إذا كان ملف صورة موضوع مباشرة في الجذر
-        elif folder.endswith(EXTENSIONS):
-            filename = folder
+for folder in sys_folders:
+    folder_path = os.path.join("system_images", folder)
+    folder_items = []
+    
+    # 1. الملفات من المجلد المحلي
+    if os.path.isdir(folder_path):
+        for filename in sorted(os.listdir(folder_path)):
+            if not filename.endswith(EXTENSIONS):
+                continue
             clean = clean_filename(filename)
             version = clean.split("_")[-2] if "_" in clean else "1.0"
             image_name = clean.split("_")[0]
+            img = image_url(image_name) or image_url(folder) or image_url("system_images")
 
-            file_path_url = f"{BASE_URL}/system_images/{filename}"
+            file_path_url = f"{BASE_URL}/system_images/{folder}/{filename}"
             for asset in release_assets_pool:
                 if asset["filename"] == filename:
                     file_path_url = asset["url"]
                     break
 
-            data["categories"]["system_images"].append({
+            folder_items.append({
                 "name": clean,
                 "version": version,
-                "description": old_descriptions.get(clean, "Enigma2 Firmware Image"),
+                "description": old_descriptions.get(clean, f"{folder} Firmware Image"),
                 "file": file_path_url,
-                "image": image_url(image_name) or image_url("system_images")
+                "image": img
             })
 
+    # 2. الملفات من GitHub Tree (إذا رُفعت على GitHub مباشرة)
+    folder_prefix = f"system_images/{folder}/"
+    for p in github_tree_paths:
+        if p.startswith(folder_prefix):
+            filename = os.path.basename(p)
+            if filename.endswith(EXTENSIONS) and not any(it["name"] == clean_filename(filename) for it in folder_items):
+                clean = clean_filename(filename)
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                image_name = clean.split("_")[0]
+                img = image_url(image_name) or image_url(folder) or image_url("system_images")
+                folder_items.append({
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean, f"{folder} Firmware Image"),
+                    "file": f"{BASE_URL}/{p}",
+                    "image": img
+                })
 
-# -------------------------------------------------
-# 2. Skins (السكينات)
-# -------------------------------------------------
-if os.path.isdir("skins"):
-    for folder in sorted(os.listdir("skins")):
-        folder_path = os.path.join("skins", folder)
-        if not os.path.isdir(folder_path):
+    # 3. ربط ملفات Releases بالمجلد تلقائياً بحسب اسم الحافظة
+    folder_kw = folder.lower().replace("_", "").replace(" ", "")
+    extra_kws = [folder_kw]
+    if "octagon" in folder_kw:
+        extra_kws.extend(["sf8008", "sx88", "sf4008"])
+    elif "novaler" in folder_kw:
+        extra_kws.extend(["multibox", "4kpro", "4kse"])
+    elif "vu" in folder_kw:
+        extra_kws.extend(["vuplus", "vuzero", "uno4k", "duo4k", "zero4k"])
+
+    for asset in release_assets_pool:
+        fname = asset["filename"]
+        fname_lower = fname.lower()
+        if any(k in fname_lower for k in ["skin", "picon", "plugin", "tool", "channel", "settings", "backup"]):
             continue
+        if any(kw in fname_lower for kw in extra_kws):
+            if not any(it["file"] == asset["url"] for it in folder_items):
+                clean = clean_filename(fname)
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                folder_items.append({
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean, f"{folder} Firmware Image"),
+                    "file": asset["url"],
+                    "image": image_url(clean.split("_")[0]) or image_url(folder) or image_url("system_images")
+                })
 
-        items = []
+    data["categories"]["system_images"].append({
+        "name": folder.replace("_", " "),
+        "items": folder_items
+    })
+
+
+# -------------------------------------------------
+# 2. Skins (ديناميكي 100% لأي مجلد جديد)
+# -------------------------------------------------
+skin_folders = discover_category_folders("skins")
+
+for folder in skin_folders:
+    folder_path = os.path.join("skins", folder)
+    items = []
+    
+    # 1. محلياً
+    if os.path.isdir(folder_path):
         for filename in sorted(os.listdir(folder_path)):
             if not filename.endswith(EXTENSIONS):
                 continue
@@ -208,11 +246,29 @@ if os.path.isdir("skins"):
                 "image": img
             })
 
-        # إضافة مجلد السكينات حتى لو كان فارغاً تماماً []
-        data["categories"]["skins"].append({
-            "name": folder.replace("_", " "),
-            "items": items
-        })
+    # 2. من GitHub Tree
+    folder_prefix = f"skins/{folder}/"
+    for p in github_tree_paths:
+        if p.startswith(folder_prefix):
+            filename = os.path.basename(p)
+            if filename.endswith(EXTENSIONS) and not any(it["name"] == clean_filename(filename) for it in items):
+                clean = clean_filename(filename)
+                version = clean.split("_")[-2] if "_" in clean else "1.0"
+                display = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
+                image_name = display.split("_")[0]
+                img = image_url(image_name) or image_url(clean.split("_")[0]) or image_url("skins")
+                items.append({
+                    "name": clean,
+                    "version": version,
+                    "description": old_descriptions.get(clean, folder + " Skin"),
+                    "file": f"{BASE_URL}/{p}",
+                    "image": img
+                })
+
+    data["categories"]["skins"].append({
+        "name": folder.replace("_", " "),
+        "items": items
+    })
 
 
 # -------------------------------------------------
@@ -252,7 +308,7 @@ for filename in sorted(picons_dict):
 
 
 # -------------------------------------------------
-# 4. Channels & Settings (القنوات والملفات المفضلة)
+# 4. Channels & Settings (القنوات)
 # -------------------------------------------------
 channels_list = []
 if os.path.isdir("channels"):
@@ -287,7 +343,7 @@ for filename in sorted(channels_list):
 
 
 # -------------------------------------------------
-# 5. Tools (الأدوات والايميو والسكربتات)
+# 5. Tools (الأدوات)
 # -------------------------------------------------
 tools_list = []
 if os.path.isdir("tools"):
@@ -325,7 +381,7 @@ for filename in sorted(tools_list):
 
 
 # -------------------------------------------------
-# 6. Plugins (الإضافات العامة)
+# 6. Plugins (الإضافات)
 # -------------------------------------------------
 plugins_list = []
 if os.path.isdir("plugins"):
@@ -427,4 +483,4 @@ os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("feed/index.json generated successfully. Empty folders remain cleanly empty with zero fake items.")
+print("feed/index.json generated successfully. 100% Dynamic - Any new folder will appear automatically.")
