@@ -564,17 +564,24 @@
                 "name": "OpenDroid",
                 "items": [
                     {
-                        "name": "opendroid-8.1.1-sf4008-20260720_system_images.Octagon.usb",
+                        "name": "opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb",
                         "version": "system",
                         "description": "OpenDroid Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-sf4008-20260720_system_images.Octagon.usb.zip",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-sf8008m-20260720_mmc",
-                        "version": "opendroid-8.1.1-sf8008m-20260720",
+                        "name": "opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc",
+                        "version": "opendroid-8.1.1-SF8008.4K.UHD-20260720",
                         "description": "OpenDroid Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-sf8008m-20260720_mmc.zip",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc",
+                        "version": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip",
                         "image": ""
                     },
                     {
