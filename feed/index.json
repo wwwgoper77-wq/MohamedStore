@@ -571,6 +571,13 @@
                         "image": ""
                     },
                     {
+                        "name": "opendroid-8.1.1-sf8008m-20260720_mmc",
+                        "version": "opendroid-8.1.1-sf8008m-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-sf8008m-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
                         "version": "system",
                         "description": "OpenDroid Image",
