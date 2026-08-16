@@ -229,7 +229,15 @@
             },
             {
                 "name": "Novaler",
-                "items": []
+                "items": [
+                    {
+                        "name": "Novaler (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for Novaler.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenATV",
@@ -320,15 +328,39 @@
             },
             {
                 "name": "OpenDroid",
-                "items": []
+                "items": [
+                    {
+                        "name": "OpenDroid (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for OpenDroid.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenEight",
-                "items": []
+                "items": [
+                    {
+                        "name": "OpenEight (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for OpenEight.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenHDF",
-                "items": []
+                "items": [
+                    {
+                        "name": "OpenHDF (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for OpenHDF.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenP",
@@ -365,19 +397,51 @@
             },
             {
                 "name": "OpenSPA",
-                "items": []
+                "items": [
+                    {
+                        "name": "OpenSPA (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for OpenSPA.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenVision",
-                "items": []
+                "items": [
+                    {
+                        "name": "OpenVision (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for OpenVision.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "Pure2",
-                "items": []
+                "items": [
+                    {
+                        "name": "Pure2 (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for Pure2.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "VTI",
-                "items": []
+                "items": [
+                    {
+                        "name": "VTI (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No skins uploaded yet for VTI.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
             }
         ],
         "tools": [
@@ -440,7 +504,19 @@
         ],
         "system_images": [
             {
-                "name": "EGAMI Images",
+                "name": "Backups",
+                "items": [
+                    {
+                        "name": "Backups (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for Backups.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "Egami",
                 "items": [
                     {
                         "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
@@ -452,7 +528,19 @@
                 ]
             },
             {
-                "name": "OpenATV Images",
+                "name": "Novaler",
+                "items": [
+                    {
+                        "name": "Novaler (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for Novaler.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "OpenATV",
                 "items": [
                     {
                         "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
@@ -492,7 +580,7 @@
                 ]
             },
             {
-                "name": "OpenBH Images",
+                "name": "OpenBH",
                 "items": [
                     {
                         "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
@@ -546,7 +634,7 @@
                 ]
             },
             {
-                "name": "Other Images",
+                "name": "OpenDroid",
                 "items": [
                     {
                         "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
@@ -558,13 +646,97 @@
                 ]
             },
             {
-                "name": "Pure2 Images",
+                "name": "OpenEight",
+                "items": [
+                    {
+                        "name": "OpenEight (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for OpenEight.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "OpenHDF",
+                "items": [
+                    {
+                        "name": "OpenHDF (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for OpenHDF.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "OpenPLi",
+                "items": [
+                    {
+                        "name": "OpenPLi (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for OpenPLi.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "OpenSPA",
+                "items": [
+                    {
+                        "name": "OpenSPA (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for OpenSPA.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "OpenViX",
+                "items": [
+                    {
+                        "name": "OpenViX (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for OpenViX.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "OpenVision",
+                "items": [
+                    {
+                        "name": "OpenVision (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for OpenVision.",
+                        "file": "",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "Pure2",
                 "items": [
                     {
                         "name": "vuzero4k-PurE2-7.6-20260217_usb",
                         "version": "vuzero4k-PurE2-7.6-20260217",
                         "description": "PurE2 صورة لجهاز vuzero4k",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "VTI",
+                "items": [
+                    {
+                        "name": "VTI (Coming Soon)",
+                        "version": "1.0",
+                        "description": "No firmware images uploaded yet for VTI.",
+                        "file": "",
                         "image": ""
                     }
                 ]
