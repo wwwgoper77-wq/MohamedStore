@@ -464,22 +464,7 @@
             },
             {
                 "name": "Novaler",
-                "items": [
-                    {
-                        "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
-                        "version": "images-vuduo4kse-8c6baf54",
-                        "description": "Novaler Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
-                        "version": "images-vuuno4kse-8c6baf54",
-                        "description": "Novaler Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Octagon",
