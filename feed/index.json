@@ -708,6 +708,21 @@
                 "image": ""
             }
         ],
-        "novaler": []
+        "novaler": [
+            {
+                "name": "enigma2-plugin-extensions-Athantimes_2.8_PY3",
+                "version": "2.8",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-Athantimes_2.8_PY3.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-alternativesoftcammanager_4.0_all",
+                "version": "4.0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-alternativesoftcammanager_4.0_all.ipk",
+                "image": ""
+            }
+        ]
     }
 }
