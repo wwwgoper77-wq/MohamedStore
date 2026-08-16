@@ -39,13 +39,6 @@
                 "image": ""
             },
             {
-                "name": "FootOnSat.plugin",
-                "version": "1.0",
-                "description": "بلجن جدول مباريات بايثون 3.13.12",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
-                "image": ""
-            },
-            {
                 "name": "FuryBiss",
                 "version": "1.0",
                 "description": "بلجن مفتاح شفرة بيس بايثون 3.13.12",
@@ -445,34 +438,11 @@
             },
             {
                 "name": "Egami",
-                "items": [
-                    {
-                        "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
-                        "version": "S",
-                        "description": "صورة egami لجهاز vuzero4k  ",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Novaler",
-                "items": [
-                    {
-                        "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
-                        "version": "images-vuduo4kse-8c6baf54",
-                        "description": "صورة openbh لجهاز vuduo4kse",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
-                        "version": "images-vuuno4kse-8c6baf54",
-                        "description": "صورة openbh جهاز vuuno4kse",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Octagon",
@@ -480,109 +450,15 @@
             },
             {
                 "name": "OpenATV",
-                "items": [
-                    {
-                        "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
-                        "version": "system",
-                        "description": "نسخة بيتا صورة openatv لجهاز vuduo4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb",
-                        "version": "system",
-                        "description": "نسخة بيتا لصورة openatv لجهاز vusolo4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb",
-                        "version": "system",
-                        "description": "نسخة بيتا لصورة openatv لجهاز vuultimo4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb",
-                        "version": "system",
-                        "description": "نسخة بيتا صورة openatv لجهاز vuuno4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
-                        "version": "system",
-                        "description": "نسخة بيتا لصورة openatv لجهاز vuzero4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenBH",
-                "items": [
-                    {
-                        "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
-                        "version": "images-vuduo4k-8c6baf54",
-                        "description": "صورة openbh  لجهاز vuduo4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
-                        "version": "images-vuduo4kse-8c6baf54",
-                        "description": "صورة openbh لجهاز vuduo4kse",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb",
-                        "version": "images-vusolo4k-8c6baf54",
-                        "description": "صورة openbh جهاز vusolo4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb",
-                        "version": "images-vuuno4k-8c6baf54",
-                        "description": "صورة openbh جهاز vuuno4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
-                        "version": "images-vuuno4kse-8c6baf54",
-                        "description": "صورة openbh جهاز vuuno4kse",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb",
-                        "version": "images-vuzero4k-8c6baf54",
-                        "description": "openbh صورة لجهاز vuzero4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb",
-                        "version": "images.-vuultimo4k-8c6baf54",
-                        "description": "openbh لجهاز vuultimo4k صورة",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenDroid",
-                "items": [
-                    {
-                        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
-                        "version": "system",
-                        "description": "Other Images Firmware Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenEight",
@@ -610,15 +486,7 @@
             },
             {
                 "name": "Pure2",
-                "items": [
-                    {
-                        "name": "vuzero4k-PurE2-7.6-20260217_usb",
-                        "version": "vuzero4k-PurE2-7.6-20260217",
-                        "description": "PurE2 صورة لجهاز vuzero4k",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "VTI",
@@ -631,55 +499,6 @@
                 "version": "1.0",
                 "description": "بيكونات نيل سات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon 7.ow.zip",
-                "image": ""
-            },
-            {
-                "name": "picon-13E",
-                "version": "1.0",
-                "description": "بيكونات هوت بيرد",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon-13E.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_16.0E",
-                "version": "1.0",
-                "description": "بيكونات يوتلسات 16",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_26",
-                "version": "1.0",
-                "description": "بيكونات بدر",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_39E",
-                "version": "1.0",
-                "description": "بيكونات هيلاسات 39 شرق",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_39E.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_8.0W",
-                "version": "1.0",
-                "description": "بيكونات قمر 8 شرق",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_8.0W.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_AL.part1",
-                "version": "1.0",
-                "description": "بيكونات اقمار متحرك",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part1.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_AL.part2",
-                "version": "1.0",
-                "description": "بيكونات اقمار متحرك",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part2.zip",
                 "image": ""
             }
         ],
