@@ -26,17 +26,18 @@ old_descriptions = {}
 
 try:
     if os.path.exists("feed/index.json"):
-        with open("feed/index.json","r",encoding="utf-8") as f:
+        with open("feed/index.json", "r", encoding="utf-8") as f:
             old = json.load(f)
 
         for cat, items in old.get("categories", {}).items():
-            if cat == "skins":
-                for folder in items:
-                    for it in folder.get("items", []):
-                        old_descriptions[it.get("name","")] = it.get("description","")
-            else:
-                for it in items:
-                    old_descriptions[it.get("name","")] = it.get("description","")
+            if isinstance(items, list):
+                for folder_or_item in items:
+                    if isinstance(folder_or_item, dict):
+                        if "items" in folder_or_item:
+                            for it in folder_or_item.get("items", []):
+                                old_descriptions[it.get("name", "")] = it.get("description", "")
+                        else:
+                            old_descriptions[folder_or_item.get("name", "")] = folder_or_item.get("description", "")
 except:
     pass
 
@@ -56,8 +57,8 @@ def image_url(prefix):
     return ""
 
 
-# صيغ ملفات التثبيت العامة
-EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv", ".img", ".nfi", ".tar.xz")
+# صيغ ملفات التثبيت والصور العامة
+EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv", ".img", ".nfi", ".tar.xz", ".bin")
 
 
 # -------------------------------------------------
@@ -99,47 +100,112 @@ def clean_filename(filename):
 
 
 # -------------------------------------------------
-# 1. System Images (صور النظام حصراً)
+# 1. System Images (فرز وتجميع تلقائي ذكي في حافظات)
 # -------------------------------------------------
-sys_list = []
-if os.path.isdir("system_images"):
-    for filename in sorted(os.listdir("system_images")):
-        if filename.endswith((".zip", ".tar.gz", ".img", ".nfi", ".tar.xz")):
-            sys_list.append(filename)
+# قاموس لتجميع الصور بحسب نوعها تلقائياً
+grouped_images = {}
 
+def get_image_group_name(filename_lower):
+    """تحديد الحافظة المناسبة للصورة تلقائياً من اسمها"""
+    if "egami" in filename_lower:
+        return "EGAMI Images"
+    elif "openatv" in filename_lower or "atv" in filename_lower:
+        return "OpenATV Images"
+    elif "pure2" in filename_lower or "pur2" in filename_lower:
+        return "Pure2 Images"
+    elif "openbh" in filename_lower or "blackhole" in filename_lower:
+        return "OpenBH Images"
+    elif "openpli" in filename_lower or "pli" in filename_lower:
+        return "OpenPLi Images"
+    elif "openspa" in filename_lower:
+        return "OpenSPA Images"
+    elif "vti" in filename_lower:
+        return "VTi Images"
+    elif "novaler" in filename_lower or "noflayer" in filename_lower:
+        return "Novaler Images"
+    elif "openvision" in filename_lower:
+        return "OpenVision Images"
+    elif "openhdf" in filename_lower:
+        return "OpenHDF Images"
+    elif "openeight" in filename_lower:
+        return "OpenEight Images"
+    else:
+        return "Other Images"
+
+sys_files = []
+if os.path.isdir("system_images"):
+    for entry in sorted(os.listdir("system_images")):
+        entry_path = os.path.join("system_images", entry)
+        
+        # إذا كان المستخدم أنشأ مجلداً يدوياً
+        if os.path.isdir(entry_path):
+            folder_items = []
+            for subfile in sorted(os.listdir(entry_path)):
+                if subfile.endswith(EXTENSIONS):
+                    clean = clean_filename(subfile)
+                    version = clean.split("_")[-2] if "_" in clean else "1.0"
+                    img_name = clean.split("_")[0]
+                    file_url = f"{BASE_URL}/system_images/{entry}/{subfile}"
+                    for asset in release_assets_pool:
+                        if asset["filename"] == subfile:
+                            file_url = asset["url"]
+                            break
+                    folder_items.append({
+                        "name": clean,
+                        "version": version,
+                        "description": old_descriptions.get(clean, f"{entry} Image"),
+                        "file": file_url,
+                        "image": image_url(img_name) or image_url(entry) or image_url("system_images")
+                    })
+            if folder_items:
+                data["categories"]["system_images"].append({
+                    "name": entry.replace("_", " "),
+                    "items": folder_items
+                })
+        
+        # إذا كانت ملفات مفردة موضوعة مباشرة داخل system_images
+        elif entry.endswith(EXTENSIONS):
+            sys_files.append({"filename": entry, "url": f"{BASE_URL}/system_images/{entry}"})
+
+# جلب الصور من الـ Releases أيضاً
 for asset in release_assets_pool:
     fname = asset["filename"]
     lower_f = fname.lower()
-    # استبعاد أي شيء ليس صورة نظام
     if any(k in lower_f for k in ["skin", "picon", "plugin", "tool", "channel", "settings", "backup", "ncam", "oscam", "softcam", "script"]):
         continue
-    # قبول ملفات الصور
     if any(img_kw in lower_f for img_kw in ["egami", "openatv", "blackhole", "vti", "pure2", "openpli", "openblack", "vu+", "image", "firmware", "rootfs"]):
-        if fname not in sys_list:
-            sys_list.append(fname)
+        if not any(f["filename"] == fname for f in sys_files):
+            sys_files.append({"filename": fname, "url": asset["url"]})
 
-for filename in sorted(sys_list):
-    clean = clean_filename(filename)
+# فرز الملفات المباشرة إلى حافظات تلقائياً
+for f_info in sys_files:
+    fname = f_info["filename"]
+    group_name = get_image_group_name(fname.lower())
+    clean = clean_filename(fname)
     version = clean.split("_")[-2] if "_" in clean else "1.0"
     image_name = clean.split("_")[0]
 
-    file_path_url = f"{BASE_URL}/system_images/{filename}"
-    for asset in release_assets_pool:
-        if asset["filename"] == filename:
-            file_path_url = asset["url"]
-            break
+    if group_name not in grouped_images:
+        grouped_images[group_name] = []
 
-    data["categories"]["system_images"].append({
+    grouped_images[group_name].append({
         "name": clean,
         "version": version,
-        "description": old_descriptions.get(clean,""),
-        "file": file_path_url,
-        "image": image_url(image_name)
+        "description": old_descriptions.get(clean, f"{group_name} Firmware Image"),
+        "file": f_info["url"],
+        "image": image_url(image_name) or image_url("system_images")
+    })
+
+# إضافة الحافظات المجمعة إلى الفيد
+for group_name in sorted(grouped_images.keys()):
+    data["categories"]["system_images"].append({
+        "name": group_name,
+        "items": grouped_images[group_name]
     })
 
 
 # -------------------------------------------------
-# 2. Skins (السكينات - دعم كافة المجلدات الحالية والجديدة)
+# 2. Skins (السكينات)
 # -------------------------------------------------
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -156,7 +222,6 @@ if os.path.isdir("skins"):
             display = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             image_name = display.split("_")[0]
 
-            # البحث عن صورة مخصصة للسكين، وإذا لم توجد توضع صورة skins.png
             img = image_url(image_name) or image_url(clean.split("_")[0]) or image_url("skins")
 
             items.append({
@@ -168,7 +233,7 @@ if os.path.isdir("skins"):
             })
 
         data["categories"]["skins"].append({
-            "name": folder,
+            "name": folder.replace("_", " "),
             "items": items
         })
 
@@ -238,7 +303,7 @@ for filename in sorted(channels_list):
     data["categories"]["channels"].append({
         "name": clean,
         "version": "1.0",
-        "description": old_descriptions.get(clean,""),
+        "description": old_descriptions.get(clean, ""),
         "file": file_path_url,
         "image": image_url(clean.split("_")[0])
     })
@@ -276,7 +341,7 @@ for filename in sorted(tools_list):
     data["categories"]["tools"].append({
         "name": clean,
         "version": version,
-        "description": old_descriptions.get(clean,""),
+        "description": old_descriptions.get(clean, ""),
         "file": file_path_url,
         "image": image_url(image_name)
     })
@@ -294,7 +359,6 @@ if os.path.isdir("plugins"):
 for asset in release_assets_pool:
     fname = asset["filename"]
     lower_f = fname.lower()
-    # استبعاد أي شيء ينتمي للأقسام المذكورة أعلاه بصرامة
     if any(k in lower_f for k in ["skin", "picon", "channel", "image", "settings", "backup", "ncam", "oscam", "softcam", "script", "egami", "openatv"]):
         continue
     
@@ -361,7 +425,6 @@ for filename in sorted(novaler_list):
     )
     image_name = display.split("_")[0]
 
-    # جلب صورة novaler.png تلقائياً
     img = image_url("novaler") or image_url("noflayer") or image_url(image_name)
 
     file_path_url = f"{BASE_URL}/{novaler_folder}/{filename}"
@@ -387,4 +450,4 @@ os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("feed/index.json generated successfully.")
+print("feed/index.json generated successfully with smart auto-grouping for system_images.")
