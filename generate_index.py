@@ -100,7 +100,7 @@ def clean_filename(filename):
 
 
 # -------------------------------------------------
-# 1. System Images (صور النظام - حسب المجلد الحقيقي 100%)
+# 1. System Images (صور النظام)
 # -------------------------------------------------
 if os.path.isdir("system_images"):
     for folder in sorted(os.listdir("system_images")):
@@ -152,16 +152,7 @@ if os.path.isdir("system_images"):
                             "image": image_url(clean.split("_")[0]) or image_url(folder) or image_url("system_images")
                         })
             
-            # إذا كان المجلد فارغاً نعرض Coming Soon
-            if not folder_items:
-                folder_items.append({
-                    "name": f"{folder.replace('_', ' ')} (Coming Soon)",
-                    "version": "1.0",
-                    "description": f"No firmware images uploaded yet for {folder.replace('_', ' ')}.",
-                    "file": "",
-                    "image": image_url(folder) or image_url("system_images")
-                })
-
+            # إضافة المجلد حتى لو كان فارغاً تماماً []
             data["categories"]["system_images"].append({
                 "name": folder.replace("_", " "),
                 "items": folder_items
@@ -217,15 +208,7 @@ if os.path.isdir("skins"):
                 "image": img
             })
 
-        if not items:
-            items.append({
-                "name": f"{folder.replace('_', ' ')} (Coming Soon)",
-                "version": "1.0",
-                "description": f"No skins uploaded yet for {folder.replace('_', ' ')}.",
-                "file": "",
-                "image": image_url(folder) or image_url("skins")
-            })
-
+        # إضافة مجلد السكينات حتى لو كان فارغاً تماماً []
         data["categories"]["skins"].append({
             "name": folder.replace("_", " "),
             "items": items
@@ -444,4 +427,4 @@ os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("feed/index.json generated successfully. Pure folder-based mapping active (no other images).")
+print("feed/index.json generated successfully. Empty folders remain cleanly empty with zero fake items.")
