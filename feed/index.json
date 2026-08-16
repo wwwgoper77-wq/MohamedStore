@@ -794,6 +794,41 @@
                 "image": ""
             },
             {
+                "name": "enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all",
+                "version": "11.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all",
+                "version": "11.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all",
+                "version": "11.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all",
+                "version": "11.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all",
+                "version": "11.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "enigma2-plugin-extensions-camnova_1.8-arm_all",
                 "version": "1.8-arm",
                 "description": "",
@@ -871,6 +906,62 @@
                 "image": ""
             },
             {
+                "name": "enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all",
+                "version": "4.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all",
+                "version": "4.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all",
+                "version": "4.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all",
+                "version": "4.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all",
+                "version": "5.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all",
+                "version": "5.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all",
+                "version": "5.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all",
+                "version": "5.0-r0",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "enigma2-plugin-extensions-petazetas_1.1_all",
                 "version": "1.1",
                 "description": "",
@@ -882,6 +973,13 @@
                 "version": "20240220",
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
+                "version": "20240324",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
             {
