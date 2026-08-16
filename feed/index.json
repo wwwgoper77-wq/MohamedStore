@@ -382,10 +382,6 @@
             {
                 "name": "VTI",
                 "items": []
-            },
-            {
-                "name": "index.json",
-                "items": []
             }
         ],
         "tools": [
