@@ -568,6 +568,13 @@
                 "name": "OpenDroid",
                 "items": [
                     {
+                        "name": "opendroid-8.1.1-sf4008-20260720_system_images.Octagon.usb",
+                        "version": "system",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-sf4008-20260720_system_images.Octagon.usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
                         "version": "system",
                         "description": "OpenDroid Image",
