@@ -195,7 +195,7 @@
             {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
-                "description": "",
+                "description": "بلجن جدول المباريات بايثون 3.13.12",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             }
