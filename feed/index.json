@@ -230,10 +230,6 @@
         ],
         "skins": [
             {
-                "name": "All",
-                "items": []
-            },
-            {
                 "name": "All ",
                 "items": [
                     {
