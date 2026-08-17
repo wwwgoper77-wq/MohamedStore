@@ -172,6 +172,27 @@
                 "image": ""
             },
             {
+                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
+                "version": "py3.13",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1.ipk",
+                "image": ""
+            },
+            {
+                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
+                "version": "py3.13",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk",
+                "image": ""
+            },
+            {
+                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
+                "version": "py3.14",
+                "description": "",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk",
+                "image": ""
+            },
+            {
                 "name": "extensions-tivimatee2_1.0.01_all",
                 "version": "1.0.01",
                 "description": "بلجن iptv بايثون 3.13.12",
