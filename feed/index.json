@@ -233,6 +233,13 @@
                 "name": "All",
                 "items": [
                     {
+                        "name": "MX-HC2-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/MX-HC2-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole_all",
                         "version": "BlackHole",
                         "description": "OpenBlack Skin",
@@ -270,13 +277,6 @@
             {
                 "name": "Novaler",
                 "items": [
-                    {
-                        "name": "MX-HC2-MOD-By-RAED",
-                        "version": "1.0",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/MX-HC2-MOD-By-RAED.ipk",
-                        "image": ""
-                    },
                     {
                         "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
                         "version": "1.0",
