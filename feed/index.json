@@ -308,6 +308,20 @@
                         "image": ""
                     },
                     {
+                        "name": "Skin-MX-X6-By-Matrix10-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-MX-X6-By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-MX-X7-By-Matrix10-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-MX-X7-By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
                         "version": "HQ9",
                         "description": "Novaler Skin",
@@ -375,6 +389,13 @@
                         "version": "Graphite",
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all",
+                        "version": "2.2-By-SkinMania-MOD-By-MEHDI",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
                     }
                 ]
