@@ -362,6 +362,27 @@
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-fullhdglass17_7.10_all",
+                        "version": "7.10",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /enigma2-skin-fullhdglass17_7.10_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino",
+                        "version": "Graphite",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all",
+                        "version": "2.2-By-SkinMania-MOD-By-MEHDI",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
+                        "image": ""
                     }
                 ]
             },
@@ -387,32 +408,6 @@
                         "version": "By",
                         "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
-                        "image": ""
-                    }
-                ]
-            },
-            {
-                "name": "Novaler",
-                "items": [
-                    {
-                        "name": "enigma2-skin-fullhdglass17_7.10_all",
-                        "version": "7.10",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/enigma2-skin-fullhdglass17_7.10_all.ipk",
-                        "image": ""
-                    },
-                    {
-                        "name": "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino",
-                        "version": "Graphite",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
-                        "image": ""
-                    },
-                    {
-                        "name": "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all",
-                        "version": "2.2-By-SkinMania-MOD-By-MEHDI",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
                     }
                 ]
