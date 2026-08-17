@@ -287,6 +287,34 @@
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all",
+                        "version": "2.5-1",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all",
+                        "version": "3.3",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-novaler-s-x-fhd_MNASR_1.6_all",
+                        "version": "1.6",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-novaler-s-x-fhd_MNASR_1.6_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-novaler-s-xtra-fhd_MNASR_1.6_all",
+                        "version": "1.6",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-novaler-s-xtra-fhd_MNASR_1.6_all.ipk",
+                        "image": ""
                     }
                 ]
             },
