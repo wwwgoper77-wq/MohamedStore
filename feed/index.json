@@ -470,10 +470,6 @@
                 ]
             },
             {
-                "name": "Novaler",
-                "items": []
-            },
-            {
                 "name": "OpenATV",
                 "items": [
                     {
@@ -628,7 +624,7 @@
                     {
                         "name": "system_image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc",
                         "version": "image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3",
-                        "description": "OpenPLi Image",
+                        "description": "",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/system_image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc.zip",
                         "image": ""
                     }
