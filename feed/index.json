@@ -257,6 +257,13 @@
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /Skin-BATMAN-RED-FHD-By-Muaath.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
                     }
                 ]
             },
@@ -289,13 +296,6 @@
             {
                 "name": "Novaler",
                 "items": [
-                    {
-                        "name": "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
-                        "version": "1.0",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk",
-                        "image": ""
-                    },
                     {
                         "name": "Skin-BundesligaFHD-By-Maggy-MOD-By-RAED",
                         "version": "1.0",
