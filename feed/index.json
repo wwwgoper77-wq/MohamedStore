@@ -240,10 +240,31 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all",
+                        "version": "v3.3",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-bianca-fhd_1.0_all",
                         "version": "1.0",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-bianca-fhd_1.0_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-extremegolden-fhd-all_v1.0_all",
+                        "version": "v1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-extremegolden-fhd-all_v1.0_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-karonte-fhd-all_1.0_all",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-karonte-fhd-all_1.0_all.ipk",
                         "image": ""
                     }
                 ]
