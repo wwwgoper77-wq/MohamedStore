@@ -327,6 +327,13 @@
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /enigma2-plugin-skins-dreamosatfhd-adrenalinnrw-mod_1.0-r0_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-madmax-impossible_1.6_all",
+                        "version": "1.6",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /enigma2-plugin-skins-madmax-impossible_1.6_all.ipk",
+                        "image": ""
                     }
                 ]
             },
@@ -359,13 +366,6 @@
             {
                 "name": "Novaler",
                 "items": [
-                    {
-                        "name": "enigma2-plugin-skins-madmax-impossible_1.6_all",
-                        "version": "1.6",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/enigma2-plugin-skins-madmax-impossible_1.6_all.ipk",
-                        "image": ""
-                    },
                     {
                         "name": "enigma2-plugin-skins-nitro-fhd-all_1.1_all",
                         "version": "1.1",
