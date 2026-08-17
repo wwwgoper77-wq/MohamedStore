@@ -427,6 +427,13 @@
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole",
+                        "version": "OpenBlack-skin-armynextgengradient.mod.fhroma",
+                        "description": "OpenBlack Skin",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
+                        "image": ""
                     }
                 ]
             },
@@ -578,6 +585,13 @@
                         "version": "2.2-By-SkinMania-MOD-By-MEHDI",
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole",
+                        "version": "OpenBlack-skin-armynextgengradient.mod.fhroma",
+                        "description": "OpenBlack Skin",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
                         "image": ""
                     }
                 ]
