@@ -233,6 +233,13 @@
                 "name": "All",
                 "items": [
                     {
+                        "name": "Malek-FHD_v1.5_MNASR",
+                        "version": "v1.5",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Malek-FHD_v1.5_MNASR.tar.gz",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-enigma2-plugin-skins-red-dragon-fhd_v1.0_all",
                         "version": "v1.0",
                         "description": "All Skin",
@@ -321,6 +328,20 @@
                         "version": "1.0",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-obselite-fhd-all_1.0_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all",
+                        "version": "multiposter",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-metrixperience-adrenalinnrw_1.0_all",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk",
                         "image": ""
                     }
                 ]
