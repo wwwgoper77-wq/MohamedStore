@@ -308,6 +308,20 @@
                         "image": ""
                     },
                     {
+                        "name": "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
+                        "version": "HQ9",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-MX_HQ9_By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
+                        "version": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-dreamosatfhd-adrenalinnrw-mod_1.0-r0_all",
                         "version": "1.0-r0",
                         "description": "Novaler Skin",
@@ -354,6 +368,13 @@
                         "version": "7.10",
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/enigma2-skin-fullhdglass17_7.10_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino",
+                        "version": "Graphite",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
                         "image": ""
                     }
                 ]
