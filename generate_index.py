@@ -98,62 +98,30 @@ def clean_filename(filename):
         return os.path.splitext(filename)[0]
 
 
-# دالة دقيقة لتحديد مطابقة ملف الـ Release لحافظة صور النظام
-def match_release_to_system_image_folder(fname_lower, folder_name):
-    f_lower = folder_name.lower().replace("_", "").replace(" ", "")
-
-    if any(k in fname_lower for k in ["openbh", "open-bh", "obh", "blackhole", "black_hole"]):
-        return f_lower in ["openbh", "blackhole"]
-    if "egami" in fname_lower:
-        return f_lower == "egami"
-    if "openatv" in fname_lower or "atv" in fname_lower:
-        return f_lower == "openatv"
-    if "pure2" in fname_lower or "pur2" in fname_lower:
-        return f_lower == "pure2"
-    if "openpli" in fname_lower or "pli" in fname_lower:
-        return f_lower == "openpli"
-    if "opendroid" in fname_lower or "droid" in fname_lower:
-        return f_lower == "opendroid"
-    if "openspa" in fname_lower:
-        return f_lower == "openspa"
-    if "vti" in fname_lower:
-        return f_lower == "vti"
-    if any(k in fname_lower for k in ["octagon", "sf8008", "sx88", "sf4008"]):
-        return f_lower == "octagon"
-    if any(k in fname_lower for k in ["vuplus", "vuduo", "vuuno", "vuzero", "vuultimo", "vusolo"]):
-        return f_lower == "vuplus"
-    if "novaler" in fname_lower or "noflayer" in fname_lower:
-        return f_lower in ["novaler", "noflayer"]
-
-    return f_lower in fname_lower
-
-
 # -------------------------------------------------
-# 1. System Images (دمج ومنع تكرار الحافظات)
+# 1. System Images
 # -------------------------------------------------
-sys_folders_map = {} # لدمج أي حافظات متطابقة بالاسم
+sys_folders_map = {}
 
 if os.path.isdir("system_images"):
     for entry in sorted(os.listdir("system_images")):
         entry_path = os.path.join("system_images", entry)
 
         if os.path.isdir(entry_path):
-            canonical_name = entry
-            # التحقق إذا كان الاسم موجوداً بحالة أحرف مختلفة لدمجه
-            for existing in sys_folders_map.keys():
-                if existing.lower() == entry.lower():
-                    canonical_name = existing
-                    break
+            key = entry.lower()
+            if key not in sys_folders_map:
+                sys_folders_map[key] = {
+                    "display_name": entry,
+                    "items": [],
+                    "seen_files": set()
+                }
 
-            if canonical_name not in sys_folders_map:
-                sys_folders_map[canonical_name] = {"items": [], "seen_files": set()}
-
-            # 1. الملفات من المجلد المحلي
+            # الملفات المحلية
             for filename in sorted(os.listdir(entry_path)):
                 if not filename.endswith(EXTENSIONS):
                     continue
-                if filename not in sys_folders_map[canonical_name]["seen_files"]:
-                    sys_folders_map[canonical_name]["seen_files"].add(filename)
+                if filename not in sys_folders_map[key]["seen_files"]:
+                    sys_folders_map[key]["seen_files"].add(filename)
                     clean = clean_filename(filename)
                     version = clean.split("_")[-2] if "_" in clean else "1.0"
                     image_name = clean.split("_")[0]
@@ -164,43 +132,23 @@ if os.path.isdir("system_images"):
                             file_path_url = asset["url"]
                             break
 
-                    sys_folders_map[canonical_name]["items"].append({
+                    sys_folders_map[key]["items"].append({
                         "name": clean,
                         "version": version,
-                        "description": old_descriptions.get(clean, f"{canonical_name} Image"),
+                        "description": old_descriptions.get(clean, f"{sys_folders_map[key]['display_name']} Image"),
                         "file": file_path_url,
-                        "image": image_url(image_name) or image_url(canonical_name) or image_url("system_images")
+                        "image": image_url(image_name) or image_url(sys_folders_map[key]["display_name"]) or image_url("system_images")
                     })
 
-            # 2. ملفات Releases
-            for asset in release_assets_pool:
-                fname = asset["filename"]
-                fname_lower = fname.lower()
-                if any(k in fname_lower for k in ["skin", "picon", "plugin", "tool", "channel", "settings", "ncam", "oscam"]):
-                    continue
-
-                if match_release_to_system_image_folder(fname_lower, canonical_name):
-                    if fname not in sys_folders_map[canonical_name]["seen_files"]:
-                        sys_folders_map[canonical_name]["seen_files"].add(fname)
-                        clean = clean_filename(fname)
-                        version = clean.split("_")[-2] if "_" in clean else "1.0"
-                        sys_folders_map[canonical_name]["items"].append({
-                            "name": clean,
-                            "version": version,
-                            "description": old_descriptions.get(clean, f"{canonical_name} Image"),
-                            "file": asset["url"],
-                            "image": image_url(clean.split("_")[0]) or image_url(canonical_name) or image_url("system_images")
-                        })
-
-for f_name, f_data in sorted(sys_folders_map.items()):
+for key, f_data in sorted(sys_folders_map.items()):
     data["categories"]["system_images"].append({
-        "name": f_name,
+        "name": f_data["display_name"],
         "items": f_data["items"]
     })
 
 
 # -------------------------------------------------
-# 2. Skins (دمج ومنع تكرار حافظة All أو أي حافظة أخرى)
+# 2. Skins (دمج قاطع لأي مجلدات متشابهة مثل All و all)
 # -------------------------------------------------
 skin_folders_map = {}
 
@@ -210,22 +158,22 @@ if os.path.isdir("skins"):
         if not os.path.isdir(folder_path):
             continue
 
-        canonical_name = folder
-        # دمج All مع all أو أي حالة أحرف مكررة
-        for existing in skin_folders_map.keys():
-            if existing.lower() == folder.lower():
-                canonical_name = existing
-                break
+        # توحيد المفتاح ليكون بالأحرف الصغيرة (all = All)
+        key = folder.lower()
 
-        if canonical_name not in skin_folders_map:
-            skin_folders_map[canonical_name] = {"items": [], "seen_files": set()}
+        if key not in skin_folders_map:
+            skin_folders_map[key] = {
+                "display_name": "All" if key == "all" else folder,
+                "items": [],
+                "seen_files": set()
+            }
 
         # 1. الملفات من داخل المجلد
         for filename in sorted(os.listdir(folder_path)):
             if not filename.endswith(EXTENSIONS):
                 continue
-            if filename not in skin_folders_map[canonical_name]["seen_files"]:
-                skin_folders_map[canonical_name]["seen_files"].add(filename)
+            if filename not in skin_folders_map[key]["seen_files"]:
+                skin_folders_map[key]["seen_files"].add(filename)
                 clean = clean_filename(filename)
                 version = clean.split("_")[-2] if "_" in clean else "1.0"
                 display = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
@@ -237,38 +185,37 @@ if os.path.isdir("skins"):
                         file_path_url = asset["url"]
                         break
 
-                skin_folders_map[canonical_name]["items"].append({
+                skin_folders_map[key]["items"].append({
                     "name": clean,
                     "version": version,
-                    "description": old_descriptions.get(clean, canonical_name + " Skin"),
+                    "description": old_descriptions.get(clean, skin_folders_map[key]["display_name"] + " Skin"),
                     "file": file_path_url,
                     "image": image_url(image_name) or image_url("skins")
                 })
 
-        # 2. الملفات من Releases
-        folder_lower = canonical_name.lower().replace("_", "").replace(" ", "")
+        # 2. ملفات Releases
         for asset in release_assets_pool:
             fname = asset["filename"]
             fname_lower = fname.lower()
-            if "skin" in fname_lower and (folder_lower in fname_lower or folder_lower == "all"):
-                if fname not in skin_folders_map[canonical_name]["seen_files"]:
-                    skin_folders_map[canonical_name]["seen_files"].add(fname)
+            if "skin" in fname_lower and (key in fname_lower or key == "all"):
+                if fname not in skin_folders_map[key]["seen_files"]:
+                    skin_folders_map[key]["seen_files"].add(fname)
                     clean = clean_filename(fname)
                     version = clean.split("_")[-2] if "_" in clean else "1.0"
                     display = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
                     image_name = display.split("_")[0]
 
-                    skin_folders_map[canonical_name]["items"].append({
+                    skin_folders_map[key]["items"].append({
                         "name": clean,
                         "version": version,
-                        "description": old_descriptions.get(clean, canonical_name + " Skin"),
+                        "description": old_descriptions.get(clean, skin_folders_map[key]["display_name"] + " Skin"),
                         "file": asset["url"],
                         "image": image_url(image_name) or image_url("skins")
                     })
 
-for f_name, f_data in sorted(skin_folders_map.items()):
+for key, f_data in sorted(skin_folders_map.items()):
     data["categories"]["skins"].append({
-        "name": f_name,
+        "name": f_data["display_name"],
         "items": f_data["items"]
     })
 
@@ -530,4 +477,4 @@ os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("feed/index.json generated successfully. Zero duplicated folders guaranteed.")
+print("feed/index.json generated successfully. All duplicate skins merged into single 'All' folder.")
