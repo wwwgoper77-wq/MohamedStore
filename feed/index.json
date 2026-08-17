@@ -427,13 +427,6 @@
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk",
                         "image": ""
-                    },
-                    {
-                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole",
-                        "version": "OpenBlack-skin-armynextgengradient.mod.fhroma",
-                        "description": "OpenBlack Skin",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
-                        "image": ""
                     }
                 ]
             },
@@ -836,19 +829,156 @@
             },
             {
                 "name": "Egami",
-                "items": []
+                "items": [
+                    {
+                        "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
+                        "version": "S",
+                        "description": "Egami Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenATV",
-                "items": []
+                "items": [
+                    {
+                        "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenBH",
-                "items": []
+                "items": [
+                    {
+                        "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
+                        "version": "images-vuduo4k-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
+                        "version": "images-vuduo4kse-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb",
+                        "version": "images-vusolo4k-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb",
+                        "version": "images-vuuno4k-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
+                        "version": "images-vuuno4kse-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb",
+                        "version": "images-vuzero4k-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb",
+                        "version": "images.-vuultimo4k-8c6baf54",
+                        "description": "OpenBH Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenDroid",
-                "items": []
+                "items": [
+                    {
+                        "name": "opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb",
+                        "version": "system",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc",
+                        "version": "opendroid-8.1.1-SF8008.4K.UHD-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc",
+                        "version": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vusolo4k-20260720_usb",
+                        "version": "opendroid-8.1.1-vusolo4k-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vuuno4k-20260720_usb",
+                        "version": "opendroid-8.1.1-vuuno4k-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
+                        "version": "system",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenEight",
@@ -860,14 +990,18 @@
             },
             {
                 "name": "OpenPLi",
-                "items": []
+                "items": [
+                    {
+                        "name": "system_image.wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc",
+                        "version": "image.wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3",
+                        "description": "OpenPLi Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/system_image.wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenSPA",
-                "items": []
-            },
-            {
-                "name": "OpenVision",
                 "items": []
             },
             {
@@ -875,8 +1009,20 @@
                 "items": []
             },
             {
-                "name": "Pure2",
+                "name": "OpenVision",
                 "items": []
+            },
+            {
+                "name": "Pure2",
+                "items": [
+                    {
+                        "name": "vuzero4k-PurE2-7.6-20260217_usb",
+                        "version": "vuzero4k-PurE2-7.6-20260217",
+                        "description": "Pure2 Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "VTI",
