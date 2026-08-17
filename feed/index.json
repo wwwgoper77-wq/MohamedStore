@@ -266,6 +266,27 @@
                         "image": ""
                     },
                     {
+                        "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-BATMAN-RED-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-BATMAN-RED-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-dreamosatfhd-adrenalinnrw-mod_1.0-r0_all",
                         "version": "1.0-r0",
                         "description": "Novaler Skin",
@@ -305,6 +326,13 @@
                         "version": "by.Mmark.v.1.0.0",
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-skin-fullhdglass17_7.10_all",
+                        "version": "7.10",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/enigma2-skin-fullhdglass17_7.10_all.ipk",
                         "image": ""
                     }
                 ]
