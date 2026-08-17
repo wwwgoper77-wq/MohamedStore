@@ -622,10 +622,10 @@
                 "name": "OpenPLi",
                 "items": [
                     {
-                        "name": "system_image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc",
-                        "version": "image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3",
-                        "description": "",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/system_image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc.zip",
+                        "name": "system_image.wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc",
+                        "version": "image.wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3",
+                        "description": "OpenPLi Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/system_image.wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc.zip",
                         "image": ""
                     }
                 ]
@@ -1075,13 +1075,6 @@
                 "version": "v-1.2",
                 "description": "",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
-                "image": ""
-            },
-            {
-                "name": "system_image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc",
-                "version": "image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3",
-                "description": "",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/system_image.Novaler-wrynose-MULTIBOX.4K.PRO.ULTRA.HD.Open.PLI.Wrynose.py3_emmc.zip",
                 "image": ""
             }
         ]
