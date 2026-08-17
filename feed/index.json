@@ -257,7 +257,15 @@
             },
             {
                 "name": "Novaler",
-                "items": []
+                "items": [
+                    {
+                        "name": "MX-HC2-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Novaler/MX-HC2-MOD-By-RAED.ipk",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenATV",
