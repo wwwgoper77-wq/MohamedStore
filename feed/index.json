@@ -231,15 +231,7 @@
         "skins": [
             {
                 "name": "All",
-                "items": [
-                    {
-                        "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
-                        "version": "1.0",
-                        "description": "Novaler Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "All ",
@@ -249,6 +241,13 @@
                         "version": "1.0",
                         "description": "Novaler Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /MX-HC2-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "Novaler Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All /Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
