@@ -1170,343 +1170,343 @@
             {
                 "name": "ArabicSavior-1.3",
                 "version": "1.0",
-                "description": "Novaler Package",
+                "description": "معالجة وتصحيح مشاكل عرض اللغة العربية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/ArabicSavior-1.3.tar.gz",
                 "image": ""
             },
             {
                 "name": "KeyAdder",
                 "version": "1.0",
-                "description": "Novaler Package",
+                "description": "إدخال وتحديث شفرات ومفاتيح التشفير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/KeyAdder.tar.gz",
                 "image": ""
             },
             {
                 "name": "RaedQuickSignal-12.0",
                 "version": "1.0",
-                "description": "Novaler Package",
+                "description": "قياس واستعراض قوة إشارة البث",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/RaedQuickSignal-12.0.tar.gz",
                 "image": ""
             },
             {
                 "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
                 "version": "20201016-V2.8-By-momi133-OE2",
-                "description": "Novaler Package",
+                "description": "جلب مفاتيح تشفير BISS تلقائياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
                 "name": "cfg_Zoom_Final_FIX7x_all",
                 "version": "FIX7x",
-                "description": "Novaler Package",
+                "description": "سكريبت/تعديل مخصص لسكينات وأدوات الإنيجما 2،",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-Athantimes_2.8_PY3",
                 "version": "2.8",
-                "description": "Novaler Package",
+                "description": "عرض مواقيت الصلاة والأذان",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-Athantimes_2.8_PY3.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ajpanel_v8.8.5_all",
                 "version": "v8.8.5",
-                "description": "Novaler Package",
+                "description": "مدير ملفات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ajpanel_v8.8.5_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-alternativesoftcammanager_4.0_all",
                 "version": "4.0",
-                "description": "Novaler Package",
+                "description": "إدارة وتشغيل إيموهات الشيرنج",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-alternativesoftcammanager_4.0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ansite_1.3_all",
                 "version": "1.3",
-                "description": "Novaler Package",
+                "description": "عرض وتصفح محتوى الفيديوهات والأفلام والمسلسلات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ansite_1.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-audiopip_0.3_all",
                 "version": "0.3",
-                "description": "Novaler Package",
+                "description": "بلجن صوتيات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-audiopip_0.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل خدمات ومحتوى منصة Beengo",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل خدمات ومحتوى منصة Beengo",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل خدمات ومحتوى منصة Beengo",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل خدمات ومحتوى منصة Beengo",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل خدمات ومحتوى منصة Beengo",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-camnova_1.8-arm_all",
                 "version": "1.8-arm",
-                "description": "Novaler Package",
+                "description": "تفعيل وإدارة إيمو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-camnova_1.8-arm_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all",
                 "version": "1.0.43",
-                "description": "Novaler Package",
+                "description": "تحويل الملفات الى مفضلات قنوات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all",
                 "version": "20220111-V1.7-momi133-OE2",
-                "description": "Novaler Package",
+                "description": "البحث عن فيدات الأقمار الصناعية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-freeserver_7.2.6_all",
                 "version": "7.2.6",
-                "description": "Novaler Package",
+                "description": "جلب وتحديث مجاني لسيرفرات الشيرنج",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-freeserver_7.2.6_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
                 "version": "1.2",
-                "description": "Novaler Package",
+                "description": "فحص واختبار سرعة اتصال الانترنيت نسخة اخرى",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
                 "version": "py3.12",
-                "description": "Novaler Package",
+                "description": "تحويل وتنسيق اشتراكات الـ IPTV وإضافتها كقنوات عادية داخل نظام الإنيجما 2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
                 "version": "5.9",
-                "description": "Novaler Package",
+                "description": "تثبيت وتحديث صور النظام (Images) أونلاين والإقلاع المتعدد",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-netspeedtest_2.1.3_all",
                 "version": "2.1.3",
-                "description": "Novaler Package",
+                "description": "قياس واختبار سرعة اتصال الإنترنت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all",
                 "version": "9.2-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل سيرفرات واشتراكات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all",
                 "version": "9.2-r0",
-                "description": "Novaler Package",
+                "description": تفعيل وتشغيل سيرفرات واشتراكات"",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all",
                 "version": "9.2-r0",
-                "description": "Novaler Package",
+                "description": "تفعيل وتشغيل سيرفرات واشتراكات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "Novaler Package",
+                "description": "التطبيق الرسمي المخصص لتفعيل وإدارة سيرفر NovaCam Pro",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "Novaler Package",
+                "description": "التطبيق الرسمي المخصص لتفعيل وإدارة سيرفر NovaCam Pro",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "Novaler Package",
+                "description": "التطبيق الرسمي المخصص لتفعيل وإدارة سيرفر NovaCam Pro",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "Novaler Package",
+                "description": "التطبيق الرسمي المخصص لتفعيل وإدارة سيرفر NovaCam Pro",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "Novaler Package",
+                "description": "المتجر الرسمي المخصص لأجهزة Novaler 4K",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "Novaler Package",
+                "description": "المتجر الرسمي المخصص لأجهزة Novaler 4K",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "Novaler Package",
+                "description": "المتجر الرسمي المخصص لأجهزة Novaler 4K",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "Novaler Package",
+                "description": "المتجر الرسمي المخصص لأجهزة Novaler 4K",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-petazetas_1.1_all",
                 "version": "1.1",
-                "description": "Novaler Package",
+                "description": "بلاجن PetaZetas هو إضافة مخصصة لمشاهدة الأفلام والمسلسلات الأجنبية والأنمي عبر شبكة الإنترنت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-plutotv_20240220_all",
                 "version": "20240220",
-                "description": "Novaler Package",
+                "description": بلاجن Pluto TV هو إضافة مخصصة لتشغيل خدمة Pluto TV العالمية للث التلفزيوني المجاني"",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
                 "version": "20240324",
-                "description": "Novaler Package",
+                "description": "بلاجن Rakuten TV هو إضافة ترفيهية تتيح لك الوصول لمحتوى وقنوات منصة Rakuten TV العالمية مجاناً عبر الإنترنت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-screengrabber_2.6_all",
                 "version": "2.6",
-                "description": "Novaler Package",
+                "description": "أداة مخصصة لـ التقاط صور لشاشة الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-screengrabber_2.6_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-subssupport_1.5.8-r3_all",
                 "version": "1.5.8-r3",
-                "description": "Novaler Package",
+                "description": "بلجن جلب ملفات الترجمة العربية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-subssupport_1.5.8-r3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "Novaler Package",
+                "description": "لتفعيل وتحديث اشتراكات سيرفر SupTV الشهير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "Novaler Package",
+                "description": "لتفعيل وتحديث اشتراكات سيرفر SupTV الشهير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "Novaler Package",
+                "description": "لتفعيل وتحديث اشتراكات سيرفر SupTV الشهير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "Novaler Package",
+                "description": "نسخة اخرى لتفعيل وتحديث اشتراكات سيرفر SupTV الشهير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "Novaler Package",
+                "description": "لتفعيل وتحديث اشتراكات سيرفر SupTV الشهير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-tvspro_1.3_all",
                 "version": "1.3",
-                "description": "Novaler Package",
+                "description": "تشغيل سيرفرات الـ IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-tvspro_1.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all",
                 "version": "mod",
-                "description": "Novaler Package",
+                "description": "بلجن الطقس",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-xcplugin-forever_1.8_all",
                 "version": "1.8",
-                "description": "Novaler Package",
+                "description": "بلاجن مخصص لتشغيل اشتراكات الـ IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xcplugin-forever_1.8_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-xstreamity_4.02.20230510_all",
                 "version": "4.02.20230510",
-                "description": "Novaler Package",
+                "description": "بلجن تشغيل اشتراكات الـ IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xstreamity_4.02.20230510_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
                 "version": "v-1.2",
-                "description": "Novaler Package",
+                "description": "بلجن تشغيل اشتراكات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
                 "image": ""
             }
