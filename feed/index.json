@@ -975,7 +975,22 @@
             },
             {
                 "name": "VTI",
-                "items": []
+                "items": [
+                    {
+                        "name": "VTi_15-0-02_vuduo4kse_202212231255_usb",
+                        "version": "202212231255",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4kse_202212231255_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "VTi_15-0-02_vuduo4k_202212231257_usb",
+                        "version": "202212231257",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4k_202212231257_usb.zip",
+                        "image": ""
+                    }
+                ]
             }
         ],
         "picons": [
