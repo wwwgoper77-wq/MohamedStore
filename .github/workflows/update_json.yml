@@ -7,8 +7,15 @@ on:
       - 'skins/**'
       - 'tools/**'
       - 'system_images/**'
+      - 'novaler/**'
+      - 'picons/**'
+      - 'channels/**'
       
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +23,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -23,12 +32,15 @@ jobs:
           python-version: '3.x'
 
       - name: Generate index
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_index.py
 
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add feed/index.json
           git commit -m "Auto-update json index" || echo "No changes to commit"
-          git push
+          git pull --rebase origin main
+          git push origin main
