@@ -939,6 +939,13 @@
                         "description": "OpenPLi Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb",
+                        "version": "OpenPLi-wrynose-novaler4kpro-backup-20260812",
+                        "description": "OpenPLi Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip",
+                        "image": ""
                     }
                 ]
             },
