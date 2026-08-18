@@ -110,7 +110,7 @@ except Exception as e:
 def process_nested_category(cat_key, default_label):
     folders_map = {}
 
-    # أولاً: قراءة المجلدات الحقيقية في المستودع
+    # أولاً: قراءة المجلدات الحقيقية في المستودع (بما فيها الفارغة)
     if os.path.isdir(cat_key):
         for folder in sorted(os.listdir(cat_key)):
             folder_path = os.path.join(cat_key, folder)
@@ -127,7 +127,7 @@ def process_nested_category(cat_key, default_label):
                     "seen_files": set()
                 }
 
-            # قراءة الملفات المحلية
+            # قراءة الملفات المحلية إن وجدت
             for filename in sorted(os.listdir(folder_path)):
                 if not filename.endswith(EXTENSIONS):
                     continue
@@ -177,7 +177,6 @@ def process_nested_category(cat_key, default_label):
             if "all" in folders_map:
                 matched_folder = "all"
             else:
-                # إنشاء مجلد تلقائي مثل openpli
                 if "openpli" in fname_norm or "open.pli" in fname.lower():
                     matched_folder = "openpli"
                     if matched_folder not in folders_map:
@@ -201,13 +200,12 @@ def process_nested_category(cat_key, default_label):
                 "image": image_url(clean.split("_")[0]) or image_url(display_name) or image_url(cat_key)
             })
 
-    # تجهيز القائمة النهائية
+    # تجهيز القائمة النهائية (مع إظهار جميع المجلدات حتى لو كانت فارغة)
     for f_norm, f_data in sorted(folders_map.items()):
-        if f_data["items"]:
-            data["categories"][cat_key].append({
-                "name": f_data["display_name"],
-                "items": f_data["items"]
-            })
+        data["categories"][cat_key].append({
+            "name": f_data["display_name"],
+            "items": f_data["items"]
+        })
 
 
 # تشغيل صور النظام والسكينات
@@ -289,4 +287,4 @@ output_path = "feed/index.json"
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print(f"🎉 Successfully generated {output_path} with all categories, releases, and preserved descriptions!")
+print(f"🎉 Successfully generated {output_path} preserving all empty folders and items cleanly!")
