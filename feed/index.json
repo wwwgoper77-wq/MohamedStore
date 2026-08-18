@@ -130,86 +130,86 @@
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
                 "version": "py2.7",
-                "description": "بلجن صوتيات بايثون 2.7",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
                 "version": "py3.11",
-                "description": "بلجن صوتيات بايثون 3.11",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1",
                 "version": "py3.13",
-                "description": "بلجن صوتيات بايثون 3.13",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
                 "version": "py3.14",
-                "description": "بلجن صوتيات بايثون 3.14",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
                 "version": "py3.9",
-                "description": "بلجن صوتيات بايثون 3.9",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1",
                 "version": "py3.12",
-                "description": "",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
                 "version": "py3.13",
-                "description": "",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
                 "version": "py3.13",
-                "description": "",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
+                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
                 "version": "py3.14",
-                "description": "",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-tivimatee2_1.0.01_all",
+                "name": "enigma2-plugin-extensions-tivimatee2_1.0.01_all",
                 "version": "1.0.01",
-                "description": "بلجن iptv بايثون 3.13.12",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk",
                 "image": ""
             },
             {
-                "name": "extensions-uninstaller_1.0_all",
+                "name": "enigma2-plugin-extensions-uninstaller_1.0_all",
                 "version": "1.0",
-                "description": "حذف البلجنات والسكنات  بايثون 3",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-uninstaller_1.0_all.ipk",
                 "image": ""
             },
             {
-                "name": "timeshift-delay-egami_3.0_all",
+                "name": "enigma2-plugin-timeshift-delay-egami_3.0_all",
                 "version": "3.0",
-                "description": "عداد ثواني تايم شفت صورة ايجامي فقط بايثون 3.13.12",
+                "description": "Plugins Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             },
@@ -223,16 +223,12 @@
             {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
-                "description": "",
+                "description": "Plugins Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             }
         ],
         "skins": [
-            {
-                "name": "All",
-                "items": []
-            },
             {
                 "name": "Egami",
                 "items": [
@@ -354,18 +350,6 @@
                 ]
             },
             {
-                "name": "OpenDroid",
-                "items": []
-            },
-            {
-                "name": "OpenEight",
-                "items": []
-            },
-            {
-                "name": "OpenHDF",
-                "items": []
-            },
-            {
                 "name": "OpenP",
                 "items": [
                     {
@@ -397,87 +381,67 @@
                         "image": ""
                     }
                 ]
-            },
-            {
-                "name": "OpenSPA",
-                "items": []
-            },
-            {
-                "name": "OpenVision",
-                "items": []
-            },
-            {
-                "name": "Pure2",
-                "items": []
-            },
-            {
-                "name": "VTI",
-                "items": []
             }
         ],
         "tools": [
             {
                 "name": "Ncam v15.8",
                 "version": "1.0",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/Ncam v15.8.sh",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
                 "version": "V10.0-r0",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all",
                 "version": "11965-803",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-oscam_11878-emu-r802_all",
                 "version": "11878-emu-r802",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11878-emu-r802_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-oscam_11886-emu-r803_all",
                 "version": "11886-emu-r803",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11886-emu-r803_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all",
                 "version": "11725-V9-Kitte888-V23Rev",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all",
                 "version": "11.715-emu-r798-arm+mips",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all",
                 "version": "11791-emu-801-arm+mips",
-                "description": "",
+                "description": "Tools Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all.ipk",
                 "image": ""
             }
         ],
         "system_images": [
-            {
-                "name": "Backups",
-                "items": []
-            },
             {
                 "name": "Egami",
                 "items": [
@@ -632,28 +596,16 @@
                 ]
             },
             {
-                "name": "OpenEight",
-                "items": []
-            },
-            {
-                "name": "OpenHDF",
-                "items": []
-            },
-            {
                 "name": "OpenPLi",
-                "items": []
-            },
-            {
-                "name": "OpenSPA",
-                "items": []
-            },
-            {
-                "name": "OpenViX",
-                "items": []
-            },
-            {
-                "name": "OpenVision",
-                "items": []
+                "items": [
+                    {
+                        "name": "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc",
+                        "version": "images.py3",
+                        "description": "OpenPLi Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "Pure2",
@@ -666,10 +618,6 @@
                         "image": ""
                     }
                 ]
-            },
-            {
-                "name": "VTI",
-                "items": []
             }
         ],
         "picons": [
@@ -683,49 +631,49 @@
             {
                 "name": "picon-13E",
                 "version": "1.0",
-                "description": "",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon-13E.zip",
                 "image": ""
             },
             {
                 "name": "picon_16.0E",
-                "version": "1.0",
-                "description": "",
+                "version": "picon",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
                 "image": ""
             },
             {
                 "name": "picon_26",
-                "version": "1.0",
-                "description": "",
+                "version": "picon",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
                 "image": ""
             },
             {
                 "name": "picon_39E",
-                "version": "1.0",
-                "description": "",
+                "version": "picon",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_39E.zip",
                 "image": ""
             },
             {
                 "name": "picon_8.0W",
-                "version": "1.0",
-                "description": "",
+                "version": "picon",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_8.0W.zip",
                 "image": ""
             },
             {
                 "name": "picon_AL.part1",
-                "version": "1.0",
-                "description": "",
+                "version": "picon",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part1.zip",
                 "image": ""
             },
             {
                 "name": "picon_AL.part2",
-                "version": "1.0",
-                "description": "",
+                "version": "picon",
+                "description": "Picons Package",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part2.zip",
                 "image": ""
             }
@@ -733,14 +681,14 @@
         "channels": [
             {
                 "name": "channels_backup_MNASR_20260527",
-                "version": "1.0",
+                "version": "MNASR",
                 "description": "ملف قنوات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_MNASR_20260527.tar.gz",
                 "image": ""
             },
             {
                 "name": "channels_backup_openATV_20260602_000828",
-                "version": "1.0",
+                "version": "20260602",
                 "description": "ملف قنوات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_openATV_20260602_000828.tar.gz",
                 "image": ""
@@ -750,343 +698,343 @@
             {
                 "name": "ArabicSavior-1.3",
                 "version": "1.0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/ArabicSavior-1.3.tar.gz",
                 "image": ""
             },
             {
                 "name": "KeyAdder",
                 "version": "1.0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/KeyAdder.tar.gz",
                 "image": ""
             },
             {
                 "name": "RaedQuickSignal-12.0",
                 "version": "1.0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/RaedQuickSignal-12.0.tar.gz",
                 "image": ""
             },
             {
                 "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
                 "version": "20201016-V2.8-By-momi133-OE2",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
                 "name": "cfg_Zoom_Final_FIX7x_all",
                 "version": "FIX7x",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-Athantimes_2.8_PY3",
                 "version": "2.8",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-Athantimes_2.8_PY3.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ajpanel_v8.8.5_all",
                 "version": "v8.8.5",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ajpanel_v8.8.5_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-alternativesoftcammanager_4.0_all",
                 "version": "4.0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-alternativesoftcammanager_4.0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ansite_1.3_all",
                 "version": "1.3",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ansite_1.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-audiopip_0.3_all",
                 "version": "0.3",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-audiopip_0.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all",
                 "version": "11.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-camnova_1.8-arm_all",
                 "version": "1.8-arm",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-camnova_1.8-arm_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all",
                 "version": "1.0.43",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all",
                 "version": "20220111-V1.7-momi133-OE2",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-freeserver_7.2.6_all",
                 "version": "7.2.6",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-freeserver_7.2.6_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
                 "version": "1.2",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
                 "version": "py3.12",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
                 "version": "5.9",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-netspeedtest_2.1.3_all",
                 "version": "2.1.3",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all",
                 "version": "9.2-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all",
                 "version": "9.2-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all",
                 "version": "9.2-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all",
                 "version": "4.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all",
                 "version": "5.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-petazetas_1.1_all",
                 "version": "1.1",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-plutotv_20240220_all",
                 "version": "20240220",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
                 "version": "20240324",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-screengrabber_2.6_all",
                 "version": "2.6",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-screengrabber_2.6_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-subssupport_1.5.8-r3_all",
                 "version": "1.5.8-r3",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-subssupport_1.5.8-r3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all",
                 "version": "6.0-r0",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-tvspro_1.3_all",
                 "version": "1.3",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-tvspro_1.3_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all",
                 "version": "mod",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-xcplugin-forever_1.8_all",
                 "version": "1.8",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xcplugin-forever_1.8_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-xstreamity_4.02.20230510_all",
                 "version": "4.02.20230510",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xstreamity_4.02.20230510_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
                 "version": "v-1.2",
-                "description": "",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
                 "image": ""
             }
