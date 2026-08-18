@@ -22,7 +22,7 @@ data = {
 }
 
 # -------------------------------------------------
-# 1. حفظ واسترجاع الأوصاف القديمة
+# 1. حفظ واسترجاع الأوصاف القديمة المكتوبة باللغة العربية
 # -------------------------------------------------
 old_descriptions = {}
 try:
@@ -37,11 +37,14 @@ try:
                         for it in el.get("items", []):
                             if it.get("name") and it.get("description"):
                                 old_descriptions[it["name"]] = it["description"]
+                                old_descriptions[it.get("file", "").split("/")[-1]] = it["description"]
                     elif isinstance(el, dict):
                         if el.get("name") and el.get("description"):
                             old_descriptions[el["name"]] = el["description"]
-except Exception:
-    pass
+                            old_descriptions[el.get("file", "").split("/")[-1]] = el["description"]
+    print(f"✅ Loaded {len(old_descriptions)} existing descriptions.")
+except Exception as e:
+    print("Notice loading previous descriptions:", e)
 
 
 def image_url(prefix):
@@ -69,8 +72,26 @@ def normalize_text(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
 
+def get_best_description(clean_name, filename, release_body="", default_desc=""):
+    """دالة ذكية لاختيار الوصف العربي وعدم استبداله بالإنجليزي"""
+    # 1. إذا كان موجوداً في الأوصاف القديمة المحفوظة
+    if clean_name in old_descriptions and old_descriptions[clean_name].strip():
+        return old_descriptions[clean_name].strip()
+    if filename in old_descriptions and old_descriptions[filename].strip():
+        return old_descriptions[filename].strip()
+
+    # 2. إذا كان مكتوباً في تفاصيل الـ Release
+    if release_body and release_body.strip():
+        # نأخذ أول سطر مفيد من وصف الـ Release
+        lines = [l.strip() for l in release_body.split("\n") if l.strip() and not l.strip().startswith("#")]
+        if lines:
+            return lines[0]
+
+    return default_desc
+
+
 # -------------------------------------------------
-# 2. جلب ملفات الـ Releases كاملة
+# 2. جلب ملفات الـ Releases وأوصافها العربية
 # -------------------------------------------------
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
@@ -91,12 +112,14 @@ while True:
             break
 
         for release in releases:
+            rel_body = release.get("body", "") or release.get("name", "")
             for asset in release.get("assets", []):
                 filename = asset.get("name", "")
                 if filename.endswith(EXTENSIONS):
                     release_assets_pool.append({
                         "filename": filename,
-                        "url": asset.get("browser_download_url", "")
+                        "url": asset.get("browser_download_url", ""),
+                        "body": rel_body
                     })
 
         if len(releases) < 100:
@@ -106,9 +129,8 @@ while True:
         print("Releases notice:", e)
         break
 
-print(f"✅ Total Release Assets: {len(release_assets_pool)}")
+print(f"✅ Total Release Assets loaded: {len(release_assets_pool)}")
 
-# مجموعة لتتبع الملفات التي تم تصنيفها لمنع تكرار أي ملف في أكثر من قسم
 assigned_releases = set()
 
 
@@ -132,25 +154,28 @@ if os.path.isdir("system_images"):
             clean = clean_filename(fn)
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             f_url = f"{BASE_URL}/system_images/{folder}/{fn}"
+            body_desc = ""
             for asset in release_assets_pool:
                 if asset["filename"] == fn:
                     f_url = asset["url"]
+                    body_desc = asset.get("body", "")
                     break
+
+            final_desc = get_best_description(clean, fn, body_desc, f"{disp} Image")
+
             sys_folders[norm]["items"].append({
                 "name": clean,
                 "version": ver,
-                "description": old_descriptions.get(clean, f"{disp} Image"),
+                "description": final_desc,
                 "file": f_url,
                 "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
             })
 
-# إضافة صور النظام من Releases
 for asset in release_assets_pool:
     fn = asset["filename"]
     fn_lower = fn.lower()
     fn_norm = normalize_text(fn)
 
-    # التحقق هل هذا الملف صورة نظام؟
     is_sys_img = False
     if any(k in fn_norm for k in ["vti", "openpli", "openatv", "openbh", "blackhole", "egami", "pure2", "openspa", "openvix", "systemimage"]):
         is_sys_img = True
@@ -159,7 +184,6 @@ for asset in release_assets_pool:
 
     if is_sys_img and not any(k in fn_norm for k in ["plugin", "skin", "picon", "channel", "ncam", "oscam"]):
         assigned_releases.add(fn)
-        # البحث عن المجلد المناسب
         matched = None
         for norm_k in sys_folders.keys():
             if norm_k != "all" and norm_k in fn_norm:
@@ -176,10 +200,12 @@ for asset in release_assets_pool:
             clean = clean_filename(fn)
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp = sys_folders[matched]["display_name"]
+            final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Image")
+
             sys_folders[matched]["items"].append({
                 "name": clean,
                 "version": ver,
-                "description": old_descriptions.get(clean, f"{disp} Image"),
+                "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
             })
@@ -212,19 +238,23 @@ if os.path.isdir("skins"):
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             f_url = f"{BASE_URL}/skins/{folder}/{fn}"
+            body_desc = ""
             for asset in release_assets_pool:
                 if asset["filename"] == fn:
                     f_url = asset["url"]
+                    body_desc = asset.get("body", "")
                     break
+
+            final_desc = get_best_description(clean, fn, body_desc, f"{disp} Skin")
+
             skin_folders[norm]["items"].append({
                 "name": clean,
                 "version": ver,
-                "description": old_descriptions.get(clean, f"{disp} Skin"),
+                "description": final_desc,
                 "file": f_url,
                 "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
             })
 
-# إضافة السكينات من Releases
 for asset in release_assets_pool:
     fn = asset["filename"]
     fn_norm = normalize_text(fn)
@@ -248,10 +278,12 @@ for asset in release_assets_pool:
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             disp = skin_folders[matched]["display_name"]
+            final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Skin")
+
             skin_folders[matched]["items"].append({
                 "name": clean,
                 "version": ver,
-                "description": old_descriptions.get(clean, f"{disp} Skin"),
+                "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
             })
@@ -270,7 +302,6 @@ def handle_flat(cat_key, matcher_func, default_desc):
     items = []
     seen = set()
 
-    # محلياً
     if os.path.isdir(cat_key):
         for fn in sorted(os.listdir(cat_key)):
             if not fn.endswith(EXTENSIONS):
@@ -280,19 +311,23 @@ def handle_flat(cat_key, matcher_func, default_desc):
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
             f_url = f"{BASE_URL}/{cat_key}/{fn}"
+            body_desc = ""
             for asset in release_assets_pool:
                 if asset["filename"] == fn:
                     f_url = asset["url"]
+                    body_desc = asset.get("body", "")
                     break
+
+            final_desc = get_best_description(clean, fn, body_desc, default_desc)
+
             items.append({
                 "name": clean,
                 "version": ver,
-                "description": old_descriptions.get(clean, default_desc),
+                "description": final_desc,
                 "file": f_url,
                 "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
             })
 
-    # من Releases
     for asset in release_assets_pool:
         fn = asset["filename"]
         fn_norm = normalize_text(fn)
@@ -305,10 +340,12 @@ def handle_flat(cat_key, matcher_func, default_desc):
             clean = clean_filename(fn)
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
+            final_desc = get_best_description(clean, fn, asset.get("body", ""), default_desc)
+
             items.append({
                 "name": clean,
                 "version": ver,
-                "description": old_descriptions.get(clean, default_desc),
+                "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
             })
@@ -316,27 +353,18 @@ def handle_flat(cat_key, matcher_func, default_desc):
     data["categories"][cat_key] = items
 
 
-# 1. Novaler
 handle_flat("novaler", lambda n: "novaler" in n or "noflayer" in n, "Novaler Package")
-
-# 2. Picons
 handle_flat("picons", lambda n: "picon" in n or "snp" in n or "srp" in n, "Picons Package")
-
-# 3. Channels
 handle_flat("channels", lambda n: any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav"]), "Channels Settings")
-
-# 4. Tools
 handle_flat("tools", lambda n: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "tool", "script", "tweak"]), "Tool Package")
-
-# 5. Plugins (كل ما تبقى من بلجنات وإضافات)
 handle_flat("plugins", lambda n: True, "Plugin Extension")
 
 
 # -------------------------------------------------
-# 6. حفظ الفهرس المنظم
+# 6. حفظ الفهرس بترميز UTF-8 لدعم الحروف العربية
 # -------------------------------------------------
 os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated clean, organized, non-duplicated feed/index.json!")
+print("🎉 Successfully generated feed/index.json preserving Arabic descriptions perfectly!")
