@@ -230,6 +230,10 @@
         ],
         "skins": [
             {
+                "name": "All",
+                "items": []
+            },
+            {
                 "name": "Egami",
                 "items": [
                     {
@@ -350,6 +354,18 @@
                 ]
             },
             {
+                "name": "OpenDroid",
+                "items": []
+            },
+            {
+                "name": "OpenEight",
+                "items": []
+            },
+            {
+                "name": "OpenHDF",
+                "items": []
+            },
+            {
                 "name": "OpenP",
                 "items": [
                     {
@@ -381,6 +397,22 @@
                         "image": ""
                     }
                 ]
+            },
+            {
+                "name": "OpenSPA",
+                "items": []
+            },
+            {
+                "name": "OpenVision",
+                "items": []
+            },
+            {
+                "name": "Pure2",
+                "items": []
+            },
+            {
+                "name": "VTI",
+                "items": []
             }
         ],
         "tools": [
@@ -442,6 +474,10 @@
             }
         ],
         "system_images": [
+            {
+                "name": "Backups",
+                "items": []
+            },
             {
                 "name": "Egami",
                 "items": [
@@ -596,6 +632,14 @@
                 ]
             },
             {
+                "name": "OpenEight",
+                "items": []
+            },
+            {
+                "name": "OpenHDF",
+                "items": []
+            },
+            {
                 "name": "OpenPLi",
                 "items": [
                     {
@@ -608,6 +652,18 @@
                 ]
             },
             {
+                "name": "OpenSPA",
+                "items": []
+            },
+            {
+                "name": "OpenVision",
+                "items": []
+            },
+            {
+                "name": "OpenViX",
+                "items": []
+            },
+            {
                 "name": "Pure2",
                 "items": [
                     {
@@ -618,6 +674,10 @@
                         "image": ""
                     }
                 ]
+            },
+            {
+                "name": "VTI",
+                "items": []
             }
         ],
         "picons": [
