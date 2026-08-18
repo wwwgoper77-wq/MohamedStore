@@ -233,6 +233,41 @@
                 "name": "All",
                 "items": [
                     {
+                        "name": "SKIN-ORANGESKY-XP-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ORANGESKY-XP-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "SKIN-ORANGESKY-XP2-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ORANGESKY-XP2-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-OSN-PN-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-OSN-PN-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-QATAR2022-GPN-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-QATAR2022-GPN-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-ROBOCOP-P-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-ROBOCOP-P-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "Skin-SPIDERMAN-P-FHD-By-Muaath",
                         "version": "1.0",
                         "description": "All Skin",
