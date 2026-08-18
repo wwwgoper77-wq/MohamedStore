@@ -973,7 +973,15 @@
             },
             {
                 "name": "OpenViX",
-                "items": []
+                "items": [
+                    {
+                        "name": "openvix-6.9.001.release-vuduo2_usb",
+                        "version": "openvix-6.9.001.release-vuduo2",
+                        "description": "OpenViX Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo2_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "Pure2",
@@ -991,6 +999,13 @@
                 "name": "VTI",
                 "items": [
                     {
+                        "name": "VTi_15-0-02_vuduo2_202212231310_usb",
+                        "version": "202212231310",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo2_202212231310_usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "VTi_15-0-02_vuduo4kse_202212231255_usb",
                         "version": "202212231255",
                         "description": "VTI Image",
@@ -1005,10 +1020,24 @@
                         "image": ""
                     },
                     {
+                        "name": "VTi_15-0-02_vusolo2_202212231312_usb",
+                        "version": "202212231312",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vusolo2_202212231312_usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "VTi_15-0-02_vusolo4k_202212231308_usb",
                         "version": "202212231308",
                         "description": "VTI Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vusolo4k_202212231308_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "VTi_15-0-02_vusolose_202212231314_usb",
+                        "version": "202212231314",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vusolose_202212231314_usb.zip",
                         "image": ""
                     },
                     {
