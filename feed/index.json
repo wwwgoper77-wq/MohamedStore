@@ -408,6 +408,34 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all",
+                        "version": "2.0-mod2ha",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-nitro-fhd-all_1.1_all",
+                        "version": "1.1",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitro-fhd-all_1.1_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all",
+                        "version": "2.5-1",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all",
+                        "version": "3.3",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-obselite-fhd-all_1.0_all",
                         "version": "1.0",
                         "description": "All Skin",
