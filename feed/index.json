@@ -231,7 +231,29 @@
         "skins": [
             {
                 "name": "All",
-                "items": []
+                "items": [
+                    {
+                        "name": "Skin-SPIDERMAN-P-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-SPIDERMAN-P-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-SPIDERMAN-SP-FHD-By-Muaath",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-SPIDERMAN-SP-FHD-By-Muaath.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-Sky-FHD-By-Maggy-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Sky-FHD-By-Maggy-MOD-By-RAED.ipk",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "Egami",
