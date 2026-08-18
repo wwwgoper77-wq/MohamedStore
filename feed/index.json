@@ -980,6 +980,20 @@
                         "description": "OpenViX Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo2_usb.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuduo4kse_usb",
+                        "version": "openvix-6.9.001.release-vuduo4kse",
+                        "description": "OpenViX Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo4kse_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuduo4k_usb",
+                        "version": "openvix-6.9.001.release-vuduo4k",
+                        "description": "OpenViX Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo4k_usb.zip",
+                        "image": ""
                     }
                 ]
             },
