@@ -2,6 +2,7 @@ import os
 import json
 import re
 import urllib.request
+import urllib.error
 
 GITHUB_USER = "wwwgoper77-wq"
 REPO_NAME = "MohamedStore"
@@ -76,32 +77,46 @@ def normalize_text(text):
 
 
 # -------------------------------------------------
-# 2. جلب جميع ملفات Releases من GitHub API
+# 2. جلب جميع ملفات Releases من GitHub API مع دعم Pagination & Token
 # -------------------------------------------------
 release_assets_pool = []
-try:
-    api_rel = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases"
-    req = urllib.request.Request(
-        api_rel,
-        headers={
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/vnd.github+json"
-        }
-    )
-    with urllib.request.urlopen(req, timeout=25) as response:
-        releases = json.loads(response.read().decode("utf-8"))
+github_token = os.environ.get("GITHUB_TOKEN", "")
 
-    for release in releases:
-        for asset in release.get("assets", []):
-            filename = asset.get("name", "")
-            if filename.endswith(EXTENSIONS):
-                release_assets_pool.append({
-                    "filename": filename,
-                    "url": asset.get("browser_download_url", "")
-                })
-    print(f"✅ Loaded {len(release_assets_pool)} assets from Releases.")
-except Exception as e:
-    print("⚠️ GitHub Releases Fetch Error:", e)
+headers = {
+    "User-Agent": "MohamedStore-Feed-Generator",
+    "Accept": "application/vnd.github+json"
+}
+if github_token:
+    headers["Authorization"] = f"token {github_token}"
+
+page = 1
+while True:
+    try:
+        api_rel = f"https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/releases?per_page=100&page={page}"
+        req = urllib.request.Request(api_rel, headers=headers)
+        with urllib.request.urlopen(req, timeout=30) as response:
+            releases = json.loads(response.read().decode("utf-8"))
+
+        if not releases or not isinstance(releases, list):
+            break
+
+        for release in releases:
+            for asset in release.get("assets", []):
+                filename = asset.get("name", "")
+                if filename.endswith(EXTENSIONS):
+                    release_assets_pool.append({
+                        "filename": filename,
+                        "url": asset.get("browser_download_url", "")
+                    })
+
+        if len(releases) < 100:
+            break
+        page += 1
+    except Exception as e:
+        print(f"GitHub Releases Fetch Notice on page {page}:", e)
+        break
+
+print(f"✅ Total Release Assets loaded: {len(release_assets_pool)}")
 
 
 # -------------------------------------------------
@@ -150,41 +165,62 @@ def process_nested_category(cat_key, default_label):
                         "image": image_url(clean.split("_")[0]) or image_url(display_name) or image_url(cat_key)
                     })
 
-    # ثانياً: فحص ملفات الـ Releases بحسب القسم أولاً ثم المجلد
+    # ثانياً: فحص وتوزيع ملفات Releases على الحافظات
     for asset in release_assets_pool:
         fname = asset["filename"]
         fname_norm = normalize_text(fname)
 
-        # التحقق من مطابقة القسم (مثلاً: system_images أو skins)
         is_this_cat = False
-        if cat_key == "system_images" and any(k in fname_norm for k in ["systemimage", "systemimages", "image", "img", "py3", "emmc", "mmc", "recovery", "usb"]):
-            is_this_cat = True
-        elif cat_key == "skins" and "skin" in fname_norm:
-            is_this_cat = True
+        if cat_key == "system_images":
+            if any(k in fname_norm for k in [
+                "systemimage", "systemimages", "openpli", "openatv", "openbh", "blackhole",
+                "egami", "pure2", "openspa", "openvix", "octagon", "vuplus", "vuzero", "vuduo",
+                "sf8008", "multibox", "py3", "emmc", "mmc", "recovery", "rootfs", "kernel"
+            ]):
+                # استبعاد البلجنات والسكينات
+                if not any(k in fname_norm for k in ["plugin", "skin", "picon", "channel", "ncam", "oscam"]):
+                    is_this_cat = True
+
+        elif cat_key == "skins":
+            if "skin" in fname_norm:
+                is_this_cat = True
 
         if not is_this_cat:
             continue
 
-        # تحديد المجلد الهدف المناسب بناءً على الاسم
+        # مطابقة اسم الحافظة
         matched_folder = None
         for f_norm, f_data in folders_map.items():
             if f_norm != "all" and f_norm in fname_norm:
                 matched_folder = f_norm
                 break
 
-        # إذا لم يتطابق مع مجلد معين، يوضع في All أو ينشئ مجلداً باسم الفريق
+        # مطابقة خاصة لصور النظام المشهورة إن لم يكن المجلد موجوداً بعد
+        if not matched_folder and cat_key == "system_images":
+            if "openpli" in fname_norm or "open.pli" in fname.lower():
+                matched_folder = "openpli"
+                if matched_folder not in folders_map:
+                    folders_map[matched_folder] = {"display_name": "OpenPLi", "items": [], "seen_files": set()}
+            elif "openatv" in fname_norm or "atv" in fname_norm:
+                matched_folder = "openatv"
+                if matched_folder not in folders_map:
+                    folders_map[matched_folder] = {"display_name": "OpenATV", "items": [], "seen_files": set()}
+            elif "openbh" in fname_norm or "blackhole" in fname_norm:
+                matched_folder = "openbh"
+                if matched_folder not in folders_map:
+                    folders_map[matched_folder] = {"display_name": "OpenBH", "items": [], "seen_files": set()}
+            elif "egami" in fname_norm:
+                matched_folder = "egami"
+                if matched_folder not in folders_map:
+                    folders_map[matched_folder] = {"display_name": "EGAMI", "items": [], "seen_files": set()}
+
         if not matched_folder:
             if "all" in folders_map:
                 matched_folder = "all"
             else:
-                if "openpli" in fname_norm or "open.pli" in fname.lower():
-                    matched_folder = "openpli"
-                    if matched_folder not in folders_map:
-                        folders_map[matched_folder] = {"display_name": "OpenPLi", "items": [], "seen_files": set()}
-                else:
-                    matched_folder = "all"
-                    if matched_folder not in folders_map:
-                        folders_map[matched_folder] = {"display_name": "All", "items": [], "seen_files": set()}
+                matched_folder = "all"
+                if matched_folder not in folders_map:
+                    folders_map[matched_folder] = {"display_name": "All", "items": [], "seen_files": set()}
 
         if fname not in folders_map[matched_folder]["seen_files"]:
             folders_map[matched_folder]["seen_files"].add(fname)
@@ -200,7 +236,7 @@ def process_nested_category(cat_key, default_label):
                 "image": image_url(clean.split("_")[0]) or image_url(display_name) or image_url(cat_key)
             })
 
-    # تجهيز القائمة النهائية (مع إظهار جميع المجلدات حتى لو كانت فارغة)
+    # حفظ الحافظات بما فيها الفارغة
     for f_norm, f_data in sorted(folders_map.items()):
         data["categories"][cat_key].append({
             "name": f_data["display_name"],
@@ -208,7 +244,7 @@ def process_nested_category(cat_key, default_label):
         })
 
 
-# تشغيل صور النظام والسكينات
+# تشغيل الأقسام المزدوجة
 process_nested_category("system_images", "Image")
 process_nested_category("skins", "Skin")
 
@@ -216,11 +252,11 @@ process_nested_category("skins", "Skin")
 # -------------------------------------------------
 # 4. معالجة الأقسام المفردة (Plugins, Tools, Picons, Channels, Novaler)
 # -------------------------------------------------
-def process_flat_category(cat_key, keywords):
+def process_flat_category(cat_key, keywords, exclude_keywords):
     items_list = []
     seen_files = set()
 
-    # الملفات المحلية
+    # 1. قراءة الملفات المحلية
     if os.path.isdir(cat_key):
         for filename in sorted(os.listdir(cat_key)):
             if not filename.endswith(EXTENSIONS):
@@ -243,7 +279,7 @@ def process_flat_category(cat_key, keywords):
                 "image": image_url(clean.split("_")[0]) or image_url(cat_key)
             })
 
-    # ملفات Releases
+    # 2. سحب ملفات Releases الخاصة بهذا القسم بدقة
     for asset in release_assets_pool:
         fname = asset["filename"]
         fname_norm = normalize_text(fname)
@@ -251,10 +287,11 @@ def process_flat_category(cat_key, keywords):
         if fname in seen_files:
             continue
 
-        # استبعاد الأقسام الأخرى
-        if any(k in fname_norm for k in ["systemimage", "skin", "openpli", "openatv", "openbh", "egami"]):
+        # استبعاد الكلمات التابعة لأقسام أخرى
+        if any(ex in fname_norm for ex in exclude_keywords):
             continue
 
+        # مطابقة كلمات هذا القسم
         if any(k in fname_norm for k in keywords):
             seen_files.add(fname)
             clean = clean_filename(fname)
@@ -271,11 +308,36 @@ def process_flat_category(cat_key, keywords):
     data["categories"][cat_key] = items_list
 
 
-process_flat_category("plugins", ["plugin", "extension", "panel", "weather", "tmdb", "subs", "e2player", "multiepg"])
-process_flat_category("tools", ["tool", "ncam", "oscam", "softcam", "emu", "script", "tweak"])
-process_flat_category("picons", ["picon", "logos", "snp", "srp"])
-process_flat_category("channels", ["channel", "setting", "bouquet", "satellites"])
-process_flat_category("novaler", ["novaler", "noflayer"])
+# تصنيف دقيق ومنظم للأقسام الفردية
+process_flat_category(
+    "plugins",
+    ["plugin", "extension", "panel", "weather", "tmdb", "subs", "e2player", "multiepg", "ipa", "audi"],
+    ["skin", "systemimage", "openpli", "openatv", "openbh", "egami", "picon", "satellites", "ncam", "oscam"]
+)
+
+process_flat_category(
+    "tools",
+    ["tool", "ncam", "oscam", "softcam", "emu", "script", "tweak", "extnumber", "powershell"],
+    ["skin", "systemimage", "openpli", "openatv", "picon", "satellites"]
+)
+
+process_flat_category(
+    "picons",
+    ["picon", "logos", "snp", "srp", "zzpicon"],
+    ["skin", "systemimage", "plugin"]
+)
+
+process_flat_category(
+    "channels",
+    ["channel", "setting", "bouquet", "satellites", "fav", "m3u"],
+    ["skin", "systemimage", "plugin", "picon"]
+)
+
+process_flat_category(
+    "novaler",
+    ["novaler", "noflayer"],
+    ["skin", "systemimage", "openpli", "openatv", "openbh", "egami"]
+)
 
 
 # -------------------------------------------------
@@ -287,4 +349,4 @@ output_path = "feed/index.json"
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print(f"🎉 Successfully generated {output_path} preserving all empty folders and items cleanly!")
+print(f"🎉 Successfully generated {output_path} with all Release assets, preserved folders & descriptions!")
