@@ -989,6 +989,13 @@
                         "description": "VTI Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4k_202212231257_usb.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "VTi_15-0-02_vuzero4k_202212231301_usb",
+                        "version": "202212231301",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuzero4k_202212231301_usb.zip",
+                        "image": ""
                     }
                 ]
             }
