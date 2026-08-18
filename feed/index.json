@@ -914,20 +914,6 @@
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-vusolo4k-20260720_usb",
-                        "version": "opendroid-8.1.1-vusolo4k-20260720",
-                        "description": "OpenDroid Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "opendroid-8.1.1-vuuno4k-20260720_usb",
-                        "version": "opendroid-8.1.1-vuuno4k-20260720",
-                        "description": "OpenDroid Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
-                        "image": ""
-                    },
-                    {
                         "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
                         "version": "system",
                         "description": "OpenDroid Image",
