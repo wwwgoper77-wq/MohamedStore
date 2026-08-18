@@ -247,6 +247,34 @@
                         "image": ""
                     },
                     {
+                        "name": "Skin-MX-X6-By-Matrix10-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX-X6-By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-MX-X7-By-Matrix10-MOD-By-RAED",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX-X7-By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
+                        "version": "HQ9",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX_HQ9_By-Matrix10-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
+                        "version": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "Skin-OSN-PN-FHD-By-Muaath",
                         "version": "1.0",
                         "description": "All Skin",
@@ -286,6 +314,20 @@
                         "version": "1.0",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Sky-FHD-By-Maggy-MOD-By-RAED.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino",
+                        "version": "Graphite",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all",
+                        "version": "2.2-By-SkinMania-MOD-By-MEHDI",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
                     }
                 ]
