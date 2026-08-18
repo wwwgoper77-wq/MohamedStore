@@ -784,10 +784,6 @@
         ],
         "system_images": [
             {
-                "name": "Backups",
-                "items": []
-            },
-            {
                 "name": "Egami",
                 "items": [
                     {
