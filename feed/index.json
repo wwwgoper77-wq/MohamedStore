@@ -408,10 +408,24 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skins-obselite-fhd-all_1.0_all",
+                        "version": "1.0",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-obselite-fhd-all_1.0_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-octagon-hd-style-dark_1.3_all",
                         "version": "1.3",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-octagon-hd-style-dark_1.3_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-octagoneightfhd_V4.50_all",
+                        "version": "V4.50",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-octagoneightfhd_V4.50_all.ipk",
                         "image": ""
                     },
                     {
