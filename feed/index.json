@@ -230,15 +230,20 @@
         ],
         "skins": [
             {
-                "name": "All",
+                "name": "Al",
                 "items": [
                     {
-                        "name": "SKIN-BATMAN-VPX-FHD-By-Muaath",
+                        "name": "lSKIN-BATMAN-VPX-FHD-By-Muaath",
                         "version": "1.0",
-                        "description": "All Skin",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-BATMAN-VPX-FHD-By-Muaath.ipk",
+                        "description": "Al Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Al/lSKIN-BATMAN-VPX-FHD-By-Muaath.ipk",
                         "image": ""
-                    },
+                    }
+                ]
+            },
+            {
+                "name": "All",
+                "items": [
                     {
                         "name": "SKIN-ICONE-VPX-FHD-By-Muaath",
                         "version": "1.0",
