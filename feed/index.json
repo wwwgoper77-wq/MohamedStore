@@ -408,6 +408,27 @@
                         "image": ""
                     },
                     {
+                        "name": "enigma2-plugin-skins-litehd_1.6_all",
+                        "version": "1.6",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-litehd_1.6_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-madmax-impossible-pli_2.3_all",
+                        "version": "2.3",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-madmax-impossible-pli_2.3_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "enigma2-plugin-skins-madmax-impossible_2.4_all",
+                        "version": "2.4",
+                        "description": "All Skin",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-madmax-impossible_2.4_all.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all",
                         "version": "2.0-mod2ha",
                         "description": "All Skin",
