@@ -219,13 +219,6 @@
                 "description": "بلجن صوتيات بايثون 3.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ipa udio pro_1.7.ipk",
                 "image": ""
-            },
-            {
-                "name": "FootOnSat.plugin",
-                "version": "1.0",
-                "description": "بلجن اوقات مباريات بايثون 3.13.12",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
-                "image": ""
             }
         ],
         "skins": [
@@ -565,6 +558,13 @@
                         "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
+                    },
+                    {
+                        "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
+                        "version": "S",
+                        "description": "Egami Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
+                        "image": ""
                     }
                 ]
             },
@@ -604,6 +604,41 @@
                         "version": "By",
                         "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
+                        "version": "system",
+                        "description": "OpenATV Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip",
                         "image": ""
                     }
                 ]
@@ -664,7 +699,50 @@
             },
             {
                 "name": "OpenDroid",
-                "items": []
+                "items": [
+                    {
+                        "name": "opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb",
+                        "version": "system",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc",
+                        "version": "opendroid-8.1.1-SF8008.4K.UHD-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc",
+                        "version": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vusolo4k-20260720_usb",
+                        "version": "opendroid-8.1.1-vusolo4k-20260720",
+                        "description": "OpenDroid Skin",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vuuno4k-20260720_usb",
+                        "version": "opendroid-8.1.1-vuuno4k-20260720",
+                        "description": "OpenDroid Skin",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
+                        "version": "system",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenEight",
@@ -704,6 +782,20 @@
                         "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc",
+                        "version": "images.py3",
+                        "description": "OpenPLi Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb",
+                        "version": "OpenPLi-wrynose-novaler4kpro-backup-20260812",
+                        "description": "OpenPLi Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip",
+                        "image": ""
                     }
                 ]
             },
@@ -717,11 +809,48 @@
             },
             {
                 "name": "Pure2",
-                "items": []
+                "items": [
+                    {
+                        "name": "vuzero4k-PurE2-7.6-20260217_usb",
+                        "version": "vuzero4k-PurE2-7.6-20260217",
+                        "description": "Pure2 Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "VTI",
-                "items": []
+                "items": [
+                    {
+                        "name": "VTi_15-0-02_vuduo4kse_202212231255_usb",
+                        "version": "202212231255",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4kse_202212231255_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "VTi_15-0-02_vuduo4k_202212231257_usb",
+                        "version": "202212231257",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4k_202212231257_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "VTi_15-0-02_vuuno4kse_202212231259_usb",
+                        "version": "202212231259",
+                        "description": "VTI Skin",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuuno4kse_202212231259_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "VTi_15-0-02_vuzero4k_202212231301_usb",
+                        "version": "202212231301",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuzero4k_202212231301_usb.zip",
+                        "image": ""
+                    }
+                ]
             }
         ],
         "tools": [
@@ -914,6 +1043,20 @@
                         "image": ""
                     },
                     {
+                        "name": "opendroid-8.1.1-vusolo4k-20260720_usb",
+                        "version": "opendroid-8.1.1-vusolo4k-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "opendroid-8.1.1-vuuno4k-20260720_usb",
+                        "version": "opendroid-8.1.1-vuuno4k-20260720",
+                        "description": "OpenDroid Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
                         "version": "system",
                         "description": "OpenDroid Image",
@@ -991,6 +1134,13 @@
                         "image": ""
                     },
                     {
+                        "name": "VTi_15-0-02_vuuno4kse_202212231259_usb",
+                        "version": "202212231259",
+                        "description": "VTI Image",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuuno4kse_202212231259_usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "VTi_15-0-02_vuzero4k_202212231301_usb",
                         "version": "202212231301",
                         "description": "VTI Image",
@@ -1006,55 +1156,6 @@
                 "version": "1.0",
                 "description": "بيكونات نيل سات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon 7.ow.zip",
-                "image": ""
-            },
-            {
-                "name": "picon-13E",
-                "version": "1.0",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon-13E.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_16.0E",
-                "version": "picon",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_26",
-                "version": "picon",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_39E",
-                "version": "picon",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_39E.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_8.0W",
-                "version": "picon",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_8.0W.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_AL.part1",
-                "version": "picon",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part1.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_AL.part2",
-                "version": "picon",
-                "description": "Picons Package",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part2.zip",
                 "image": ""
             }
         ],
@@ -1416,6 +1517,13 @@
                 "version": "v-1.2",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb",
+                "version": "OpenPLi-wrynose-novaler4kpro-backup-20260812",
+                "description": "OpenPLi Image",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip",
                 "image": ""
             }
         ]
