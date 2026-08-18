@@ -2,7 +2,6 @@ import os
 import json
 import re
 import urllib.request
-import urllib.error
 
 GITHUB_USER = "wwwgoper77-wq"
 REPO_NAME = "MohamedStore"
@@ -23,7 +22,7 @@ data = {
 }
 
 # -------------------------------------------------
-# 1. حفظ واسترجاع الأوصاف القديمة
+# 1. حفظ الأوصاف القديمة
 # -------------------------------------------------
 old_descriptions = {}
 try:
@@ -32,21 +31,17 @@ try:
             old = json.load(f)
 
         for cat, items in old.get("categories", {}).items():
-            if cat in ["skins", "system_images"]:
-                for folder in items:
-                    if isinstance(folder, dict) and "items" in folder:
-                        for it in folder.get("items", []):
+            if isinstance(items, list):
+                for el in items:
+                    if isinstance(el, dict) and "items" in el:
+                        for it in el.get("items", []):
                             if it.get("name") and it.get("description"):
                                 old_descriptions[it["name"]] = it["description"]
-                    elif isinstance(folder, dict):
-                        if folder.get("name") and folder.get("description"):
-                            old_descriptions[folder["name"]] = folder["description"]
-            else:
-                for it in items:
-                    if it.get("name") and it.get("description"):
-                        old_descriptions[it["name"]] = it["description"]
-except Exception as e:
-    print("Notice: No previous descriptions loaded:", e)
+                    elif isinstance(el, dict):
+                        if el.get("name") and el.get("description"):
+                            old_descriptions[el["name"]] = el["description"]
+except Exception:
+    pass
 
 
 def image_url(prefix):
@@ -72,18 +67,17 @@ def clean_filename(filename):
 
 
 def normalize_text(text):
-    """توحيد النص لإلغاء الفروق بين الحروف الكبيرة والصغيرة والنقاط والشرطات"""
-    return re.sub(r'[^a-z0-9]', '', text.lower())
+    return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
 
 # -------------------------------------------------
-# 2. جلب جميع ملفات Releases من GitHub API مع دعم Pagination & Token
+# 2. جلب جميع ملفات Releases كاملة بدون نقصان
 # -------------------------------------------------
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
 
 headers = {
-    "User-Agent": "MohamedStore-Feed-Generator",
+    "User-Agent": "MohamedStore-Feed",
     "Accept": "application/vnd.github+json"
 }
 if github_token:
@@ -113,240 +107,174 @@ while True:
             break
         page += 1
     except Exception as e:
-        print(f"GitHub Releases Fetch Notice on page {page}:", e)
+        print("Releases Fetch Status:", e)
         break
 
-print(f"✅ Total Release Assets loaded: {len(release_assets_pool)}")
+print(f"✅ Loaded {len(release_assets_pool)} files from Releases.")
 
 
 # -------------------------------------------------
-# 3. معالجة الأقسام ذات الحافظات الفرعية (System Images & Skins)
+# 3. معالجة الأقسام ذات المجلدات (system_images و skins)
 # -------------------------------------------------
-def process_nested_category(cat_key, default_label):
+def process_nested(cat_key, default_label):
     folders_map = {}
 
-    # أولاً: قراءة المجلدات الحقيقية في المستودع (بما فيها الفارغة)
+    # قراءة كل المجلدات الموجودة في المستودع
     if os.path.isdir(cat_key):
         for folder in sorted(os.listdir(cat_key)):
-            folder_path = os.path.join(cat_key, folder)
-            if not os.path.isdir(folder_path):
+            f_path = os.path.join(cat_key, folder)
+            if not os.path.isdir(f_path):
                 continue
 
-            folder_norm = normalize_text(folder)
-            display_name = "All" if folder_norm == "all" else folder
+            norm_key = normalize_text(folder)
+            display_name = "All" if norm_key == "all" else folder
 
-            if folder_norm not in folders_map:
-                folders_map[folder_norm] = {
+            if norm_key not in folders_map:
+                folders_map[norm_key] = {
                     "display_name": display_name,
                     "items": [],
-                    "seen_files": set()
+                    "seen": set()
                 }
 
-            # قراءة الملفات المحلية إن وجدت
-            for filename in sorted(os.listdir(folder_path)):
-                if not filename.endswith(EXTENSIONS):
+            # جلب كل الملفات المحلية في المجلد
+            for fn in sorted(os.listdir(f_path)):
+                if not fn.endswith(EXTENSIONS):
                     continue
-                if filename not in folders_map[folder_norm]["seen_files"]:
-                    folders_map[folder_norm]["seen_files"].add(filename)
-                    clean = clean_filename(filename)
-                    version = clean.split("_")[-2] if "_" in clean else "1.0"
+                folders_map[norm_key]["seen"].add(fn)
+                clean = clean_filename(fn)
+                ver = clean.split("_")[-2] if "_" in clean else "1.0"
 
-                    file_url = f"{BASE_URL}/{cat_key}/{folder}/{filename}"
-                    for asset in release_assets_pool:
-                        if asset["filename"] == filename:
-                            file_url = asset["url"]
-                            break
+                file_url = f"{BASE_URL}/{cat_key}/{folder}/{fn}"
+                for asset in release_assets_pool:
+                    if asset["filename"] == fn:
+                        file_url = asset["url"]
+                        break
 
-                    folders_map[folder_norm]["items"].append({
-                        "name": clean,
-                        "version": version,
-                        "description": old_descriptions.get(clean, f"{display_name} {default_label}"),
-                        "file": file_url,
-                        "image": image_url(clean.split("_")[0]) or image_url(display_name) or image_url(cat_key)
-                    })
+                folders_map[norm_key]["items"].append({
+                    "name": clean,
+                    "version": ver,
+                    "description": old_descriptions.get(clean, f"{display_name} {default_label}"),
+                    "file": file_url,
+                    "image": image_url(clean.split("_")[0]) or image_url(display_name) or image_url(cat_key)
+                })
 
-    # ثانياً: فحص وتوزيع ملفات Releases على الحافظات
+    # ربط ملفات الـ Releases بالمجلد الذي يطابق اسمها فوراً (بدون شروط أجهزة)
     for asset in release_assets_pool:
-        fname = asset["filename"]
-        fname_norm = normalize_text(fname)
+        fn = asset["filename"]
+        fn_norm = normalize_text(fn)
 
-        is_this_cat = False
-        if cat_key == "system_images":
-            if any(k in fname_norm for k in [
-                "systemimage", "systemimages", "openpli", "openatv", "openbh", "blackhole",
-                "egami", "pure2", "openspa", "openvix", "octagon", "vuplus", "vuzero", "vuduo",
-                "sf8008", "multibox", "py3", "emmc", "mmc", "recovery", "rootfs", "kernel"
-            ]):
-                # استبعاد البلجنات والسكينات
-                if not any(k in fname_norm for k in ["plugin", "skin", "picon", "channel", "ncam", "oscam"]):
-                    is_this_cat = True
-
-        elif cat_key == "skins":
-            if "skin" in fname_norm:
-                is_this_cat = True
-
-        if not is_this_cat:
-            continue
-
-        # مطابقة اسم الحافظة
         matched_folder = None
-        for f_norm, f_data in folders_map.items():
-            if f_norm != "all" and f_norm in fname_norm:
-                matched_folder = f_norm
+
+        # 1. إذا كان اسم المجلد موجوداً في اسم الملف
+        for norm_k in folders_map.keys():
+            if norm_k != "all" and norm_k in fn_norm:
+                matched_folder = norm_k
                 break
 
-        # مطابقة خاصة لصور النظام المشهورة إن لم يكن المجلد موجوداً بعد
-        if not matched_folder and cat_key == "system_images":
-            if "openpli" in fname_norm or "open.pli" in fname.lower():
-                matched_folder = "openpli"
-                if matched_folder not in folders_map:
-                    folders_map[matched_folder] = {"display_name": "OpenPLi", "items": [], "seen_files": set()}
-            elif "openatv" in fname_norm or "atv" in fname_norm:
-                matched_folder = "openatv"
-                if matched_folder not in folders_map:
-                    folders_map[matched_folder] = {"display_name": "OpenATV", "items": [], "seen_files": set()}
-            elif "openbh" in fname_norm or "blackhole" in fname_norm:
-                matched_folder = "openbh"
-                if matched_folder not in folders_map:
-                    folders_map[matched_folder] = {"display_name": "OpenBH", "items": [], "seen_files": set()}
-            elif "egami" in fname_norm:
-                matched_folder = "egami"
-                if matched_folder not in folders_map:
-                    folders_map[matched_folder] = {"display_name": "EGAMI", "items": [], "seen_files": set()}
-
+        # 2. إذا لم يطابق مجلداً فرعياً، وكان الملف ينتمي لهذا القسم
         if not matched_folder:
-            if "all" in folders_map:
-                matched_folder = "all"
-            else:
-                matched_folder = "all"
-                if matched_folder not in folders_map:
-                    folders_map[matched_folder] = {"display_name": "All", "items": [], "seen_files": set()}
+            if cat_key == "system_images" and any(k in fn_norm for k in ["image", "img", "py3", "emmc", "mmc", "usb", "recovery", "rootfs"]):
+                matched_folder = "all" if "all" in folders_map else None
+            elif cat_key == "skins" and "skin" in fn_norm:
+                matched_folder = "all" if "all" in folders_map else None
 
-        if fname not in folders_map[matched_folder]["seen_files"]:
-            folders_map[matched_folder]["seen_files"].add(fname)
-            clean = clean_filename(fname)
-            version = clean.split("_")[-2] if "_" in clean else "1.0"
-            display_name = folders_map[matched_folder]["display_name"]
+        # وضع الملف في المجلد المطابق
+        if matched_folder and matched_folder in folders_map:
+            if fn not in folders_map[matched_folder]["seen"]:
+                folders_map[matched_folder]["seen"].add(fn)
+                clean = clean_filename(fn)
+                ver = clean.split("_")[-2] if "_" in clean else "1.0"
+                disp = folders_map[matched_folder]["display_name"]
 
-            folders_map[matched_folder]["items"].append({
-                "name": clean,
-                "version": version,
-                "description": old_descriptions.get(clean, f"{display_name} {default_label}"),
-                "file": asset["url"],
-                "image": image_url(clean.split("_")[0]) or image_url(display_name) or image_url(cat_key)
-            })
+                folders_map[matched_folder]["items"].append({
+                    "name": clean,
+                    "version": ver,
+                    "description": old_descriptions.get(clean, f"{disp} {default_label}"),
+                    "file": asset["url"],
+                    "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url(cat_key)
+                })
 
-    # حفظ الحافظات بما فيها الفارغة
-    for f_norm, f_data in sorted(folders_map.items()):
+    # حفظ كافة المجلدات بما فيها الفارغة
+    for norm_k, f_data in sorted(folders_map.items()):
         data["categories"][cat_key].append({
             "name": f_data["display_name"],
             "items": f_data["items"]
         })
 
 
-# تشغيل الأقسام المزدوجة
-process_nested_category("system_images", "Image")
-process_nested_category("skins", "Skin")
+process_nested("system_images", "Image")
+process_nested("skins", "Skin")
 
 
 # -------------------------------------------------
-# 4. معالجة الأقسام المفردة (Plugins, Tools, Picons, Channels, Novaler)
+# 4. معالجة الأقسام العادية (Plugins, Tools, Picons, Channels, Novaler)
 # -------------------------------------------------
-def process_flat_category(cat_key, keywords, exclude_keywords):
-    items_list = []
-    seen_files = set()
+def process_flat(cat_key):
+    items = []
+    seen = set()
 
-    # 1. قراءة الملفات المحلية
+    # 1. الملفات من داخل المجلد المحلي
     if os.path.isdir(cat_key):
-        for filename in sorted(os.listdir(cat_key)):
-            if not filename.endswith(EXTENSIONS):
+        for fn in sorted(os.listdir(cat_key)):
+            if not fn.endswith(EXTENSIONS):
                 continue
-            seen_files.add(filename)
-            clean = clean_filename(filename)
-            version = clean.split("_")[-2] if "_" in clean else "1.0"
+            seen.add(fn)
+            clean = clean_filename(fn)
+            ver = clean.split("_")[-2] if "_" in clean else "1.0"
 
-            file_url = f"{BASE_URL}/{cat_key}/{filename}"
+            file_url = f"{BASE_URL}/{cat_key}/{fn}"
             for asset in release_assets_pool:
-                if asset["filename"] == filename:
+                if asset["filename"] == fn:
                     file_url = asset["url"]
                     break
 
-            items_list.append({
+            items.append({
                 "name": clean,
-                "version": version,
+                "version": ver,
                 "description": old_descriptions.get(clean, f"{cat_key.capitalize()} Package"),
                 "file": file_url,
                 "image": image_url(clean.split("_")[0]) or image_url(cat_key)
             })
 
-    # 2. سحب ملفات Releases الخاصة بهذا القسم بدقة
+    # 2. ملفات الـ Releases التي تحتوي على اسم القسم
+    cat_norm = normalize_text(cat_key)
     for asset in release_assets_pool:
-        fname = asset["filename"]
-        fname_norm = normalize_text(fname)
+        fn = asset["filename"]
+        fn_norm = normalize_text(fn)
 
-        if fname in seen_files:
+        if fn in seen:
             continue
 
-        # استبعاد الكلمات التابعة لأقسام أخرى
-        if any(ex in fname_norm for ex in exclude_keywords):
-            continue
+        # إذا كان اسم القسم موجوداً في اسم الملف
+        if cat_norm in fn_norm:
+            seen.add(fn)
+            clean = clean_filename(fn)
+            ver = clean.split("_")[-2] if "_" in clean else "1.0"
 
-        # مطابقة كلمات هذا القسم
-        if any(k in fname_norm for k in keywords):
-            seen_files.add(fname)
-            clean = clean_filename(fname)
-            version = clean.split("_")[-2] if "_" in clean else "1.0"
-
-            items_list.append({
+            items.append({
                 "name": clean,
-                "version": version,
+                "version": ver,
                 "description": old_descriptions.get(clean, f"{cat_key.capitalize()} Package"),
                 "file": asset["url"],
                 "image": image_url(clean.split("_")[0]) or image_url(cat_key)
             })
 
-    data["categories"][cat_key] = items_list
+    data["categories"][cat_key] = items
 
 
-# تصنيف دقيق ومنظم للأقسام الفردية
-process_flat_category(
-    "plugins",
-    ["plugin", "extension", "panel", "weather", "tmdb", "subs", "e2player", "multiepg", "ipa", "audi"],
-    ["skin", "systemimage", "openpli", "openatv", "openbh", "egami", "picon", "satellites", "ncam", "oscam"]
-)
-
-process_flat_category(
-    "tools",
-    ["tool", "ncam", "oscam", "softcam", "emu", "script", "tweak", "extnumber", "powershell"],
-    ["skin", "systemimage", "openpli", "openatv", "picon", "satellites"]
-)
-
-process_flat_category(
-    "picons",
-    ["picon", "logos", "snp", "srp", "zzpicon"],
-    ["skin", "systemimage", "plugin"]
-)
-
-process_flat_category(
-    "channels",
-    ["channel", "setting", "bouquet", "satellites", "fav", "m3u"],
-    ["skin", "systemimage", "plugin", "picon"]
-)
-
-process_flat_category(
-    "novaler",
-    ["novaler", "noflayer"],
-    ["skin", "systemimage", "openpli", "openatv", "openbh", "egami"]
-)
+# معالجة كل الأقسام فوراً
+process_flat("plugins")
+process_flat("tools")
+process_flat("picons")
+process_flat("channels")
+process_flat("novaler")
 
 
 # -------------------------------------------------
 # 5. حفظ الفهرس في feed/index.json
 # -------------------------------------------------
 os.makedirs("feed", exist_ok=True)
-output_path = "feed/index.json"
-
-with open(output_path, "w", encoding="utf-8") as f:
+with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print(f"🎉 Successfully generated {output_path} with all Release assets, preserved folders & descriptions!")
+print("🎉 Feed index generated successfully without any restrictions or hardcoded device checks!")
