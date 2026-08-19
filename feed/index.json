@@ -13,91 +13,91 @@
             {
                 "name": "ArabicSavior",
                 "version": "1.0",
-                "description": "إصلاح الخط العربي",
+                "description": "إصلاح الخط العربي بايثون 3.13.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
                 "image": ""
             },
             {
                 "name": "E2BissKeyEditor",
                 "version": "1.0",
-                "description": "إدخال وتعديل الشفرات",
+                "description": "بايثون 3.13.12 إدخال وتعديل الشفرات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2BissKeyEditor.zip",
                 "image": ""
             },
             {
                 "name": "EPGGrabber",
                 "version": "1.0",
-                "description": "جلب وتحديث دليل البرامج الإلكتروني",
+                "description": "بايثون 3.13.12 جلب وتحديث دليل البرامج الإلكتروني",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGGrabber.zip",
                 "image": ""
             },
             {
                 "name": "EPGTranslator",
                 "version": "1.0",
-                "description": "ترجمة دليل البرامج الإلكتروني",
+                "description": "بايثون 3.13.12 ترجمة دليل البرامج الإلكتروني",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGTranslator.zip",
                 "image": ""
             },
             {
                 "name": "FuryBiss",
                 "version": "1.0",
-                "description": "Biss هو بلاجن مخصص لجلب وتحديث شفرات ال",
+                "description": "بايثون 3.13.12 Biss هو بلاجن مخصص لجلب وتحديث شفرات ال",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FuryBiss.zip",
                 "image": ""
             },
             {
                 "name": "IPStreamer",
                 "version": "1.0",
-                "description": "IPStreamer هو بلاجن مخصص لبث وتشغيل شبكات ال",
+                "description": "بايثون 3.13.12 IPStreamer هو بلاجن مخصص لبث وتشغيل شبكات ال",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPStreamer.zip",
                 "image": ""
             },
             {
                 "name": "InternetSpeed",
                 "version": "1.0",
-                "description": "سرعة اتصال الانترنيت",
+                "description": "بايثون 3.13.12 سرعة اتصال الانترنيت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/InternetSpeed.zip",
                 "image": ""
             },
             {
                 "name": "MC oscam",
                 "version": "1.0",
-                "description": "بلجن خاص بنا تحكم بين السيرفر المجاني والمدفوع",
+                "description": "بايثون 3.13.12 بلجن خاص بنا تحكم بين السيرفر المجاني والمدفوع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
             {
                 "name": "MC stream",
                 "version": "1.0",
-                "description": "بلجن خاص بنا تشغيل ملفات IPTV",
+                "description": "بايثون 3.13.12 بلجن خاص بنا تشغيل ملفات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
             {
                 "name": "MixAudio",
                 "version": "1.0",
-                "description": "بلجن صوتيات",
+                "description": "3.13.12 بلجن صوتيات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MixAudio.sh",
                 "image": ""
             },
             {
                 "name": "MyTranslator",
                 "version": "1.0",
-                "description": "ترجمة النصوص أونلاين",
+                "description": " بايثون 3 ترجمة النصوص أونلاين",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
                 "image": ""
             },
             {
                 "name": "RaedQuickSignal",
                 "version": "1.0",
-                "description": "هو بلاجن مخصص لعرض إشارة البث",
+                "description": "بايثون 3.13.12 هو بلاجن مخصص لعرض إشارة البث",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
                 "image": ""
             },
             {
                 "name": "SubsSupport",
                 "version": "1.0",
-                "description": "بلجن ترجمة",
+                "description": "بايثون 3.13.12 بلجن جلب ملفات ترجمة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SubsSupport.zip",
                 "image": ""
             },
