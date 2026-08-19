@@ -6,224 +6,224 @@
             {
                 "name": "AJPanel",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "مدير ملفات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/AJPanel.sh",
                 "image": ""
             },
             {
                 "name": "ArabicSavior",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "إصلاح الخط العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
                 "image": ""
             },
             {
                 "name": "E2BissKeyEditor",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "إدخال وتعديل الشفرات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2BissKeyEditor.zip",
                 "image": ""
             },
             {
                 "name": "EPGGrabber",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "جلب وتحديث دليل البرامج الإلكتروني",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGGrabber.zip",
                 "image": ""
             },
             {
                 "name": "EPGTranslator",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "ترجمة دليل البرامج الإلكتروني",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGTranslator.zip",
                 "image": ""
             },
             {
                 "name": "FuryBiss",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "Biss هو بلاجن مخصص لجلب وتحديث شفرات ال",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FuryBiss.zip",
                 "image": ""
             },
             {
                 "name": "IPStreamer",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "IPStreamer هو بلاجن مخصص لبث وتشغيل شبكات ال",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPStreamer.zip",
                 "image": ""
             },
             {
                 "name": "InternetSpeed",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "سرعة اتصال الانترنيت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/InternetSpeed.zip",
                 "image": ""
             },
             {
                 "name": "MC oscam",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بلجن خاص بنا تحكم بين السيرفر المجاني والمدفوع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
             {
                 "name": "MC stream",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بلجن خاص بنا تشغيل ملفات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
             {
                 "name": "MixAudio",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بلجن صوتيات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MixAudio.sh",
                 "image": ""
             },
             {
                 "name": "MyTranslator",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "ترجمة النصوص أونلاين",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
                 "image": ""
             },
             {
                 "name": "RaedQuickSignal",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "هو بلاجن مخصص لعرض إشارة البث",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
                 "image": ""
             },
             {
                 "name": "SubsSupport",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بلجن ترجمة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SubsSupport.zip",
                 "image": ""
             },
             {
                 "name": "TMBD",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "هو بلاجن مخصص لعرض معلومات وتفاصيل الأفلام والمسلسلات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TMBD.zip",
                 "image": ""
             },
             {
                 "name": "TranslatorProAI",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": " بايثون 3.13.12 الترجمة الفورية المتقدمة ذكاءً اصطناعياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TranslatorProAI.zip",
                 "image": ""
             },
             {
                 "name": "YouTube",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بلجن اليوتيوب بايثون 3.13.12",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/YouTube.zip",
                 "image": ""
             },
             {
                 "name": "Zoom",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بايثون 3.13.12 بلجن تثبيت ايمو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
                 "version": "py2.7",
-                "description": "Plugin Extension",
+                "description": "بلجن صوتيات يايثون 2 ",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
                 "version": "py3.11",
-                "description": "Plugin Extension",
+                "description": "py3.11 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1",
                 "version": "py3.13",
-                "description": "Plugin Extension",
+                "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
                 "version": "py3.14",
-                "description": "Plugin Extension",
+                "description": "py3.14 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
                 "version": "py3.9",
-                "description": "Plugin Extension",
+                "description": "py3.9 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1",
                 "version": "py3.12",
-                "description": "Plugin Extension",
+                "description": "py3.12 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
                 "version": "py3.13",
-                "description": "Plugin Extension",
+                "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
                 "version": "py3.13",
-                "description": "Plugin Extension",
+                "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
                 "version": "py3.14",
-                "description": "Plugin Extension",
+                "description": "py3.14 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-tivimatee2_1.0.01_all",
                 "version": "1.0.01",
-                "description": "Plugin Extension",
+                "description": "بلجن تشغيل ملفات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-extensions-uninstaller_1.0_all",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": "بايثون 3.13.12 حذف البلجنات والسكن وغيرها",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-uninstaller_1.0_all.ipk",
                 "image": ""
             },
             {
                 "name": "enigma2-plugin-timeshift-delay-egami_3.0_all",
                 "version": "3.0",
-                "description": "Plugin Extension",
+                "description": "عداد ثواني تايم شفت صورة ايجامي فقط زرAUDIO",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             },
             {
                 "name": "ipa udio pro_1.7",
                 "version": "ipa udio pro",
-                "description": "Plugin Extension",
+                "description": "بلجن صوتيات بايثون 3",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ipa udio pro_1.7.ipk",
                 "image": ""
             },
             {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
-                "description": "Plugin Extension",
+                "description": " بايثون 3.13.12 عرض جدول المباريات اليومية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             }
