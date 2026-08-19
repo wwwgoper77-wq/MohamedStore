@@ -130,84 +130,84 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
+                "name": "ipaudiopro_1.7",
                 "version": "py2.7",
                 "description": "بلجن صوتيات يايثون 2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
+                "name": "ipaudiopro_1.7",
                 "version": "py3.11",
                 "description": "py3.11 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1",
+                "name": ipaudiopro_1.7"",
                 "version": "py3.13",
                 "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
+                "name": "ipaudiopro_1.7",
                 "version": "py3.14",
                 "description": "py3.14 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
+                "name": "ipaudiopro_1.7",
                 "version": "py3.9",
                 "description": "py3.9 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1",
+                "name": "ipaudiopro_1.9",
                 "version": "py3.12",
                 "description": "py3.12 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
+                "name": "ipaudiopro_1.9",
                 "version": "py3.13",
                 "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
+                "name": "ipaudiopro_1.9",
                 "version": "py3.13",
                 "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
+                "name": "ipaudiopro_1.9",
                 "version": "py3.14",
                 "description": "py3.14 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-tivimatee2_1.0.01_all",
+                "name": tivimatee2"",
                 "version": "1.0.01",
                 "description": "بلجن تشغيل ملفات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-uninstaller_1.0_all",
+                "name": "uninstalle",
                 "version": "1.0",
                 "description": "بايثون 3.13.12 حذف البلجنات والسكن وغيرها",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-uninstaller_1.0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-timeshift-delay-egami_3.0_all",
+                "name": "timeshift-delay",
                 "version": "3.0",
                 "description": "عداد ثواني تايم شفت صورة ايجامي فقط زرAUDIO",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
@@ -221,7 +221,7 @@
                 "image": ""
             },
             {
-                "name": "FootOnSat.plugin",
+                "name": "FootOnSat",
                 "version": "1.0",
                 "description": "بايثون 3.13.12 عرض جدول المباريات اليومية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
