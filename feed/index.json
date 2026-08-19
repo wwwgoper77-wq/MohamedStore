@@ -792,6 +792,27 @@
                         "description": "Egami Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "egami-11.0-r21-novaler4k-20260519_multi",
+                        "version": "egami-11.0-r21-novaler4k-20260519",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4k-20260519_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "egami-11.0-r21-novaler4kpro-20260519_multi",
+                        "version": "egami-11.0-r21-novaler4kpro-20260519",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4kpro-20260519_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "egami-11.0-r21-novaler4kse-20260519_multi",
+                        "version": "egami-11.0-r21-novaler4kse-20260519",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4kse-20260519_multi.zip",
+                        "image": ""
                     }
                 ]
             },
