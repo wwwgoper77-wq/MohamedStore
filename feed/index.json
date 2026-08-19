@@ -801,13 +801,6 @@
                 "description": "ضبط خوادم واعادة تشغيل تعريفات الشبكة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_network.sh",
                 "image": ""
-            },
-            {
-                "name": "تحديث ملف الأقمار",
-                "version": "update",
-                "description": "جلب أحدث ملف ترددات وأقمار رسمياً إلى الرسيفر",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_sat.sh",
-                "image": ""
             }
         ],
         "system_images": [
@@ -1032,6 +1025,13 @@
                         "version": "openhdf-7.2-sf3038-11-20230415",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf3038-11-20230415_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openhdf-7.2-gbtrio4kpro-13-20230502_mmc",
+                        "version": "openhdf-7.2-gbtrio4kpro-13-20230502",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip",
                         "image": ""
                     }
                 ]
