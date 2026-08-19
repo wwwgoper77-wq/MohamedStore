@@ -144,7 +144,7 @@
                 "image": ""
             },
             {
-                "name": ipaudiopro_1.7"",
+                "name": "ipaudiopro_1.7",
                 "version": "py3.13",
                 "description": "py3.13 بلجن صوتيات بايثون",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1.ipk",
@@ -193,7 +193,7 @@
                 "image": ""
             },
             {
-                "name": tivimatee2"",
+                "name": "tivimatee2",
                 "version": "1.0.01",
                 "description": "بلجن تشغيل ملفات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk",
