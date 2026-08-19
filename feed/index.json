@@ -1191,6 +1191,13 @@
                 "image": ""
             },
             {
+                "name": "picon",
+                "version": "1.0",
+                "description": "e",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon.zip",
+                "image": ""
+            },
+            {
                 "name": "picon_16.0E",
                 "version": "picon",
                 "description": "بيكونات القمر يوتلسات 16",
@@ -1219,17 +1226,10 @@
                 "image": ""
             },
             {
-                "name": "picon_AL.part1",
+                "name": "picon_ALL",
                 "version": "picon",
-                "description": "بيكونت قمر متحرك كامل",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part1.zip",
-                "image": ""
-            },
-            {
-                "name": "picon_AL.part2",
-                "version": "picon",
-                "description": "بيكونات قمر متحرك كامل",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_AL.part2.zip",
+                "description": "e",
+                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_ALL.zip",
                 "image": ""
             }
         ],
