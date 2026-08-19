@@ -733,6 +733,13 @@
                 "image": ""
             },
             {
+                "name": "clean_ram",
+                "version": "clean",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_ram.sh",
+                "image": ""
+            },
+            {
                 "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
                 "version": "V10.0-r0",
                 "description": "Tool Package",
@@ -812,6 +819,13 @@
                         "version": "egami-11.0-r21-novaler4kse-20260519",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4kse-20260519_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "egami-11.0-r21-zgemmah17combo-20260519_multi",
+                        "version": "egami-11.0-r21-zgemmah17combo-20260519",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-zgemmah17combo-20260519_multi.zip",
                         "image": ""
                     }
                 ]
@@ -963,7 +977,43 @@
             },
             {
                 "name": "OpenHDF",
-                "items": []
+                "items": [
+                    {
+                        "name": "openhdf-7.2-sf3038-11-20230415_usb",
+                        "version": "openhdf-7.2-sf3038-11-20230415",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf3038-11-20230415_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openhdf-7.2-sf4008-14-20230506_usb",
+                        "version": "openhdf-7.2-sf4008-14-20230506",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf4008-14-20230506_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openhdf-7.5-sf8008-72-20260528_mmc",
+                        "version": "openhdf-7.5-sf8008-72-20260528",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sf8008-72-20260528_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openhdf-7.5-sx88v2-72-20260528_mmc",
+                        "version": "openhdf-7.5-sx88v2-72-20260528",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx88v2-72-20260528_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openhdf-7.5-sx988-72-20260528_mmc",
+                        "version": "openhdf-7.5-sx988-72-20260528",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx988-72-20260528_mmc.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenPLi",
