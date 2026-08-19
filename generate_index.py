@@ -22,27 +22,41 @@ data = {
 }
 
 # -------------------------------------------------
-# 1. حفظ واسترجاع الأوصاف القديمة المكتوبة باللغة العربية
+# 1. حفظ واسترجاع الأوصاف والأسماء المكتوبة باللغة العربية
 # -------------------------------------------------
 old_descriptions = {}
+old_names = {}
+
 try:
     if os.path.exists("feed/index.json"):
         with open("feed/index.json", "r", encoding="utf-8") as f:
             old = json.load(f)
+
+        def save_metadata(item):
+            if not isinstance(item, dict):
+                return
+            fn = item.get("file", "").split("/")[-1]
+            c_name = item.get("name", "")
+            desc = item.get("description", "")
+
+            if desc:
+                if c_name: old_descriptions[c_name] = desc
+                if fn: old_descriptions[fn] = desc
+
+            if c_name and fn:
+                old_names[fn] = c_name
+                old_names[c_name] = c_name
 
         for cat, items in old.get("categories", {}).items():
             if isinstance(items, list):
                 for el in items:
                     if isinstance(el, dict) and "items" in el:
                         for it in el.get("items", []):
-                            if it.get("name") and it.get("description"):
-                                old_descriptions[it["name"]] = it["description"]
-                                old_descriptions[it.get("file", "").split("/")[-1]] = it["description"]
+                            save_metadata(it)
                     elif isinstance(el, dict):
-                        if el.get("name") and el.get("description"):
-                            old_descriptions[el["name"]] = el["description"]
-                            old_descriptions[el.get("file", "").split("/")[-1]] = el["description"]
-    print(f"✅ Loaded {len(old_descriptions)} existing descriptions.")
+                        save_metadata(el)
+
+    print(f"✅ Loaded {len(old_descriptions)} descriptions & {len(old_names)} custom names.")
 except Exception as e:
     print("Notice loading previous descriptions:", e)
 
@@ -70,6 +84,15 @@ def clean_filename(filename):
 
 def normalize_text(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
+
+
+def get_best_name(filename, default_clean):
+    """دالة ذكية لاختيار الاسم العربي وعدم استبداله بالإنجليزي"""
+    if filename in old_names and old_names[filename].strip():
+        return old_names[filename].strip()
+    if default_clean in old_names and old_names[default_clean].strip():
+        return old_names[default_clean].strip()
+    return default_clean
 
 
 def get_best_description(clean_name, filename, release_body="", default_desc=""):
@@ -161,10 +184,11 @@ if os.path.isdir("system_images"):
                     body_desc = asset.get("body", "")
                     break
 
+            final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, body_desc, f"{disp} Image")
 
             sys_folders[norm]["items"].append({
-                "name": clean,
+                "name": final_name,
                 "version": ver,
                 "description": final_desc,
                 "file": f_url,
@@ -200,10 +224,11 @@ for asset in release_assets_pool:
             clean = clean_filename(fn)
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp = sys_folders[matched]["display_name"]
+            final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Image")
 
             sys_folders[matched]["items"].append({
-                "name": clean,
+                "name": final_name,
                 "version": ver,
                 "description": final_desc,
                 "file": asset["url"],
@@ -245,10 +270,11 @@ if os.path.isdir("skins"):
                     body_desc = asset.get("body", "")
                     break
 
+            final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, body_desc, f"{disp} Skin")
 
             skin_folders[norm]["items"].append({
-                "name": clean,
+                "name": final_name,
                 "version": ver,
                 "description": final_desc,
                 "file": f_url,
@@ -278,10 +304,11 @@ for asset in release_assets_pool:
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             disp = skin_folders[matched]["display_name"]
+            final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Skin")
 
             skin_folders[matched]["items"].append({
-                "name": clean,
+                "name": final_name,
                 "version": ver,
                 "description": final_desc,
                 "file": asset["url"],
@@ -318,10 +345,11 @@ def handle_flat(cat_key, matcher_func, default_desc):
                     body_desc = asset.get("body", "")
                     break
 
+            final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, body_desc, default_desc)
 
             items.append({
-                "name": clean,
+                "name": final_name,
                 "version": ver,
                 "description": final_desc,
                 "file": f_url,
@@ -340,10 +368,11 @@ def handle_flat(cat_key, matcher_func, default_desc):
             clean = clean_filename(fn)
             ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
+            final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, asset.get("body", ""), default_desc)
 
             items.append({
-                "name": clean,
+                "name": final_name,
                 "version": ver,
                 "description": final_desc,
                 "file": asset["url"],
@@ -367,4 +396,4 @@ os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json preserving Arabic descriptions perfectly!")
+print("🎉 Successfully generated feed/index.json preserving Arabic descriptions & names perfectly!")
