@@ -733,8 +733,15 @@
                 "image": ""
             },
             {
-                "name": "تنظيف الذاكرة العشوائية",
-                "version": "صيانة",
+                "name": "clean_crash",
+                "version": "clean",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_crash.sh",
+                "image": ""
+            },
+            {
+                "name": "clean_ram",
+                "version": "clean",
                 "description": "تفريغ الذاكرة المؤقتة وتسريع أداء الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_ram.sh",
                 "image": ""
@@ -786,6 +793,20 @@
                 "version": "11791-emu-801-arm+mips",
                 "description": "Tool Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "fix_network",
+                "version": "fix",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_network.sh",
+                "image": ""
+            },
+            {
+                "name": "update_sat",
+                "version": "update",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_sat.sh",
                 "image": ""
             }
         ],
