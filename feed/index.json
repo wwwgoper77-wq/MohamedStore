@@ -803,9 +803,9 @@
                 "image": ""
             },
             {
-                "name": "satellites-update",
+                "name": "تحديث ملف الأقمار",
                 "version": "1.0",
-                "description": "Tool Package",
+                "description": "تحديث ملف الأقمار والترددات الشامل لجميع الأقمار (نايلسات، عربسات، هوتبيرد وغيرها). يحل مشكلة رسالة الأقمار المفقودة ويحسن عملية البحث عن القنوات. (بتاريخ 19-08-2026).",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/satellites-update.zip",
                 "image": ""
             }
