@@ -1008,6 +1008,41 @@
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vusolo4k_usb.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuultimo4k_usb",
+                        "version": "openvix-6.9.001.release-vuultimo4k",
+                        "description": "system images",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuultimo4k_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuuno4kse_usb",
+                        "version": "openvix-6.9.001.release-vuuno4kse",
+                        "description": "system images",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuuno4kse_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuuno4k_usb",
+                        "version": "openvix-6.9.001.release-vuuno4k",
+                        "description": "system images",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuuno4k_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuzero4k_usb",
+                        "version": "openvix-6.9.001.release-vuzero4k",
+                        "description": "system images",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero4k_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-vuzero_usb",
+                        "version": "openvix-6.9.001.release-vuzero",
+                        "description": "system images",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero_usb.zip",
+                        "image": ""
                     }
                 ]
             },
