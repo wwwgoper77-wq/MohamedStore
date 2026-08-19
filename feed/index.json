@@ -83,7 +83,7 @@
             {
                 "name": "MyTranslator",
                 "version": "1.0",
-                "description": " بايثون 3 ترجمة النصوص أونلاين",
+                "description": "بايثون 3 ترجمة النصوص أونلاين",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
                 "image": ""
             },
@@ -111,7 +111,7 @@
             {
                 "name": "TranslatorProAI",
                 "version": "1.0",
-                "description": " بايثون 3.13.12 الترجمة الفورية المتقدمة ذكاءً اصطناعياً",
+                "description": "بايثون 3.13.12 الترجمة الفورية المتقدمة ذكاءً اصطناعياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TranslatorProAI.zip",
                 "image": ""
             },
@@ -132,7 +132,7 @@
             {
                 "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
                 "version": "py2.7",
-                "description": "بلجن صوتيات يايثون 2 ",
+                "description": "بلجن صوتيات يايثون 2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
                 "image": ""
             },
@@ -223,7 +223,7 @@
             {
                 "name": "FootOnSat.plugin",
                 "version": "1.0",
-                "description": " بايثون 3.13.12 عرض جدول المباريات اليومية",
+                "description": "بايثون 3.13.12 عرض جدول المباريات اليومية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             }
@@ -975,6 +975,48 @@
                 "name": "OpenViX",
                 "items": [
                     {
+                        "name": "openvix-6.7.020.release-sx988_mmc",
+                        "version": "openvix-6.7.020.release-sx988",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.7.020.release-sx988_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-dm900_mmc",
+                        "version": "openvix-6.9.001.release-dm900",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-dm900_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-dm920_mmc",
+                        "version": "openvix-6.9.001.release-dm920",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-dm920_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-sf8008m_mmc",
+                        "version": "openvix-6.9.001.release-sf8008m",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sf8008m_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-sfx6008_multi",
+                        "version": "openvix-6.9.001.release-sfx6008",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sfx6008_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-sx88v2_mmc",
+                        "version": "openvix-6.9.001.release-sx88v2",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sx88v2_mmc.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "openvix-6.9.001.release-vuduo2_usb",
                         "version": "openvix-6.9.001.release-vuduo2",
                         "description": "OpenViX Image",
@@ -1048,15 +1090,7 @@
             },
             {
                 "name": "Pure2",
-                "items": [
-                    {
-                        "name": "vuzero4k-PurE2-7.6-20260217_usb",
-                        "version": "vuzero4k-PurE2-7.6-20260217",
-                        "description": "Pure2 Image",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260217_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "VTI",
