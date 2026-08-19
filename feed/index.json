@@ -1085,6 +1085,20 @@
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero_usb.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-zgemmah17combo_multi",
+                        "version": "openvix-6.9.001.release-zgemmah17combo",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-zgemmah17combo_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openvix-6.9.001.release-zgemmah82h_nand",
+                        "version": "openvix-6.9.001.release-zgemmah82h",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-zgemmah82h_nand.zip",
+                        "image": ""
                     }
                 ]
             },
