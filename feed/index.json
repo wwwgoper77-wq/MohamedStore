@@ -734,7 +734,7 @@
             },
             {
                 "name": "تنظيف الذاكرة العشوائية",
-                "version": "clean",
+                "version": "صيانة",
                 "description": "تفريغ الذاكرة المؤقتة وتسريع أداء الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_ram.sh",
                 "image": ""
