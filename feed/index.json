@@ -733,14 +733,14 @@
                 "image": ""
             },
             {
-                "name": "clean_crash",
+                "name": "تنظيف الذاكرة الداخلية (Clear Crash Logs)",
                 "version": "clean",
-                "description": "Tool Package",
+                "description": "حذف ملفات الكراش القديمة لتوفير المساحة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_crash.sh",
                 "image": ""
             },
             {
-                "name": "clean_ram",
+                "name": "تنظيف الذاكرة العشوائية (RAM Clean)",
                 "version": "clean",
                 "description": "تفريغ الذاكرة المؤقتة وتسريع أداء الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_ram.sh",
@@ -796,16 +796,16 @@
                 "image": ""
             },
             {
-                "name": "fix_network",
+                "name": "إصلاح الاتصال والشبكة",
                 "version": "fix",
-                "description": "Tool Package",
+                "description": "ضبط خوادم واعادة تشغيل تعريفات الشبكة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_network.sh",
                 "image": ""
             },
             {
-                "name": "update_sat",
+                "name": "تحديث ملف الأقمار",
                 "version": "update",
-                "description": "Tool Package",
+                "description": "جلب أحدث ملف ترددات وأقمار رسمياً إلى الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_sat.sh",
                 "image": ""
             }
