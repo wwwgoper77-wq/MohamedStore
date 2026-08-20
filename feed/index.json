@@ -5,7 +5,7 @@
         "plugins": [
             {
                 "name": "AJPanel",
-                "description": "Plugin Extension",
+                "description": "مدير الملفات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/AJPanel.sh",
                 "image": ""
             },
