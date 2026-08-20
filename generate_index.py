@@ -21,13 +21,12 @@ data = {
     }
 }
 
-# -------------------------------------------------
-# 1. استرجاع وحفظ الأوصاف والأسماء العربية من خزنة البيانات الثابتة
-# -------------------------------------------------
 META_STORE_FILE = "feed/metadata_store.json"
+INDEX_FILE = "feed/index.json"
+
 metadata_store = {}
 
-# أولاً: قراءة الخزنة الدائمة إن وجدت
+# 1. قراءة الخزنة الحالية
 if os.path.exists(META_STORE_FILE):
     try:
         with open(META_STORE_FILE, "r", encoding="utf-8") as f:
@@ -35,18 +34,18 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# ثانياً: استخراج أي تعديل جديد كتبته في feed/index.json وحفظه في الخزنة
-if os.path.exists("feed/index.json"):
+# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت في index.json وحفظه فوراً في الخزنة
+if os.path.exists(INDEX_FILE):
     try:
-        with open("feed/index.json", "r", encoding="utf-8") as f:
+        with open(INDEX_FILE, "r", encoding="utf-8") as f:
             old_index = json.load(f)
 
-        def sync_item(item):
+        def sync_user_edits(item):
             if not isinstance(item, dict):
                 return
             fn = item.get("file", "").split("/")[-1]
-            c_name = item.get("name", "")
-            desc = item.get("description", "")
+            c_name = item.get("name", "").strip()
+            desc = item.get("description", "").strip()
             if fn:
                 if fn not in metadata_store:
                     metadata_store[fn] = {}
@@ -60,13 +59,161 @@ if os.path.exists("feed/index.json"):
                 for el in items:
                     if isinstance(el, dict) and "items" in el:
                         for it in el.get("items", []):
-                            sync_item(it)
+                            sync_user_edits(it)
                     elif isinstance(el, dict):
-                        sync_item(el)
+                        sync_user_edits(el)
     except Exception as e:
-        print("Notice loading index.json:", e)
+        print("Notice reading index.json:", e)
 
-print(f"✅ Secure Metadata Store loaded with {len(metadata_store)} items.")
+
+CUSTOM_MAP = {
+    "AJPanel": ("AJPanel", "لوحة تحكم شاملة ومدير ملفات وسكربتات وأدوات متقدمة للانيجما2"),
+    "ArabicSavior": ("Arabic Savior", "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات"),
+    "E2BissKeyEditor": ("E2 Biss Key Editor", "محرر شفرات البيس Biss وتعديلها بسهولة عبر الريموت"),
+    "EPGGrabber": ("EPG Grabber", "جلب وتحميل الدليل الإلكتروني للبرامج EPG للقنوات الفضائية"),
+    "EPGTranslator": ("EPG Translator", "ترجمة نصوص ومعلومات الدليل الإلكتروني EPG إلى العربية فورياً"),
+    "FuryBiss": ("Fury Biss", "جلب وتحديث شفرات البيس للقنوات المشفرة تلقائياً عبر الإنترنت"),
+    "IPStreamer": ("IP Streamer", "بث واستقبال روابط وقنوات البث المباشر عبر الشبكة المنزلية"),
+    "InternetSpeed": ("Internet Speed", "أداة قياس سرعة الإنترنت المباشرة والـ Ping على الرسيفر"),
+    "MC oscam": ("MC Oscam", "أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam"),
+    "MC stream": ("MC Stream", "مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة"),
+    "MixAudio": ("Mix Audio", "خلط ومزامنة القنوات الصوتية مع البث المباشر للتايم شفت"),
+    "MyTranslator": ("My Translator", "ترجمة سريعة للقوائم والأحداث والمحتوى التلفزيوني"),
+    "RaedQuickSignal": ("Raed Quick Signal", "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع"),
+    "SubsSupport": ("Subs Support", "تحميل وتشغيل ملفات الترجمة للأفلام والقنوات التلفزيونية"),
+    "TMBD": ("TMDB", "جلب بوسترات ومعلومات وقصص الأفلام والمسلسلات من قاعدة TMDB"),
+    "TranslatorProAI": ("Translator Pro AI", "ترجمة احترافية فورية مدعومة بالذكاء الاصطناعي"),
+    "YouTube": ("YouTube", "تطبيق تشغيل مقاطع وبثوث اليوتيوب بدقة عالية على الانيجما2"),
+    "Zoom": ("Zoom Screen", "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار"),
+    "TiviMate": ("TiviMate E2", "مشغل اشتراكات الـ IPTV بواجهة تيفيمات الاحترافية والسريعة"),
+    "uninstaller": ("Plugin Uninstaller", "أداة حذف وإزالة البلجنات وحزم التثبيت وحذف مخلفاتها"),
+    "timeshift-delay": ("Timeshift Delay Egami", "ضبط وتأخير التايم شفت وتأخير الصوت لمطابقة التعليق"),
+    "FootOnSat": ("FootOnSat", "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة"),
+
+    "Ncam v15.8": ("تثبيت محاكي Ncam v15.8", "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam"),
+    "backup_channels": ("أخذ نسخة احتياطية للقنوات", "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك"),
+    "clean_crash": ("تنظيف ملفات الكراش Crash", "سكربت حذف ملفات الكراش واللوغ المؤقتة لتوفير الذاكرة"),
+    "clean_ram": ("تنظيف وتسريع الرام RAM", "سكربت تفريغ ذاكرة الرام المؤقتة وتسريع استجابة الرسيفر"),
+    "fix_network": ("إصلاح وإعادة تشغيل الشبكة", "سكربت حل مشاكل الاتصال بالإنترنت وإعادة ضبط الشبكة"),
+    "restart_cam": ("إعادة تشغيل الكامات Cam", "سكربت عمل ريستارت لمحاكيات الشفرات Oscam و Ncam عند التوقف"),
+    "satellites-update": ("تحديث ملف الأقمار Satellites", "تحديث جميع ترددات وأقمار الستلايت لأحدث الترددات الحالية"),
+    "update_packages": ("تحديث حزم وفيدات الصورة", "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة"),
+
+    "Athantimes": ("مواقيت الأذان AthanTimes", "بلجن عرض أوقات الصلاة والأذان بدقة للشاشات"),
+    "ajpanel": ("AJPanel Novaler", "لوحة تحكم وأدوات شاملة لأجهزة نوفالير"),
+    "alternativesoftcammanager": ("Alternative Softcam Manager", "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"),
+    "ansite": ("Ansite Panel", "لوحة خدمات وإضافات وسكربتات داعمة"),
+    "audiopip": ("Audio PIP", "تشغيل الصوت في الخلفية مع خاصية صورة داخل صورة"),
+    "camnova": ("Cam Nova", "مشغل وسيرفر كام نوفالير لفتح القنوات الفضائية"),
+    "e2m3u2bouquet": ("E2m3u2bouquet", "تحويل وتوليد باقات ومفضلات القنوات من ملفات وروابط M3U"),
+    "feeds-finder": ("Feeds Finder", "أداة البحث التلقائي عن الفيدات الرياضية المباشرة"),
+    "freeserver": ("Free Server", "جلب وتحديث سيرفرات الشيرنج المجانية تلقائياً"),
+    "netspeedtest": ("Net SpeedTest", "أداة قياس سرعة الإنترنت والاتصال"),
+    "screengrabber": ("Screen Grabber", "أداة التقاط صور الشاشة للرسيفر بجودة عالية"),
+    "tvspro": ("TVS Pro", "مشغل القنوات التلفزيونية والوسائط المتعددة"),
+    "weather-msn": ("MSN Weather", "عرض حالة الطقس والتوقعات الجوية للمدن العالمية"),
+    "xcplugin-forever": ("XC Plugin Forever", "مشغل اشتراكات الـ IPTV بنظام Xtream Codes"),
+    "xstreamity": ("Xstreamity IPTV", "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر")
+}
+
+
+def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc=""):
+    # 1. إذا كان لديك تعديل يدوي محفوظ، هو الأقوى دائماً
+    if fn in metadata_store:
+        u_name = metadata_store[fn].get("name")
+        u_desc = metadata_store[fn].get("description")
+        if u_name and u_desc:
+            return u_name, u_desc
+        if u_name:
+            return u_name, default_desc
+
+    # 2. التنسيق التلقائي الذكي للملفات الجديدة
+    auto_name = clean_name
+    auto_desc = default_desc
+
+    if "ipaudiopro" in fn.lower() or "ipa udio" in fn.lower():
+        if "py2.7" in fn: auto_name = "IPAudio Pro v1.7 (Py2.7)"
+        elif "py3.11" in fn: auto_name = "IPAudio Pro v1.7 (Py3.11)"
+        elif "py3.12" in fn: auto_name = "IPAudio Pro v1.9 (Py3.12)"
+        elif "py3.13" in fn and "ff8.0" in fn: auto_name = "IPAudio Pro v1.9 (Py3.13 - FF8.0)"
+        elif "py3.13" in fn: auto_name = "IPAudio Pro v1.9 (Py3.13)"
+        elif "py3.14" in fn: auto_name = "IPAudio Pro v1.9 (Py3.14)"
+        elif "py3.9" in fn: auto_name = "IPAudio Pro v1.7 (Py3.9)"
+        else: auto_name = "IPAudio Pro All"
+        auto_desc = "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي"
+        return auto_name, auto_desc
+
+    if "beengo" in fn.lower():
+        ver = fn.split("beengo-")[-1].split("_")[0]
+        return f"Beengo IPTV ({ver})", "مشغل الوسائط والبث المباشر لخدمة بينجو"
+
+    if "novacam-supreme" in fn.lower():
+        ver = fn.split("novacam-supreme-")[-1].split("_")[0]
+        return f"Novacam Supreme ({ver})", "سيرفر ومحاكي نوفاكام سوبريم المطور للقنوات المشفرة"
+
+    if "novacampro" in fn.lower():
+        ver = fn.split("novacampro-")[-1].split("_")[0]
+        return f"Novacam Pro ({ver})", "محاكي وسيرفر نوفاكام برو لأجهزة نوفالير"
+
+    if "novalerstore" in fn.lower():
+        ver = fn.split("novalerstore-")[-1].split("_")[0]
+        return f"Novaler Store ({ver})", "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات"
+
+    if "suptv" in fn.lower():
+        ver = fn.split("suptv-")[-1].split("_")[0]
+        return f"SupTV ({ver})", "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV"
+
+    if "oscam" in fn.lower():
+        if "levi45" in fn: return "Oscam Emu Levi45 v11965", "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
+        elif "11878" in fn: return "Oscam Emu r802 v11878", "محاكي أوسكام إيمو مستقر وسريع في كسر التشفير"
+        elif "11886" in fn: return "Oscam Emu r803 v11886", "محاكي أوسكام إيمو محدث لفتح القنوات الفضائية"
+        elif "oscamicam" in fn: return "Oscam ICam v11725", "محاكي أوسكام آيكام لتشغيل باقات وقنوات ICam"
+        elif "798" in fn: return "Oscam All Images r798 (ARM+MIPS)", "محاكي أوسكام الشامل لجميع الصور ومعالجات ARM و MIPS"
+        elif "801" in fn: return "Oscam All Images r801 (ARM+MIPS)", "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور"
+
+    if "picon" in fn.lower() or "picons" in fn.lower():
+        if "7.0w" in fn.lower() or "7.ow" in fn.lower() or "8.0w" in fn.lower():
+            return "بيكونات قمر نايل سات (Nilesat 7W / 8W)", "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
+        elif "13e" in fn.lower():
+            return "بيكونات قمر هوتبيرد (Hotbird 13E)", "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق"
+        elif "16.0e" in fn.lower():
+            return "بيكونات قمر يوتلسات (Eutelsat 16E)", "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية"
+        elif "26" in fn.lower():
+            return "بيكونات قمر عربسات بدر (Badr 26E)", "شعارات وقنوات قمر عربسات بدر 26 شرق"
+        elif "39e" in fn.lower():
+            return "بيكونات قمر هيلاسات (Hellas Sat 39E)", "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي"
+        elif "all" in fn.lower():
+            return "حزمة البيكونات الشاملة (جميع الأقمار)", "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+
+    if "channels" in fn.lower():
+        if "mnasr" in fn.lower():
+            return "ملف قنوات ومفضلات مرتب (MNASR)", "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية"
+        elif "openatv" in fn.lower():
+            return "ملف قنوات ومفضلات صورة OpenATV", "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+
+    for brand in ["egami", "openatv", "openbh", "opendroid", "openhdf", "openpli", "openvix", "pure2", "vti"]:
+        if brand in fn.lower():
+            dev = "الجهاز"
+            for d in ["vuzero4k", "vuduo4kse", "vuduo4k", "vusolo4k", "vuultimo4k", "vuuno4kse", "vuuno4k", "vuzero", "vusolo2", "vuduo2", "novaler4kpro", "novaler4kse", "novaler4k", "sf8008", "sf4008", "sf3038", "sx88v2", "sx988", "sfx6008", "dm900", "dm920", "gbquad4k", "gbtrio4kpro", "gbtrio4k", "zgemmah17combo", "zgemmah82h"]:
+                if d in fn.lower().replace(".", "").replace("-", "").replace("_", ""):
+                    dev = d.upper()
+                    break
+            return f"صورة {brand.upper()} لجهاز {dev}", f"صورة نظام {brand.upper()} الرسمية المحدثة لجهاز {dev}"
+
+    if "skin" in fn.lower():
+        s_name = fn.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("enigma2-skin-", "").replace("skin-", "").split(".")[0]
+        return f"سكين {s_name}", f"سكين {s_name} عالي الدقة FHD بتصميم أنيق وخفيف"
+
+    for k, (n, d) in CUSTOM_MAP.items():
+        if k.lower() in fn.lower() or k.lower() in clean_name.lower():
+            return n, d
+
+    if release_body and release_body.strip():
+        lines = [l.strip() for l in release_body.split("\n") if l.strip() and not l.strip().startswith("#")]
+        if lines:
+            auto_desc = lines[0]
+
+    return auto_name, auto_desc
 
 
 def image_url(prefix):
@@ -94,33 +241,7 @@ def normalize_text(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
 
-def get_best_name(filename, default_clean):
-    """دالة ذكية ومحمية لاسترجاع الاسم العربي المحفوظ"""
-    if filename in metadata_store and metadata_store[filename].get("name"):
-        return metadata_store[filename]["name"].strip()
-    if default_clean in metadata_store and metadata_store[default_clean].get("name"):
-        return metadata_store[default_clean]["name"].strip()
-    return default_clean
-
-
-def get_best_description(clean_name, filename, release_body="", default_desc=""):
-    """دالة ذكية ومحمية لاسترجاع الوصف العربي المحفوظ"""
-    if filename in metadata_store and metadata_store[filename].get("description"):
-        return metadata_store[filename]["description"].strip()
-    if clean_name in metadata_store and metadata_store[clean_name].get("description"):
-        return metadata_store[clean_name]["description"].strip()
-
-    if release_body and release_body.strip():
-        lines = [l.strip() for l in release_body.split("\n") if l.strip() and not l.strip().startswith("#")]
-        if lines:
-            return lines[0]
-
-    return default_desc
-
-
-# -------------------------------------------------
-# 2. جلب ملفات الـ Releases
-# -------------------------------------------------
+# جلب الـ Releases
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
 
@@ -157,14 +278,9 @@ while True:
         print("Releases notice:", e)
         break
 
-print(f"✅ Total Release Assets loaded: {len(release_assets_pool)}")
-
 assigned_releases = set()
 
-
-# -------------------------------------------------
-# 3. معالجة صور النظام (System Images)
-# -------------------------------------------------
+# 1. System Images
 sys_folders = {}
 if os.path.isdir("system_images"):
     for folder in sorted(os.listdir("system_images")):
@@ -188,8 +304,7 @@ if os.path.isdir("system_images"):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name = get_best_name(fn, clean)
-            final_desc = get_best_description(clean, fn, body_desc, f"{disp} Image")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image")
 
             sys_folders[norm]["items"].append({
                 "name": final_name,
@@ -226,8 +341,7 @@ for asset in release_assets_pool:
             sys_folders[matched]["seen"].add(fn)
             clean = clean_filename(fn)
             disp = sys_folders[matched]["display_name"]
-            final_name = get_best_name(fn, clean)
-            final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Image")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image")
 
             sys_folders[matched]["items"].append({
                 "name": final_name,
@@ -242,10 +356,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-
-# -------------------------------------------------
-# 4. معالجة السكينات (Skins)
-# -------------------------------------------------
+# 2. Skins
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -270,8 +381,7 @@ if os.path.isdir("skins"):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name = get_best_name(fn, clean)
-            final_desc = get_best_description(clean, fn, body_desc, f"{disp} Skin")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin")
 
             skin_folders[norm]["items"].append({
                 "name": final_name,
@@ -302,8 +412,7 @@ for asset in release_assets_pool:
             clean = clean_filename(fn)
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             disp = skin_folders[matched]["display_name"]
-            final_name = get_best_name(fn, clean)
-            final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Skin")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin")
 
             skin_folders[matched]["items"].append({
                 "name": final_name,
@@ -318,10 +427,7 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-
-# -------------------------------------------------
-# 5. معالجة بقية الأقسام (Novaler, Picons, Channels, Tools, Plugins)
-# -------------------------------------------------
+# 3. Flat categories (plugins, tools, novaler, picons, channels)
 def handle_flat(cat_key, matcher_func, default_desc):
     items = []
     seen = set()
@@ -341,8 +447,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name = get_best_name(fn, clean)
-            final_desc = get_best_description(clean, fn, body_desc, default_desc)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc)
 
             items.append({
                 "name": final_name,
@@ -362,8 +467,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
             seen.add(fn)
             clean = clean_filename(fn)
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
-            final_name = get_best_name(fn, clean)
-            final_desc = get_best_description(clean, fn, asset.get("body", ""), default_desc)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc)
 
             items.append({
                 "name": final_name,
@@ -381,18 +485,25 @@ handle_flat("channels", lambda n: any(k in n for k in ["channel", "setting", "bo
 handle_flat("tools", lambda n: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "tool", "script", "tweak"]), "Tool Package")
 handle_flat("plugins", lambda n: True, "Plugin Extension")
 
+# تحديث الخزنة بالقيم الحالية
+for cat, items in data["categories"].items():
+    if isinstance(items, list):
+        for el in items:
+            sub = el.get("items", []) if (isinstance(el, dict) and "items" in el) else [el]
+            for it in sub:
+                if isinstance(it, dict):
+                    fn = it.get("file", "").split("/")[-1]
+                    if fn:
+                        metadata_store[fn] = {
+                            "name": it.get("name", ""),
+                            "description": it.get("description", "")
+                        }
 
-# -------------------------------------------------
-# 6. حفظ الفهرس وخزنة البيانات الثابتة بترميز UTF-8
-# -------------------------------------------------
 os.makedirs("feed", exist_ok=True)
-
-# حفظ ملف index.json
-with open("feed/index.json", "w", encoding="utf-8") as f:
+with open(INDEX_FILE, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-# حفظ الخزنة الدائمة metadata_store.json
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json and locked metadata in metadata_store.json!")
+print("🎉 Successfully generated feed/index.json locking all user custom edits perfectly!")
