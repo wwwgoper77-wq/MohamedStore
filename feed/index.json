@@ -1397,67 +1397,67 @@
                 "image": ""
             },
             {
-                "name": "petazetas_1.1_all",
+                "name": "petazetas",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
             {
-                "name": "plutotv_20240220_all",
+                "name": "plutotv",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
                 "image": ""
             },
             {
-                "name": "rakutentv_20240324_all",
+                "name": "rakutentv",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
             {
-                "name": "screengrabber_2.6_all",
+                "name": "screengrabber",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-screengrabber_2.6_all.ipk",
                 "image": ""
             },
             {
-                "name": "subssupport_1.5.8-r3_all",
+                "name": "subssupport",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-subssupport_1.5.8-r3_all.ipk",
                 "image": ""
             },
             {
-                "name": "suptv-py3.11_6.0-r0_all",
+                "name": "suptv-py3.11_6",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "suptv-py3.12_6.0-r0_all",
+                "name": "suptv-py3.12_6l",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "suptv-py3.13_6.0-r0_all",
+                "name": "suptv-py3.13_6.",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "suptv-py3.14_6.0-r0_all",
+                "name": "suptv-py3.14_6",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "suptv-py3.9_6.0-r0_all",
+                "name": "suptv-py3.9_6",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "tvspro_1.3_all",
+                "name": "tvspro_",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-tvspro_1.3_all.ipk",
                 "image": ""
@@ -1469,13 +1469,13 @@
                 "image": ""
             },
             {
-                "name": "xcplugin-forever_1.8_all",
+                "name": "xcplugin-forever",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xcplugin-forever_1.8_all.ipk",
                 "image": ""
             },
             {
-                "name": "xstreamity_4.02",
+                "name": "xstreamity",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xstreamity_4.02.20230510_all.ipk",
                 "image": ""
