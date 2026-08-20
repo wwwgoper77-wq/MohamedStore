@@ -117,17 +117,44 @@ CUSTOM_MAP = {
 }
 
 
-def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc=""):
+def clean_skin_name(fn):
+    """تنظيف اسم السكين ليظهر بالإنجليزية فقط وبدون زوائد"""
+    name = fn
+    for ext in [".ipk", ".tar.gz", ".tar.xz", ".zip", ".deb"]:
+        if name.endswith(ext):
+            name = name[:-len(ext)]
+            break
+    
+    # حذف بادئات الانيجما الزائدة
+    name = re.sub(r'^(enigma2-plugin-skins?-|enigma2-skin-|skin-)', '', name, flags=re.IGNORECASE)
+    # إزالة كلمة _all أو إصدارات البايثون في نهاية اسم الملف
+    name = re.sub(r'(_all|_mips|_arm.*)$', '', name, flags=re.IGNORECASE)
+    name = name.replace("-", " ").replace("_", " ").strip()
+    return name
+
+
+def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False):
     # 1. إذا كان لديك تعديل يدوي محفوظ، هو الأقوى دائماً
     if fn in metadata_store:
         u_name = metadata_store[fn].get("name")
         u_desc = metadata_store[fn].get("description")
         if u_name and u_desc:
+            # إذا كان سكين وتوجد كلمة "سكين" عربية بالاسم القديم، نزيلها
+            if is_skin and u_name.startswith("سكين "):
+                u_name = clean_skin_name(fn)
             return u_name, u_desc
         if u_name:
+            if is_skin and u_name.startswith("سكين "):
+                u_name = clean_skin_name(fn)
             return u_name, default_desc
 
-    # 2. التنسيق التلقائي الذكي للملفات الجديدة
+    # 2. إذا كان سكين (اسم إنجليزي نظيف فقط)
+    if is_skin:
+        eng_skin_name = clean_skin_name(fn)
+        skin_desc = f"سكين {eng_skin_name} عالي الدقة FHD بتصميم أنيق وخفيف"
+        return eng_skin_name, skin_desc
+
+    # 3. التنسيق التلقائي الذكي لبقية الأقسام
     auto_name = clean_name
     auto_desc = default_desc
 
@@ -199,10 +226,6 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc=""):
                     dev = d.upper()
                     break
             return f"صورة {brand.upper()} لجهاز {dev}", f"صورة نظام {brand.upper()} الرسمية المحدثة لجهاز {dev}"
-
-    if "skin" in fn.lower():
-        s_name = fn.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("enigma2-skin-", "").replace("skin-", "").split(".")[0]
-        return f"سكين {s_name}", f"سكين {s_name} عالي الدقة FHD بتصميم أنيق وخفيف"
 
     for k, (n, d) in CUSTOM_MAP.items():
         if k.lower() in fn.lower() or k.lower() in clean_name.lower():
@@ -304,7 +327,7 @@ if os.path.isdir("system_images"):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image", is_skin=False)
 
             sys_folders[norm]["items"].append({
                 "name": final_name,
@@ -341,7 +364,7 @@ for asset in release_assets_pool:
             sys_folders[matched]["seen"].add(fn)
             clean = clean_filename(fn)
             disp = sys_folders[matched]["display_name"]
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image", is_skin=False)
 
             sys_folders[matched]["items"].append({
                 "name": final_name,
@@ -356,7 +379,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins
+# 2. Skins (أسماء إنجليزية نظيفة + أوصاف عربية)
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -381,7 +404,7 @@ if os.path.isdir("skins"):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin", is_skin=True)
 
             skin_folders[norm]["items"].append({
                 "name": final_name,
@@ -412,7 +435,7 @@ for asset in release_assets_pool:
             clean = clean_filename(fn)
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             disp = skin_folders[matched]["display_name"]
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin")
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin", is_skin=True)
 
             skin_folders[matched]["items"].append({
                 "name": final_name,
@@ -447,7 +470,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc, is_skin=False)
 
             items.append({
                 "name": final_name,
@@ -467,7 +490,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
             seen.add(fn)
             clean = clean_filename(fn)
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc, is_skin=False)
 
             items.append({
                 "name": final_name,
@@ -485,7 +508,7 @@ handle_flat("channels", lambda n: any(k in n for k in ["channel", "setting", "bo
 handle_flat("tools", lambda n: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "tool", "script", "tweak"]), "Tool Package")
 handle_flat("plugins", lambda n: True, "Plugin Extension")
 
-# تحديث الخزنة بالقيم الحالية
+# تحديث وتثبيت الخزنة
 for cat, items in data["categories"].items():
     if isinstance(items, list):
         for el in items:
@@ -506,4 +529,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json locking all user custom edits perfectly!")
+print("🎉 Successfully generated feed/index.json: English skin names without 'سكين' + Arabic descriptions preserved!")
