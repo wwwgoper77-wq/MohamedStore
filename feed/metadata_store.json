@@ -116,7 +116,7 @@
         "description": "أداة حذف وإزالة البلجنات وحزم التثبيت وحذف مخلفاتها"
     },
     "enigma2-plugin-timeshift-delay-egami_3.0_all.ipk": {
-        "name": "صورة EGAMI لجهاز الجهاز",
+        "name": "timeshift",
         "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز"
     },
     "ipa udio pro_1.7.ipk": {
