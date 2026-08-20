@@ -53,13 +53,13 @@
             },
             {
                 "name": "MC oscam",
-                "description": "بلجن خاص بنا امكانية تشغيل السيرفر المجاني وكذلك المدفوع",
+                "description": "Plugin Extension",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
             {
                 "name": "MC Stream",
-                "description": " بنل خاص بنا مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة",
+                "description": "مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
@@ -106,8 +106,8 @@
                 "image": ""
             },
             {
-                "name": "Zoom",
-                "description": "تثبيت ايمو",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
                 "image": ""
             },
@@ -178,8 +178,8 @@
                 "image": ""
             },
             {
-                "name": "timeshift",
-                "description": "AUDIO عداد ثواني تايم شفت صورة ايجامي فقط",
+                "name": "صورة EGAMI لجهاز الجهاز",
+                "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             },
@@ -202,264 +202,264 @@
                 "items": [
                     {
                         "name": "MX-HC2-MOD-By-RAED",
-                        "description": "بتصميم أنيق وخفيف",
+                        "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/MX-HC2-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-BATMAN-VPX-FHD-By-Muaath",
+                        "name": "سكين SKIN-BATMAN-VPX-FHD-By-Muaath",
                         "description": "سكين SKIN-BATMAN-VPX-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-BATMAN-VPX-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ICONE-VPX-FHD-By-Muaath",
+                        "name": "سكين SKIN-ICONE-VPX-FHD-By-Muaath",
                         "description": "سكين SKIN-ICONE-VPX-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ICONE-VPX-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ICONE-VPX2-FHD-By-Muaath",
+                        "name": "سكين SKIN-ICONE-VPX2-FHD-By-Muaath",
                         "description": "سكين SKIN-ICONE-VPX2-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ICONE-VPX2-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ORANGESKY-XP-FHD-By-Muaath",
+                        "name": "سكين SKIN-ORANGESKY-XP-FHD-By-Muaath",
                         "description": "سكين SKIN-ORANGESKY-XP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ORANGESKY-XP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ORANGESKY-XP2-FHD-By-Muaath",
+                        "name": "سكين SKIN-ORANGESKY-XP2-FHD-By-Muaath",
                         "description": "سكين SKIN-ORANGESKY-XP2-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ORANGESKY-XP2-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
+                        "name": "سكين Skin-BATMAN-BLACK-P-FHD-By-Muaath",
                         "description": "سكين Skin-BATMAN-BLACK-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BATMAN-RED-FHD-By-Muaath",
+                        "name": "سكين Skin-BATMAN-RED-FHD-By-Muaath",
                         "description": "سكين Skin-BATMAN-RED-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BATMAN-RED-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BEIN-BLACK-NP-FHD-By-Muaath",
+                        "name": "سكين Skin-BEIN-BLACK-NP-FHD-By-Muaath",
                         "description": "سكين Skin-BEIN-BLACK-NP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BEIN-BLACK-NP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BEIN-NEP-FHD-By-Muaath",
+                        "name": "سكين Skin-BEIN-NEP-FHD-By-Muaath",
                         "description": "سكين Skin-BEIN-NEP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BEIN-NEP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
+                        "name": "سكين Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
                         "description": "سكين Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BundesligaFHD-By-Maggy-MOD-By-RAED",
+                        "name": "سكين Skin-BundesligaFHD-By-Maggy-MOD-By-RAED",
                         "description": "سكين Skin-BundesligaFHD-By-Maggy-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BundesligaFHD-By-Maggy-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-CH",
+                        "name": "سكين Skin-CH",
                         "description": "سكين Skin-CH عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-CH.LEAGUE-PN-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED",
+                        "name": "سكين Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED",
                         "description": "سكين Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-EUR02020-FHD-N-By-Muaath",
+                        "name": "سكين Skin-EUR02020-FHD-N-By-Muaath",
                         "description": "سكين Skin-EUR02020-FHD-N-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-EUR02020-FHD-N-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-MX-X6-By-Matrix10-MOD-By-RAED",
+                        "name": "سكين Skin-MX-X6-By-Matrix10-MOD-By-RAED",
                         "description": "سكين Skin-MX-X6-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX-X6-By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-MX-X7-By-Matrix10-MOD-By-RAED",
+                        "name": "سكين Skin-MX-X7-By-Matrix10-MOD-By-RAED",
                         "description": "سكين Skin-MX-X7-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX-X7-By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
+                        "name": "سكين Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
                         "description": "سكين Skin-MX_HQ9_By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX_HQ9_By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
+                        "name": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
                         "description": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-OSN-PN-FHD-By-Muaath",
+                        "name": "سكين Skin-OSN-PN-FHD-By-Muaath",
                         "description": "سكين Skin-OSN-PN-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-OSN-PN-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-QATAR2022-GPN-FHD-By-Muaath",
+                        "name": "سكين Skin-QATAR2022-GPN-FHD-By-Muaath",
                         "description": "سكين Skin-QATAR2022-GPN-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-QATAR2022-GPN-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-ROBOCOP-P-FHD-By-Muaath",
+                        "name": "سكين Skin-ROBOCOP-P-FHD-By-Muaath",
                         "description": "سكين Skin-ROBOCOP-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-ROBOCOP-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-SPIDERMAN-P-FHD-By-Muaath",
+                        "name": "سكين Skin-SPIDERMAN-P-FHD-By-Muaath",
                         "description": "سكين Skin-SPIDERMAN-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-SPIDERMAN-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-SPIDERMAN-SP-FHD-By-Muaath",
+                        "name": "سكين Skin-SPIDERMAN-SP-FHD-By-Muaath",
                         "description": "سكين Skin-SPIDERMAN-SP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-SPIDERMAN-SP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-Sky-FHD-By-Maggy-MOD-By-RAED",
+                        "name": "سكين Skin-Sky-FHD-By-Maggy-MOD-By-RAED",
                         "description": "سكين Skin-Sky-FHD-By-Maggy-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Sky-FHD-By-Maggy-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "KIII-PRO-by-zelda77_v3",
+                        "name": "سكين KIII-PRO-by-zelda77_v3",
                         "description": "سكين KIII-PRO-by-zelda77_v3 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "karonte-fhd-all_1",
+                        "name": "سكين karonte-fhd-all_1",
                         "description": "سكين karonte-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-karonte-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "kitte888lite-fhd-all_1",
+                        "name": "سكين kitte888lite-fhd-all_1",
                         "description": "سكين kitte888lite-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-kitte888lite-fhd-all_1.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "litehd_1",
+                        "name": "سكين litehd_1",
                         "description": "سكين litehd_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-litehd_1.6_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "madmax-impossible-pli_2",
+                        "name": "سكين madmax-impossible-pli_2",
                         "description": "سكين madmax-impossible-pli_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-madmax-impossible-pli_2.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": سكين madmax-impossible_2",
+                        "name": "سكين madmax-impossible_2",
                         "description": "سكين madmax-impossible_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-madmax-impossible_2.4_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "mx--sline-posterx_2",
+                        "name": "سكين mx--sline-posterx_2",
                         "description": "سكين mx--sline-posterx_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "nitro-fhd-all_1",
+                        "name": "سكين nitro-fhd-all_1",
                         "description": "سكين nitro-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitro-fhd-all_1.1_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "nitrofhd-green-all_2",
+                        "name": "سكين nitrofhd-green-all_2",
                         "description": "سكين nitrofhd-green-all_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "novaler-s-fhd-indianred_3",
+                        "name": "سكين novaler-s-fhd-indianred_3",
                         "description": "سكين novaler-s-fhd-indianred_3 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "obselite-fhd-all_1",
+                        "name": "سكين obselite-fhd-all_1",
                         "description": "سكين obselite-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-obselite-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "octagon-hd-style-dark_1",
+                        "name": "سكين octagon-hd-style-dark_1",
                         "description": "سكين octagon-hd-style-dark_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-octagon-hd-style-dark_1.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "octagoneightfhd_V4",
+                        "name": "سكين octagoneightfhd_V4",
                         "description": "سكين octagoneightfhd_V4 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-octagoneightfhd_V4.50_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "ozfhd_by",
+                        "name": "سكين ozfhd_by",
                         "description": "سكين ozfhd_by عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "beta-pro-fhd_v1",
+                        "name": "سكين beta-pro-fhd_v1",
                         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-beta-pro-fhd_v1.1_all_BY_BAhaa_1772022_Xtraevent.ipk",
                         "image": ""
                     },
                     {
-                        "name": "metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all",
+                        "name": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all",
                         "description": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "metrixperience-adrenalinnrw_1",
+                        "name": "سكين metrixperience-adrenalinnrw_1",
                         "description": "سكين metrixperience-adrenalinnrw_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "MX_Graphite",
-                        "description": "عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة OPENATV لجهاز الجهاز",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
                         "image": ""
                     },
                     {
-                        "name": "octelfhd_2",
+                        "name": "سكين octelfhd_2",
                         "description": "سكين octelfhd_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
@@ -470,19 +470,19 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "luka",
-                        "description": "بتصميم أنيق وخفيف",
+                        "name": "صورة EGAMI لجهاز الجهاز",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
                         "image": ""
                     },
                     {
-                        "name": "ozeta_1",
+                        "name": "سكين ozeta_1",
                         "description": "سكين ozeta_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-ozeta_1.5.2-byhossam_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "beta-pro-fhd_v1",
+                        "name": "سكين beta-pro-fhd_v1",
                         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
@@ -494,30 +494,30 @@
                 "items": [
                     {
                         "name": "Copper-FHD-v1.0-MNASR",
-                        "description": "بتصميم أنيق وخفيف",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/Copper-FHD-v1.0-MNASR.tar.gz",
                         "image": ""
                     },
                     {
-                        "name": "revolution-pro_full",
+                        "name": "سكين revolution-pro_full",
                         "description": "سكين revolution-pro_full عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "multiposter-fhd-all_1",
+                        "name": "سكين multiposter-fhd-all_1",
                         "description": "سكين multiposter-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "premium-fhd-black_2",
+                        "name": "سكين premium-fhd-black_2",
                         "description": "سكين premium-fhd-black_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skins-premium-fhd-black_2.4_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "beta-pro-fhd_v1",
+                        "name": "سكين beta-pro-fhd_v1",
                         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
@@ -528,43 +528,43 @@
                 "name": "OpenBlack",
                 "items": [
                     {
-                        "name": "mx-hq10-2-by-mamba65_v2_all",
+                        "name": "سكين mx-hq10-2-by-mamba65_v2_all",
                         "description": "سكين mx-hq10-2-by-mamba65_v2_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "mxgraphite_mod",
+                        "name": "سكين mxgraphite_mod",
                         "description": "سكين mxgraphite_mod عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-mxgraphite_mod.fhroma_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "q-darkblue-fhd-bh_1",
+                        "name": "سكين q-darkblue-fhd-bh_1",
                         "description": "سكين q-darkblue-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "q-purple-fhd-bh_1",
+                        "name": "سكين q-purple-fhd-bh_1",
                         "description": "سكين q-purple-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "waves4-fire-weather-by-mamba65_v1_all",
+                        "name": "سكين waves4-fire-weather-by-mamba65_v1_all",
                         "description": "سكين waves4-fire-weather-by-mamba65_v1_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-alienaware-obh4_all",
+                        "name": "سكين enigma2-alienaware-obh4_all",
                         "description": "سكين enigma2-alienaware-obh4_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/skin-enigma2-alienaware-obh4_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "OpenBlack-armynextgengradient",
+                        "name": "سكين OpenBlack-armynextgengradient",
                         "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
                         "image": ""
@@ -588,25 +588,25 @@
                 "items": [
                     {
                         "name": "Copper-FHD-v1.0-MNASR",
-                        "description": "بتصميم أنيق وخفيف",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/Copper-FHD-v1.0-MNASR.tar.gz",
                         "image": ""
                     },
                     {
-                        "name": "multiposter-fhd-all_1",
+                        "name": "سكين multiposter-fhd-all_1",
                         "description": "سكين multiposter-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "beta-pro-fhd_v1",
+                        "name": "سكين beta-pro-fhd_v1",
                         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     },
                     {
-                        "name": "whiteshadowfhd",
-                        "description": "بتصميم أنيق وخفيف",
+                        "name": "صورة OPENPLI لجهاز الجهاز",
+                        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk",
                         "image": ""
                     }
@@ -637,8 +637,8 @@
                 "image": ""
             },
             {
-                "name": "باكاب القنوات والمفضلات",
-                "description": "حفظ نسخة مضغوطة في الهارد من مفظلاتك وقنواتك",
+                "name": "backup_channels",
+                "description": "Tool Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_channels.sh",
                 "image": ""
             },
@@ -655,8 +655,8 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-ncam",
-                "description": "محاكي اوسكام",
+                "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
+                "description": "Tool Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
                 "image": ""
             },
@@ -1223,7 +1223,7 @@
             },
             {
                 "name": "picon",
-                "description": "حزمة البيكونات الشاملة (جميع الأقمار)",
+                "description": "e",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon.zip",
                 "image": ""
             },
@@ -1281,7 +1281,7 @@
             },
             {
                 "name": "KeyAdder",
-                "description": "إدخال الشفرات يدوياً",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/KeyAdder.tar.gz",
                 "image": ""
             },
@@ -1292,14 +1292,14 @@
                 "image": ""
             },
             {
-                "name": "bissfeed-autokey",
-                "description": "البحث التلقائي عن الشفرات",
+                "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
-                "name": "Zoom",
-                "description": "نزيل خوادم وتثبيت",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
             },
@@ -1388,20 +1388,20 @@
                 "image": ""
             },
             {
-                "name": "internet-speedtest",
-                "description": "قياس واختبار سرعة اتصال الانترنيت",
+                "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk",
                 "image": ""
             },
             {
-                "name": "ejedimakerxtream",
-                "description": "اشتراكات الـ IPTV",
+                "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk",
                 "image": ""
             },
             {
-                "name": "emultiboot",
-                "description": "تثبيت الصور المتعددة",
+                "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk",
                 "image": ""
             },
@@ -1478,20 +1478,20 @@
                 "image": ""
             },
             {
-                "name": "petazetas",
-                "description": "جلب وتفعيل شفرات قنوات BISS",
+                "name": "enigma2-plugin-extensions-petazetas_1.1_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
             {
-                "name": "plutotv",
-                "description": "خدمة البث التلفزيوني المجانية الشهيرة",
+                "name": "enigma2-plugin-extensions-plutotv_20240220_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
                 "image": ""
             },
             {
-                "name": "rakutentv",
-                "description": " الشهيرة Rakuten TV عرض القنوات المجانية",
+                "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
@@ -1562,8 +1562,8 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k",
-                "description": "أداة/إيمو",
+                "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
                 "image": ""
             }
