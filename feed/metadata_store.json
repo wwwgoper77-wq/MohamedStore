@@ -1,0 +1,950 @@
+{
+    "AJPanel.sh": {
+        "name": "AJPanel",
+        "description": "مدير الملفات"
+    },
+    "ArabicSavior.zip": {
+        "name": "ArabicSavior",
+        "description": "Plugin Extension"
+    },
+    "E2BissKeyEditor.zip": {
+        "name": "E2BissKeyEditor",
+        "description": "Plugin Extension"
+    },
+    "EPGGrabber.zip": {
+        "name": "EPGGrabber",
+        "description": "Plugin Extension"
+    },
+    "EPGTranslator.zip": {
+        "name": "EPGTranslator",
+        "description": "Plugin Extension"
+    },
+    "FuryBiss.zip": {
+        "name": "FuryBiss",
+        "description": "Plugin Extension"
+    },
+    "IPStreamer.zip": {
+        "name": "IPStreamer",
+        "description": "Plugin Extension"
+    },
+    "InternetSpeed.zip": {
+        "name": "InternetSpeed",
+        "description": "Plugin Extension"
+    },
+    "MC oscam.zip": {
+        "name": "MC oscam",
+        "description": "Plugin Extension"
+    },
+    "MC stream.zip": {
+        "name": "MC stream",
+        "description": "Plugin Extension"
+    },
+    "MixAudio.sh": {
+        "name": "MixAudio",
+        "description": "Plugin Extension"
+    },
+    "MyTranslator.zip": {
+        "name": "MyTranslator",
+        "description": "Plugin Extension"
+    },
+    "RaedQuickSignal.zip": {
+        "name": "RaedQuickSignal",
+        "description": "Plugin Extension"
+    },
+    "SubsSupport.zip": {
+        "name": "SubsSupport",
+        "description": "Plugin Extension"
+    },
+    "TMBD.zip": {
+        "name": "TMBD",
+        "description": "Plugin Extension"
+    },
+    "TranslatorProAI.zip": {
+        "name": "TranslatorProAI",
+        "description": "Plugin Extension"
+    },
+    "YouTube.zip": {
+        "name": "YouTube",
+        "description": "Plugin Extension"
+    },
+    "Zoom.zip": {
+        "name": "Zoom",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk": {
+        "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk": {
+        "name": "enigma2-plugin-extensions-tivimatee2_1.0.01_all",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-uninstaller_1.0_all.ipk": {
+        "name": "enigma2-plugin-extensions-uninstaller_1.0_all",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-timeshift-delay-egami_3.0_all.ipk": {
+        "name": "enigma2-plugin-timeshift-delay-egami_3.0_all",
+        "description": "Plugin Extension"
+    },
+    "ipa udio pro_1.7.ipk": {
+        "name": "ipa udio pro_1.7",
+        "description": "Plugin Extension"
+    },
+    "FootOnSat.plugin.zip": {
+        "name": "FootOnSat.plugin",
+        "description": "e"
+    },
+    "MX-HC2-MOD-By-RAED.ipk": {
+        "name": "MX-HC2-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "SKIN-BATMAN-VPX-FHD-By-Muaath.ipk": {
+        "name": "SKIN-BATMAN-VPX-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "SKIN-ICONE-VPX-FHD-By-Muaath.ipk": {
+        "name": "SKIN-ICONE-VPX-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "SKIN-ICONE-VPX2-FHD-By-Muaath.ipk": {
+        "name": "SKIN-ICONE-VPX2-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "SKIN-ORANGESKY-XP-FHD-By-Muaath.ipk": {
+        "name": "SKIN-ORANGESKY-XP-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "SKIN-ORANGESKY-XP2-FHD-By-Muaath.ipk": {
+        "name": "SKIN-ORANGESKY-XP2-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk": {
+        "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-BATMAN-RED-FHD-By-Muaath.ipk": {
+        "name": "Skin-BATMAN-RED-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-BEIN-BLACK-NP-FHD-By-Muaath.ipk": {
+        "name": "Skin-BEIN-BLACK-NP-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-BEIN-NEP-FHD-By-Muaath.ipk": {
+        "name": "Skin-BEIN-NEP-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "Skin-BundesligaFHD-By-Maggy-MOD-By-RAED.ipk": {
+        "name": "Skin-BundesligaFHD-By-Maggy-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "Skin-CH.LEAGUE-PN-FHD-By-Muaath.ipk": {
+        "name": "Skin-CH.LEAGUE-PN-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED.ipk": {
+        "name": "Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "Skin-EUR02020-FHD-N-By-Muaath.ipk": {
+        "name": "Skin-EUR02020-FHD-N-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-MX-X6-By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "Skin-MX-X6-By-Matrix10-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "Skin-MX-X7-By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "Skin-MX-X7-By-Matrix10-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk": {
+        "name": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
+        "description": "All Skin"
+    },
+    "Skin-OSN-PN-FHD-By-Muaath.ipk": {
+        "name": "Skin-OSN-PN-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-QATAR2022-GPN-FHD-By-Muaath.ipk": {
+        "name": "Skin-QATAR2022-GPN-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-ROBOCOP-P-FHD-By-Muaath.ipk": {
+        "name": "Skin-ROBOCOP-P-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-SPIDERMAN-P-FHD-By-Muaath.ipk": {
+        "name": "Skin-SPIDERMAN-P-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-SPIDERMAN-SP-FHD-By-Muaath.ipk": {
+        "name": "Skin-SPIDERMAN-SP-FHD-By-Muaath",
+        "description": "All Skin"
+    },
+    "Skin-Sky-FHD-By-Maggy-MOD-By-RAED.ipk": {
+        "name": "Skin-Sky-FHD-By-Maggy-MOD-By-RAED",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all.ipk": {
+        "name": "enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-karonte-fhd-all_1.0_all.ipk": {
+        "name": "enigma2-plugin-skins-karonte-fhd-all_1.0_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-kitte888lite-fhd-all_1.3_all.ipk": {
+        "name": "enigma2-plugin-skins-kitte888lite-fhd-all_1.3_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-litehd_1.6_all.ipk": {
+        "name": "enigma2-plugin-skins-litehd_1.6_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-madmax-impossible-pli_2.3_all.ipk": {
+        "name": "enigma2-plugin-skins-madmax-impossible-pli_2.3_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-madmax-impossible_2.4_all.ipk": {
+        "name": "enigma2-plugin-skins-madmax-impossible_2.4_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all.ipk": {
+        "name": "enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-nitro-fhd-all_1.1_all.ipk": {
+        "name": "enigma2-plugin-skins-nitro-fhd-all_1.1_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all.ipk": {
+        "name": "enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all.ipk": {
+        "name": "enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-obselite-fhd-all_1.0_all.ipk": {
+        "name": "enigma2-plugin-skins-obselite-fhd-all_1.0_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-octagon-hd-style-dark_1.3_all.ipk": {
+        "name": "enigma2-plugin-skins-octagon-hd-style-dark_1.3_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-octagoneightfhd_V4.50_all.ipk": {
+        "name": "enigma2-plugin-skins-octagoneightfhd_V4.50_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk": {
+        "name": "enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all",
+        "description": "All Skin"
+    },
+    "enigma2-skin-beta-pro-fhd_v1.1_all_BY_BAhaa_1772022_Xtraevent.ipk": {
+        "name": "enigma2-skin-beta-pro-fhd_v1.1_all_BY_BAhaa_1772022_Xtraevent",
+        "description": "All Skin"
+    },
+    "enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk": {
+        "name": "enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all",
+        "description": "All Skin"
+    },
+    "enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk": {
+        "name": "enigma2-skin-metrixperience-adrenalinnrw_1.0_all",
+        "description": "All Skin"
+    },
+    "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk": {
+        "name": "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino",
+        "description": "All Skin"
+    },
+    "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk": {
+        "name": "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all",
+        "description": "All Skin"
+    },
+    "enigma2-plugin-skins-luka-fhd_1.0_egami.ipk": {
+        "name": "enigma2-plugin-skins-luka-fhd_1.0_egami",
+        "description": "Egami Skin"
+    },
+    "enigma2-plugin-skins-ozeta_1.5.2-byhossam_all.ipk": {
+        "name": "enigma2-plugin-skins-ozeta_1.5.2-byhossam_all",
+        "description": "Egami Skin"
+    },
+    "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz": {
+        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
+        "description": "OpenP Skin"
+    },
+    "Copper-FHD-v1.0-MNASR.tar.gz": {
+        "name": "Copper-FHD-v1.0-MNASR",
+        "description": "OpenP Skin"
+    },
+    "enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk": {
+        "name": "enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all",
+        "description": "OpenATV Skin"
+    },
+    "enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk": {
+        "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
+        "description": "OpenP Skin"
+    },
+    "enigma2-plugin-skins-premium-fhd-black_2.4_all.ipk": {
+        "name": "enigma2-plugin-skins-premium-fhd-black_2.4_all",
+        "description": "OpenATV Skin"
+    },
+    "enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all.ipk": {
+        "name": "enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all",
+        "description": "OpenBlack Skin"
+    },
+    "enigma2-plugin-skins-mxgraphite_mod.fhroma_all.ipk": {
+        "name": "enigma2-plugin-skins-mxgraphite_mod.fhroma_all",
+        "description": "OpenBlack Skin"
+    },
+    "enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all.ipk": {
+        "name": "enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all",
+        "description": "OpenBlack Skin"
+    },
+    "enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all.ipk": {
+        "name": "enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all",
+        "description": "OpenBlack Skin"
+    },
+    "enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all.ipk": {
+        "name": "enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all",
+        "description": "OpenBlack Skin"
+    },
+    "skin-enigma2-alienaware-obh4_all.ipk": {
+        "name": "skin-enigma2-alienaware-obh4_all",
+        "description": "OpenBlack Skin"
+    },
+    "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk": {
+        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole",
+        "description": "e"
+    },
+    "enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk": {
+        "name": "enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all",
+        "description": "OpenP Skin"
+    },
+    "Ncam v15.8.sh": {
+        "name": "Ncam v15.8",
+        "description": "Tool Package"
+    },
+    "backup_channels.sh": {
+        "name": "backup_channels",
+        "description": "Tool Package"
+    },
+    "clean_crash.sh": {
+        "name": "clean_crash",
+        "description": "Tool Package"
+    },
+    "clean_ram.sh": {
+        "name": "clean_ram",
+        "description": "Tool Package"
+    },
+    "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk": {
+        "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
+        "description": "Tool Package"
+    },
+    "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk": {
+        "name": "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all",
+        "description": "Tool Package"
+    },
+    "enigma2-plugin-softcams-oscam_11878-emu-r802_all.ipk": {
+        "name": "enigma2-plugin-softcams-oscam_11878-emu-r802_all",
+        "description": "Tool Package"
+    },
+    "enigma2-plugin-softcams-oscam_11886-emu-r803_all.ipk": {
+        "name": "enigma2-plugin-softcams-oscam_11886-emu-r803_all",
+        "description": "Tool Package"
+    },
+    "enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all.ipk": {
+        "name": "enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all",
+        "description": "Tool Package"
+    },
+    "enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all.ipk": {
+        "name": "enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all",
+        "description": "Tool Package"
+    },
+    "enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all.ipk": {
+        "name": "enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all",
+        "description": "Tool Package"
+    },
+    "fix_network.sh": {
+        "name": "fix_network",
+        "description": "Tool Package"
+    },
+    "restart_cam.sh": {
+        "name": "restart_cam",
+        "description": "Tool Package"
+    },
+    "satellites-update.zip": {
+        "name": "satellites-update",
+        "description": "Tool Package"
+    },
+    "update_packages.sh": {
+        "name": "update_packages",
+        "description": "Tool Package"
+    },
+    "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip": {
+        "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
+        "description": "e"
+    },
+    "egami-11.0-r21-novaler4k-20260519_multi.zip": {
+        "name": "egami-11.0-r21-novaler4k-20260519_multi",
+        "description": "e"
+    },
+    "egami-11.0-r21-novaler4kpro-20260519_multi.zip": {
+        "name": "egami-11.0-r21-novaler4kpro-20260519_multi",
+        "description": "e"
+    },
+    "egami-11.0-r21-novaler4kse-20260519_multi.zip": {
+        "name": "egami-11.0-r21-novaler4kse-20260519_multi",
+        "description": "e"
+    },
+    "egami-11.0-r21-zgemmah17combo-20260519_multi.zip": {
+        "name": "egami-11.0-r21-zgemmah17combo-20260519_multi",
+        "description": "e"
+    },
+    "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip": {
+        "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
+        "description": "e"
+    },
+    "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip": {
+        "name": "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb",
+        "description": "e"
+    },
+    "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip": {
+        "name": "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb",
+        "description": "e"
+    },
+    "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip": {
+        "name": "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb",
+        "description": "e"
+    },
+    "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip": {
+        "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
+        "description": "e"
+    },
+    "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
+        "description": "e"
+    },
+    "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
+        "description": "e"
+    },
+    "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb",
+        "description": "e"
+    },
+    "openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb",
+        "description": "e"
+    },
+    "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
+        "description": "e"
+    },
+    "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb",
+        "description": "e"
+    },
+    "openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip": {
+        "name": "openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb",
+        "description": "e"
+    },
+    "opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip": {
+        "name": "opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb",
+        "description": "e"
+    },
+    "opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip": {
+        "name": "opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc",
+        "description": "e"
+    },
+    "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip": {
+        "name": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc",
+        "description": "e"
+    },
+    "opendroid-8.1.1-vusolo4k-20260720_usb.zip": {
+        "name": "opendroid-8.1.1-vusolo4k-20260720_usb",
+        "description": "e"
+    },
+    "opendroid-8.1.1-vuuno4k-20260720_usb.zip": {
+        "name": "opendroid-8.1.1-vuuno4k-20260720_usb",
+        "description": "e"
+    },
+    "opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip": {
+        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
+        "description": "e"
+    },
+    "openhdf-7.2-gbquad4k-13-20230501_usb.zip": {
+        "name": "openhdf-7.2-gbquad4k-13-20230501_usb",
+        "description": "e"
+    },
+    "openhdf-7.2-gbtrio4k-13-20230502_mmc.zip": {
+        "name": "openhdf-7.2-gbtrio4k-13-20230502_mmc",
+        "description": "e"
+    },
+    "openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip": {
+        "name": "openhdf-7.2-gbtrio4kpro-13-20230502_mmc",
+        "description": "e"
+    },
+    "openhdf-7.2-sf3038-11-20230415_usb.zip": {
+        "name": "openhdf-7.2-sf3038-11-20230415_usb",
+        "description": "e"
+    },
+    "openhdf-7.2-sf4008-14-20230506_usb.zip": {
+        "name": "openhdf-7.2-sf4008-14-20230506_usb",
+        "description": "e"
+    },
+    "openhdf-7.5-sf8008-72-20260528_mmc.zip": {
+        "name": "openhdf-7.5-sf8008-72-20260528_mmc",
+        "description": "e"
+    },
+    "openhdf-7.5-sx88v2-72-20260528_mmc.zip": {
+        "name": "openhdf-7.5-sx88v2-72-20260528_mmc",
+        "description": "e"
+    },
+    "openhdf-7.5-sx988-72-20260528_mmc.zip": {
+        "name": "openhdf-7.5-sx988-72-20260528_mmc",
+        "description": "e"
+    },
+    "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip": {
+        "name": "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc",
+        "description": "e"
+    },
+    "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip": {
+        "name": "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb",
+        "description": "e"
+    },
+    "openvix-6.7.020.release-sx988_mmc.zip": {
+        "name": "openvix-6.7.020.release-sx988_mmc",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-dm900_mmc.zip": {
+        "name": "openvix-6.9.001.release-dm900_mmc",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-dm920_mmc.zip": {
+        "name": "openvix-6.9.001.release-dm920_mmc",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-sf8008m_mmc.zip": {
+        "name": "openvix-6.9.001.release-sf8008m_mmc",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-sfx6008_multi.zip": {
+        "name": "openvix-6.9.001.release-sfx6008_multi",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-sx88v2_mmc.zip": {
+        "name": "openvix-6.9.001.release-sx88v2_mmc",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuduo2_usb.zip": {
+        "name": "openvix-6.9.001.release-vuduo2_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuduo4kse_usb.zip": {
+        "name": "openvix-6.9.001.release-vuduo4kse_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuduo4k_usb.zip": {
+        "name": "openvix-6.9.001.release-vuduo4k_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vusolo2_usb.zip": {
+        "name": "openvix-6.9.001.release-vusolo2_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vusolo4k_usb.zip": {
+        "name": "openvix-6.9.001.release-vusolo4k_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuultimo4k_usb.zip": {
+        "name": "openvix-6.9.001.release-vuultimo4k_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuuno4kse_usb.zip": {
+        "name": "openvix-6.9.001.release-vuuno4kse_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuuno4k_usb.zip": {
+        "name": "openvix-6.9.001.release-vuuno4k_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuzero4k_usb.zip": {
+        "name": "openvix-6.9.001.release-vuzero4k_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-vuzero_usb.zip": {
+        "name": "openvix-6.9.001.release-vuzero_usb",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-zgemmah17combo_multi.zip": {
+        "name": "openvix-6.9.001.release-zgemmah17combo_multi",
+        "description": "e"
+    },
+    "openvix-6.9.001.release-zgemmah82h_nand.zip": {
+        "name": "openvix-6.9.001.release-zgemmah82h_nand",
+        "description": "e"
+    },
+    "novaler4k-PurE2-7.6-20260816_multi.zip": {
+        "name": "novaler4k-PurE2-7.6-20260816_multi",
+        "description": "e"
+    },
+    "novaler4kpro-PurE2-7.6-20260816_multi.zip": {
+        "name": "novaler4kpro-PurE2-7.6-20260816_multi",
+        "description": "e"
+    },
+    "novaler4kse-PurE2-7.6-20260816_multi.zip": {
+        "name": "novaler4kse-PurE2-7.6-20260816_multi",
+        "description": "e"
+    },
+    "sf4008-PurE2-7.6-20260814_usb.zip": {
+        "name": "sf4008-PurE2-7.6-20260814_usb",
+        "description": "e"
+    },
+    "sf8008-PurE2-7.6-20260816_mmc.zip": {
+        "name": "sf8008-PurE2-7.6-20260816_mmc",
+        "description": "e"
+    },
+    "vuduo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "vuduo4k-PurE2-7.6-20260817_usb",
+        "description": "e"
+    },
+    "vuduo4kse-PurE2-7.6-20260817_usb.zip": {
+        "name": "vuduo4kse-PurE2-7.6-20260817_usb",
+        "description": "e"
+    },
+    "vusolo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "vusolo4k-PurE2-7.6-20260817_usb",
+        "description": "e"
+    },
+    "vuultimo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "vuultimo4k-PurE2-7.6-20260817_usb",
+        "description": "e"
+    },
+    "vuuno4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "vuuno4k-PurE2-7.6-20260817_usb",
+        "description": "e"
+    },
+    "vuzero4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "vuzero4k-PurE2-7.6-20260817_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuduo2_202212231310_usb.zip": {
+        "name": "VTi_15-0-02_vuduo2_202212231310_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuduo4kse_202212231255_usb.zip": {
+        "name": "VTi_15-0-02_vuduo4kse_202212231255_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuduo4k_202212231257_usb.zip": {
+        "name": "VTi_15-0-02_vuduo4k_202212231257_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vusolo2_202212231312_usb.zip": {
+        "name": "VTi_15-0-02_vusolo2_202212231312_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vusolo4k_202212231308_usb.zip": {
+        "name": "VTi_15-0-02_vusolo4k_202212231308_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vusolose_202212231314_usb.zip": {
+        "name": "VTi_15-0-02_vusolose_202212231314_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuultimo4k_202212231304_usb.zip": {
+        "name": "VTi_15-0-02_vuultimo4k_202212231304_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuuno4kse_202212231259_usb.zip": {
+        "name": "VTi_15-0-02_vuuno4kse_202212231259_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuuno4k_202212231306_usb.zip": {
+        "name": "VTi_15-0-02_vuuno4k_202212231306_usb",
+        "description": "e"
+    },
+    "VTi_15-0-02_vuzero4k_202212231301_usb.zip": {
+        "name": "VTi_15-0-02_vuzero4k_202212231301_usb",
+        "description": "e"
+    },
+    "Picon 7.ow.zip": {
+        "name": "Picon 7.ow",
+        "description": "Picons Package"
+    },
+    "picon-13E.zip": {
+        "name": "picon-13E",
+        "description": "e"
+    },
+    "picon.zip": {
+        "name": "picon",
+        "description": "e"
+    },
+    "picon_16.0E.zip": {
+        "name": "picon_16.0E",
+        "description": "e"
+    },
+    "picon_26.zip": {
+        "name": "picon_26",
+        "description": "e"
+    },
+    "picon_39E.zip": {
+        "name": "picon_39E",
+        "description": "e"
+    },
+    "picon_8.0W.zip": {
+        "name": "picon_8.0W",
+        "description": "e"
+    },
+    "picon_ALL.zip": {
+        "name": "picon_ALL",
+        "description": "e"
+    },
+    "channels_backup_MNASR_20260527.tar.gz": {
+        "name": "channels_backup_MNASR_20260527",
+        "description": "Channels Settings"
+    },
+    "channels_backup_openATV_20260602_000828.tar.gz": {
+        "name": "channels_backup_openATV_20260602_000828",
+        "description": "Channels Settings"
+    },
+    "ArabicSavior-1.3.tar.gz": {
+        "name": "ArabicSavior-1.3",
+        "description": "Novaler Package"
+    },
+    "KeyAdder.tar.gz": {
+        "name": "KeyAdder",
+        "description": "Novaler Package"
+    },
+    "RaedQuickSignal-12.0.tar.gz": {
+        "name": "RaedQuickSignal-12.0",
+        "description": "Novaler Package"
+    },
+    "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk": {
+        "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
+        "description": "Novaler Package"
+    },
+    "cfg_Zoom_Final_FIX7x_all.ipk": {
+        "name": "cfg_Zoom_Final_FIX7x_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-Athantimes_2.8_PY3.ipk": {
+        "name": "enigma2-plugin-extensions-Athantimes_2.8_PY3",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-ajpanel_v8.8.5_all.ipk": {
+        "name": "enigma2-plugin-extensions-ajpanel_v8.8.5_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-alternativesoftcammanager_4.0_all.ipk": {
+        "name": "enigma2-plugin-extensions-alternativesoftcammanager_4.0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-ansite_1.3_all.ipk": {
+        "name": "enigma2-plugin-extensions-ansite_1.3_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-audiopip_0.3_all.ipk": {
+        "name": "enigma2-plugin-extensions-audiopip_0.3_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-camnova_1.8-arm_all.ipk": {
+        "name": "enigma2-plugin-extensions-camnova_1.8-arm_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all.ipk": {
+        "name": "enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all.ipk": {
+        "name": "enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-freeserver_7.2.6_all.ipk": {
+        "name": "enigma2-plugin-extensions-freeserver_7.2.6_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk": {
+        "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk": {
+        "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk": {
+        "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk": {
+        "name": "enigma2-plugin-extensions-netspeedtest_2.1.3_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-petazetas_1.1_all.ipk": {
+        "name": "enigma2-plugin-extensions-petazetas_1.1_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-plutotv_20240220_all.ipk": {
+        "name": "enigma2-plugin-extensions-plutotv_20240220_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-rakutentv_20240324_all.ipk": {
+        "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-screengrabber_2.6_all.ipk": {
+        "name": "enigma2-plugin-extensions-screengrabber_2.6_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-subssupport_1.5.8-r3_all.ipk": {
+        "name": "enigma2-plugin-extensions-subssupport_1.5.8-r3_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all.ipk": {
+        "name": "enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-tvspro_1.3_all.ipk": {
+        "name": "enigma2-plugin-extensions-tvspro_1.3_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all.ipk": {
+        "name": "enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-xcplugin-forever_1.8_all.ipk": {
+        "name": "enigma2-plugin-extensions-xcplugin-forever_1.8_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-extensions-xstreamity_4.02.20230510_all.ipk": {
+        "name": "enigma2-plugin-extensions-xstreamity_4.02.20230510_all",
+        "description": "Novaler Package"
+    },
+    "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
+        "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
+        "description": "Novaler Package"
+    }
+}
