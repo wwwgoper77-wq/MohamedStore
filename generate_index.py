@@ -22,43 +22,51 @@ data = {
 }
 
 # -------------------------------------------------
-# 1. حفظ واسترجاع الأوصاف والأسماء المكتوبة باللغة العربية
+# 1. استرجاع وحفظ الأوصاف والأسماء العربية من خزنة البيانات الثابتة
 # -------------------------------------------------
-old_descriptions = {}
-old_names = {}
+META_STORE_FILE = "feed/metadata_store.json"
+metadata_store = {}
 
-try:
-    if os.path.exists("feed/index.json"):
+# أولاً: قراءة الخزنة الدائمة إن وجدت
+if os.path.exists(META_STORE_FILE):
+    try:
+        with open(META_STORE_FILE, "r", encoding="utf-8") as f:
+            metadata_store = json.load(f)
+    except Exception:
+        metadata_store = {}
+
+# ثانياً: استخراج أي تعديل جديد كتبته في feed/index.json وحفظه في الخزنة
+if os.path.exists("feed/index.json"):
+    try:
         with open("feed/index.json", "r", encoding="utf-8") as f:
-            old = json.load(f)
+            old_index = json.load(f)
 
-        def save_metadata(item):
+        def sync_item(item):
             if not isinstance(item, dict):
                 return
             fn = item.get("file", "").split("/")[-1]
             c_name = item.get("name", "")
             desc = item.get("description", "")
+            if fn:
+                if fn not in metadata_store:
+                    metadata_store[fn] = {}
+                if c_name:
+                    metadata_store[fn]["name"] = c_name
+                if desc:
+                    metadata_store[fn]["description"] = desc
 
-            if desc:
-                if c_name: old_descriptions[c_name] = desc
-                if fn: old_descriptions[fn] = desc
-
-            if c_name and fn:
-                old_names[fn] = c_name
-                old_names[c_name] = c_name
-
-        for cat, items in old.get("categories", {}).items():
+        for cat, items in old_index.get("categories", {}).items():
             if isinstance(items, list):
                 for el in items:
                     if isinstance(el, dict) and "items" in el:
                         for it in el.get("items", []):
-                            save_metadata(it)
+                            sync_item(it)
                     elif isinstance(el, dict):
-                        save_metadata(el)
+                        sync_item(el)
+    except Exception as e:
+        print("Notice loading index.json:", e)
 
-    print(f"✅ Loaded {len(old_descriptions)} descriptions & {len(old_names)} custom names.")
-except Exception as e:
-    print("Notice loading previous descriptions:", e)
+print(f"✅ Secure Metadata Store loaded with {len(metadata_store)} items.")
 
 
 def image_url(prefix):
@@ -87,25 +95,22 @@ def normalize_text(text):
 
 
 def get_best_name(filename, default_clean):
-    """دالة ذكية لاختيار الاسم العربي وعدم استبداله بالإنجليزي"""
-    if filename in old_names and old_names[filename].strip():
-        return old_names[filename].strip()
-    if default_clean in old_names and old_names[default_clean].strip():
-        return old_names[default_clean].strip()
+    """دالة ذكية ومحمية لاسترجاع الاسم العربي المحفوظ"""
+    if filename in metadata_store and metadata_store[filename].get("name"):
+        return metadata_store[filename]["name"].strip()
+    if default_clean in metadata_store and metadata_store[default_clean].get("name"):
+        return metadata_store[default_clean]["name"].strip()
     return default_clean
 
 
 def get_best_description(clean_name, filename, release_body="", default_desc=""):
-    """دالة ذكية لاختيار الوصف العربي وعدم استبداله بالإنجليزي"""
-    # 1. إذا كان موجوداً في الأوصاف القديمة المحفوظة
-    if clean_name in old_descriptions and old_descriptions[clean_name].strip():
-        return old_descriptions[clean_name].strip()
-    if filename in old_descriptions and old_descriptions[filename].strip():
-        return old_descriptions[filename].strip()
+    """دالة ذكية ومحمية لاسترجاع الوصف العربي المحفوظ"""
+    if filename in metadata_store and metadata_store[filename].get("description"):
+        return metadata_store[filename]["description"].strip()
+    if clean_name in metadata_store and metadata_store[clean_name].get("description"):
+        return metadata_store[clean_name]["description"].strip()
 
-    # 2. إذا كان مكتوباً في تفاصيل الـ Release
     if release_body and release_body.strip():
-        # نأخذ أول سطر مفيد من وصف الـ Release
         lines = [l.strip() for l in release_body.split("\n") if l.strip() and not l.strip().startswith("#")]
         if lines:
             return lines[0]
@@ -114,7 +119,7 @@ def get_best_description(clean_name, filename, release_body="", default_desc="")
 
 
 # -------------------------------------------------
-# 2. جلب ملفات الـ Releases وأوصافها العربية
+# 2. جلب ملفات الـ Releases
 # -------------------------------------------------
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
@@ -378,10 +383,16 @@ handle_flat("plugins", lambda n: True, "Plugin Extension")
 
 
 # -------------------------------------------------
-# 6. حفظ الفهرس بترميز UTF-8 لدعم الحروف العربية
+# 6. حفظ الفهرس وخزنة البيانات الثابتة بترميز UTF-8
 # -------------------------------------------------
 os.makedirs("feed", exist_ok=True)
+
+# حفظ ملف index.json
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json without version field!")
+# حفظ الخزنة الدائمة metadata_store.json
+with open(META_STORE_FILE, "w", encoding="utf-8") as f:
+    json.dump(metadata_store, f, indent=4, ensure_ascii=False)
+
+print("🎉 Successfully generated feed/index.json and locked metadata in metadata_store.json!")
