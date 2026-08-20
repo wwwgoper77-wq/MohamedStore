@@ -360,7 +360,7 @@
                     },
                     {
                         "name": "Skin-Multibox-FHD",
-                        "version": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED",
+                        "version": "Skin-Multibox",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk",
                         "image": ""
@@ -500,7 +500,7 @@
                     },
                     {
                         "name": "skins-ozskin-fhd",
-                        "version": "by.Mmark.v.1.0.0",
+                        "version": "by.Mmark",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk",
                         "image": ""
@@ -513,7 +513,7 @@
                         "image": ""
                     },
                     {
-                        "name": "metrixconfluenceatv-adrenalinnrw",
+                        "name": "metrixconfluenceatv",
                         "version": "multiposter",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk",
@@ -535,7 +535,7 @@
                     },
                     {
                         "name": "skin-octelfhd_2.2-By-SkinMania",
-                        "version": "2.2-By-SkinMania-MOD-By-MEHDI",
+                        "version": "SkinMania",
                         "description": "All Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
@@ -554,7 +554,7 @@
                     },
                     {
                         "name": "skins-ozeta_1.5.2-byhossam_all",
-                        "version": "1.5.2-byhossam",
+                        "version": "byhossam",
                         "description": "Egami Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-ozeta_1.5.2-byhossam_all.ipk",
                         "image": ""
@@ -580,7 +580,7 @@
                     },
                     {
                         "name": "revolution-pro_full",
-                        "version": "full.1.5.Rev.dragon",
+                        "version": "dragon",
                         "description": "OpenATV Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk",
                         "image": ""
@@ -648,14 +648,14 @@
                     },
                     {
                         "name": "skin-enigma2-alienaware-obh4",
-                        "version": "skin-enigma2-alienaware-obh4",
+                        "version": "skin",
                         "description": "OpenBlack Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/skin-enigma2-alienaware-obh4_all.ipk",
                         "image": ""
                     },
                     {
                         "name": "OpenBlack-skin-armynextgengradient_BlackHole",
-                        "version": "OpenBlack-skin-armynextgengradient.mod.fhroma",
+                        "version": "OpenBlack",
                         "description": "OpenBlack Skin",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
                         "image": ""
@@ -700,7 +700,7 @@
                     },
                     {
                         "name": "whiteshadowfhd_sharp987_openpli",
-                        "version": "openpli8.3-r1.00",
+                        "version": "openpli8",
                         "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk",
                         "image": ""
