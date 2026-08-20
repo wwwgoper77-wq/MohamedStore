@@ -5,49 +5,49 @@
         "plugins": [
             {
                 "name": "AJPanel",
-                "description": "مدير الملفات",
+                "description": "لوحة تحكم شاملة ومدير ملفات وسكربتات وأدوات متقدمة للانيجما2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/AJPanel.sh",
                 "image": ""
             },
             {
-                "name": "ArabicSavior",
-                "description": "Plugin Extension",
+                "name": "Arabic Savior",
+                "description": "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
                 "image": ""
             },
             {
-                "name": "E2BissKeyEditor",
-                "description": "Plugin Extension",
+                "name": "E2 Biss Key Editor",
+                "description": "محرر شفرات البيس Biss وتعديلها بسهولة عبر الريموت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2BissKeyEditor.zip",
                 "image": ""
             },
             {
-                "name": "EPGGrabber",
-                "description": "Plugin Extension",
+                "name": "EPG Grabber",
+                "description": "جلب وتحميل الدليل الإلكتروني للبرامج EPG للقنوات الفضائية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGGrabber.zip",
                 "image": ""
             },
             {
-                "name": "EPGTranslator",
-                "description": "Plugin Extension",
+                "name": "EPG Translator",
+                "description": "ترجمة نصوص ومعلومات الدليل الإلكتروني EPG إلى العربية فورياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGTranslator.zip",
                 "image": ""
             },
             {
-                "name": "FuryBiss",
-                "description": "Plugin Extension",
+                "name": "Fury Biss",
+                "description": "جلب وتحديث شفرات البيس للقنوات المشفرة تلقائياً عبر الإنترنت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FuryBiss.zip",
                 "image": ""
             },
             {
-                "name": "IPStreamer",
-                "description": "Plugin Extension",
+                "name": "IP Streamer",
+                "description": "بث واستقبال روابط وقنوات البث المباشر عبر الشبكة المنزلية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPStreamer.zip",
                 "image": ""
             },
             {
-                "name": "InternetSpeed",
-                "description": "Plugin Extension",
+                "name": "Internet Speed",
+                "description": "أداة قياس سرعة الإنترنت المباشرة والـ Ping على الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/InternetSpeed.zip",
                 "image": ""
             },
@@ -58,140 +58,140 @@
                 "image": ""
             },
             {
-                "name": "MC stream",
-                "description": "Plugin Extension",
+                "name": "MC Stream",
+                "description": "مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
             {
-                "name": "MixAudio",
-                "description": "Plugin Extension",
+                "name": "Mix Audio",
+                "description": "خلط ومزامنة القنوات الصوتية مع البث المباشر للتايم شفت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MixAudio.sh",
                 "image": ""
             },
             {
-                "name": "MyTranslator",
-                "description": "Plugin Extension",
+                "name": "My Translator",
+                "description": "ترجمة سريعة للقوائم والأحداث والمحتوى التلفزيوني",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
                 "image": ""
             },
             {
-                "name": "RaedQuickSignal",
-                "description": "Plugin Extension",
+                "name": "Raed Quick Signal",
+                "description": "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
                 "image": ""
             },
             {
-                "name": "SubsSupport",
-                "description": "Plugin Extension",
+                "name": "Subs Support",
+                "description": "تحميل وتشغيل ملفات الترجمة للأفلام والقنوات التلفزيونية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SubsSupport.zip",
                 "image": ""
             },
             {
-                "name": "TMBD",
-                "description": "Plugin Extension",
+                "name": "TMDB",
+                "description": "جلب بوسترات ومعلومات وقصص الأفلام والمسلسلات من قاعدة TMDB",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TMBD.zip",
                 "image": ""
             },
             {
-                "name": "TranslatorProAI",
-                "description": "Plugin Extension",
+                "name": "Translator Pro AI",
+                "description": "ترجمة احترافية فورية مدعومة بالذكاء الاصطناعي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/TranslatorProAI.zip",
                 "image": ""
             },
             {
                 "name": "YouTube",
-                "description": "Plugin Extension",
+                "description": "تطبيق تشغيل مقاطع وبثوث اليوتيوب بدقة عالية على الانيجما2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/YouTube.zip",
                 "image": ""
             },
             {
-                "name": "Zoom",
-                "description": "Plugin Extension",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.7 (Py2.7)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.7 (Py3.11)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.11_ff6.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.9 (Py3.13)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.9 (Py3.14)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.7 (Py3.9)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py3.9_ff4.4.3.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.9 (Py3.12)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.12_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.9 (Py3.13)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff7.1.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.9 (Py3.13 - FF8.0)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro v1.9 (Py3.14)",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-tivimatee2_1.0.01_all",
-                "description": "Plugin Extension",
+                "name": "TiviMate E2",
+                "description": "مشغل اشتراكات الـ IPTV بواجهة تيفيمات الاحترافية والسريعة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-uninstaller_1.0_all",
-                "description": "Plugin Extension",
+                "name": "Plugin Uninstaller",
+                "description": "أداة حذف وإزالة البلجنات وحزم التثبيت وحذف مخلفاتها",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-uninstaller_1.0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-timeshift-delay-egami_3.0_all",
-                "description": "Plugin Extension",
+                "name": "صورة EGAMI لجهاز الجهاز",
+                "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",
                 "image": ""
             },
             {
-                "name": "ipa udio pro_1.7",
-                "description": "Plugin Extension",
+                "name": "IPAudio Pro All",
+                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ipa udio pro_1.7.ipk",
                 "image": ""
             },
             {
-                "name": "FootOnSat.plugin",
-                "description": "e",
+                "name": "FootOnSat",
+                "description": "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
             }
@@ -207,260 +207,260 @@
                         "image": ""
                     },
                     {
-                        "name": "SKIN-BATMAN-VPX-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين SKIN-BATMAN-VPX-FHD-By-Muaath",
+                        "description": "سكين SKIN-BATMAN-VPX-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-BATMAN-VPX-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ICONE-VPX-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين SKIN-ICONE-VPX-FHD-By-Muaath",
+                        "description": "سكين SKIN-ICONE-VPX-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ICONE-VPX-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ICONE-VPX2-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين SKIN-ICONE-VPX2-FHD-By-Muaath",
+                        "description": "سكين SKIN-ICONE-VPX2-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ICONE-VPX2-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ORANGESKY-XP-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين SKIN-ORANGESKY-XP-FHD-By-Muaath",
+                        "description": "سكين SKIN-ORANGESKY-XP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ORANGESKY-XP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "SKIN-ORANGESKY-XP2-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين SKIN-ORANGESKY-XP2-FHD-By-Muaath",
+                        "description": "سكين SKIN-ORANGESKY-XP2-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/SKIN-ORANGESKY-XP2-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BATMAN-BLACK-P-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-BATMAN-BLACK-P-FHD-By-Muaath",
+                        "description": "سكين Skin-BATMAN-BLACK-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BATMAN-RED-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-BATMAN-RED-FHD-By-Muaath",
+                        "description": "سكين Skin-BATMAN-RED-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BATMAN-RED-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BEIN-BLACK-NP-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-BEIN-BLACK-NP-FHD-By-Muaath",
+                        "description": "سكين Skin-BEIN-BLACK-NP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BEIN-BLACK-NP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BEIN-NEP-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-BEIN-NEP-FHD-By-Muaath",
+                        "description": "سكين Skin-BEIN-NEP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BEIN-NEP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED",
+                        "description": "سكين Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-BundesligaFHD-By-Maggy-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-BundesligaFHD-By-Maggy-MOD-By-RAED",
+                        "description": "سكين Skin-BundesligaFHD-By-Maggy-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-BundesligaFHD-By-Maggy-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-CH.LEAGUE-PN-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-CH",
+                        "description": "سكين Skin-CH عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-CH.LEAGUE-PN-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED",
+                        "description": "سكين Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-EUR02020-FHD-N-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-EUR02020-FHD-N-By-Muaath",
+                        "description": "سكين Skin-EUR02020-FHD-N-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-EUR02020-FHD-N-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-MX-X6-By-Matrix10-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-MX-X6-By-Matrix10-MOD-By-RAED",
+                        "description": "سكين Skin-MX-X6-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX-X6-By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-MX-X7-By-Matrix10-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-MX-X7-By-Matrix10-MOD-By-RAED",
+                        "description": "سكين Skin-MX-X7-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX-X7-By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-MX_HQ9_By-Matrix10-MOD-By-RAED",
+                        "description": "سكين Skin-MX_HQ9_By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-MX_HQ9_By-Matrix10-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
-                        "description": "All Skin",
+                        "name": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only",
+                        "description": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-OSN-PN-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-OSN-PN-FHD-By-Muaath",
+                        "description": "سكين Skin-OSN-PN-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-OSN-PN-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-QATAR2022-GPN-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-QATAR2022-GPN-FHD-By-Muaath",
+                        "description": "سكين Skin-QATAR2022-GPN-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-QATAR2022-GPN-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-ROBOCOP-P-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-ROBOCOP-P-FHD-By-Muaath",
+                        "description": "سكين Skin-ROBOCOP-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-ROBOCOP-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-SPIDERMAN-P-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-SPIDERMAN-P-FHD-By-Muaath",
+                        "description": "سكين Skin-SPIDERMAN-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-SPIDERMAN-P-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-SPIDERMAN-SP-FHD-By-Muaath",
-                        "description": "All Skin",
+                        "name": "سكين Skin-SPIDERMAN-SP-FHD-By-Muaath",
+                        "description": "سكين Skin-SPIDERMAN-SP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-SPIDERMAN-SP-FHD-By-Muaath.ipk",
                         "image": ""
                     },
                     {
-                        "name": "Skin-Sky-FHD-By-Maggy-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "سكين Skin-Sky-FHD-By-Maggy-MOD-By-RAED",
+                        "description": "سكين Skin-Sky-FHD-By-Maggy-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Sky-FHD-By-Maggy-MOD-By-RAED.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all",
-                        "description": "All Skin",
+                        "name": "سكين KIII-PRO-by-zelda77_v3",
+                        "description": "سكين KIII-PRO-by-zelda77_v3 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-karonte-fhd-all_1.0_all",
-                        "description": "All Skin",
+                        "name": "سكين karonte-fhd-all_1",
+                        "description": "سكين karonte-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-karonte-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-kitte888lite-fhd-all_1.3_all",
-                        "description": "All Skin",
+                        "name": "سكين kitte888lite-fhd-all_1",
+                        "description": "سكين kitte888lite-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-kitte888lite-fhd-all_1.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-litehd_1.6_all",
-                        "description": "All Skin",
+                        "name": "سكين litehd_1",
+                        "description": "سكين litehd_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-litehd_1.6_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-madmax-impossible-pli_2.3_all",
-                        "description": "All Skin",
+                        "name": "سكين madmax-impossible-pli_2",
+                        "description": "سكين madmax-impossible-pli_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-madmax-impossible-pli_2.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-madmax-impossible_2.4_all",
-                        "description": "All Skin",
+                        "name": "سكين madmax-impossible_2",
+                        "description": "سكين madmax-impossible_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-madmax-impossible_2.4_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all",
-                        "description": "All Skin",
+                        "name": "سكين mx--sline-posterx_2",
+                        "description": "سكين mx--sline-posterx_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-nitro-fhd-all_1.1_all",
-                        "description": "All Skin",
+                        "name": "سكين nitro-fhd-all_1",
+                        "description": "سكين nitro-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitro-fhd-all_1.1_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all",
-                        "description": "All Skin",
+                        "name": "سكين nitrofhd-green-all_2",
+                        "description": "سكين nitrofhd-green-all_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all",
-                        "description": "All Skin",
+                        "name": "سكين novaler-s-fhd-indianred_3",
+                        "description": "سكين novaler-s-fhd-indianred_3 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-obselite-fhd-all_1.0_all",
-                        "description": "All Skin",
+                        "name": "سكين obselite-fhd-all_1",
+                        "description": "سكين obselite-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-obselite-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-octagon-hd-style-dark_1.3_all",
-                        "description": "All Skin",
+                        "name": "سكين octagon-hd-style-dark_1",
+                        "description": "سكين octagon-hd-style-dark_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-octagon-hd-style-dark_1.3_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-octagoneightfhd_V4.50_all",
-                        "description": "All Skin",
+                        "name": "سكين octagoneightfhd_V4",
+                        "description": "سكين octagoneightfhd_V4 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-octagoneightfhd_V4.50_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all",
-                        "description": "All Skin",
+                        "name": "سكين ozfhd_by",
+                        "description": "سكين ozfhd_by عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-beta-pro-fhd_v1.1_all_BY_BAhaa_1772022_Xtraevent",
-                        "description": "All Skin",
+                        "name": "سكين beta-pro-fhd_v1",
+                        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-beta-pro-fhd_v1.1_all_BY_BAhaa_1772022_Xtraevent.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all",
-                        "description": "All Skin",
+                        "name": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all",
+                        "description": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-metrixperience-adrenalinnrw_1.0_all",
-                        "description": "All Skin",
+                        "name": "سكين metrixperience-adrenalinnrw_1",
+                        "description": "سكين metrixperience-adrenalinnrw_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino",
-                        "description": "All Skin",
+                        "name": "صورة OPENATV لجهاز الجهاز",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
                         "image": ""
                     },
                     {
-                        "name": "skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all",
-                        "description": "All Skin",
+                        "name": "سكين octelfhd_2",
+                        "description": "سكين octelfhd_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
                     }
@@ -470,20 +470,20 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "enigma2-plugin-skins-luka-fhd_1.0_egami",
-                        "description": "Egami Skin",
+                        "name": "صورة EGAMI لجهاز الجهاز",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-ozeta_1.5.2-byhossam_all",
-                        "description": "Egami Skin",
+                        "name": "سكين ozeta_1",
+                        "description": "سكين ozeta_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-ozeta_1.5.2-byhossam_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
-                        "description": "OpenP Skin",
+                        "name": "سكين beta-pro-fhd_v1",
+                        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     }
@@ -499,26 +499,26 @@
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all",
-                        "description": "OpenATV Skin",
+                        "name": "سكين revolution-pro_full",
+                        "description": "سكين revolution-pro_full عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
-                        "description": "OpenP Skin",
+                        "name": "سكين multiposter-fhd-all_1",
+                        "description": "سكين multiposter-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-premium-fhd-black_2.4_all",
-                        "description": "OpenATV Skin",
+                        "name": "سكين premium-fhd-black_2",
+                        "description": "سكين premium-fhd-black_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skins-premium-fhd-black_2.4_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
-                        "description": "OpenP Skin",
+                        "name": "سكين beta-pro-fhd_v1",
+                        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     }
@@ -528,44 +528,44 @@
                 "name": "OpenBlack",
                 "items": [
                     {
-                        "name": "enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all",
-                        "description": "OpenBlack Skin",
+                        "name": "سكين mx-hq10-2-by-mamba65_v2_all",
+                        "description": "سكين mx-hq10-2-by-mamba65_v2_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-mxgraphite_mod.fhroma_all",
-                        "description": "OpenBlack Skin",
+                        "name": "سكين mxgraphite_mod",
+                        "description": "سكين mxgraphite_mod عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-mxgraphite_mod.fhroma_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all",
-                        "description": "OpenBlack Skin",
+                        "name": "سكين q-darkblue-fhd-bh_1",
+                        "description": "سكين q-darkblue-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all",
-                        "description": "OpenBlack Skin",
+                        "name": "سكين q-purple-fhd-bh_1",
+                        "description": "سكين q-purple-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all",
-                        "description": "OpenBlack Skin",
+                        "name": "سكين waves4-fire-weather-by-mamba65_v1_all",
+                        "description": "سكين waves4-fire-weather-by-mamba65_v1_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "skin-enigma2-alienaware-obh4_all",
-                        "description": "OpenBlack Skin",
+                        "name": "سكين enigma2-alienaware-obh4_all",
+                        "description": "سكين enigma2-alienaware-obh4_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/skin-enigma2-alienaware-obh4_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole",
-                        "description": "e",
+                        "name": "سكين OpenBlack-armynextgengradient",
+                        "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
                         "image": ""
                     }
@@ -593,20 +593,20 @@
                         "image": ""
                     },
                     {
-                        "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
-                        "description": "OpenP Skin",
+                        "name": "سكين multiposter-fhd-all_1",
+                        "description": "سكين multiposter-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
-                        "description": "OpenP Skin",
+                        "name": "سكين beta-pro-fhd_v1",
+                        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     },
                     {
-                        "name": "enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all",
-                        "description": "OpenP Skin",
+                        "name": "صورة OPENPLI لجهاز الجهاز",
+                        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk",
                         "image": ""
                     }
@@ -631,8 +631,8 @@
         ],
         "tools": [
             {
-                "name": "Ncam v15.8",
-                "description": "Tool Package",
+                "name": "تثبيت محاكي Ncam v15.8",
+                "description": "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/Ncam v15.8.sh",
                 "image": ""
             },
@@ -643,14 +643,14 @@
                 "image": ""
             },
             {
-                "name": "clean_crash",
-                "description": "Tool Package",
+                "name": "تنظيف ملفات الكراش Crash",
+                "description": "سكربت حذف ملفات الكراش واللوغ المؤقتة لتوفير الذاكرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_crash.sh",
                 "image": ""
             },
             {
-                "name": "clean_ram",
-                "description": "Tool Package",
+                "name": "تنظيف وتسريع الرام RAM",
+                "description": "سكربت تفريغ ذاكرة الرام المؤقتة وتسريع استجابة الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_ram.sh",
                 "image": ""
             },
@@ -661,62 +661,62 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all",
-                "description": "Tool Package",
+                "name": "Oscam Emu Levi45 v11965",
+                "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-oscam_11878-emu-r802_all",
-                "description": "Tool Package",
+                "name": "Oscam Emu r802 v11878",
+                "description": "محاكي أوسكام إيمو مستقر وسريع في كسر التشفير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11878-emu-r802_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-oscam_11886-emu-r803_all",
-                "description": "Tool Package",
+                "name": "Oscam Emu r803 v11886",
+                "description": "محاكي أوسكام إيمو محدث لفتح القنوات الفضائية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam_11886-emu-r803_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all",
-                "description": "Tool Package",
+                "name": "Oscam ICam v11725",
+                "description": "محاكي أوسكام آيكام لتشغيل باقات وقنوات ICam",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscamicam_11725-V9-Kitte888-V23Rev_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all",
-                "description": "Tool Package",
+                "name": "Oscam All Images r798 (ARM+MIPS)",
+                "description": "محاكي أوسكام الشامل لجميع الصور ومعالجات ARM و MIPS",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all",
-                "description": "Tool Package",
+                "name": "Oscam All Images r801 (ARM+MIPS)",
+                "description": "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all.ipk",
                 "image": ""
             },
             {
-                "name": "fix_network",
-                "description": "Tool Package",
+                "name": "إصلاح وإعادة تشغيل الشبكة",
+                "description": "سكربت حل مشاكل الاتصال بالإنترنت وإعادة ضبط الشبكة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_network.sh",
                 "image": ""
             },
             {
-                "name": "restart_cam",
-                "description": "Tool Package",
+                "name": "إعادة تشغيل الكامات Cam",
+                "description": "سكربت عمل ريستارت لمحاكيات الشفرات Oscam و Ncam عند التوقف",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/restart_cam.sh",
                 "image": ""
             },
             {
-                "name": "satellites-update",
-                "description": "Tool Package",
+                "name": "تحديث ملف الأقمار Satellites",
+                "description": "تحديث جميع ترددات وأقمار الستلايت لأحدث الترددات الحالية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/satellites-update.zip",
                 "image": ""
             },
             {
-                "name": "update_packages",
-                "description": "Tool Package",
+                "name": "تحديث حزم وفيدات الصورة",
+                "description": "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_packages.sh",
                 "image": ""
             }
@@ -726,32 +726,32 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb",
-                        "description": "e",
+                        "name": "صورة EGAMI لجهاز VUZERO4K",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "egami-11.0-r21-novaler4k-20260519_multi",
-                        "description": "e",
+                        "name": "صورة EGAMI لجهاز NOVALER4K",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز NOVALER4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4k-20260519_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "egami-11.0-r21-novaler4kpro-20260519_multi",
-                        "description": "e",
+                        "name": "صورة EGAMI لجهاز NOVALER4KPRO",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز NOVALER4KPRO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4kpro-20260519_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "egami-11.0-r21-novaler4kse-20260519_multi",
-                        "description": "e",
+                        "name": "صورة EGAMI لجهاز NOVALER4KSE",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز NOVALER4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-novaler4kse-20260519_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "egami-11.0-r21-zgemmah17combo-20260519_multi",
-                        "description": "e",
+                        "name": "صورة EGAMI لجهاز ZGEMMAH17COMBO",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز ZGEMMAH17COMBO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0-r21-zgemmah17combo-20260519_multi.zip",
                         "image": ""
                     }
@@ -761,32 +761,32 @@
                 "name": "OpenATV",
                 "items": [
                     {
-                        "name": "openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb",
-                        "description": "e",
+                        "name": "صورة OPENATV لجهاز VUDUO4K",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb",
-                        "description": "e",
+                        "name": "صورة OPENATV لجهاز VUSOLO4K",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUSOLO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb",
-                        "description": "e",
+                        "name": "صورة OPENATV لجهاز VUULTIMO4K",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUULTIMO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb",
-                        "description": "e",
+                        "name": "صورة OPENATV لجهاز VUUNO4K",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUUNO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb",
-                        "description": "e",
+                        "name": "صورة OPENATV لجهاز VUZERO4K",
+                        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip",
                         "image": ""
                     }
@@ -796,44 +796,44 @@
                 "name": "OpenBH",
                 "items": [
                     {
-                        "name": "openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUDUO4K",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUDUO4KSE",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUSOLO4K",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUSOLO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUUNO4K",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUUNO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUUNO4KSE",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUUNO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUZERO4K",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb",
-                        "description": "e",
+                        "name": "صورة OPENBH لجهاز VUULTIMO4K",
+                        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUULTIMO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip",
                         "image": ""
                     }
@@ -843,38 +843,38 @@
                 "name": "OpenDroid",
                 "items": [
                     {
-                        "name": "opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb",
-                        "description": "e",
+                        "name": "صورة OPENDROID لجهاز SF4008",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF4008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc",
-                        "description": "e",
+                        "name": "صورة OPENDROID لجهاز SF8008",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc",
-                        "description": "e",
+                        "name": "صورة OPENDROID لجهاز SF8008",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-vusolo4k-20260720_usb",
-                        "description": "e",
+                        "name": "صورة OPENDROID لجهاز VUSOLO4K",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUSOLO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-vuuno4k-20260720_usb",
-                        "description": "e",
+                        "name": "صورة OPENDROID لجهاز VUUNO4K",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUUNO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "opendroid-8.1.1-vuzero4k-20260715_system_images.usb",
-                        "description": "e",
+                        "name": "صورة OPENDROID لجهاز VUZERO4K",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
                         "image": ""
                     }
@@ -884,50 +884,50 @@
                 "name": "OpenHDF",
                 "items": [
                     {
-                        "name": "openhdf-7.2-gbquad4k-13-20230501_usb",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز GBQUAD4K",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbquad4k-13-20230501_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.2-gbtrio4k-13-20230502_mmc",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز GBTRIO4K",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4k-13-20230502_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.2-gbtrio4kpro-13-20230502_mmc",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز GBTRIO4KPRO",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4KPRO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.2-sf3038-11-20230415_usb",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز SF3038",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF3038",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf3038-11-20230415_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.2-sf4008-14-20230506_usb",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز SF4008",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF4008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf4008-14-20230506_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.5-sf8008-72-20260528_mmc",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز SF8008",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF8008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sf8008-72-20260528_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.5-sx88v2-72-20260528_mmc",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز SX88V2",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX88V2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx88v2-72-20260528_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openhdf-7.5-sx988-72-20260528_mmc",
-                        "description": "e",
+                        "name": "صورة OPENHDF لجهاز SX988",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX988",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx988-72-20260528_mmc.zip",
                         "image": ""
                     }
@@ -943,8 +943,8 @@
                         "image": ""
                     },
                     {
-                        "name": "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb",
-                        "description": "e",
+                        "name": "صورة OPENPLI لجهاز NOVALER4KPRO",
+                        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز NOVALER4KPRO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip",
                         "image": ""
                     }
@@ -962,110 +962,110 @@
                 "name": "OpenViX",
                 "items": [
                     {
-                        "name": "openvix-6.7.020.release-sx988_mmc",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز SX988",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SX988",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.7.020.release-sx988_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-dm900_mmc",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز DM900",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز DM900",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-dm900_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-dm920_mmc",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز DM920",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز DM920",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-dm920_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-sf8008m_mmc",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز SF8008",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SF8008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sf8008m_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-sfx6008_multi",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز SFX6008",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SFX6008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sfx6008_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-sx88v2_mmc",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز SX88V2",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SX88V2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sx88v2_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuduo2_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUDUO2",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUDUO2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo2_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuduo4kse_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUDUO4KSE",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUDUO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo4kse_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuduo4k_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUDUO4K",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vusolo2_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUSOLO2",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUSOLO2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vusolo2_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vusolo4k_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUSOLO4K",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUSOLO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vusolo4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuultimo4k_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUULTIMO4K",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUULTIMO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuultimo4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuuno4kse_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUUNO4KSE",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUUNO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuuno4kse_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuuno4k_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUUNO4K",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUUNO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuuno4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuzero4k_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUZERO4K",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuzero_usb",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز VUZERO",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUZERO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-zgemmah17combo_multi",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز ZGEMMAH17COMBO",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز ZGEMMAH17COMBO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-zgemmah17combo_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-zgemmah82h_nand",
-                        "description": "e",
+                        "name": "صورة OPENVIX لجهاز ZGEMMAH82H",
+                        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز ZGEMMAH82H",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-zgemmah82h_nand.zip",
                         "image": ""
                     }
@@ -1075,68 +1075,68 @@
                 "name": "Pure2",
                 "items": [
                     {
-                        "name": "novaler4k-PurE2-7.6-20260816_multi",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز NOVALER4K",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4k-PurE2-7.6-20260816_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "novaler4kpro-PurE2-7.6-20260816_multi",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز NOVALER4KPRO",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4KPRO",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4kpro-PurE2-7.6-20260816_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "novaler4kse-PurE2-7.6-20260816_multi",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز NOVALER4KSE",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4kse-PurE2-7.6-20260816_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "sf4008-PurE2-7.6-20260814_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز SF4008",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز SF4008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/sf4008-PurE2-7.6-20260814_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "sf8008-PurE2-7.6-20260816_mmc",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز SF8008",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز SF8008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/sf8008-PurE2-7.6-20260816_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "vuduo4k-PurE2-7.6-20260817_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز VUDUO4K",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuduo4k-PurE2-7.6-20260817_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "vuduo4kse-PurE2-7.6-20260817_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز VUDUO4KSE",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUDUO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuduo4kse-PurE2-7.6-20260817_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "vusolo4k-PurE2-7.6-20260817_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز VUSOLO4K",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUSOLO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vusolo4k-PurE2-7.6-20260817_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "vuultimo4k-PurE2-7.6-20260817_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز VUULTIMO4K",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUULTIMO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuultimo4k-PurE2-7.6-20260817_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "vuuno4k-PurE2-7.6-20260817_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز VUUNO4K",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUUNO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuuno4k-PurE2-7.6-20260817_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "vuzero4k-PurE2-7.6-20260817_usb",
-                        "description": "e",
+                        "name": "صورة PURE2 لجهاز VUZERO4K",
+                        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuzero4k-PurE2-7.6-20260817_usb.zip",
                         "image": ""
                     }
@@ -1146,62 +1146,62 @@
                 "name": "VTI",
                 "items": [
                     {
-                        "name": "VTi_15-0-02_vuduo2_202212231310_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUDUO2",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo2_202212231310_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vuduo4kse_202212231255_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUDUO4KSE",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4kse_202212231255_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vuduo4k_202212231257_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUDUO4K",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo4k_202212231257_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vusolo2_202212231312_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUSOLO2",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUSOLO2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vusolo2_202212231312_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vusolo4k_202212231308_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUSOLO4K",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUSOLO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vusolo4k_202212231308_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vusolose_202212231314_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز الجهاز",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vusolose_202212231314_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vuultimo4k_202212231304_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUULTIMO4K",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUULTIMO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuultimo4k_202212231304_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vuuno4kse_202212231259_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUUNO4KSE",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUUNO4KSE",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuuno4kse_202212231259_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vuuno4k_202212231306_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUUNO4K",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUUNO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuuno4k_202212231306_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "VTi_15-0-02_vuzero4k_202212231301_usb",
-                        "description": "e",
+                        "name": "صورة VTI لجهاز VUZERO4K",
+                        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuzero4k_202212231301_usb.zip",
                         "image": ""
                     }
@@ -1210,14 +1210,14 @@
         ],
         "picons": [
             {
-                "name": "Picon 7.ow",
-                "description": "Picons Package",
+                "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
+                "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon 7.ow.zip",
                 "image": ""
             },
             {
-                "name": "picon-13E",
-                "description": "e",
+                "name": "بيكونات قمر هوتبيرد (Hotbird 13E)",
+                "description": "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon-13E.zip",
                 "image": ""
             },
@@ -1228,54 +1228,54 @@
                 "image": ""
             },
             {
-                "name": "picon_16.0E",
-                "description": "e",
+                "name": "بيكونات قمر يوتلسات (Eutelsat 16E)",
+                "description": "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
                 "image": ""
             },
             {
-                "name": "picon_26",
-                "description": "e",
+                "name": "بيكونات قمر عربسات بدر (Badr 26E)",
+                "description": "شعارات وقنوات قمر عربسات بدر 26 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
                 "image": ""
             },
             {
-                "name": "picon_39E",
-                "description": "e",
+                "name": "بيكونات قمر هيلاسات (Hellas Sat 39E)",
+                "description": "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_39E.zip",
                 "image": ""
             },
             {
-                "name": "picon_8.0W",
-                "description": "e",
+                "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
+                "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_8.0W.zip",
                 "image": ""
             },
             {
-                "name": "picon_ALL",
-                "description": "e",
+                "name": "حزمة البيكونات الشاملة (جميع الأقمار)",
+                "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_ALL.zip",
                 "image": ""
             }
         ],
         "channels": [
             {
-                "name": "channels_backup_MNASR_20260527",
-                "description": "Channels Settings",
+                "name": "ملف قنوات ومفضلات مرتب (MNASR)",
+                "description": "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_MNASR_20260527.tar.gz",
                 "image": ""
             },
             {
-                "name": "channels_backup_openATV_20260602_000828",
-                "description": "Channels Settings",
+                "name": "ملف قنوات ومفضلات صورة OpenATV",
+                "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_openATV_20260602_000828.tar.gz",
                 "image": ""
             }
         ],
         "novaler": [
             {
-                "name": "ArabicSavior-1.3",
-                "description": "Novaler Package",
+                "name": "Arabic Savior",
+                "description": "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/ArabicSavior-1.3.tar.gz",
                 "image": ""
             },
@@ -1286,8 +1286,8 @@
                 "image": ""
             },
             {
-                "name": "RaedQuickSignal-12.0",
-                "description": "Novaler Package",
+                "name": "Raed Quick Signal",
+                "description": "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/RaedQuickSignal-12.0.tar.gz",
                 "image": ""
             },
@@ -1298,92 +1298,92 @@
                 "image": ""
             },
             {
-                "name": "cfg_Zoom_Final_FIX7x_all",
-                "description": "Novaler Package",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-Athantimes_2.8_PY3",
-                "description": "Novaler Package",
+                "name": "مواقيت الأذان AthanTimes",
+                "description": "بلجن عرض أوقات الصلاة والأذان بدقة للشاشات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-Athantimes_2.8_PY3.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ajpanel_v8.8.5_all",
-                "description": "Novaler Package",
+                "name": "AJPanel",
+                "description": "لوحة تحكم شاملة ومدير ملفات وسكربتات وأدوات متقدمة للانيجما2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ajpanel_v8.8.5_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-alternativesoftcammanager_4.0_all",
-                "description": "Novaler Package",
+                "name": "Alternative Softcam Manager",
+                "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-alternativesoftcammanager_4.0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-ansite_1.3_all",
-                "description": "Novaler Package",
+                "name": "Ansite Panel",
+                "description": "لوحة خدمات وإضافات وسكربتات داعمة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ansite_1.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-audiopip_0.3_all",
-                "description": "Novaler Package",
+                "name": "Audio PIP",
+                "description": "تشغيل الصوت في الخلفية مع خاصية صورة داخل صورة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-audiopip_0.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Beengo IPTV (py3.11)",
+                "description": "مشغل الوسائط والبث المباشر لخدمة بينجو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Beengo IPTV (py3.12)",
+                "description": "مشغل الوسائط والبث المباشر لخدمة بينجو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Beengo IPTV (py3.13)",
+                "description": "مشغل الوسائط والبث المباشر لخدمة بينجو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Beengo IPTV (py3.14)",
+                "description": "مشغل الوسائط والبث المباشر لخدمة بينجو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Beengo IPTV (py3.9)",
+                "description": "مشغل الوسائط والبث المباشر لخدمة بينجو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-camnova_1.8-arm_all",
-                "description": "Novaler Package",
+                "name": "Cam Nova",
+                "description": "مشغل وسيرفر كام نوفالير لفتح القنوات الفضائية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-camnova_1.8-arm_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all",
-                "description": "Novaler Package",
+                "name": "E2m3u2bouquet",
+                "description": "تحويل وتوليد باقات ومفضلات القنوات من ملفات وروابط M3U",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all",
-                "description": "Novaler Package",
+                "name": "Feeds Finder",
+                "description": "أداة البحث التلقائي عن الفيدات الرياضية المباشرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-freeserver_7.2.6_all",
-                "description": "Novaler Package",
+                "name": "Free Server",
+                "description": "جلب وتحديث سيرفرات الشيرنج المجانية تلقائياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-freeserver_7.2.6_all.ipk",
                 "image": ""
             },
@@ -1406,74 +1406,74 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-netspeedtest_2.1.3_all",
-                "description": "Novaler Package",
+                "name": "Net SpeedTest",
+                "description": "أداة قياس سرعة الإنترنت والاتصال",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Supreme (py3.11)",
+                "description": "سيرفر ومحاكي نوفاكام سوبريم المطور للقنوات المشفرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Supreme (py3.12)",
+                "description": "سيرفر ومحاكي نوفاكام سوبريم المطور للقنوات المشفرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Supreme (py3.9)",
+                "description": "سيرفر ومحاكي نوفاكام سوبريم المطور للقنوات المشفرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Pro (py3.11)",
+                "description": "محاكي وسيرفر نوفاكام برو لأجهزة نوفالير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Pro (py3.12)",
+                "description": "محاكي وسيرفر نوفاكام برو لأجهزة نوفالير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Pro (py3.13)",
+                "description": "محاكي وسيرفر نوفاكام برو لأجهزة نوفالير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novacam Pro (py3.14)",
+                "description": "محاكي وسيرفر نوفاكام برو لأجهزة نوفالير",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novaler Store (py3.12)",
+                "description": "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novaler Store (py3.13)",
+                "description": "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novaler Store (py3.14)",
+                "description": "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all",
-                "description": "Novaler Package",
+                "name": "Novaler Store (py3.9)",
+                "description": "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk",
                 "image": ""
             },
@@ -1496,68 +1496,68 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-screengrabber_2.6_all",
-                "description": "Novaler Package",
+                "name": "Screen Grabber",
+                "description": "أداة التقاط صور الشاشة للرسيفر بجودة عالية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-screengrabber_2.6_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-subssupport_1.5.8-r3_all",
-                "description": "Novaler Package",
+                "name": "Subs Support",
+                "description": "تحميل وتشغيل ملفات الترجمة للأفلام والقنوات التلفزيونية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-subssupport_1.5.8-r3_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all",
-                "description": "Novaler Package",
+                "name": "SupTV (py3.11)",
+                "description": "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.11_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all",
-                "description": "Novaler Package",
+                "name": "SupTV (py3.12)",
+                "description": "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.12_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all",
-                "description": "Novaler Package",
+                "name": "SupTV (py3.13)",
+                "description": "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.13_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all",
-                "description": "Novaler Package",
+                "name": "SupTV (py3.14)",
+                "description": "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.14_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all",
-                "description": "Novaler Package",
+                "name": "SupTV (py3.9)",
+                "description": "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-suptv-py3.9_6.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-tvspro_1.3_all",
-                "description": "Novaler Package",
+                "name": "TVS Pro",
+                "description": "مشغل القنوات التلفزيونية والوسائط المتعددة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-tvspro_1.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all",
-                "description": "Novaler Package",
+                "name": "MSN Weather",
+                "description": "عرض حالة الطقس والتوقعات الجوية للمدن العالمية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-xcplugin-forever_1.8_all",
-                "description": "Novaler Package",
+                "name": "XC Plugin Forever",
+                "description": "مشغل اشتراكات الـ IPTV بنظام Xtream Codes",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xcplugin-forever_1.8_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-xstreamity_4.02.20230510_all",
-                "description": "Novaler Package",
+                "name": "Xstreamity IPTV",
+                "description": "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xstreamity_4.02.20230510_all.ipk",
                 "image": ""
             },
