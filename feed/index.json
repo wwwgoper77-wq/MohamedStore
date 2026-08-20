@@ -697,8 +697,8 @@
                 "image": ""
             },
             {
-                "name": "restart_cam",
-                "description": "Tool Package",
+                "name": "تنشيط الشيرنج",
+                "description": "إنعاش وإعادة تشغيل إيمو (OScam أو NCam) في حال تجمد القنوات المشفرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/restart_cam.sh",
                 "image": ""
             },
@@ -1308,31 +1308,31 @@
                 "image": ""
             },
             {
-                "name": "beengo-py3.11_11",
+                "name": "beengo-py3.11",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.12_11l",
+                "name": "beengo-py3.12",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.13_11",
+                "name": "beengo-py3.13",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.14_11",
+                "name": "beengo-py3.14",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.9_11.0",
+                "name": "beengo-py3.9",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk",
                 "image": ""
