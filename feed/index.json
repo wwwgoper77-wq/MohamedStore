@@ -638,7 +638,7 @@
             },
             {
                 "name": "باكاب قنواتك ومفضلاتك",
-                "description": "media/hdd سحب نسخة آمنة ومضغوطة من المفضلات وحفظها في الهارد ديسك",
+                "description": "hdd حفظ نسخة آمنة ومضغوطة من المفضلات وحفظها في الهارد ديسك",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_channels.sh",
                 "image": ""
             },
