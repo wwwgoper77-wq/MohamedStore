@@ -637,6 +637,12 @@
                 "image": ""
             },
             {
+                "name": "backup_channels",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_channels.sh",
+                "image": ""
+            },
+            {
                 "name": "تنظيف الذاكرة الداخلية",
                 "description": "حذف ملفات الكراش القديمة لتوفير المساحة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_crash.sh",
