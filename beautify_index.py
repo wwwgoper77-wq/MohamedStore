@@ -5,7 +5,6 @@ INDEX_FILE = "feed/index.json"
 META_FILE = "feed/metadata_store.json"
 
 CUSTOM_MAP = {
-    # البلجنات Plugins
     "AJPanel": ("AJPanel", "لوحة تحكم شاملة ومدير ملفات وسكربتات وأدوات متقدمة للانيجما2"),
     "ArabicSavior": ("Arabic Savior", "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات"),
     "E2BissKeyEditor": ("E2 Biss Key Editor", "محرر شفرات البيس Biss وتعديلها بسهولة عبر الريموت"),
@@ -29,7 +28,6 @@ CUSTOM_MAP = {
     "timeshift-delay": ("Timeshift Delay Egami", "ضبط وتأخير التايم شفت وتأخير الصوت لمطابقة التعليق"),
     "FootOnSat": ("FootOnSat", "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة"),
 
-    # الأدوات والسكربتات Tools
     "Ncam v15.8": ("تثبيت محاكي Ncam v15.8", "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam"),
     "backup_channels": ("أخذ نسخة احتياطية للقنوات", "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك"),
     "clean_crash": ("تنظيف ملفات الكراش Crash", "سكربت حذف ملفات الكراش واللوغ المؤقتة لتوفير الذاكرة"),
@@ -39,7 +37,6 @@ CUSTOM_MAP = {
     "satellites-update": ("تحديث ملف الأقمار Satellites", "تحديث جميع ترددات وأقمار الستلايت لأحدث الترددات الحالية"),
     "update_packages": ("تحديث حزم وفيدات الصورة", "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة"),
 
-    # نوفالير Novaler
     "Athantimes": ("مواقيت الأذان AthanTimes", "بلجن عرض أوقات الصلاة والأذان بدقة للشاشات"),
     "ajpanel": ("AJPanel Novaler", "لوحة تحكم وأدوات شاملة لأجهزة نوفالير"),
     "alternativesoftcammanager": ("Alternative Softcam Manager", "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"),
@@ -57,11 +54,21 @@ CUSTOM_MAP = {
     "xstreamity": ("Xstreamity IPTV", "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر")
 }
 
-def clean_item(it):
+def clean_item(it, existing_custom):
     fn = it.get("file", "").split("/")[-1]
     name = it.get("name", "")
-    
-    # تحسين IPAudio Pro
+    desc = it.get("description", "")
+
+    # إذا كان للملف اسم ووصف خاص قمت بتعديله بيدك، اتركه ولا تغيره!
+    if fn in existing_custom:
+        saved = existing_custom[fn]
+        if saved.get("name") and saved["name"] != fn:
+            it["name"] = saved["name"]
+        if saved.get("description") and saved["description"] not in ["Plugin Extension", "Tool Package", "All Skin", "e"]:
+            it["description"] = saved["description"]
+            return
+
+    # غير ذلك يطبق التنسيق التلقائي
     if "ipaudiopro" in fn.lower() or "ipa udio" in fn.lower():
         if "py2.7" in fn: it["name"] = "IPAudio Pro v1.7 (Py2.7)"
         elif "py3.11" in fn: it["name"] = "IPAudio Pro v1.7 (Py3.11)"
@@ -74,14 +81,12 @@ def clean_item(it):
         it["description"] = "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي"
         return
 
-    # تحسين Beengo
     if "beengo" in fn.lower():
         ver = fn.split("beengo-")[-1].split("_")[0]
         it["name"] = f"Beengo IPTV ({ver})"
         it["description"] = "مشغل الوسائط والبث المباشر لخدمة بينجو"
         return
 
-    # تحسين Novacam
     if "novacam-supreme" in fn.lower():
         ver = fn.split("novacam-supreme-")[-1].split("_")[0]
         it["name"] = f"Novacam Supreme ({ver})"
@@ -103,7 +108,6 @@ def clean_item(it):
         it["description"] = "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV"
         return
 
-    # محاكيات Oscam في Tools
     if "oscam" in fn.lower():
         if "levi45" in fn:
             it["name"] = "Oscam Emu Levi45 v11965"
@@ -125,7 +129,6 @@ def clean_item(it):
             it["description"] = "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور"
         return
 
-    # البيكونات Picons
     if "picon" in fn.lower() or "picons" in fn.lower():
         if "7.0w" in fn.lower() or "7.ow" in fn.lower() or "8.0w" in fn.lower():
             it["name"] = "بيكونات قمر نايل سات (Nilesat 7W / 8W)"
@@ -147,7 +150,6 @@ def clean_item(it):
             it["description"] = "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
         return
 
-    # القنوات والمفضلات Channels
     if "channels" in fn.lower():
         if "mnasr" in fn.lower():
             it["name"] = "ملف قنوات ومفضلات مرتب (MNASR)"
@@ -157,7 +159,6 @@ def clean_item(it):
             it["description"] = "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
         return
 
-    # صور النظام System Images
     for brand in ["egami", "openatv", "openbh", "opendroid", "openhdf", "openpli", "openvix", "pure2", "vti"]:
         if brand in fn.lower():
             dev = "الجهاز"
@@ -169,14 +170,12 @@ def clean_item(it):
             it["description"] = f"صورة نظام {brand.upper()} الرسمية المحدثة لجهاز {dev}"
             return
 
-    # السكينات Skins
     if "skin" in fn.lower():
         s_name = fn.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("enigma2-skin-", "").replace("skin-", "").split(".")[0]
         it["name"] = f"سكين {s_name}"
         it["description"] = f"سكين {s_name} عالي الدقة FHD بتصميم أنيق وخفيف"
         return
 
-    # المطابقة من القائمة المسبقة
     for k, (n, d) in CUSTOM_MAP.items():
         if k.lower() in fn.lower() or k.lower() in name.lower():
             it["name"] = n
@@ -187,17 +186,25 @@ if os.path.exists(INDEX_FILE):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
 
+    existing_custom = {}
+    if os.path.exists(META_FILE):
+        try:
+            with open(META_FILE, "r", encoding="utf-8") as f:
+                existing_custom = json.load(f)
+        except Exception:
+            existing_custom = {}
+
     meta_store = {}
     for cat, items in data.get("categories", {}).items():
         if isinstance(items, list):
             for el in items:
                 if isinstance(el, dict) and "items" in el:
                     for it in el.get("items", []):
-                        clean_item(it)
+                        clean_item(it, existing_custom)
                         fn = it.get("file", "").split("/")[-1]
                         if fn: meta_store[fn] = {"name": it["name"], "description": it["description"]}
                 elif isinstance(el, dict):
-                    clean_item(el)
+                    clean_item(el, existing_custom)
                     fn = el.get("file", "").split("/")[-1]
                     if fn: meta_store[fn] = {"name": el["name"], "description": el["description"]}
 
@@ -207,4 +214,4 @@ if os.path.exists(INDEX_FILE):
     with open(META_FILE, "w", encoding="utf-8") as f:
         json.dump(meta_store, f, indent=4, ensure_ascii=False)
 
-    print("🎉 تم ترتيب وتنسيق جميع الأسماء والأوصاف العربية بنجاح تام!")
+    print("🎉 تم التنسيق بنجاح مع الحفاظ الكامل على أي تعديل يدوي قمت به!")
