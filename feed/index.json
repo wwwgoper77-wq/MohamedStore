@@ -194,12 +194,6 @@
                 "description": "e",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
                 "image": ""
-            },
-            {
-                "name": "openeight-6.8-dm520-20230202.rootfs",
-                "description": "e",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openeight-6.8-dm520-20230202.rootfs.tar.xz",
-                "image": ""
             }
         ],
         "skins": [
@@ -489,7 +483,7 @@
                     },
                     {
                         "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
-                        "description": "Egami Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     }
@@ -500,7 +494,7 @@
                 "items": [
                     {
                         "name": "Copper-FHD-v1.0-MNASR",
-                        "description": "OpenATV Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/Copper-FHD-v1.0-MNASR.tar.gz",
                         "image": ""
                     },
@@ -512,7 +506,7 @@
                     },
                     {
                         "name": "enigma2-plugin-skins-multiposter-fhd-all_1.0_all",
-                        "description": "OpenATV Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk",
                         "image": ""
                     },
@@ -524,7 +518,7 @@
                     },
                     {
                         "name": "enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa",
-                        "description": "OpenATV Skin",
+                        "description": "OpenP Skin",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
                         "image": ""
                     }
