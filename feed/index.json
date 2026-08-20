@@ -715,8 +715,8 @@
                 "image": ""
             },
             {
-                "name": "update_packages",
-                "description": "Tool Package",
+                "name": "تحديث حزم النظام",
+                "description": عمل تحديث شامل لمكتبات الصورة وجلب التعاريف الناقصة تلقائياً"",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_packages.sh",
                 "image": ""
             }
