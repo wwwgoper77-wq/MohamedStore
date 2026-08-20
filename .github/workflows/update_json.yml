@@ -31,12 +31,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Generate and Beautify index
+      - name: Generate index
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python generate_index.py
-          python beautify_index.py
+        run: python generate_index.py
 
       - name: Commit changes
         run: |
