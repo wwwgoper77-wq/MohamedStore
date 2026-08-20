@@ -1193,7 +1193,7 @@
         ],
         "novaler": [
             {
-                "name": "ArabicSavior-1.3",
+                "name": "ArabicSavior",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/ArabicSavior-1.3.tar.gz",
                 "image": ""
@@ -1205,7 +1205,7 @@
                 "image": ""
             },
             {
-                "name": "RaedQuickSignal-12.0",
+                "name": "RaedQuickSigna",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/RaedQuickSignal-12.0.tar.gz",
                 "image": ""
@@ -1217,7 +1217,7 @@
                 "image": ""
             },
             {
-                "name": "cfg_Zoom_Final_FIX7x_all",
+                "name": "Zoom",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
@@ -1229,7 +1229,7 @@
                 "image": ""
             },
             {
-                "name": "ajpanel_v8.8.5_all",
+                "name": "ajpanel",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ajpanel_v8.8.5_all.ipk",
                 "image": ""
@@ -1241,73 +1241,73 @@
                 "image": ""
             },
             {
-                "name": "ansite_1.3_all",
+                "name": "ansite",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-ansite_1.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "audiopip_0.3_all",
+                "name": "audiopip",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-audiopip_0.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.11_11.0-r0_all",
+                "name": "beengo-py3.11_11",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.11_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.12_11.0-r0_all",
+                "name": "beengo-py3.12_11l",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.12_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.13_11.0-r0_all",
+                "name": "beengo-py3.13_11",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.13_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.14_11.0-r0_all",
+                "name": "beengo-py3.14_11",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.14_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "beengo-py3.9_11.0-r0_all",
+                "name": "beengo-py3.9_11.0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-beengo-py3.9_11.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "ecamnova_1.8-arm_all",
+                "name": "ecamnova_1.8",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-camnova_1.8-arm_all.ipk",
                 "image": ""
             },
             {
-                "name": "e2m3u2bouquet_1.0.43_all",
+                "name": "e2m3u2bouquet",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-e2m3u2bouquet_1.0.43_all.ipk",
                 "image": ""
             },
             {
-                "name": "feeds-finder_20220111-V1.7",
+                "name": "feeds-finder",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
-                "name": "freeserver_7.2.6_all",
+                "name": "freeserver",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-freeserver_7.2.6_all.ipk",
                 "image": ""
             },
             {
-                "name": "internet-speedtest_1.2_all",
+                "name": "internet-speedtest",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk",
                 "image": ""
@@ -1325,19 +1325,19 @@
                 "image": ""
             },
             {
-                "name": "netspeedtest_2.1.3_all",
+                "name": "netspeedtest",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacam-supreme-py3",
+                "name": "novacam-supreme-py3.11",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacam-supreme-py3",
+                "name": "novacam-supreme-py3.12",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all.ipk",
                 "image": ""
@@ -1349,49 +1349,49 @@
                 "image": ""
             },
             {
-                "name": "novacampro-py3",
+                "name": "novacampro-py3.11",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3",
+                "name": "novacampro-py3.12",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3",
+                "name": "novacampro-py3.13",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3",
+                "name": "novacampro-py3.14",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3",
+                "name": "novalerstore-py3.12",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3",
+                "name": "novalerstore-py3.13",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3",
+                "name": "novalerstore-py3.14",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3",
+                "name": "novalerstore-py3.9",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk",
                 "image": ""
