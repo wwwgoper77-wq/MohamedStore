@@ -54,21 +54,12 @@ CUSTOM_MAP = {
     "xstreamity": ("Xstreamity IPTV", "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر")
 }
 
-def clean_item(it, existing_custom):
+GENERIC_DESCS = {"plugin extension", "tool package", "all skin", "e", "novaler package", "picons package", "channels settings", "openp skin", "egami skin", "openatv skin", "openblack skin"}
+
+def auto_beautify_item(it):
     fn = it.get("file", "").split("/")[-1]
     name = it.get("name", "")
-    desc = it.get("description", "")
 
-    # إذا كان للملف اسم ووصف خاص قمت بتعديله بيدك، اتركه ولا تغيره!
-    if fn in existing_custom:
-        saved = existing_custom[fn]
-        if saved.get("name") and saved["name"] != fn:
-            it["name"] = saved["name"]
-        if saved.get("description") and saved["description"] not in ["Plugin Extension", "Tool Package", "All Skin", "e"]:
-            it["description"] = saved["description"]
-            return
-
-    # غير ذلك يطبق التنسيق التلقائي
     if "ipaudiopro" in fn.lower() or "ipa udio" in fn.lower():
         if "py2.7" in fn: it["name"] = "IPAudio Pro v1.7 (Py2.7)"
         elif "py3.11" in fn: it["name"] = "IPAudio Pro v1.7 (Py3.11)"
@@ -182,36 +173,62 @@ def clean_item(it, existing_custom):
             it["description"] = d
             return
 
+
 if os.path.exists(INDEX_FILE):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    existing_custom = {}
+    # 1. قراءة الخزنة الحالية
+    metadata_store = {}
     if os.path.exists(META_FILE):
         try:
             with open(META_FILE, "r", encoding="utf-8") as f:
-                existing_custom = json.load(f)
+                metadata_store = json.load(f)
         except Exception:
-            existing_custom = {}
+            metadata_store = {}
 
-    meta_store = {}
+    # 2. معالجة العناصر بدقة فائقة
     for cat, items in data.get("categories", {}).items():
         if isinstance(items, list):
             for el in items:
-                if isinstance(el, dict) and "items" in el:
-                    for it in el.get("items", []):
-                        clean_item(it, existing_custom)
-                        fn = it.get("file", "").split("/")[-1]
-                        if fn: meta_store[fn] = {"name": it["name"], "description": it["description"]}
-                elif isinstance(el, dict):
-                    clean_item(el, existing_custom)
-                    fn = el.get("file", "").split("/")[-1]
-                    if fn: meta_store[fn] = {"name": el["name"], "description": el["description"]}
+                # إذا كانت فئة فرعية مثل system_images و skins
+                sub_items = el.get("items", []) if (isinstance(el, dict) and "items" in el) else [el]
+                for it in sub_items:
+                    if not isinstance(it, dict):
+                        continue
+                    fn = it.get("file", "").split("/")[-1]
+                    clean_fn = fn.rsplit(".", 1)[0]
+                    current_name = it.get("name", "").strip()
+                    current_desc = it.get("description", "").strip()
 
+                    # أ) إذا كان لديك تعديل يدوي في index.json أو في الخزنة:
+                    has_user_name = current_name and (current_name != clean_fn and current_name != fn)
+                    has_user_desc = current_desc and (current_desc.lower() not in GENERIC_DESCS)
+
+                    if fn in metadata_store:
+                        # استرجاع الاسم المحفوظ إن وجد
+                        if not has_user_name and metadata_store[fn].get("name"):
+                            it["name"] = metadata_store[fn]["name"]
+                        # استرجاع الوصف المحفوظ إن وجد
+                        if not has_user_desc and metadata_store[fn].get("description"):
+                            it["description"] = metadata_store[fn]["description"]
+
+                    # ب) إذا كان العنصر جديداً ولم يسبق تعديله، نطبق عليه التنسيق التلقائي:
+                    if not it.get("name") or it["name"] == clean_fn or it["name"] == fn or not it.get("description") or it["description"].lower() in GENERIC_DESCS:
+                        auto_beautify_item(it)
+
+                    # ج) تثبيت وحفظ الحالة النهائية في الخزنة للأبد:
+                    if fn:
+                        metadata_store[fn] = {
+                            "name": it.get("name", clean_fn),
+                            "description": it.get("description", "")
+                        }
+
+    # 3. حفظ الملفات
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
     with open(META_FILE, "w", encoding="utf-8") as f:
-        json.dump(meta_store, f, indent=4, ensure_ascii=False)
+        json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-    print("🎉 تم التنسيق بنجاح مع الحفاظ الكامل على أي تعديل يدوي قمت به!")
+    print("🎉 تم تثبيت تعديلاتك اليدوية وحمايتها بنجاح تام!")
