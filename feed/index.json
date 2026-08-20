@@ -1073,6 +1073,24 @@
                 "name": "Pure2",
                 "items": [
                     {
+                        "name": "novaler4k-PurE2-7.6-20260816_multi",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4k-PurE2-7.6-20260816_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "novaler4kpro-PurE2-7.6-20260816_multi",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4kpro-PurE2-7.6-20260816_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "novaler4kse-PurE2-7.6-20260816_multi",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4kse-PurE2-7.6-20260816_multi.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "sf4008-PurE2-7.6-20260814_usb",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/sf4008-PurE2-7.6-20260814_usb.zip",
