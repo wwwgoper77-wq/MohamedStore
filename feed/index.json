@@ -698,7 +698,7 @@
             },
             {
                 "name": "تنشيط الشيرنج",
-                "description": "إنعاش وإعادة تشغيل إيمو (OScam أو NCam) في حال تجمد القنوات المشفرة",
+                "description": "إنعاش وإعادة تشغيل إيمو في حال تجمد القنوات المشفرة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/restart_cam.sh",
                 "image": ""
             },
