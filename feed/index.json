@@ -949,7 +949,7 @@
                 "name": "OpenDroid",
                 "items": [
                     {
-                        "name": "opendroid-8.1.1-SF4008.4K.UHD-system_images.Octagon.usb",
+                        "name": "opendroid-8.1.1-SF4008.4K.UHD.Octagon.usb",
                         "version": "system",
                         "description": "OpenDroid Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
@@ -1068,7 +1068,7 @@
                         "image": ""
                     },
                     {
-                        "name": "OpenPLi-wrynose-novaler4kpro-backup.usb",
+                        "name": "OpenPLi-novaler4kpro-backup.usb",
                         "version": "OpenPLi-wrynose-novaler4kpro-backup-20260812",
                         "description": "OpenPLi Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip",
@@ -1088,126 +1088,126 @@
                 "name": "OpenViX",
                 "items": [
                     {
-                        "name": "openvix-6.7.020.release-sx988_mmc",
+                        "name": "openvix-6.7.020-sx988_mmc",
                         "version": "openvix-6.7.020.release-sx988",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.7.020.release-sx988_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-dm900_mmc",
+                        "name": "openvix-6.9.001-dm900_mmc",
                         "version": "openvix-6.9.001.release-dm900",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-dm900_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-dm920_mmc",
+                        "name": "openvix-6.9.001-dm920_mmc",
                         "version": "openvix-6.9.001.release-dm920",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-dm920_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-sf8008m_mmc",
+                        "name": "openvix-6.9.001-sf8008m_mmc",
                         "version": "openvix-6.9.001.release-sf8008m",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sf8008m_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-sfx6008_multi",
+                        "name": "openvix-6.9.001-sfx6008_multi",
                         "version": "openvix-6.9.001.release-sfx6008",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sfx6008_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-sx88v2_mmc",
+                        "name": "openvix-6.9.001-sx88v2_mmc",
                         "version": "openvix-6.9.001.release-sx88v2",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-sx88v2_mmc.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuduo2_usb",
+                        "name": "openvix-6.9.001-vuduo2_usb",
                         "version": "openvix-6.9.001.release-vuduo2",
                         "description": "OpenViX Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo2_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuduo4kse_usb",
+                        "name": "openvix-6.9.001-vuduo4kse_usb",
                         "version": "openvix-6.9.001.release-vuduo4kse",
                         "description": "OpenViX Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo4kse_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuduo4k_usb",
+                        "name": "openvix-6.9.vuduo4k_usb",
                         "version": "openvix-6.9.001.release-vuduo4k",
                         "description": "OpenViX Image",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuduo4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vusolo2_usb",
+                        "name": "openvix-6.9.001-vusolo2_usb",
                         "version": "openvix-6.9.001.release-vusolo2",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vusolo2_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vusolo4k_usb",
+                        "name": "openvix-6.9.001-vusolo4k_usb",
                         "version": "openvix-6.9.001.release-vusolo4k",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vusolo4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuultimo4k_usb",
+                        "name": "openvix-6.9.001-vuultimo4k_usb",
                         "version": "openvix-6.9.001.release-vuultimo4k",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuultimo4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuuno4kse_usb",
+                        "name": "openvix-6.9.001-vuuno4kse_usb",
                         "version": "openvix-6.9.001.release-vuuno4kse",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuuno4kse_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuuno4k_usb",
+                        "name": "openvix-6.9.001-vuuno4k_usb",
                         "version": "openvix-6.9.001.release-vuuno4k",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuuno4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuzero4k_usb",
+                        "name": "openvix-6.9.001-vuzero4k_usb",
                         "version": "openvix-6.9.001.release-vuzero4k",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero4k_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-vuzero_usb",
+                        "name": "openvix-6.9.001-vuzero_usb",
                         "version": "openvix-6.9.001.release-vuzero",
                         "description": "system images",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-vuzero_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-zgemmah17combo_multi",
+                        "name": "openvix-6.9.001-zgemmah17combo_multi",
                         "version": "openvix-6.9.001.release-zgemmah17combo",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-zgemmah17combo_multi.zip",
                         "image": ""
                     },
                     {
-                        "name": "openvix-6.9.001.release-zgemmah82h_nand",
+                        "name": "openvix-6.9.001-zgemmah82h_nand",
                         "version": "openvix-6.9.001.release-zgemmah82h",
                         "description": "e",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvix-6.9.001.release-zgemmah82h_nand.zip",
@@ -1420,7 +1420,7 @@
                 "image": ""
             },
             {
-                "name": "alternativesoftcammanager_4.0_all",
+                "name": "alternativesoftcammanager",
                 "version": "4.0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-alternativesoftcammanager_4.0_all.ipk",
@@ -1490,7 +1490,7 @@
                 "image": ""
             },
             {
-                "name": "feeds-finder_20220111-V1.7-momi133-OE2_all",
+                "name": "feeds-finder_20220111-V1.7",
                 "version": "20220111-V1.7-momi133-OE2",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-feeds-finder_20220111-V1.7-momi133-OE2_all.ipk",
@@ -1511,14 +1511,14 @@
                 "image": ""
             },
             {
-                "name": "jedimakerxtream_6.36-r3_20240210_py3.12_all",
+                "name": "jedimakerxtream",
                 "version": "py3.12",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk",
                 "image": ""
             },
             {
-                "name": "multiboot-flashonline_5.9_all",
+                "name": "multiboot-flashonline",
                 "version": "5.9",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk",
@@ -1532,77 +1532,77 @@
                 "image": ""
             },
             {
-                "name": "novacam-supreme-py3.11_9.2-r0_all",
+                "name": "novacam-supreme-py3",
                 "version": "9.2-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.11_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacam-supreme-py3.12_9.2-r0_all",
+                "name": "novacam-supreme-py3",
                 "version": "9.2-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.12_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacam-supreme-py3.9_9.2-r0_all",
+                "name": "novacam-supreme-py3",
                 "version": "9.2-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacam-supreme-py3.9_9.2-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3.11_4.0-r0_all",
+                "name": "novacampro-py3",
                 "version": "4.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.11_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3.12_4.0-r0_all",
+                "name": "novacampro-py3",
                 "version": "4.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.12_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3.13_4.0-r0_all",
+                "name": "novacampro-py3",
                 "version": "4.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.13_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novacampro-py3.14_4.0-r0_all",
+                "name": "novacampro-py3",
                 "version": "4.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novacampro-py3.14_4.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3.12_5.0-r0_all",
+                "name": "novalerstore-py3",
                 "version": "5.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.12_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3.13_5.0-r0_all",
+                "name": "novalerstore-py3",
                 "version": "5.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.13_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3.14_5.0-r0_all",
+                "name": "novalerstore-py3",
                 "version": "5.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.14_5.0-r0_all.ipk",
                 "image": ""
             },
             {
-                "name": "novalerstore-py3.9_5.0-r0_all",
+                "name": "novalerstore-py3",
                 "version": "5.0-r0",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-novalerstore-py3.9_5.0-r0_all.ipk",
@@ -1686,7 +1686,7 @@
                 "image": ""
             },
             {
-                "name": "weather-msn_1.3-r3_PY2_3_mod_all",
+                "name": "weather-msn_1.3-r3_PY2_3",
                 "version": "mod",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-weather-msn_1.3-r3_PY2_3_mod_all.ipk",
@@ -1700,14 +1700,14 @@
                 "image": ""
             },
             {
-                "name": "xstreamity_4.02.20230510_all",
+                "name": "xstreamity_4.02",
                 "version": "4.02.20230510",
                 "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-xstreamity_4.02.20230510_all.ipk",
                 "image": ""
             },
             {
-                "name": "softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
+                "name": "softcams-supcam-ncam-nova-novaler4k",
                 "version": "v-1.2",
                 "description": "بلجن",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
