@@ -175,7 +175,6 @@ if os.path.isdir("system_images"):
                 continue
             sys_folders[norm]["seen"].add(fn)
             clean = clean_filename(fn)
-            ver = clean.split("_")[-2] if "_" in clean else "1.0"
             f_url = f"{BASE_URL}/system_images/{folder}/{fn}"
             body_desc = ""
             for asset in release_assets_pool:
@@ -189,7 +188,6 @@ if os.path.isdir("system_images"):
 
             sys_folders[norm]["items"].append({
                 "name": final_name,
-                "version": ver,
                 "description": final_desc,
                 "file": f_url,
                 "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
@@ -222,14 +220,12 @@ for asset in release_assets_pool:
         if fn not in sys_folders[matched]["seen"]:
             sys_folders[matched]["seen"].add(fn)
             clean = clean_filename(fn)
-            ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp = sys_folders[matched]["display_name"]
             final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, asset.get("body", ""), f"{disp} Image")
 
             sys_folders[matched]["items"].append({
                 "name": final_name,
-                "version": ver,
                 "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
@@ -260,7 +256,6 @@ if os.path.isdir("skins"):
                 continue
             skin_folders[norm]["seen"].add(fn)
             clean = clean_filename(fn)
-            ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             f_url = f"{BASE_URL}/skins/{folder}/{fn}"
             body_desc = ""
@@ -275,7 +270,6 @@ if os.path.isdir("skins"):
 
             skin_folders[norm]["items"].append({
                 "name": final_name,
-                "version": ver,
                 "description": final_desc,
                 "file": f_url,
                 "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
@@ -301,7 +295,6 @@ for asset in release_assets_pool:
         if fn not in skin_folders[matched]["seen"]:
             skin_folders[matched]["seen"].add(fn)
             clean = clean_filename(fn)
-            ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             disp = skin_folders[matched]["display_name"]
             final_name = get_best_name(fn, clean)
@@ -309,7 +302,6 @@ for asset in release_assets_pool:
 
             skin_folders[matched]["items"].append({
                 "name": final_name,
-                "version": ver,
                 "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
@@ -335,7 +327,6 @@ def handle_flat(cat_key, matcher_func, default_desc):
                 continue
             seen.add(fn)
             clean = clean_filename(fn)
-            ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
             f_url = f"{BASE_URL}/{cat_key}/{fn}"
             body_desc = ""
@@ -350,7 +341,6 @@ def handle_flat(cat_key, matcher_func, default_desc):
 
             items.append({
                 "name": final_name,
-                "version": ver,
                 "description": final_desc,
                 "file": f_url,
                 "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
@@ -366,14 +356,12 @@ def handle_flat(cat_key, matcher_func, default_desc):
             assigned_releases.add(fn)
             seen.add(fn)
             clean = clean_filename(fn)
-            ver = clean.split("_")[-2] if "_" in clean else "1.0"
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
             final_name = get_best_name(fn, clean)
             final_desc = get_best_description(clean, fn, asset.get("body", ""), default_desc)
 
             items.append({
                 "name": final_name,
-                "version": ver,
                 "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
@@ -396,4 +384,4 @@ os.makedirs("feed", exist_ok=True)
 with open("feed/index.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json preserving Arabic descriptions & names perfectly!")
+print("🎉 Successfully generated feed/index.json without version field!")
