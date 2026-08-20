@@ -11,7 +11,7 @@
             },
             {
                 "name": "ArabicSavior",
-                "description": "إصلاح الخط العربي بايثون 3.13.12",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
                 "image": ""
             },
@@ -107,7 +107,7 @@
             },
             {
                 "name": "Zoom",
-                "description": "بايثون 3.13.12 بلجن تثبيت ايمو",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
                 "image": ""
             },
@@ -1059,7 +1059,32 @@
             },
             {
                 "name": "Pure2",
-                "items": []
+                "items": [
+                    {
+                        "name": "vuduo4k-PurE2-7.6-20260817_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuduo4k-PurE2-7.6-20260817_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "vuduo4kse-PurE2-7.6-20260817_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuduo4kse-PurE2-7.6-20260817_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "vusolo4k-PurE2-7.6-20260817_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vusolo4k-PurE2-7.6-20260817_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "vuultimo4k-PurE2-7.6-20260817_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/vuultimo4k-PurE2-7.6-20260817_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "VTI",
