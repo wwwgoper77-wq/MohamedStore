@@ -1094,5 +1094,9 @@
     "openpli-9.2-release-vuzero4k-20260816_usb.zip": {
         "name": "صورة OpenPLi 9.2 لجهاز VU+ Zero 4K",
         "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "enigma2-plugin-skin-obelixfhd_1.1_all.ipk": {
+        "name": "obelixfhd 1.1",
+        "description": "سكين obelixfhd 1.1 عالي الدقة FHD بتصميم أنيق وخفيف"
     }
 }
