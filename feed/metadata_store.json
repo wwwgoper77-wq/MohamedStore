@@ -1086,5 +1086,9 @@
     "openpli-9.2-release-vuuno4kse-20260816_usb.zip": {
         "name": "صورة OpenPLi 9.2 لجهاز VU+ Uno 4K SE",
         "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "enigna2-skin-whiteshadowfhd_sharp987_vti-r1.00_all.ipk": {
+        "name": "enigna2 skin whiteshadowfhd sharp987 vti r1.00",
+        "description": "سكين enigna2 skin whiteshadowfhd sharp987 vti r1.00 عالي الدقة FHD بتصميم أنيق وخفيف"
     }
 }
