@@ -954,6 +954,54 @@
                 "name": "OpenSPA",
                 "items": [
                     {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sf208-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sf228-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF3038",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF3038 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sf3038-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF4008 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF4008 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sf4008-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF8008 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008 4K (MMC)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sf8008-20260704_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF8008m",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008m (MMC)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sf8008m-20260704_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SFX6008",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sfx6008-20260704_multi.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SX988 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SX988 4K (MMC)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-sx988-20260704_mmc.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 2",
                         "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 2 (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuduo2-20260704_usb.zip",
@@ -970,12 +1018,145 @@
                         "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 2 (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vusolo2-20260704_usb.zip",
                         "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vusolo4k-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo SE",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vusolose-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Ultimo 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Ultimo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuultimo4k-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Uno 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuuno4k-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Uno 4K SE",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuuno4kse-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Zero",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuzero-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Zero 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuzero4k-20260704_usb.zip",
+                        "image": ""
                     }
                 ]
             },
             {
                 "name": "OpenVision",
-                "items": []
+                "items": [
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K SE",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo SE",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Ultimo 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K SE",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenViX",
