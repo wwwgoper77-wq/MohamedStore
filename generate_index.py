@@ -116,6 +116,51 @@ CUSTOM_MAP = {
     "xstreamity": ("Xstreamity IPTV", "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر")
 }
 
+DEVICE_MAP = [
+    ("vuduo4kse", "VU+ Duo 4K SE"),
+    ("vuduo4k", "VU+ Duo 4K"),
+    ("vuuno4kse", "VU+ Uno 4K SE"),
+    ("vuuno4k", "VU+ Uno 4K"),
+    ("vuultimo4k", "VU+ Ultimo 4K"),
+    ("vusolo4k", "VU+ Solo 4K"),
+    ("vuzero4k", "VU+ Zero 4K"),
+    ("vusolo2", "VU+ Solo 2"),
+    ("vusolose", "VU+ Solo SE"),
+    ("vuduo2", "VU+ Duo 2"),
+    ("vuzero", "VU+ Zero"),
+    ("novaler4kpro", "Novaler 4K Pro"),
+    ("novaler4kse", "Novaler 4K SE"),
+    ("novaler4k", "Novaler 4K"),
+    ("sf8008supreme", "Octagon SF8008 Supreme"),
+    ("sf8008mini", "Octagon SF8008 Mini"),
+    ("sf8008m", "Octagon SF8008m"),
+    ("sf8008", "Octagon SF8008 4K"),
+    ("sf4008", "Octagon SF4008 4K"),
+    ("sf3038", "Octagon SF3038"),
+    ("sfx6008", "Octagon SFX6008"),
+    ("sx88v2", "Octagon SX88 v2"),
+    ("sx988", "Octagon SX988 4K"),
+    ("multibox4kpro", "Multibox 4K Pro"),
+    ("multibox4kse", "Multibox 4K SE"),
+    ("multibox", "Multibox 4K"),
+    ("zgemmah17combo", "Zgemma H17 Combo"),
+    ("zgemmah82h", "Zgemma H8.2H"),
+    ("zgemmah92h", "Zgemma H9.2H"),
+    ("zgemmah9combo", "Zgemma H9 Combo"),
+    ("zgemmah9twin", "Zgemma H9 Twin"),
+    ("zgemmah7", "Zgemma H7"),
+    ("zgemmah11", "Zgemma H11"),
+    ("dm920", "Dreambox DM920"),
+    ("dm900", "Dreambox DM900"),
+    ("dm7080", "Dreambox DM7080"),
+    ("dm820", "Dreambox DM820"),
+    ("dm520", "Dreambox DM520"),
+    ("gbquad4k", "GigaBlue Quad 4K"),
+    ("gbtrio4kpro", "GigaBlue Trio 4K Pro"),
+    ("gbtrio4k", "GigaBlue Trio 4K"),
+    ("gbue4k", "GigaBlue UE 4K")
+]
+
 
 def clean_skin_name(fn):
     """تنظيف اسم السكين ليظهر بالإنجليزية فقط وبدون زوائد"""
@@ -124,37 +169,77 @@ def clean_skin_name(fn):
         if name.endswith(ext):
             name = name[:-len(ext)]
             break
-    
-    # حذف بادئات الانيجما الزائدة
     name = re.sub(r'^(enigma2-plugin-skins?-|enigma2-skin-|skin-)', '', name, flags=re.IGNORECASE)
-    # إزالة كلمة _all أو إصدارات البايثون في نهاية اسم الملف
     name = re.sub(r'(_all|_mips|_arm.*)$', '', name, flags=re.IGNORECASE)
     name = name.replace("-", " ").replace("_", " ").strip()
     return name
 
 
-def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False):
+def format_system_image(fn, brand_disp="Image"):
+    """تنسيق وتوليد اسم ووصف صور النظام بدقة فائقة لجميع الأجهزة والفرق"""
+    fn_clean = fn.lower().replace(".", "").replace("-", "").replace("_", "")
+    
+    # 1. تحديد اسم الجهاز
+    dev_name = "Enigma2 Device"
+    for k, disp in DEVICE_MAP:
+        if k in fn_clean:
+            dev_name = disp
+            break
+
+    # 2. تحديد اسم الصورة / الفريق
+    brand = brand_disp
+    fn_lower = fn.lower()
+    if "openatv" in fn_lower: brand = "OpenATV"
+    elif "egami" in fn_lower: brand = "Egami"
+    elif "openbh" in fn_lower or "blackhole" in fn_lower: brand = "OpenBH"
+    elif "openpli" in fn_lower or "pli" in fn_lower: brand = "OpenPLi"
+    elif "pure2" in fn_lower or "pure" in fn_lower: brand = "PurE2"
+    elif "openvix" in fn_lower or "vix" in fn_lower: brand = "OpenViX"
+    elif "opendroid" in fn_lower: brand = "OpenDroid"
+    elif "openhdf" in fn_lower: brand = "OpenHDF"
+    elif "vti" in fn_lower: brand = "VTi"
+    elif "openspa" in fn_lower: brand = "OpenSPA"
+    elif "openvision" in fn_lower: brand = "OpenVision"
+    elif "openeight" in fn_lower: brand = "OpenEight"
+
+    # 3. تحديد رقم الإصدار إن وجد
+    ver_match = re.search(r'(\d+\.\d+(\.\d+)?)', fn)
+    ver_str = f" {ver_match.group(1)}" if ver_match else ""
+
+    # 4. نوع التثبيت (USB, MMC, Multi, EMMC)
+    install_type = ""
+    if "usb" in fn_lower: install_type = " (USB)"
+    elif "mmc" in fn_lower: install_type = " (MMC)"
+    elif "multi" in fn_lower: install_type = " (Multiboot)"
+    elif "emmc" in fn_lower: install_type = " (EMMC)"
+
+    final_name = f"صورة {brand}{ver_str} لجهاز {dev_name}"
+    final_desc = f"صورة نظام {brand}{ver_str} الرسمية لجهاز {dev_name}{install_type}"
+    return final_name, final_desc
+
+
+def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder=""):
     # 1. إذا كان لديك تعديل يدوي محفوظ، هو الأقوى دائماً
     if fn in metadata_store:
-        u_name = metadata_store[fn].get("name")
-        u_desc = metadata_store[fn].get("description")
-        if u_name and u_desc:
-            # إذا كان سكين وتوجد كلمة "سكين" عربية بالاسم القديم، نزيلها
+        u_name = metadata_store[fn].get("name", "").strip()
+        u_desc = metadata_store[fn].get("description", "").strip()
+        # نتحقق أن الاسم المحفوظ ليس الاسم الإنجليزي الخام للملف
+        if u_name and u_name != fn and u_name != clean_name:
             if is_skin and u_name.startswith("سكين "):
                 u_name = clean_skin_name(fn)
-            return u_name, u_desc
-        if u_name:
-            if is_skin and u_name.startswith("سكين "):
-                u_name = clean_skin_name(fn)
-            return u_name, default_desc
+            return u_name, (u_desc or default_desc)
 
-    # 2. إذا كان سكين (اسم إنجليزي نظيف فقط)
+    # 2. معالجة صور النظام System Images
+    if is_sys_img:
+        return format_system_image(fn, disp_folder)
+
+    # 3. معالجة السكينات Skins
     if is_skin:
         eng_skin_name = clean_skin_name(fn)
         skin_desc = f"سكين {eng_skin_name} عالي الدقة FHD بتصميم أنيق وخفيف"
         return eng_skin_name, skin_desc
 
-    # 3. التنسيق التلقائي الذكي لبقية الأقسام
+    # 4. معالجة باقي الأقسام والبلجنات
     auto_name = clean_name
     auto_desc = default_desc
 
@@ -217,15 +302,6 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
             return "ملف قنوات ومفضلات مرتب (MNASR)", "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية"
         elif "openatv" in fn.lower():
             return "ملف قنوات ومفضلات صورة OpenATV", "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
-
-    for brand in ["egami", "openatv", "openbh", "opendroid", "openhdf", "openpli", "openvix", "pure2", "vti"]:
-        if brand in fn.lower():
-            dev = "الجهاز"
-            for d in ["vuzero4k", "vuduo4kse", "vuduo4k", "vusolo4k", "vuultimo4k", "vuuno4kse", "vuuno4k", "vuzero", "vusolo2", "vuduo2", "novaler4kpro", "novaler4kse", "novaler4k", "sf8008", "sf4008", "sf3038", "sx88v2", "sx988", "sfx6008", "dm900", "dm920", "gbquad4k", "gbtrio4kpro", "gbtrio4k", "zgemmah17combo", "zgemmah82h"]:
-                if d in fn.lower().replace(".", "").replace("-", "").replace("_", ""):
-                    dev = d.upper()
-                    break
-            return f"صورة {brand.upper()} لجهاز {dev}", f"صورة نظام {brand.upper()} الرسمية المحدثة لجهاز {dev}"
 
     for k, (n, d) in CUSTOM_MAP.items():
         if k.lower() in fn.lower() or k.lower() in clean_name.lower():
@@ -327,7 +403,7 @@ if os.path.isdir("system_images"):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image", is_skin=False)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp)
 
             sys_folders[norm]["items"].append({
                 "name": final_name,
@@ -364,7 +440,7 @@ for asset in release_assets_pool:
             sys_folders[matched]["seen"].add(fn)
             clean = clean_filename(fn)
             disp = sys_folders[matched]["display_name"]
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image", is_skin=False)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp)
 
             sys_folders[matched]["items"].append({
                 "name": final_name,
@@ -404,7 +480,7 @@ if os.path.isdir("skins"):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin", is_skin=True)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin", is_skin=True, is_sys_img=False)
 
             skin_folders[norm]["items"].append({
                 "name": final_name,
@@ -435,7 +511,7 @@ for asset in release_assets_pool:
             clean = clean_filename(fn)
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             disp = skin_folders[matched]["display_name"]
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin", is_skin=True)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin", is_skin=True, is_sys_img=False)
 
             skin_folders[matched]["items"].append({
                 "name": final_name,
@@ -470,7 +546,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
                     body_desc = asset.get("body", "")
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc, is_skin=False)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc, is_skin=False, is_sys_img=False)
 
             items.append({
                 "name": final_name,
@@ -490,7 +566,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
             seen.add(fn)
             clean = clean_filename(fn)
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc, is_skin=False)
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc, is_skin=False, is_sys_img=False)
 
             items.append({
                 "name": final_name,
@@ -529,4 +605,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: English skin names without 'سكين' + Arabic descriptions preserved!")
+print("🎉 Successfully generated feed/index.json: Auto formatted System Images with brand and device perfectly!")
