@@ -952,7 +952,26 @@
             },
             {
                 "name": "OpenSPA",
-                "items": []
+                "items": [
+                    {
+                        "name": "openspa-8.7.001-vuduo2-20260704_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuduo2-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openspa-8.7.001-vuduo4k-20260704_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuduo4k-20260704_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "openspa-8.7.001-vusolo2-20260704_usb",
+                        "description": "e",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vusolo2-20260704_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenVision",

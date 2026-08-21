@@ -946,5 +946,17 @@
     "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
         "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
         "description": "Novaler Package"
+    },
+    "openspa-8.7.001-vuduo2-20260704_usb.zip": {
+        "name": "openspa-8.7.001-vuduo2-20260704_usb",
+        "description": "e"
+    },
+    "openspa-8.7.001-vuduo4k-20260704_usb.zip": {
+        "name": "openspa-8.7.001-vuduo4k-20260704_usb",
+        "description": "e"
+    },
+    "openspa-8.7.001-vusolo2-20260704_usb.zip": {
+        "name": "openspa-8.7.001-vusolo2-20260704_usb",
+        "description": "e"
     }
 }
