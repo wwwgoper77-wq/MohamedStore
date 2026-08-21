@@ -1078,5 +1078,13 @@
     "openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip": {
         "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
         "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "openpli-9.2-release-vuduo4kse-20260816_usb.zip": {
+        "name": "صورة OpenPLi 9.2 لجهاز VU+ Duo 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "openpli-9.2-release-vuuno4kse-20260816_usb.zip": {
+        "name": "صورة OpenPLi 9.2 لجهاز VU+ Uno 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Uno 4K SE (USB)"
     }
 }
