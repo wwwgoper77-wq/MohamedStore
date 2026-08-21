@@ -52,8 +52,8 @@
                 "image": ""
             },
             {
-                "name": "MC oscam",
-                "description": "Plugin Extension",
+                "name": "MC Oscam",
+                "description": "أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
@@ -201,8 +201,8 @@
                 "name": "All",
                 "items": [
                     {
-                        "name": "MX-HC2-MOD-By-RAED",
-                        "description": "All Skin",
+                        "name": "MX HC2 MOD By RAED",
+                        "description": "سكين MX HC2 MOD By RAED عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/MX-HC2-MOD-By-RAED.ipk",
                         "image": ""
                     },
@@ -493,8 +493,8 @@
                 "name": "OpenATV",
                 "items": [
                     {
-                        "name": "Copper-FHD-v1.0-MNASR",
-                        "description": "OpenP Skin",
+                        "name": "Copper FHD v1.0 MNASR",
+                        "description": "سكين Copper FHD v1.0 MNASR عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenATV/Copper-FHD-v1.0-MNASR.tar.gz",
                         "image": ""
                     },
@@ -587,8 +587,8 @@
                 "name": "OpenP",
                 "items": [
                     {
-                        "name": "Copper-FHD-v1.0-MNASR",
-                        "description": "OpenP Skin",
+                        "name": "Copper FHD v1.0 MNASR",
+                        "description": "سكين Copper FHD v1.0 MNASR عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/Copper-FHD-v1.0-MNASR.tar.gz",
                         "image": ""
                     },
@@ -637,8 +637,8 @@
                 "image": ""
             },
             {
-                "name": "backup_channels",
-                "description": "Tool Package",
+                "name": "أخذ نسخة احتياطية للقنوات",
+                "description": "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_channels.sh",
                 "image": ""
             },
@@ -937,8 +937,8 @@
                 "name": "OpenPLi",
                 "items": [
                     {
-                        "name": "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc",
-                        "description": "e",
+                        "name": "صورة OpenPLi لجهاز Multibox 4K Pro",
+                        "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip",
                         "image": ""
                     },
@@ -954,20 +954,20 @@
                 "name": "OpenSPA",
                 "items": [
                     {
-                        "name": "openspa-8.7.001-vuduo2-20260704_usb",
-                        "description": "e",
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 2",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 2 (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuduo2-20260704_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openspa-8.7.001-vuduo4k-20260704_usb",
-                        "description": "e",
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 4K",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 4K (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vuduo4k-20260704_usb.zip",
                         "image": ""
                     },
                     {
-                        "name": "openspa-8.7.001-vusolo2-20260704_usb",
-                        "description": "e",
+                        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo 2",
+                        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 2 (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openspa-8.7.001-vusolo2-20260704_usb.zip",
                         "image": ""
                     }

@@ -32,8 +32,8 @@
         "description": "أداة قياس سرعة الإنترنت المباشرة والـ Ping على الرسيفر"
     },
     "MC oscam.zip": {
-        "name": "MC oscam",
-        "description": "Plugin Extension"
+        "name": "MC Oscam",
+        "description": "أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam"
     },
     "MC stream.zip": {
         "name": "MC Stream",
@@ -128,8 +128,8 @@
         "description": "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة"
     },
     "MX-HC2-MOD-By-RAED.ipk": {
-        "name": "MX-HC2-MOD-By-RAED",
-        "description": "All Skin"
+        "name": "MX HC2 MOD By RAED",
+        "description": "سكين MX HC2 MOD By RAED عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "SKIN-BATMAN-VPX-FHD-By-Muaath.ipk": {
         "name": "BATMAN VPX FHD By Muaath",
@@ -316,8 +316,8 @@
         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "Copper-FHD-v1.0-MNASR.tar.gz": {
-        "name": "Copper-FHD-v1.0-MNASR",
-        "description": "OpenP Skin"
+        "name": "Copper FHD v1.0 MNASR",
+        "description": "سكين Copper FHD v1.0 MNASR عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk": {
         "name": "revolution pro full.1.5.Rev.dragon",
@@ -368,8 +368,8 @@
         "description": "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam"
     },
     "backup_channels.sh": {
-        "name": "backup_channels",
-        "description": "Tool Package"
+        "name": "أخذ نسخة احتياطية للقنوات",
+        "description": "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك"
     },
     "clean_crash.sh": {
         "name": "تنظيف ملفات الكراش Crash",
@@ -548,8 +548,8 @@
         "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX988"
     },
     "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip": {
-        "name": "Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc",
-        "description": "e"
+        "name": "صورة OpenPLi لجهاز Multibox 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)"
     },
     "OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip": {
         "name": "صورة OPENPLI لجهاز NOVALER4KPRO",
@@ -948,15 +948,15 @@
         "description": "Novaler Package"
     },
     "openspa-8.7.001-vuduo2-20260704_usb.zip": {
-        "name": "openspa-8.7.001-vuduo2-20260704_usb",
-        "description": "e"
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 2 (USB)"
     },
     "openspa-8.7.001-vuduo4k-20260704_usb.zip": {
-        "name": "openspa-8.7.001-vuduo4k-20260704_usb",
-        "description": "e"
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 4K (USB)"
     },
     "openspa-8.7.001-vusolo2-20260704_usb.zip": {
-        "name": "openspa-8.7.001-vusolo2-20260704_usb",
-        "description": "e"
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 2 (USB)"
     }
 }
