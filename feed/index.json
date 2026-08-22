@@ -851,12 +851,6 @@
                 "image": ""
             },
             {
-                "name": "translate_epg",
-                "description": "Tool Package",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/translate_epg.sh",
-                "image": ""
-            },
-            {
                 "name": "تحديث حزم وفيدات الصورة",
                 "description": "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_packages.sh",
