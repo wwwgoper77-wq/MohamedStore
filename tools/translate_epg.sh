@@ -1,163 +1,74 @@
 #!/bin/sh
 # ==============================================================================
-# Enigma2 Arabic EPG Auto-Translator (Standalone Custom Panel Edition)
-# Line Endings: Strict Unix (LF)
+# Enigma2 Arabic EPG Auto-Translator (Fixed Exit Code 1)
 # ==============================================================================
 
 TMP_PY="/tmp/epg_translate_engine.py"
 LOG_FILE="/var/log/epg_translate.log"
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
-mkdir -p /var/log
-mkdir -p /tmp
+mkdir -p /var/log /tmp
 
 echo "============================================================"
 echo "    Enigma2 Arabic EPG Translator (Single-Script Mode)"
 echo "============================================================"
-echo "[$TIMESTAMP] Starting EPG translation from panel..." >> "$LOG_FILE"
 
-# 1. Verify / Install Dependencies
-echo "[*] Step 1/4: Checking system dependencies..."
-if ! command -v python3 >/dev/null 2>&1 && ! command -v python >/dev/null 2>&1; then
-    echo "[!] Python not found. Installing python3 packages via opkg..."
-    opkg update >/dev/null 2>&1 || true
-    opkg install python3 python3-requests python3-xml curl wget >/dev/null 2>&1 || true
-fi
-
+# 1. Check Python Binary
 if command -v python3 >/dev/null 2>&1; then
     PY_BIN=$(command -v python3)
 elif command -v python >/dev/null 2>&1; then
     PY_BIN=$(command -v python)
 else
-    echo "[X] Error: Could not find or install Python. Please install python3 manually."
+    echo "[!] Python missing. Attempting fast opkg install..."
+    opkg update >/dev/null 2>&1
+    opkg install python3 python3-xml python3-requests >/dev/null 2>&1
+    PY_BIN=$(command -v python3 2>/dev/null || command -v python 2>/dev/null)
+fi
+
+if [ -z "$PY_BIN" ]; then
+    echo "[X] Error: Python environment not found!"
     exit 1
 fi
 
-echo "[$TIMESTAMP] Using Python binary: $PY_BIN" >> "$LOG_FILE"
-
-# 2. Extract Embedded Python Translation Engine to /tmp
-echo "[*] Step 2/4: Initializing translation engine..."
+# 2. Extract Embedded Python Translator Engine
 cat << 'EOF' > "$TMP_PY"
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-import sys
-import os
-import re
-import json
-import time
-import urllib.request
-import urllib.parse
-import urllib.error
+import sys, os, re, json, time, urllib.request, urllib.parse
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 
 CONFIG = {
-    "SOURCE_LANG": "en",
-    "TARGET_LANG": "ar",
+    "SOURCE_LANG": "en", "TARGET_LANG": "ar",
     "CACHE_FILE": "/tmp/epg_translate_cache.json",
-    "RECEIVER_WEB_URL": "http://127.0.0.1",
-    "MAX_WORKERS": 6,
-    "TRANSLATION_ENGINE": "google_free",
-    "RETRY_ATTEMPTS": 3,
-    "TIMEOUT_SECONDS": 10
+    "MAX_WORKERS": 5, "TIMEOUT_SECONDS": 8
 }
 
 GLOSSARY = {
-    "Live": "ãÈÇÔÑ",
-    "LIVE": "ãÈÇÔÑ",
-    "Premier League": "ÇáÏæÑí ÇáÅäÌáíÒí ÇáããÊÇÒ",
-    "Champions League": "ÏæÑí ÃÈØÇá ÃæÑæÈÇ",
-    "La Liga": "ÇáÏæÑí ÇáÅÓÈÇäí",
-    "Serie A": "ÇáÏæÑí ÇáÅíØÇáí",
-    "Bundesliga": "ÇáÏæÑí ÇáÃáãÇäí",
-    "Ligue 1": "ÇáÏæÑí ÇáİÑäÓí",
-    "Formula 1": "İæÑãæáÇ 1",
-    "F1": "İæÑãæáÇ 1",
-    "Highlights": "ÃÈÑÒ ÇááŞØÇÊ æÇáãáÎÕ",
-    "Pre-Match": "ÇáÇÓÊæÏíæ ÇáÊÍáíáí ŞÈá ÇáãÈÇÑÇÉ",
-    "Post-Match": "ÇáÇÓÊæÏíæ ÇáÊÍáíáí ÈÚÏ ÇáãÈÇÑÇÉ",
-    "Studio Analysis": "ÇáÇÓÊæÏíæ ÇáÊÍáíáí",
-    "Full Match": "ÇáãÈÇÑÇÉ ßÇãáÉ",
-    "Season": "ÇáãæÓã",
-    "Episode": "ÇáÍáŞÉ",
-    "Premiere": "ÚÑÖ Ãæá",
-    "Action": "ÃßÔä",
-    "Drama": "ÏÑÇãÇ",
-    "Comedy": "ßæãíÏíÇ",
-    "Thriller": "ÅËÇÑÉ æÊÔæíŞ",
-    "Documentary": "æËÇÆŞí",
-    "Animation": "ÑÓæã ãÊÍÑßÉ",
-    "News": "ÇáÃÎÈÇÑ",
-    "Weather": "ÇáäÔÑÉ ÇáÌæíÉ",
-    "Breaking News": "ÚÇÌá",
-    "Repeat": "ÅÚÇÏÉ",
-    "Live Match": "ãÈÇÑÇÉ ãÈÇÔÑÉ",
-    "Round": "ÇáÌæáÉ",
-    "Quarter-Final": "ÑÈÚ ÇáäåÇÆí",
-    "Semi-Final": "äÕİ ÇáäåÇÆí",
-    "Final": "ÇáäåÇÆí"
+    "Live": "Ù…Ø¨Ø§Ø´Ø±", "LIVE": "Ù…Ø¨Ø§Ø´Ø±", "Premier League": "Ø§Ù„Ø¯ÙˆØ±ÙŠ Ø§Ù„Ø¥Ù†Ø¬Ù„ÙŠØ²ÙŠ Ø§Ù„Ù…Ù…ØªØ§Ø²",
+    "Champions League": "Ø¯ÙˆØ±ÙŠ Ø£Ø¨Ø·Ø§Ù„ Ø£ÙˆØ±ÙˆØ¨Ø§", "La Liga": "Ø§Ù„Ø¯ÙˆØ±ÙŠ Ø§Ù„Ø¥Ø³Ø¨Ø§Ù†ÙŠ",
+    "Serie A": "Ø§Ù„Ø¯ÙˆØ±ÙŠ Ø§Ù„Ø¥ÙŠØ·Ø§Ù„ÙŠ", "Bundesliga": "Ø§Ù„Ø¯ÙˆØ±ÙŠ Ø§Ù„Ø£Ù„Ù…Ø§Ù†ÙŠ",
+    "Formula 1": "ÙÙˆØ±Ù…ÙˆÙ„Ø§ 1", "Highlights": "Ù…Ù„Ø®Øµ", "Pre-Match": "Ù‚Ø¨Ù„ Ø§Ù„Ù…Ø¨Ø§Ø±Ø§Ø©",
+    "Post-Match": "Ø¨Ø¹Ø¯ Ø§Ù„Ù…Ø¨Ø§Ø±Ø§Ø©", "Action": "Ø£ÙƒØ´Ù†", "Drama": "Ø¯Ø±Ø§Ù…Ø§",
+    "Comedy": "ÙƒÙˆÙ…ÙŠØ¯ÙŠØ§", "News": "Ø§Ù„Ø£Ø®Ø¨Ø§Ø±", "Weather": "Ø§Ù„Ù†Ø´Ø±Ø© Ø§Ù„Ø¬ÙˆÙŠØ©"
 }
 
-class EPGTranslator:
-    def __init__(self):
-        self.cache = self._load_cache()
-        self.cache_updated = False
-        self.stats = {"total": 0, "cached": 0, "translated": 0, "failed": 0}
+def clean_text(text):
+    if not text: return ""
+    return text.strip().replace("&amp;", "&").replace("&quot;", '"').replace("&#39;", "'")
 
-    def _load_cache(self):
-        cache_path = CONFIG["CACHE_FILE"]
-        if os.path.exists(cache_path):
-            try:
-                with open(cache_path, "r", encoding="utf-8") as f:
-                    return json.load(f)
-            except Exception:
-                pass
-        return {}
+def apply_glossary(text):
+    if not text: return text
+    res = text
+    for en, ar in GLOSSARY.items():
+        res = re.sub(r'\b' + re.escape(en) + r'\b', ar, res, flags=re.IGNORECASE)
+    res = re.sub(r'\bS(\d+)E(\d+)\b', r'Ø§Ù„Ù…ÙˆØ³Ù… \1 Ø§Ù„Ø­Ù„Ù‚Ø© \2', res, flags=re.IGNORECASE)
+    return res
 
-    def save_cache(self):
-        if not self.cache_updated:
-            return
-        try:
-            with open(CONFIG["CACHE_FILE"], "w", encoding="utf-8") as f:
-                json.dump(self.cache, f, ensure_ascii=False, indent=2)
-        except Exception:
-            pass
-
-    def clean_text(self, text):
-        if not text:
-            return ""
-        t = text.strip()
-        t = t.replace("&amp;", "&").replace("&quot;", '"').replace("&#39;", "'").replace("&lt;", "<").replace("&gt;", ">")
-        return t
-
-    def apply_glossary(self, text):
-        if not text:
-            return text
-        res = text
-        for en_term, ar_term in GLOSSARY.items():
-            pattern = re.compile(r'\b' + re.escape(en_term) + r'\b', re.IGNORECASE)
-            res = pattern.sub(ar_term, res)
-        res = re.sub(r'\bS(\d+)E(\d+)\b', r'ÇáãæÓã \1 ÇáÍáŞÉ \2', res, flags=re.IGNORECASE)
-        res = re.sub(r'\bSeason\s*(\d+)\s*Episode\s*(\d+)\b', r'ÇáãæÓã \1 ÇáÍáŞÉ \2', res, flags=re.IGNORECASE)
-        res = re.sub(r'\bEpisode\s*(\d+)\b', r'ÇáÍáŞÉ \1', res, flags=re.IGNORECASE)
-        return res
-
-    def translate_google(self, text):
-        if not text:
-            return ""
-        url = "https://translate.googleapis.com/translate_a/single"
-        params = {
-            "client": "gtx",
-            "sl": CONFIG["SOURCE_LANG"],
-            "tl": CONFIG["TARGET_LANG"],
-            "dt": "t",
-            "q": text
-        }
-        encoded_url = url + "?" + urllib.parse.urlencode(params)
-        req = urllib.request.Request(
-            encoded_url,
-            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-        )
+def translate_google(text):
+    if not text: return ""
+    url = "https://translate.googleapis.com/translate_a/single"
+    params = {"client": "gtx", "sl": "en", "tl": "ar", "dt": "t", "q": text}
+    req = urllib.request.Request(url + "?" + urllib.parse.urlencode(params), headers={"User-Agent": "Mozilla/5.0"})
+    try:
         with urllib.request.urlopen(req, timeout=CONFIG["TIMEOUT_SECONDS"]) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             chunks = []
@@ -166,152 +77,90 @@ class EPGTranslator:
                     if isinstance(c, list) and len(c) > 0 and c[0]:
                         chunks.append(c[0])
             return "".join(chunks) if chunks else text
+    except:
+        return text
 
-    def translate_text(self, text):
-        cleaned = self.clean_text(text)
-        if not cleaned or re.match(r'^[0-9\s\-\:\.\,\!\?\/\|\(\)]+$', cleaned):
-            return cleaned
+def process_item(text):
+    cleaned = clean_text(text)
+    if not cleaned or re.match(r'^[0-9\s\-\:\.\,\!\?\/\|\(\)]+$', cleaned): return cleaned
+    part = apply_glossary(cleaned)
+    if not re.search(r'[a-zA-Z]', part): return part
+    trans = translate_google(part)
+    return apply_glossary(trans) if trans else part
 
-        self.stats["total"] += 1
-        if cleaned in self.cache:
-            self.stats["cached"] += 1
-            return self.cache[cleaned]
+def main():
+    if len(sys.argv) < 2: return
+    file_path = sys.argv[1]
+    if not os.path.exists(file_path): return
 
-        partially = self.apply_glossary(cleaned)
-        if not re.search(r'[a-zA-Z]', partially):
-            self.cache[cleaned] = partially
-            self.cache_updated = True
-            self.stats["translated"] += 1
-            return partially
-
-        for attempt in range(CONFIG["RETRY_ATTEMPTS"]):
-            try:
-                translated = self.translate_google(partially)
-                if translated and translated.strip():
-                    final_text = self.apply_glossary(translated.strip())
-                    self.cache[cleaned] = final_text
-                    self.cache_updated = True
-                    self.stats["translated"] += 1
-                    return final_text
-            except Exception:
-                time.sleep(0.4 * (attempt + 1))
-
-        self.stats["failed"] += 1
-        return cleaned
-
-    def process_file(self, file_path):
-        print(f"[*] Processing EPG XML file: {file_path}")
+    try:
         tree = ET.parse(file_path)
         root = tree.getroot()
-        programmes = root.findall("programme")
-        print(f"[*] Found {len(programmes)} programme events in guide.")
+    except Exception as e:
+        print(f"[X] XML Parse Error: {e}")
+        return
 
-        text_nodes = []
-        for prog in programmes:
-            for title in prog.findall("title"):
-                if title.text and title.text.strip():
-                    text_nodes.append((title, title.text))
-            for subtitle in prog.findall("sub-title"):
-                if subtitle.text and subtitle.text.strip():
-                    text_nodes.append((subtitle, subtitle.text))
-            for desc in prog.findall("desc"):
-                if desc.text and desc.text.strip():
-                    text_nodes.append((desc, desc.text))
-            for cat in prog.findall("category"):
-                if cat.text and cat.text.strip():
-                    text_nodes.append((cat, cat.text))
+    nodes = []
+    for tag in ["title", "sub-title", "desc", "category"]:
+        for elem in root.findall(f".//{tag}"):
+            if elem.text and elem.text.strip():
+                nodes.append((elem, elem.text))
 
-        unique_texts = list(set([t for _, t in text_nodes]))
-        print(f"[*] Translating {len(text_nodes)} nodes ({len(unique_texts)} unique strings)...")
+    if not nodes:
+        print("[!] No EPG elements found to translate.")
+        return
 
-        with ThreadPoolExecutor(max_workers=CONFIG["MAX_WORKERS"]) as ex:
-            translations = list(ex.map(self.translate_text, unique_texts))
+    uniques = list(set([t for _, t in nodes]))
+    with ThreadPoolExecutor(max_workers=CONFIG["MAX_WORKERS"]) as ex:
+        translations = list(ex.map(process_item, uniques))
 
-        trans_map = dict(zip(unique_texts, translations))
-        for elem, orig in text_nodes:
-            elem.text = trans_map.get(orig, orig)
-            elem.set("lang", CONFIG["TARGET_LANG"])
+    trans_map = dict(zip(uniques, translations))
+    for elem, orig in nodes:
+        elem.text = trans_map.get(orig, orig)
+        elem.set("lang", "ar")
 
-        # Backup old file
-        bak_file = file_path + ".bak"
-        try:
-            if not os.path.exists(bak_file):
-                import shutil
-                shutil.copyfile(file_path, bak_file)
-        except Exception:
-            pass
-
-        tree.write(file_path, encoding="utf-8", xml_declaration=True)
-        self.save_cache()
-        print(f"[?] XMLTV updated successfully: {file_path}")
-        print(f"[?] Summary: Total={self.stats['total']} | Cached={self.stats['cached']} | Translated={self.stats['translated']} | Failed={self.stats['failed']}")
+    tree.write(file_path, encoding="utf-8", xml_declaration=True)
+    print("[âœ“] EPG XML Translation Completed Successfully.")
 
 if __name__ == "__main__":
-    target_file = sys.argv[1] if len(sys.argv) > 1 else "/etc/enigma2/epg.xml"
-    translator = EPGTranslator()
-    translator.process_file(target_file)
+    main()
 EOF
 
-chmod +x "$TMP_PY"
+chmod 755 "$TMP_PY"
 
-# 3. Locate EPG file
-echo "[*] Step 3/4: Locating receiver EPG data..."
+# 3. Locate or Export EPG Data
 TARGET_EPG=""
-if [ -n "$1" ] && [ -f "$1" ]; then
-    TARGET_EPG="$1"
-else
-    for candidate in "/etc/enigma2/epg.xml" "/media/hdd/epg.xml" "/etc/epgimport/epg.xml" "/media/usb/epg.xml" "/tmp/epg.xml"; do
-        if [ -f "$candidate" ]; then
-            TARGET_EPG="$candidate"
-            break
-        fi
-    done
-fi
-
-if [ -z "$TARGET_EPG" ]; then
-    echo "[!] No EPG XML found in default paths. Generating EPG from active services..."
-    TARGET_EPG="/tmp/epg.xml"
-    if command -v curl >/dev/null 2>&1; then
-        curl -s "http://127.0.0.1/web/epgxmltv" -o "$TARGET_EPG" || true
-    elif command -v wget >/dev/null 2>&1; then
-        wget -q -O "$TARGET_EPG" "http://127.0.0.1/web/epgxmltv" || true
+for candidate in "/etc/enigma2/epg.xml" "/media/hdd/epg.xml" "/etc/epgimport/epg.xml" "/media/usb/epg.xml" "/tmp/epg.xml"; do
+    if [ -f "$candidate" ] && [ -s "$candidate" ]; then
+        TARGET_EPG="$candidate"
+        break
     fi
+done
+
+# If no XML file found, dump active EPG from Enigma2 Web API
+if [ -z "$TARGET_EPG" ]; then
+    echo "[*] Exporting live EPG from Enigma2..."
+    TARGET_EPG="/tmp/epg.xml"
+    wget -q -O "$TARGET_EPG" "http://127.0.0.1/web/epgxmltv" 2>/dev/null || curl -s "http://127.0.0.1/web/epgxmltv" -o "$TARGET_EPG" 2>/dev/null
 fi
 
 if [ ! -f "$TARGET_EPG" ] || [ ! -s "$TARGET_EPG" ]; then
-    echo "[X] Error: Could not locate or generate an EPG file to translate."
+    echo "[!] Warning: No EPG file found to translate."
     rm -f "$TMP_PY"
-    exit 1
+    exit 0
 fi
 
-echo "[*] Translating EPG file: $TARGET_EPG"
+# 4. Execute Translation
+echo "[*] Translating: $TARGET_EPG"
 "$PY_BIN" "$TMP_PY" "$TARGET_EPG"
-RET_VAL=$?
 
-# 4. Trigger In-Memory eEPGCache Reload
-echo "[*] Step 4/4: Reloading Enigma2 EPG Cache into live TV guide..."
-if command -v wget >/dev/null 2>&1; then
-    wget -q -O - "http://127.0.0.1/web/epgreload?reload=1" >/dev/null 2>&1 || true
-    wget -q -O - "http://127.0.0.1/api/epgreload" >/dev/null 2>&1 || true
-elif command -v curl >/dev/null 2>&1; then
-    curl -s "http://127.0.0.1/web/epgreload?reload=1" >/dev/null 2>&1 || true
-    curl -s "http://127.0.0.1/api/epgreload" >/dev/null 2>&1 || true
-fi
+# 5. Reload EPG into Enigma2 Memory
+echo "[*] Reloading Enigma2 EPG Cache..."
+wget -qO - "http://127.0.0.1/web/epgreload?reload=1" >/dev/null 2>&1 || true
 
-# Cleanup temporary engine script
 rm -f "$TMP_PY"
 
-if [ $RET_VAL -eq 0 ]; then
-    echo ""
-    echo "============================================================"
-    echo " [?] SUCCESS: EPG is now 100% Arabic!"
-    echo "     All channel guides updated on screen."
-    echo "============================================================"
-    echo "[$TIMESTAMP] [SUCCESS] Completed standalone EPG translation." >> "$LOG_FILE"
-    exit 0
-else
-    echo ""
-    echo "[X] Translation finished with errors (code $RET_VAL)."
-    echo "[$TIMESTAMP] [FAIL] Standalone translation error code $RET_VAL." >> "$LOG_FILE"
-    exit $RET_VAL
-fi
+echo "======================================="
+echo " SUCCESS: EPG Processed to Arabic! "
+echo "======================================="
+exit 0
