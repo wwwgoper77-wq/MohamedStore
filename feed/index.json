@@ -809,12 +809,6 @@
                 "image": ""
             },
             {
-                "name": "تثبيت تعاريف قطع",
-                "description": "يقوم الفحص بالتعرف على أجهزة التوصيل مثل قطعة الوايفاي أو البلوتوث عبر أمر التتبع الخاص بالنظام، ثم يقوم بتنزيل وتثبيت التعاريف المفقودة تلقائياً من سيرفرات الصورة.",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/install_usb_drivers.sh",
-                "image": ""
-            },
-            {
                 "name": "إزالة الحزم اليتيمة",
                 "description": "البحث عن المكتبات والحزم التي تم إزالة البلوجينات الخاصة بها ولم تعد مستخدمة وحذفها تلقائياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/purge_packages.sh",
