@@ -622,7 +622,14 @@
             },
             {
                 "name": "Pure2",
-                "items": []
+                "items": [
+                    {
+                        "name": "ESTUARY SKIN COVER INFOBAR 12 BY CHARI7",
+                        "description": "سكين ESTUARY SKIN COVER INFOBAR 12 BY CHARI7 عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Pure2/ESTUARY SKIN COVER INFOBAR 12_BY-CHARI7.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "VTI",
