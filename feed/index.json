@@ -791,6 +791,12 @@
                 "image": ""
             },
             {
+                "name": "fix_lamedb",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_lamedb.sh",
+                "image": ""
+            },
+            {
                 "name": "إصلاح وإعادة تشغيل الشبكة",
                 "description": "سكربت حل مشاكل الاتصال بالإنترنت وإعادة ضبط الشبكة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_network.sh",

@@ -1154,5 +1154,9 @@
     "format_ext4.sh": {
         "name": "فرمتة الفلاشة Format USB to ext4",
         "description": "الوصف: تهيئة الفلاشة بنظام ملفات ext4 لتجهيزها لـ NeoBoot"
+    },
+    "fix_lamedb.sh": {
+        "name": "fix_lamedb",
+        "description": "Tool Package"
     }
 }
