@@ -1132,11 +1132,11 @@
         "description": "لتصبح dreambox أو فارغة لتسهيل الاتصال عبر البرامج FTP / SSH تعيين كلمة السر الخاصة بـ"
     },
     "repair_disk.sh": {
-        "name": "repair_disk",
-        "description": "Tool Package"
+        "name": "فحص وإصلاح الفلاشة",
+        "description": "فحص الأقطاعات التالفة وأخطاء نظام الملفات (ext4/fat32) للذاكرة الخارجية وتصليحها"
     },
     "reset_settings.sh": {
-        "name": "reset_settings",
-        "description": "Tool Package"
+        "name": "تصفير إعدادات النظام",
+        "description": "حذف ملف settings وإعادة تشغيل الواجهة لاستعادة الضبط الافتراضي عند حدوث بطء شديد أو أخطاء مجهولة"
     }
 }
