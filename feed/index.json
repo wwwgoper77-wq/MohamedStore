@@ -791,9 +791,21 @@
                 "image": ""
             },
             {
+                "name": "repair_disk",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/repair_disk.sh",
+                "image": ""
+            },
+            {
                 "name": "تصفير كلمة السر",
                 "description": "لتصبح dreambox أو فارغة لتسهيل الاتصال عبر البرامج FTP / SSH تعيين كلمة السر الخاصة بـ",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/reset_pass.sh",
+                "image": ""
+            },
+            {
+                "name": "reset_settings",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/reset_settings.sh",
                 "image": ""
             },
             {

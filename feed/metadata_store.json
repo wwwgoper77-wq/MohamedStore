@@ -1130,5 +1130,13 @@
     "reset_pass.sh": {
         "name": "تصفير كلمة السر",
         "description": "لتصبح dreambox أو فارغة لتسهيل الاتصال عبر البرامج FTP / SSH تعيين كلمة السر الخاصة بـ"
+    },
+    "repair_disk.sh": {
+        "name": "repair_disk",
+        "description": "Tool Package"
+    },
+    "reset_settings.sh": {
+        "name": "reset_settings",
+        "description": "Tool Package"
     }
 }
