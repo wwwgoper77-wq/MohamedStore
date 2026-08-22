@@ -791,8 +791,8 @@
                 "image": ""
             },
             {
-                "name": "repair_disk",
-                "description": "Tool Package",
+                "name": "فحص وإصلاح الفلاشة",
+                "description": "فحص الأقطاعات التالفة وأخطاء نظام الملفات (ext4/fat32) للذاكرة الخارجية وتصليحها",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/repair_disk.sh",
                 "image": ""
             },
@@ -803,8 +803,8 @@
                 "image": ""
             },
             {
-                "name": "reset_settings",
-                "description": "Tool Package",
+                "name": "تصفير إعدادات النظام",
+                "description": "حذف ملف settings وإعادة تشغيل الواجهة لاستعادة الضبط الافتراضي عند حدوث بطء شديد أو أخطاء مجهولة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/reset_settings.sh",
                 "image": ""
             },
