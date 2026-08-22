@@ -1158,5 +1158,9 @@
     "fix_lamedb.sh": {
         "name": "fix_lamedb",
         "description": "Tool Package"
+    },
+    "install_usb_drivers.sh": {
+        "name": "install_usb_drivers",
+        "description": "Tool Package"
     }
 }

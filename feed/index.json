@@ -809,6 +809,12 @@
                 "image": ""
             },
             {
+                "name": "install_usb_drivers",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/install_usb_drivers.sh",
+                "image": ""
+            },
+            {
                 "name": "إزالة الحزم اليتيمة",
                 "description": "البحث عن المكتبات والحزم التي تم إزالة البلوجينات الخاصة بها ولم تعد مستخدمة وحذفها تلقائياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/purge_packages.sh",
