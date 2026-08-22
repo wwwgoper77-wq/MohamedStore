@@ -1140,11 +1140,19 @@
         "description": "حذف ملف settings وإعادة تشغيل الواجهة لاستعادة الضبط الافتراضي عند حدوث بطء شديد أو أخطاء مجهولة"
     },
     "clean_iptv_cache.sh": {
-        "name": "clean_iptv_cache",
-        "description": "Tool Package"
+        "name": "تنظيف مخلفات IPTV (Clear IPTV Cache)",
+        "description": "حذف الملفات المؤقتة الناتجة عن مشاهدة أفلام ومسلسلات البث المباشر لزيادة المساحة"
     },
     "purge_packages.sh": {
-        "name": "purge_packages",
+        "name": "إزالة الحزم اليتيمة",
+        "description": "البحث عن المكتبات والحزم التي تم إزالة البلوجينات الخاصة بها ولم تعد مستخدمة وحذفها تلقائياً"
+    },
+    "format_ext3.sh": {
+        "name": "format_ext3",
+        "description": "Tool Package"
+    },
+    "format_ext4.sh": {
+        "name": "format_ext4",
         "description": "Tool Package"
     }
 }

@@ -797,6 +797,18 @@
                 "image": ""
             },
             {
+                "name": "format_ext3",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/format_ext3.sh",
+                "image": ""
+            },
+            {
+                "name": "format_ext4",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/format_ext4.sh",
+                "image": ""
+            },
+            {
                 "name": "إزالة الحزم اليتيمة",
                 "description": "البحث عن المكتبات والحزم التي تم إزالة البلوجينات الخاصة بها ولم تعد مستخدمة وحذفها تلقائياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/purge_packages.sh",
