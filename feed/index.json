@@ -737,6 +737,12 @@
                 "image": ""
             },
             {
+                "name": "clean_iptv_cache",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_iptv_cache.sh",
+                "image": ""
+            },
+            {
                 "name": "تنظيف وتسريع الرام RAM",
                 "description": "سكربت تفريغ ذاكرة الرام المؤقتة وتسريع استجابة الرسيفر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_ram.sh",
@@ -788,6 +794,12 @@
                 "name": "إصلاح وإعادة تشغيل الشبكة",
                 "description": "سكربت حل مشاكل الاتصال بالإنترنت وإعادة ضبط الشبكة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/fix_network.sh",
+                "image": ""
+            },
+            {
+                "name": "purge_packages",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/purge_packages.sh",
                 "image": ""
             },
             {

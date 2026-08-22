@@ -1138,5 +1138,13 @@
     "reset_settings.sh": {
         "name": "تصفير إعدادات النظام",
         "description": "حذف ملف settings وإعادة تشغيل الواجهة لاستعادة الضبط الافتراضي عند حدوث بطء شديد أو أخطاء مجهولة"
+    },
+    "clean_iptv_cache.sh": {
+        "name": "clean_iptv_cache",
+        "description": "Tool Package"
+    },
+    "purge_packages.sh": {
+        "name": "purge_packages",
+        "description": "Tool Package"
     }
 }
