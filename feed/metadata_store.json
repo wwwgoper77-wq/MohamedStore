@@ -1160,7 +1160,7 @@
         "description": "Tool Package"
     },
     "install_usb_drivers.sh": {
-        "name": "install_usb_drivers",
-        "description": "Tool Package"
+        "name": "تثبيت تعاريف قطع",
+        "description": "يقوم الفحص بالتعرف على أجهزة التوصيل مثل قطعة الوايفاي أو البلوتوث عبر أمر التتبع الخاص بالنظام، ثم يقوم بتنزيل وتثبيت التعاريف المفقودة تلقائياً من سيرفرات الصورة."
     }
 }
