@@ -719,8 +719,8 @@
                 "image": ""
             },
             {
-                "name": "backup_cams",
-                "description": "Tool Package",
+                "name": "حفظ اشتراكات الشيرنج",
+                "description": "أخذ نسخة احتياطية من ملفات OScam و NCam و CCcam وحفظها في مجلد آمن بالهارد أو الـ USB",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_cams.sh",
                 "image": ""
             },
