@@ -3,7 +3,6 @@ echo "1. Updating feeds list..."
 opkg update >/dev/null 2>&1
 
 echo "2. Scanning connected hardware..."
-# Scan and install drivers for Realtek, Ralink, and Bluetooth devices
 for DRV in rtl8812au rtl8192eu rt2800-usb kernel-module-btusb; do
     echo "Checking driver: $DRV"
     opkg install enigma2-plugin-drivers-network-usb-$DRV >/dev/null 2>&1
