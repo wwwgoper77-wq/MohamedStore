@@ -1122,5 +1122,9 @@
     "enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
         "name": "xDreamy 6.0.0",
         "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "backup_cams.sh": {
+        "name": "backup_cams",
+        "description": "Tool Package"
     }
 }

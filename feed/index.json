@@ -719,6 +719,12 @@
                 "image": ""
             },
             {
+                "name": "backup_cams",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_cams.sh",
+                "image": ""
+            },
+            {
                 "name": "أخذ نسخة احتياطية للقنوات",
                 "description": "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/backup_channels.sh",
