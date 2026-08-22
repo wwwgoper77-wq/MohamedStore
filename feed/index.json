@@ -797,14 +797,14 @@
                 "image": ""
             },
             {
-                "name": "format_ext3",
-                "description": "Tool Package",
+                "name": "فرمتة الفلاشة إلى ext3",
+                "description": "ext3 تهيئة الفلاشة بنظام ملفات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/format_ext3.sh",
                 "image": ""
             },
             {
-                "name": "format_ext4",
-                "description": "Tool Package",
+                "name": "فرمتة الفلاشة Format USB to ext4",
+                "description": "الوصف: تهيئة الفلاشة بنظام ملفات ext4 لتجهيزها لـ NeoBoot",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/format_ext4.sh",
                 "image": ""
             },
