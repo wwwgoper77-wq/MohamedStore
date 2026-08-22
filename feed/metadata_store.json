@@ -1148,11 +1148,11 @@
         "description": "البحث عن المكتبات والحزم التي تم إزالة البلوجينات الخاصة بها ولم تعد مستخدمة وحذفها تلقائياً"
     },
     "format_ext3.sh": {
-        "name": "format_ext3",
-        "description": "Tool Package"
+        "name": "فرمتة الفلاشة إلى ext3",
+        "description": "ext3 تهيئة الفلاشة بنظام ملفات"
     },
     "format_ext4.sh": {
-        "name": "format_ext4",
-        "description": "Tool Package"
+        "name": "فرمتة الفلاشة Format USB to ext4",
+        "description": "الوصف: تهيئة الفلاشة بنظام ملفات ext4 لتجهيزها لـ NeoBoot"
     }
 }
