@@ -737,8 +737,8 @@
                 "image": ""
             },
             {
-                "name": "clean_iptv_cache",
-                "description": "Tool Package",
+                "name": "تنظيف مخلفات IPTV (Clear IPTV Cache)",
+                "description": "حذف الملفات المؤقتة الناتجة عن مشاهدة أفلام ومسلسلات البث المباشر لزيادة المساحة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/clean_iptv_cache.sh",
                 "image": ""
             },
@@ -797,8 +797,8 @@
                 "image": ""
             },
             {
-                "name": "purge_packages",
-                "description": "Tool Package",
+                "name": "إزالة الحزم اليتيمة",
+                "description": "البحث عن المكتبات والحزم التي تم إزالة البلوجينات الخاصة بها ولم تعد مستخدمة وحذفها تلقائياً",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/purge_packages.sh",
                 "image": ""
             },
