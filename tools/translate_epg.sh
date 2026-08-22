@@ -1,48 +1,39 @@
 #!/bin/sh
 # ==============================================================================
-# EPG Translator via Gemini API
+# Arabic EPG Free Translator (No Key Required)
 # ==============================================================================
 
-PY_SCRIPT="/tmp/run_gemini_epg.py"
+PY_SCRIPT="/tmp/run_free_epg.py"
 
 echo "============================================================"
-echo "      Starting Gemini API EPG Translation Process"
+echo "      Starting Free Arabic EPG Translation Process"
 echo "============================================================"
 
-# إنشاء كود البايثون الداخلي
+# إنشاء كود البايثون الداخلي لعمل الترجمة المجانية
 cat << 'EOF' > "$PY_SCRIPT"
-import sys, os, urllib.request, json, re
+import sys, os, urllib.request, urllib.parse, json, re
 import xml.etree.ElementTree as ET
 
-# --- ضع مفتاح Gemini الخاص بك هنا ---
-GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
-
-def translate_gemini(text):
+def translate_google_free(text):
     if not text or not text.strip(): return text
     if re.match(r'^[0-9\s\-\:\.\,\!\?\/\|\(\)]+$', text): return text
     
     try:
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + GEMINI_API_KEY
-        payload = {
-            "contents": [{
-                "parts": [{
-                    "text": "Translate the following TV EPG text to natural, high-quality Arabic. Return ONLY the translated Arabic text with absolutely no explanations, codeblocks, formatting, or extra words:\n\n" + text
-                }]
-            }]
-        }
-        data = json.dumps(payload).encode("utf-8")
+        url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ar&dt=t&q=" + urllib.parse.quote(text)
         req = urllib.request.Request(
             url,
-            data=data,
-            headers={"Content-Type": "application/json"}
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
         )
-        with urllib.request.urlopen(req, timeout=5) as response:
-            res_data = json.loads(response.read().decode("utf-8"))
-            if "candidates" in res_data:
-                translated = res_data["candidates"][0]["content"]["parts"][0]["text"]
-                return translated.strip()
-    except Exception as e:
-        print(f"Gemini Error: {e}")
+        with urllib.request.urlopen(req, timeout=4) as response:
+            data = json.loads(response.read().decode("utf-8"))
+            translated_parts = []
+            if data and data[0]:
+                for part in data[0]:
+                    if part and part[0]:
+                        translated_parts.append(part[0])
+            return "".join(translated_parts).strip()
+    except Exception:
+        pass
     return text
 
 epg_paths = ["/etc/enigma2/epg.dat", "/media/hdd/epg.dat", "/media/usb/epg.dat", "/tmp/epg.xml"]
@@ -58,38 +49,42 @@ if not xml_file:
     os.system('wget -q -O /tmp/live_epg.xml "http://127.0.0.1/web/epgxmltv" 2>/dev/null')
 
 if os.path.exists(xml_file) and os.path.getsize(xml_file) > 0:
-    print("[*] Processing EPG XML with Gemini AI...")
+    print("[*] Processing EPG XML with Free Google Engine...")
     try:
         tree = ET.parse(xml_file)
         root = tree.getroot()
         count = 0
         for elem in root.findall(".//title") + root.findall(".//desc"):
             if elem.text:
-                elem.text = translate_gemini(elem.text)
+                elem.text = translate_google_free(elem.text)
                 count += 1
-                if count % 10 == 0:
+                if count % 15 == 0:
                     print(f"[*] Translated {count} items...")
         tree.write(xml_file, encoding="utf-8", xml_declaration=True)
-        print("[✓] Translation Finished Successfully.")
+        print("[✓] EPG Translation Finished Successfully.")
     except Exception as e:
         print(f"[X] XML Error: {e}")
 else:
-    print("[!] No EPG data found.")
+    print("[!] No active EPG XML found.")
+
 EOF
 
+# إيقاف واجهة Enigma2 لتطبيق الترجمة على الذاكرة
 echo "[*] Stopping Enigma2 GUI..."
 init 4
 sleep 3
 
-echo "[*] Running Translation via Gemini..."
+# تنفيذ الترجمة
+echo "[*] Translating EPG..."
 python3 "$PY_SCRIPT" || python "$PY_SCRIPT"
 
 rm -f "$PY_SCRIPT"
 
+# إعادة تشغيل الواجهة
 echo "[*] Restarting Enigma2 GUI..."
 init 3
 
 echo "============================================================"
-echo "          Completed!"
+echo "          Process Completed Successfully!"
 echo "============================================================"
 exit 0
