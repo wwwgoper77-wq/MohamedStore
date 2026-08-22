@@ -791,6 +791,12 @@
                 "image": ""
             },
             {
+                "name": "reset_pass",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/reset_pass.sh",
+                "image": ""
+            },
+            {
                 "name": "إعادة تشغيل الكامات Cam",
                 "description": "سكربت عمل ريستارت لمحاكيات الشفرات Oscam و Ncam عند التوقف",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/restart_cam.sh",

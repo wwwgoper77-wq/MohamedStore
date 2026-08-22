@@ -1126,5 +1126,9 @@
     "backup_cams.sh": {
         "name": "حفظ اشتراكات الشيرنج",
         "description": "أخذ نسخة احتياطية من ملفات OScam و NCam و CCcam وحفظها في مجلد آمن بالهارد أو الـ USB"
+    },
+    "reset_pass.sh": {
+        "name": "reset_pass",
+        "description": "Tool Package"
     }
 }
