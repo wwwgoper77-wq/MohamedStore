@@ -1110,5 +1110,9 @@
     "enigma2-skin-aeonfhdmod_sharp987_vti-r3.27_all.ipk": {
         "name": "aeonfhdmod sharp987 vti r3.27",
         "description": "سكين aeonfhdmod sharp987 vti r3.27 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "enigma2-plugin-skin-metrix-curve-fhd_1.0.2_all.ipk": {
+        "name": "metrix curve fhd 1.0.2",
+        "description": "سكين metrix curve fhd 1.0.2 عالي الدقة FHD بتصميم أنيق وخفيف"
     }
 }
