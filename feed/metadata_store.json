@@ -1124,7 +1124,7 @@
         "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "backup_cams.sh": {
-        "name": "backup_cams",
-        "description": "Tool Package"
+        "name": "حفظ اشتراكات الشيرنج",
+        "description": "أخذ نسخة احتياطية من ملفات OScam و NCam و CCcam وحفظها في مجلد آمن بالهارد أو الـ USB"
     }
 }
