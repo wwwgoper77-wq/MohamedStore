@@ -1128,7 +1128,7 @@
         "description": "أخذ نسخة احتياطية من ملفات OScam و NCam و CCcam وحفظها في مجلد آمن بالهارد أو الـ USB"
     },
     "reset_pass.sh": {
-        "name": "reset_pass",
-        "description": "Tool Package"
+        "name": "تصفير كلمة السر",
+        "description": "لتصبح dreambox أو فارغة لتسهيل الاتصال عبر البرامج FTP / SSH تعيين كلمة السر الخاصة بـ"
     }
 }
