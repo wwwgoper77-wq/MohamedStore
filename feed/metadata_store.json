@@ -1154,5 +1154,13 @@
     "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
         "name": "enigma2-plugin-softcams-supcam-ncam-nova",
         "description": "هو حزمة تثبيت مدمجة لإيمو"
+    },
+    "enigma2-plugin-skins-extreme-fhd-all_v1.0_all.ipk": {
+        "name": "extreme fhd all v1.0",
+        "description": "سكين extreme fhd all v1.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "enigma2-plugin-skins-extremegolden-fhd-all_v1.0_all.ipk": {
+        "name": "extremegolden fhd all v1.0",
+        "description": "سكين extremegolden fhd all v1.0 عالي الدقة FHD بتصميم أنيق وخفيف"
     }
 }
