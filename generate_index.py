@@ -26,6 +26,13 @@ INDEX_FILE = "feed/index.json"
 
 metadata_store = {}
 
+def get_clean_file_key(url_or_path):
+    """تنظيف اسم الملف لاستخدامه كمفتاح ثابت في الخزنة مهما كان الرابط"""
+    if not url_or_path:
+        return ""
+    fn = str(url_or_path).split("?")[0].split("/")[-1].strip()
+    return fn
+
 # 1. قراءة الخزنة الحالية
 if os.path.exists(META_STORE_FILE):
     try:
@@ -34,7 +41,7 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت في index.json وحفظه فوراً وبشكل دائم في الخزنة
+# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت في index.json وحفظه فوراً في الخزنة
 if os.path.exists(INDEX_FILE):
     try:
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
@@ -43,7 +50,7 @@ if os.path.exists(INDEX_FILE):
         def sync_user_edits(item):
             if not isinstance(item, dict):
                 return
-            fn = item.get("file", "").split("/")[-1].split("?")[0]
+            fn = get_clean_file_key(item.get("file", ""))
             c_name = item.get("name", "").strip()
             desc = item.get("description", "").strip()
             if fn:
@@ -163,7 +170,6 @@ DEVICE_MAP = [
 
 
 def clean_skin_name(fn):
-    """تنظيف اسم السكين ليظهر بالإنجليزية فقط وبدون زوائد"""
     name = fn
     for ext in [".ipk", ".tar.gz", ".tar.xz", ".zip", ".deb"]:
         if name.endswith(ext):
@@ -176,17 +182,14 @@ def clean_skin_name(fn):
 
 
 def format_system_image(fn, brand_disp="Image"):
-    """تنسيق وتوليد اسم ووصف صور النظام بدقة فائقة لجميع الأجهزة والفرق"""
     fn_clean = fn.lower().replace(".", "").replace("-", "").replace("_", "")
     
-    # 1. تحديد اسم الجهاز
     dev_name = "Enigma2 Device"
     for k, disp in DEVICE_MAP:
         if k in fn_clean:
             dev_name = disp
             break
 
-    # 2. تحديد اسم الصورة / الفريق
     brand = brand_disp
     fn_lower = fn.lower()
     if "openatv" in fn_lower: brand = "OpenATV"
@@ -202,11 +205,9 @@ def format_system_image(fn, brand_disp="Image"):
     elif "openvision" in fn_lower: brand = "OpenVision"
     elif "openeight" in fn_lower: brand = "OpenEight"
 
-    # 3. تحديد رقم الإصدار إن وجد
     ver_match = re.search(r'(\d+\.\d+(\.\d+)?)', fn)
     ver_str = f" {ver_match.group(1)}" if ver_match else ""
 
-    # 4. نوع التثبيت (USB, MMC, Multi, EMMC)
     install_type = ""
     if "usb" in fn_lower: install_type = " (USB)"
     elif "mmc" in fn_lower: install_type = " (MMC)"
@@ -219,26 +220,35 @@ def format_system_image(fn, brand_disp="Image"):
 
 
 def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder=""):
-    # 1. إذا كان لديك تعديل يدوي محفوظ للاسم أو الوصف، يتم اعتماده دائماً ومباشرة دون أي تجاوز
-    if fn in metadata_store:
-        u_name = metadata_store[fn].get("name", "").strip()
-        u_desc = metadata_store[fn].get("description", "").strip()
-        if u_name or u_desc:
-            saved_name = u_name if u_name else clean_name
-            saved_desc = u_desc if u_desc else default_desc
-            return saved_name, saved_desc
+    clean_k = get_clean_file_key(fn)
+    
+    # 1. البحث الشامل في الخزنة (بالمطابقة المباشرة أو غير الحساسة لحالة الأحرف)
+    matched_entry = None
+    if clean_k in metadata_store:
+        matched_entry = metadata_store[clean_k]
+    else:
+        for k, v in metadata_store.items():
+            if k.lower() == clean_k.lower():
+                matched_entry = v
+                break
 
-    # 2. معالجة صور النظام System Images (في حال لم يكن هناك تعديل يدوي)
+    if matched_entry:
+        u_name = matched_entry.get("name", "").strip()
+        u_desc = matched_entry.get("description", "").strip()
+        if u_name or u_desc:
+            return (u_name if u_name else clean_name), (u_desc if u_desc else default_desc)
+
+    # 2. معالجة صور النظام
     if is_sys_img:
         return format_system_image(fn, disp_folder)
 
-    # 3. معالجة السكينات Skins (في حال لم يكن هناك تعديل يدوي)
+    # 3. معالجة السكينات
     if is_skin:
         eng_skin_name = clean_skin_name(fn)
         skin_desc = f"سكين {eng_skin_name} عالي الدقة FHD بتصميم أنيق وخفيف"
         return eng_skin_name, skin_desc
 
-    # 4. معالجة باقي الأقسام والبلجنات تلقائياً
+    # 4. معالجة باقي الأقسام تلقائياً إذا لم يكن هناك تعديل يدوي
     auto_name = clean_name
     auto_desc = default_desc
 
@@ -583,14 +593,14 @@ handle_flat("channels", lambda n: any(k in n for k in ["channel", "setting", "bo
 handle_flat("tools", lambda n: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "tool", "script", "tweak"]), "Tool Package")
 handle_flat("plugins", lambda n: True, "Plugin Extension")
 
-# تحديث وتثبيت الخزنة (يحفظ الاسم والوصف المعتمد دائماً)
+# تحديث وتثبيت الخزنة
 for cat, items in data["categories"].items():
     if isinstance(items, list):
         for el in items:
             sub = el.get("items", []) if (isinstance(el, dict) and "items" in el) else [el]
             for it in sub:
                 if isinstance(it, dict):
-                    fn = it.get("file", "").split("/")[-1].split("?")[0]
+                    fn = get_clean_file_key(it.get("file", ""))
                     if fn:
                         metadata_store[fn] = {
                             "name": it.get("name", ""),
@@ -604,4 +614,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Preserved user custom names & descriptions permanently!")
+print("🎉 Successfully generated feed/index.json: Fully preserved all custom edits for Novaler and all categories!")
