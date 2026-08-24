@@ -32,7 +32,7 @@ def get_file_basename(url_or_path):
         return ""
     return str(url_or_path).split("?")[0].split("/")[-1].strip()
 
-# 1. قراءة الخزنة الحالية
+# 1. قراءة الخزنة
 if os.path.exists(META_STORE_FILE):
     try:
         with open(META_STORE_FILE, "r", encoding="utf-8") as f:
@@ -40,7 +40,7 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت في index.json وحفظه فوراً في الخزنة
+# 2. قراءة التعديلات اليدوية المحفوظة
 if os.path.exists(INDEX_FILE):
     try:
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
@@ -96,16 +96,16 @@ CUSTOM_MAP = {
     "timeshift-delay": ("Timeshift Delay Egami", "ضبط وتأخير التايم شفت وتأخير الصوت لمطابقة التعليق"),
     "FootOnSat": ("FootOnSat", "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة"),
 
-    "Ncam v15.8": ("تثبيت محاكي Ncam v15.8", "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam"),
-    "backup_channels": ("أخذ نسخة احتياطية للقنوات", "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك"),
-    "clean_crash": ("تنظيف ملفات الكراش Crash", "سكربت حذف ملفات الكراش واللوغ المؤقتة لتوفير الذاكرة"),
-    "clean_ram": ("تنظيف وتسريع الرام RAM", "سكربت تفريغ ذاكرة الرام المؤقتة وتسريع استجابة الرسيفر"),
-    "fix_network": ("إصلاح وإعادة تشغيل الشبكة", "سكربت حل مشاكل الاتصال بالإنترنت وإعادة ضبط الشبكة"),
-    "restart_cam": ("إعادة تشغيل الكامات Cam", "سكربت عمل ريستارت لمحاكيات الشفرات Oscam و Ncam عند التوقف"),
-    "satellites-update": ("تحديث ملف الأقمار Satellites", "تحديث جميع ترددات وأقمار الستلايت لأحدث الترددات الحالية"),
-    "update_packages": ("تحديث حزم وفيدات الصورة", "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة"),
+    "Ncam v15.8": ("Ncam v15.8 Installer", "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam"),
+    "backup_channels": ("Backup Channels Script", "سكربت حفظ وباك اب لقائمة القنوات والمفضلات لديك"),
+    "clean_crash": ("Clean Crash Logs", "سكربت حذف ملفات الكراش واللوغ المؤقتة لتوفير الذاكرة"),
+    "clean_ram": ("Clean RAM Memory", "سكربت تفريغ ذاكرة الرام المؤقتة وتسريع استجابة الرسيفر"),
+    "fix_network": ("Fix Network Connection", "سكربت حل مشاكل الاتصال بالإنترنت وإعادة ضبط الشبكة"),
+    "restart_cam": ("Restart Softcams", "سكربت عمل ريستارت لمحاكيات الشفرات Oscam و Ncam عند التوقف"),
+    "satellites-update": ("Satellites XML Update", "تحديث جميع ترددات وأقمار الستلايت لأحدث الترددات الحالية"),
+    "update_packages": ("Update Image Feeds", "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة"),
 
-    "Athantimes": ("مواقيت الأذان AthanTimes", "بلجن عرض أوقات الصلاة والأذان بدقة للشاشات"),
+    "Athantimes": ("AthanTimes", "بلجن عرض أوقات الصلاة والأذان بدقة للشاشات"),
     "ajpanel": ("AJPanel Novaler", "لوحة تحكم وأدوات شاملة لأجهزة نوفالير"),
     "alternativesoftcammanager": ("Alternative Softcam Manager", "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"),
     "ansite": ("Ansite Panel", "لوحة خدمات وإضافات وسكربتات داعمة"),
@@ -169,7 +169,9 @@ DEVICE_MAP = [
     ("gbue4k", "GigaBlue UE 4K")
 ]
 
+# تجاهل الملفات غير الصالحة أو السكربتات المؤقتة داخل حافظات الصور
 IGNORED_FILES = {".ds_store", "thumbs.db", ".gitkeep", "readme.md", ".gitignore"}
+VALID_SYS_IMAGE_EXTS = {".zip", ".tar.gz", ".tar.xz", ".nfi", ".img", ".bin", ".bz2"}
 
 def clean_filename(filename):
     name = filename
@@ -199,7 +201,7 @@ def detect_brand_from_filename(fn_lower):
     if "openvix" in fn_lower or "vix" in fn_lower: return "OpenViX"
     if "opendroid" in fn_lower: return "OpenDroid"
     if "openhdf" in fn_lower: return "OpenHDF"
-    if "vti" in fn_lower: return "VTi"
+    if re.search(r'(^|[^a-z])vti([^a-z]|$)', fn_lower): return "VTi"
     if "openspa" in fn_lower: return "OpenSPA"
     if "openvision" in fn_lower: return "OpenVision"
     if "openeight" in fn_lower: return "OpenEight"
@@ -209,7 +211,7 @@ def detect_brand_from_filename(fn_lower):
 def format_system_image(fn, brand_disp="Image"):
     fn_clean = fn.lower().replace(".", "").replace("-", "").replace("_", "").replace(" ", "")
     
-    dev_name = "Enigma2 Device"
+    dev_name = ""
     for k, disp in DEVICE_MAP:
         if k in fn_clean:
             dev_name = disp
@@ -217,7 +219,9 @@ def format_system_image(fn, brand_disp="Image"):
 
     brand = detect_brand_from_filename(fn.lower())
     if brand == "All" and brand_disp != "Image" and brand_disp != "All":
-        brand = brand_disp
+        # تنظيف اسم الحافظة مثل OpenBH (NeoBoot Safe)
+        clean_brand_folder = brand_disp.split("(")[0].strip()
+        brand = clean_brand_folder if clean_brand_folder else brand_disp
 
     ver_match = re.search(r'(\d+\.\d+(\.\d+)?)', fn)
     ver_str = f" {ver_match.group(1)}" if ver_match else ""
@@ -229,8 +233,14 @@ def format_system_image(fn, brand_disp="Image"):
     elif "multi" in fn_lower: install_type = " (Multiboot)"
     elif "emmc" in fn_lower: install_type = " (EMMC)"
 
-    final_name = f"صورة {brand}{ver_str} لجهاز {dev_name}"
-    final_desc = f"صورة نظام {brand}{ver_str} الرسمية لجهاز {dev_name}{install_type}"
+    if dev_name:
+        final_name = f"{brand}{ver_str} - {dev_name}"
+        final_desc = f"صورة نظام {brand}{ver_str} الرسمية لجهاز {dev_name}{install_type}"
+    else:
+        clean_base = clean_filename(fn)
+        final_name = f"{brand}{ver_str} - {clean_base}"
+        final_desc = f"صورة نظام {brand}{ver_str} لأجهزة الإنيجما 2{install_type}"
+
     return final_name, final_desc
 
 
@@ -261,13 +271,13 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
 
     if "morph883" in fn_l or "morph" in fn_l:
         sat = "Hotbird 13E" if "13" in fn_l else ""
-        return f"ملف قنوات ومفضلات {sat} (Morph883)".strip(), "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883"
+        return f"Channels {sat} (Morph883)".strip(), "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883"
 
     if "mnasr" in fn_l:
-        return "ملف قنوات ومفضلات مرتب (MNASR)", "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية"
+        return "Channels Setting (MNASR)", "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية"
         
     if "openatv" in fn_l and ("channel" in fn_l or "setting" in fn_l):
-        return "ملف قنوات ومفضلات صورة OpenATV", "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+        return "OpenATV Channels Backup", "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
 
     if "ipaudiopro" in fn_l or "ipa udio" in fn_l:
         if "py2.7" in fn: auto_name = "IPAudio Pro v1.7 (Py2.7)"
@@ -311,17 +321,17 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
 
     if "picon" in fn_l or "picons" in fn_l:
         if "7.0w" in fn_l or "7.ow" in fn_l or "8.0w" in fn_l or "nile" in fn_l:
-            return "بيكونات قمر نايل سات (Nilesat 7W / 8W)", "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
+            return "Picons Nilesat (7.0W / 8.0W)", "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
         elif "13e" in fn_l or "hotbird" in fn_l:
-            return "بيكونات قمر هوتبيرد (Hotbird 13E)", "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق"
+            return "Picons Hotbird (13.0E)", "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق"
         elif "16.0e" in fn_l or "16e" in fn_l:
-            return "بيكونات قمر يوتلسات (Eutelsat 16E)", "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية"
+            return "Picons Eutelsat (16.0E)", "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية"
         elif "26" in fn_l or "badr" in fn_l:
-            return "بيكونات قمر عربسات بدر (Badr 26E)", "شعارات وقنوات قمر عربسات بدر 26 شرق"
+            return "Picons Badr / Arabsat (26.0E)", "شعارات وقنوات قمر عربسات بدر 26 شرق"
         elif "39e" in fn_l or "hellas" in fn_l:
-            return "بيكونات قمر هيلاسات (Hellas Sat 39E)", "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي"
+            return "Picons Hellas Sat (39.0E)", "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي"
         elif "all" in fn_l:
-            return "حزمة البيكونات الشاملة (جميع الأقمار)", "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+            return "Picons Full Package (All Sats)", "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
 
     for k, (n, d) in CUSTOM_MAP.items():
         if k.lower() in fn_l or k.lower() in clean_name.lower():
@@ -351,7 +361,7 @@ def normalize_text(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
 
-# جلب الـ Releases
+# جلب ملفات الـ Releases
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
 
@@ -391,7 +401,7 @@ while True:
 assigned_releases = set()
 globally_seen = set()
 
-# 1. System Images (معالجة المجلدات + توزيع صور النظام في الـ Releases باسم الصورة والموديل)
+# 1. System Images
 sys_folders = {}
 
 if os.path.isdir("system_images"):
@@ -406,6 +416,10 @@ if os.path.isdir("system_images"):
         for fn in sorted(os.listdir(fpath)):
             if fn.lower() in IGNORED_FILES or fn.startswith("."):
                 continue
+            # التأكد أن الملف له امتداد صورة حقيقي
+            if not any(fn.lower().endswith(ext) for ext in VALID_SYS_IMAGE_EXTS):
+                continue
+
             norm_fn = normalize_text(fn)
             sys_folders[norm]["seen"].add(norm_fn)
             globally_seen.add(norm_fn)
@@ -436,7 +450,10 @@ for asset in release_assets_pool:
     fn_norm = normalize_text(fn)
 
     is_sys_img = False
-    has_brand = any(b in fn_lower for b in ["openatv", "egami", "pure2", "vti", "openbh", "blackhole", "openpli", "openspa", "openvix", "opendroid", "openhdf", "systemimage"])
+    has_brand = any(b in fn_lower for b in ["openatv", "egami", "pure2", "openbh", "blackhole", "openpli", "openspa", "openvix", "opendroid", "openhdf", "systemimage"])
+    if not has_brand and re.search(r'(^|[^a-z])vti([^a-z]|$)', fn_lower):
+        has_brand = True
+
     has_model = any(k in fn_norm for k, d in DEVICE_MAP) or any(ext in fn_lower for ext in ["usb.zip", "emmc.zip", "mmc.zip", "recovery.zip", "rootfs.tar.bz2", ".nfi", ".img"])
 
     if has_brand and has_model:
@@ -470,7 +487,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins (معالجة المجلدات + شرط الـ Releases: اسم السكين وكلمة skin واسم الحافظة)
+# 2. Skins
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -512,12 +529,10 @@ for asset in release_assets_pool:
     fn = asset["filename"]
     fn_norm = normalize_text(fn)
 
-    # شرط السكينات في الـ Releases: يحتوي على كلمة skin
     if "skin" in fn_norm and fn_norm not in assigned_releases and fn_norm not in globally_seen:
         assigned_releases.add(fn_norm)
         globally_seen.add(fn_norm)
         
-        # التعرف على اسم الحافظة من اسم الملف
         matched = "all"
         for norm_k in skin_folders.keys():
             if norm_k != "all" and norm_k in fn_norm:
@@ -525,7 +540,6 @@ for asset in release_assets_pool:
                 break
 
         if matched not in skin_folders:
-            # إذا كتب اسم حافظة جديدة في السكين يتم إنشاؤها ديناميكياً
             skin_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
 
         clean = clean_filename(fn)
@@ -546,12 +560,11 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. الأقسام المباشرة: تقبل أي ملف يُرفع بالمجلدات دون شروط + فحص كلمات الـ Releases الدقيقة
+# 3. باقي الأقسام
 def handle_category_without_restrictions(cat_key, release_matcher, default_desc):
     items = []
     seen_in_cat = set()
 
-    # أ. المجلدات: قبول فوري لأي ملف دون أي قيد أو شرط
     if os.path.isdir(cat_key):
         for root, dirs, files in os.walk(cat_key):
             for fn in sorted(files):
@@ -587,7 +600,6 @@ def handle_category_without_restrictions(cat_key, release_matcher, default_desc)
                     "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
                 })
 
-    # ب. الـ Releases: التحقق الدقيق من الكلمات المفتاحية للقسم
     for asset in release_assets_pool:
         fn = asset["filename"]
         fn_norm = normalize_text(fn)
@@ -613,23 +625,12 @@ def handle_category_without_restrictions(cat_key, release_matcher, default_desc)
     data["categories"][cat_key] = items
 
 
-# تطبيق الشروط المطلوبة لملفات الـ Releases بدقة:
-# نوفالير: يحتوي على كلمة novaler أو novacam
 handle_category_without_restrictions("novaler", lambda n, l: ("novaler" in n or "novacam" in n or "noflayer" in n) and "skin" not in n, "Novaler Package")
-
-# البيكونات: يحتوي على كلمة picon أو picons
 handle_category_without_restrictions("picons", lambda n, l: ("picon" in n or "snp" in n or "srp" in n) and "skin" not in n, "Picons Package")
-
-# القنوات: يحتوي على كلمة channel أو channels أو setting أو bouquet
 handle_category_without_restrictions("channels", lambda n, l: (any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav", "mnasr", "morph"]) or l.endswith(".tv")) and "plugin" not in n, "Channels Settings")
-
-# الأدوات: يحتوي على ncam أو oscam أو script أو أداة
 handle_category_without_restrictions("tools", lambda n, l: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "script", "clean", "backup", "restart", "network"]), "Tool Package")
-
-# البلجنات: يجب أن يحتوي على كلمة plugin أو plugins في الـ Releases
 handle_category_without_restrictions("plugins", lambda n, l: ("plugin" in n or "extension" in n) and "skin" not in n, "Plugin Extension")
 
-# حفظ وتثبيت index.json و metadata_store.json
 os.makedirs("feed", exist_ok=True)
 with open(INDEX_FILE, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
@@ -637,4 +638,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Strict Keyword-Based Releases Routing & 100% Open Folder Uploads!")
+print("🎉 Successfully generated feed/index.json: Clean UI & No Mixed Text Glitches!")
