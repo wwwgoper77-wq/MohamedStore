@@ -309,7 +309,7 @@
                         "image": ""
                     },
                     {
-                        "name": "Multibox FHD By stein17 Mod By RAED",
+                        "name": "Multibox FHD By stein17 Mod By RAED OpenSource only",
                         "description": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk",
                         "image": ""
@@ -441,7 +441,7 @@
                         "image": ""
                     },
                     {
-                        "name": "metrixconfluenceatv adrenalinnrw 1 7full dragon",
+                        "name": "metrixconfluenceatv adrenalinnrw 1 7full dragon multiposter",
                         "description": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk",
                         "image": ""
@@ -470,8 +470,8 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "skins luka",
-                        "description": "بتصميم أنيق وخفيف",
+                        "name": "صورة EGAMI لجهاز الجهاز",
+                        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
                         "image": ""
                     },
@@ -582,7 +582,7 @@
                         "image": ""
                     },
                     {
-                        "name": "OpenBlack skin armynextgengradient.mod",
+                        "name": "OpenBlack skin armynextgengradient.mod.fhroma BlackHole",
                         "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
                         "image": ""
@@ -636,8 +636,8 @@
                         "image": ""
                     },
                     {
-                        "name": "whiteshadowfhd",
-                        "description": "بتصميم أنيق وخفيف",
+                        "name": "صورة OPENPLI لجهاز الجهاز",
+                        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز الجهاز",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk",
                         "image": ""
                     }
@@ -749,7 +749,7 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-ncam-mips",
+                "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
                 "description": "Tool Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk",
                 "image": ""
@@ -1576,7 +1576,7 @@
                 "image": ""
             },
             {
-                "name": "بيكونات قمر متحرك",
+                "name": "picon",
                 "description": "e",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon.zip",
                 "image": ""
@@ -1635,7 +1635,7 @@
             },
             {
                 "name": "KeyAdder",
-                "description": "لإضافة وتعديل شفرات القنوات",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/KeyAdder.tar.gz",
                 "image": ""
             },
@@ -1646,14 +1646,14 @@
                 "image": ""
             },
             {
-                "name": "bissfeed-autokey",
-                "description": يبحث وجلب شفرات BISS الخاصة بقنوات الفيد"",
+                "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
-                "name": "Zoom",
-                "description": "اداة تثبيت ايمو",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
             },
@@ -1742,20 +1742,20 @@
                 "image": ""
             },
             {
-                "name": "internet-speedtest",
-                "description": "اختبار سرعة الانترنيت",
+                "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk",
                 "image": ""
             },
             {
-                "name": "jedimakerxtream",
-                "description": "يُستخدم لتحويل اشتراكات IPTV",
+                "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk",
                 "image": ""
             },
             {
-                "name": "multiboot-flashonlin",
-                "description": "يُستخدم لتفليش وتنصيب الصور",
+                "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk",
                 "image": ""
             },
@@ -1832,20 +1832,20 @@
                 "image": ""
             },
             {
-                "name": "petazetas",
-                "description": "يُستخدم لجلب وتشغيل روابط قنوات IPTV",
+                "name": "enigma2-plugin-extensions-petazetas_1.1_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
             {
-                "name": "plutotv",
-                "description": يتيح لك تشغيل قنوات ومحتوى منصة Pluto TV المجانية مباشرة على أجهزة الإنكما2"",
+                "name": "enigma2-plugin-extensions-plutotv_20240220_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
                 "image": ""
             },
             {
-                "name": "rakutentv",
-                "description": "يُتيح لك تشغيل قنوات ومحتوى خدمة Rakuten TV على أجهزة الإنكما2",
+                "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
@@ -1916,8 +1916,8 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-supcam-ncam-nova",
-                "description": هو محاكي مشفرات"",
+                "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
                 "image": ""
             }
