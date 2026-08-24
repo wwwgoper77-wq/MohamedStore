@@ -200,7 +200,7 @@
         "description": "سكين Skin-MX_HQ9_By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk": {
-        "name": "Multibox FHD By stein17 Mod By RAED OpenSource only",
+        "name": "Multibox FHD By stein17 Mod By RAED",
         "description": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "Skin-OSN-PN-FHD-By-Muaath.ipk": {
@@ -288,7 +288,7 @@
         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk": {
-        "name": "metrixconfluenceatv adrenalinnrw 1 7full dragon multiposter",
+        "name": "metrixconfluenceatv",
         "description": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk": {
@@ -304,8 +304,8 @@
         "description": "سكين octelfhd_2 عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "enigma2-plugin-skins-luka-fhd_1.0_egami.ipk": {
-        "name": "صورة EGAMI لجهاز الجهاز",
-        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز"
+        "name": "luka",
+        "description": "بتصميم أنيق وخفيف"
     },
     "enigma2-plugin-skins-ozeta_1.5.2-byhossam_all.ipk": {
         "name": "ozeta 1.5.2 byhossam",
@@ -360,12 +360,12 @@
         "description": "سكين enigma2-alienaware-obh4_all عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk": {
-        "name": "OpenBlack skin armynextgengradient.mod.fhroma BlackHole",
+        "name": "armynextgengradient",
         "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف"
     },
     "enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk": {
-        "name": "صورة OPENPLI لجهاز الجهاز",
-        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز الجهاز"
+        "name": "whiteshadowfhd",
+        "description": "بتصميم أنيق وخفيف"
     },
     "ESTUARY SKIN COVER INFOBAR 12_BY-CHARI7.zip": {
         "name": "ESTUARY SKIN COVER INFOBAR 12 BY CHARI7",
@@ -416,7 +416,7 @@
         "description": "سكربت تفريغ ذاكرة الرام المؤقتة وتسريع استجابة الرسيفر"
     },
     "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk": {
-        "name": "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all",
+        "name": "enigma2-plugin-softcams-ncam-mips",
         "description": "Tool Package"
     },
     "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk": {
