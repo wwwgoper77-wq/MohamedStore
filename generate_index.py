@@ -191,7 +191,6 @@ def clean_skin_name(fn):
 
 
 def detect_brand_from_filename(fn_lower):
-    """التعرف الديناميكي على حافظة الصورة من اسم الملف"""
     if "openatv" in fn_lower: return "OpenATV"
     if "egami" in fn_lower: return "Egami"
     if "openbh" in fn_lower or "blackhole" in fn_lower: return "OpenBH"
@@ -392,10 +391,9 @@ while True:
 assigned_releases = set()
 globally_seen = set()
 
-# 1. System Images (معالجة المجلدات + توزيع ديناميكي ذكي لصور الـ Releases داخل حافظاتها)
+# 1. System Images (معالجة المجلدات + توزيع صور النظام في الـ Releases باسم الصورة والموديل)
 sys_folders = {}
 
-# إنشاء الحافظات الموجودة في المستودع
 if os.path.isdir("system_images"):
     for folder in sorted(os.listdir("system_images")):
         fpath = os.path.join("system_images", folder)
@@ -431,17 +429,17 @@ if os.path.isdir("system_images"):
                 "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
             })
 
-# توزيع ديناميكي للـ Releases الخاصة بالصور مباشرة إلى الحافظة المناسبة
+# شرط صور النظام في الـ Releases: (اسم الصورة + موديل الجهاز)
 for asset in release_assets_pool:
     fn = asset["filename"]
     fn_lower = fn.lower()
     fn_norm = normalize_text(fn)
 
     is_sys_img = False
-    img_keywords = ["openatv", "egami", "pure2", "vti", "openbh", "blackhole", "openpli", "openspa", "openvix", "opendroid", "openhdf", "systemimage", "recovery", "rootfs", "multibox", "sf8008", "zgemma", "vuplus", "vuduo", "vuuno", "vusolo", "vuzero", "dreambox"]
-    img_exts = ["usb.zip", "emmc.zip", "mmc.zip", "recovery.zip", "rootfs.tar.bz2", ".nfi", ".img"]
-    
-    if any(ext in fn_lower for ext in img_exts) or any(k in fn_norm for k in img_keywords):
+    has_brand = any(b in fn_lower for b in ["openatv", "egami", "pure2", "vti", "openbh", "blackhole", "openpli", "openspa", "openvix", "opendroid", "openhdf", "systemimage"])
+    has_model = any(k in fn_norm for k, d in DEVICE_MAP) or any(ext in fn_lower for ext in ["usb.zip", "emmc.zip", "mmc.zip", "recovery.zip", "rootfs.tar.bz2", ".nfi", ".img"])
+
+    if has_brand and has_model:
         if not any(k in fn_norm for k in ["plugin", "skin", "picon", "channel", "ncam", "oscam"]):
             is_sys_img = True
 
@@ -449,7 +447,6 @@ for asset in release_assets_pool:
         assigned_releases.add(fn_norm)
         globally_seen.add(fn_norm)
         
-        # كشف اسم الفريق ديناميكياً
         detected_brand = detect_brand_from_filename(fn_lower)
         matched_key = normalize_text(detected_brand)
         
@@ -473,7 +470,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins (معالجة المجلدات + توزيع الـ Releases داخل الحافظات)
+# 2. Skins (معالجة المجلدات + شرط الـ Releases: اسم السكين وكلمة skin واسم الحافظة)
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -515,20 +512,21 @@ for asset in release_assets_pool:
     fn = asset["filename"]
     fn_norm = normalize_text(fn)
 
+    # شرط السكينات في الـ Releases: يحتوي على كلمة skin
     if "skin" in fn_norm and fn_norm not in assigned_releases and fn_norm not in globally_seen:
         assigned_releases.add(fn_norm)
         globally_seen.add(fn_norm)
         
-        matched = None
+        # التعرف على اسم الحافظة من اسم الملف
+        matched = "all"
         for norm_k in skin_folders.keys():
             if norm_k != "all" and norm_k in fn_norm:
                 matched = norm_k
                 break
 
-        if not matched:
-            matched = "all"
-            if matched not in skin_folders:
-                skin_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
+        if matched not in skin_folders:
+            # إذا كتب اسم حافظة جديدة في السكين يتم إنشاؤها ديناميكياً
+            skin_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
 
         clean = clean_filename(fn)
         disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
@@ -548,12 +546,12 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. الأقسام المباشرة: تقبل أي ملف يُرفع داخلها بدون أي قيد أو شرط إطلاقاً + توجيه ذكي للـ Releases
+# 3. الأقسام المباشرة: تقبل أي ملف يُرفع بالمجلدات دون شروط + فحص كلمات الـ Releases الدقيقة
 def handle_category_without_restrictions(cat_key, release_matcher, default_desc):
     items = []
     seen_in_cat = set()
 
-    # أ. قراءة كل الملفات المرفوعة بالمجلد بدون أي قيد أو شرط
+    # أ. المجلدات: قبول فوري لأي ملف دون أي قيد أو شرط
     if os.path.isdir(cat_key):
         for root, dirs, files in os.walk(cat_key):
             for fn in sorted(files):
@@ -589,7 +587,7 @@ def handle_category_without_restrictions(cat_key, release_matcher, default_desc)
                     "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
                 })
 
-    # ب. التقاط ملفات الـ Releases المناسبة للقسم
+    # ب. الـ Releases: التحقق الدقيق من الكلمات المفتاحية للقسم
     for asset in release_assets_pool:
         fn = asset["filename"]
         fn_norm = normalize_text(fn)
@@ -615,13 +613,21 @@ def handle_category_without_restrictions(cat_key, release_matcher, default_desc)
     data["categories"][cat_key] = items
 
 
+# تطبيق الشروط المطلوبة لملفات الـ Releases بدقة:
+# نوفالير: يحتوي على كلمة novaler أو novacam
 handle_category_without_restrictions("novaler", lambda n, l: ("novaler" in n or "novacam" in n or "noflayer" in n) and "skin" not in n, "Novaler Package")
+
+# البيكونات: يحتوي على كلمة picon أو picons
 handle_category_without_restrictions("picons", lambda n, l: ("picon" in n or "snp" in n or "srp" in n) and "skin" not in n, "Picons Package")
-handle_category_without_restrictions("channels", lambda n, l: any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav", "mnasr", "morph"]) or l.endswith(".tv"), "Channels Settings")
+
+# القنوات: يحتوي على كلمة channel أو channels أو setting أو bouquet
+handle_category_without_restrictions("channels", lambda n, l: (any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav", "mnasr", "morph"]) or l.endswith(".tv")) and "plugin" not in n, "Channels Settings")
+
+# الأدوات: يحتوي على ncam أو oscam أو script أو أداة
 handle_category_without_restrictions("tools", lambda n, l: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "script", "clean", "backup", "restart", "network"]), "Tool Package")
 
-# قسم البلجنات: يأخذ ملفات مجلده بدون شروط + ملفات الـ Releases المتبقية
-handle_category_without_restrictions("plugins", lambda n, l: True, "Plugin Extension")
+# البلجنات: يجب أن يحتوي على كلمة plugin أو plugins في الـ Releases
+handle_category_without_restrictions("plugins", lambda n, l: ("plugin" in n or "extension" in n) and "skin" not in n, "Plugin Extension")
 
 # حفظ وتثبيت index.json و metadata_store.json
 os.makedirs("feed", exist_ok=True)
@@ -631,4 +637,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Zero-restriction upload on folders, dynamic routing for Releases & permanent custom edits!")
+print("🎉 Successfully generated feed/index.json: Strict Keyword-Based Releases Routing & 100% Open Folder Uploads!")
