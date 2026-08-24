@@ -1635,7 +1635,7 @@
             },
             {
                 "name": "KeyAdder",
-                "description": "Novaler Package",
+                "description": "لإضافة وتعديل شفرات القنوات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/KeyAdder.tar.gz",
                 "image": ""
             },
@@ -1646,14 +1646,14 @@
                 "image": ""
             },
             {
-                "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
-                "description": "Novaler Package",
+                "name": "bissfeed-autokey",
+                "description": يبحث وجلب شفرات BISS الخاصة بقنوات الفيد"",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk",
                 "image": ""
             },
             {
-                "name": "Zoom Screen",
-                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
+                "name": "Zoom",
+                "description": "اداة تثبيت ايمو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/cfg_Zoom_Final_FIX7x_all.ipk",
                 "image": ""
             },
@@ -1742,20 +1742,20 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
-                "description": "Novaler Package",
+                "name": "internet-speedtest",
+                "description": "اختبار سرعة الانترنيت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
-                "description": "Novaler Package",
+                "name": "jedimakerxtream",
+                "description": "يُستخدم لتحويل اشتراكات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
-                "description": "Novaler Package",
+                "name": "multiboot-flashonlin",
+                "description": "يُستخدم لتفليش وتنصيب الصور",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk",
                 "image": ""
             },
@@ -1832,20 +1832,20 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-petazetas_1.1_all",
-                "description": "Novaler Package",
+                "name": "petazetas",
+                "description": "يُستخدم لجلب وتشغيل روابط قنوات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-plutotv_20240220_all",
-                "description": "Novaler Package",
+                "name": "plutotv",
+                "description": يتيح لك تشغيل قنوات ومحتوى منصة Pluto TV المجانية مباشرة على أجهزة الإنكما2"",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-plutotv_20240220_all.ipk",
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
-                "description": "Novaler Package",
+                "name": "rakutentv",
+                "description": "يُتيح لك تشغيل قنوات ومحتوى خدمة Rakuten TV على أجهزة الإنكما2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-rakutentv_20240324_all.ipk",
                 "image": ""
             },
@@ -1916,8 +1916,8 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
-                "description": "Novaler Package",
+                "name": "enigma2-plugin-softcams-supcam-ncam-nova",
+                "description": هو محاكي مشفرات"",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk",
                 "image": ""
             }
