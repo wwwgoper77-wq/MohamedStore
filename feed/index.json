@@ -1114,12 +1114,6 @@
                         "image": ""
                     },
                     {
-                        "name": "صورة OpenPLi لجهاز Multibox 4K Pro",
-                        "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OpenPLi 9.2 لجهاز VU+ Duo 4K SE",
                         "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Duo 4K SE (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openpli-9.2-release-vuduo4kse-20260816_usb.zip",
@@ -1271,96 +1265,6 @@
                         "name": "صورة VTI لجهاز Enigma2 Device",
                         "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenVision/readme.txt",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K SE",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 4K",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo SE",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Ultimo 4K",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K SE",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
-                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip",
                         "image": ""
                     }
                 ]
