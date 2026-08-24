@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-# ==========================================
-# Mohamed Store - Modern Grid Dashboard Edition v1.3.2
-# Python 2 & Python 3 fully compatible
-# Multi-Content Item & Category Icon Rendering Supported
-# Instant-Open Local Cache + Enhanced IP / Telemetry Engine
-# ==========================================
-
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -104,9 +97,44 @@ BUILTIN_SYSTEM_TOOLS = [
     }
 ]
 
+def get_neoboot_images_upload_path():
+    candidates = [
+        "/media/hdd/ImagesUpload",
+        "/media/usb/ImagesUpload",
+        "/media/mmc/ImagesUpload",
+        "/data/ImagesUpload",
+        "/media/hdd",
+        "/media/usb"
+    ]
+    for p in candidates:
+        if "/ImagesUpload" in p:
+            parent = os.path.dirname(p)
+            if os.path.exists(parent):
+                if not os.path.exists(p):
+                    try:
+                        os.makedirs(p)
+                    except:
+                        pass
+                return p
+    for p in ["/media/hdd", "/media/usb"]:
+        if os.path.exists(p):
+            target = os.path.join(p, "ImagesUpload")
+            try:
+                if not os.path.exists(target):
+                    os.makedirs(target)
+                return target
+            except:
+                pass
+    return "/media/hdd/ImagesUpload"
+
+def get_direct_hdd_root_path():
+    """Detect and return valid direct HDD/USB root directory for saving ZIP directly."""
+    for drive in ["/media/hdd", "/media/usb", "/media/mmc", "/data"]:
+        if os.path.exists(drive):
+            return drive
+    return "/media/hdd"
+
 def get_real_box_ip():
-    """Detect real local IP address using multiple Enigma2/Linux fallbacks."""
-    # Method 1: Scanning active interfaces via SIOCGIFADDR
     interfaces = ["eth0", "wlan0", "eth1", "ra0", "wlan1", "lan0", "enp3s0"]
     for ifname in interfaces:
         try:
@@ -114,7 +142,7 @@ def get_real_box_ip():
             ifname_bytes = ifname.encode('utf-8') if sys.version_info >= (3, 0) else ifname
             ip = socket.inet_ntoa(fcntl.ioctl(
                 s.fileno(),
-                0x8915,  # SIOCGIFADDR
+                0x8915,
                 struct.pack('256s', ifname_bytes[:15])
             )[20:24])
             s.close()
@@ -123,7 +151,6 @@ def get_real_box_ip():
         except Exception:
             pass
 
-    # Method 2: Fast socket route detection
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.settimeout(0.2)
@@ -135,7 +162,6 @@ def get_real_box_ip():
     except Exception:
         pass
 
-    # Method 3: Parsing /proc/net/fib_trie or /sbin/ip
     try:
         import subprocess
         output = subprocess.check_output(["ip", "route", "get", "1"]).decode('utf-8', 'ignore')
@@ -145,7 +171,6 @@ def get_real_box_ip():
     except Exception:
         pass
 
-    # Method 4: Hostname resolution fallback
     try:
         ip = socket.gethostbyname(socket.gethostname())
         if ip and not ip.startswith("127."):
@@ -195,7 +220,6 @@ def get_category_icon_path(category_id):
                 if os.path.exists(full_p):
                     return full_p
     return None
-
 
 def get_item_icon_path(item, category_id):
     if not isinstance(item, dict):
@@ -262,7 +286,6 @@ def get_item_icon_path(item, category_id):
 
     return None
 
-
 def count_items_recursive(items_list):
     if not isinstance(items_list, list):
         return 0
@@ -273,7 +296,6 @@ def count_items_recursive(items_list):
         else:
             count += 1
     return count
-
 
 def load_json_network(url):
     try:
@@ -384,7 +406,7 @@ class MohamedStore(Screen):
     <!-- Item Description -->
     <widget name="description" position="1222,178" size="464,338" font="Regular;28" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
 
-    <!-- FACEBOOK INFO BOX (Avatar + QR Barcode Side-by-Side + Facebook Link) -->
+    <!-- FACEBOOK INFO BOX -->
     <eLabel position="1220,530" size="468,118" backgroundColor="#05070c" zPosition="1" />
     <eLabel position="1220,530" size="468,2" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="1220,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
@@ -502,7 +524,6 @@ class MohamedStore(Screen):
         self["sys_ram"] = Label(telemetry.get("ram", "RAM: OK"))
         self["sys_flash"] = Label(telemetry.get("flash", "Flash: OK"))
         
-        # Immediate Local IP detection
         real_ip = get_real_box_ip()
         self["sys_ip"] = Label("IP: %s" % real_ip)
         self["sys_net"] = Label("Net: Online")
@@ -534,6 +555,8 @@ class MohamedStore(Screen):
 
         self.download_in_progress = False
         self.download_is_update_script = False
+        self.download_is_system_image = False
+        self.download_is_picon = False
         self.download_url = ""
         self.download_dest_path = ""
         self.download_aborted = False
@@ -582,10 +605,8 @@ class MohamedStore(Screen):
         self["categories_list"].onSelectionChanged.append(self.category_changed)
         self["items_list"].onSelectionChanged.append(self.item_changed)
         
-        # 1. Load Instant Cache IMMEDIATELY on init
         self.load_local_cache()
 
-        # 2. Sync online in background after launch
         self.bg_sync_timer = eTimer()
         try:
             self.bg_sync_timer_conn = self.bg_sync_timer.timeout.connect(self.start_background_sync)
@@ -618,7 +639,6 @@ class MohamedStore(Screen):
         t.start()
 
     def async_network_fetch(self):
-        # Refresh real IP just in case network became active later
         try:
             current_ip = get_real_box_ip()
             self["sys_ip"].setText("IP: %s" % current_ip)
@@ -902,6 +922,8 @@ class MohamedStore(Screen):
         self.download_url = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh"
         self.download_dest_path = "/tmp/install.sh"
         self.download_is_update_script = True
+        self.download_is_system_image = False
+        self.download_is_picon = False
         self.download_aborted = False
         self.download_completed = False
         self.download_error_msg = ""
@@ -1067,12 +1089,16 @@ class MohamedStore(Screen):
             
             item = self.visible_items[idx]
             cat_idx = self["categories_list"].getSelectionIndex()
+            cat_id = str(self.categories[cat_idx]).lower() if cat_idx >= 0 else ""
             cat_name = str(self.categories[cat_idx]).replace("_", " ").capitalize() if cat_idx >= 0 else "Unknown"
             
             path_parts = [cat_name]
             for folder in self.current_path:
                 path_parts.append(str(folder.get("name", "")))
             path_str = " > ".join(path_parts)
+            
+            is_sys_img = ("image" in cat_id or "system" in cat_id or "neoboot" in cat_id or item.get("type") in ["image", "system_image", "system"])
+            is_picon = ("picon" in cat_id or item.get("type") in ["picon", "picons"])
             
             if item.get("type") == "tool":
                 self["key_green"].setText("Execute")
@@ -1088,6 +1114,22 @@ class MohamedStore(Screen):
                     path_str,
                     str(item.get("name", "")),
                     sub_count
+                )
+            elif is_sys_img:
+                self["key_green"].setText("Download")
+                info_text = "Section: %s (NeoBoot Safe)\n\nImage: %s\nVersion: %s\n\nDescription:\n%s\n\n* Will be downloaded as a ZIP file directly into NeoBoot ImagesUpload folder." % (
+                    path_str,
+                    str(item.get("name", "")),
+                    str(item.get("version", "")),
+                    str(item.get("description", "Enigma2 System Image for NeoBoot."))
+                )
+            elif is_picon:
+                self["key_green"].setText("Download")
+                info_text = "Section: %s (Direct HDD ZIP)\n\nName: %s\nVersion: %s\n\nDescription:\n%s\n\n* Will be downloaded as a direct ZIP file directly into HDD root (/media/hdd/)." % (
+                    path_str,
+                    str(item.get("name", "")),
+                    str(item.get("version", "")),
+                    str(item.get("description", "Channel Picons Package."))
                 )
             else:
                 self["key_green"].setText("Install")
@@ -1220,44 +1262,75 @@ class MohamedStore(Screen):
                 if not filename:
                     filename = "addon" + ext
 
+                cat_idx = self["categories_list"].getSelectionIndex()
+                cat_id = str(self.categories[cat_idx]).lower() if cat_idx >= 0 else ""
+                item_type = str(item.get("type", "")).lower()
+                
+                is_system_image = ("system" in cat_id or "image" in cat_id or "neoboot" in cat_id or item_type in ["image", "system", "system_image"])
+                is_picon = ("picon" in cat_id or item_type in ["picon", "picons"])
+
                 dest_path = ""
                 cmd = ""
-                if ext == ".deb":
-                    dest_path = "/tmp/addon.deb"
-                    cmd = "dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
-                elif ext == ".ipk":
-                    dest_path = "/tmp/addon.ipk"
-                    cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
-                elif ext == ".sh":
-                    dest_path = "/tmp/addon.sh"
-                    cmd = "chmod +x /tmp/addon.sh && /tmp/addon.sh && rm -f /tmp/addon.sh"
-                elif ext == ".zip":
-                    dest_path = "/tmp/addon.zip"
-                    cmd = "unzip -o /tmp/addon.zip -d / && rm -f /tmp/addon.zip"
-                elif ext in [".tar.gz", ".tgz"]:
-                    dest_path = "/tmp/addon.tar.gz"
-                    cmd = "tar -xzf /tmp/addon.tar.gz -C / && rm -f /tmp/addon.tar.gz"
-                elif ext == ".tar":
-                    dest_path = "/tmp/addon.tar"
-                    cmd = "tar -xf /tmp/addon.tar -C / && rm -f /tmp/addon.tar"
-                elif ext == ".tv":
-                    dest_path = os.path.join("/etc/enigma2", filename)
-                    cmd = (
-                        "if ! grep -q '{filename}' /etc/enigma2/bouquets.tv; then "
-                        "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"{filename}\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
-                        "fi && "
-                        "(wget -qO - http://127.0.0.1/web/servicelistreload?mode=0 || "
-                        "curl -s http://127.0.0.1/web/servicelistreload?mode=0 || "
-                        "enigma2-web-reload || true)"
-                    )
-                elif ext == ".py":
-                    dest_path = "/tmp/addon.py"
-                    cmd = "(python /tmp/addon.py || python3 /tmp/addon.py) && rm -f /tmp/addon.py"
+
+                # 1. SPECIAL LOGIC FOR SYSTEM IMAGES ONLY (Download ZIP to NeoBoot folder, NO UNZIP!)
+                if is_system_image:
+                    target_dir = get_neoboot_images_upload_path()
+                    safe_filename = filename if filename.lower().endswith(".zip") else (filename + ".zip")
+                    dest_path = os.path.join(target_dir, safe_filename)
+                    cmd = "sync"
+                    self.download_is_system_image = True
+                    self.download_is_picon = False
+
+                # 2. SPECIAL LOGIC FOR PICONS ONLY (Download full ZIP directly to HDD root, NO UNZIP, NO PICON FOLDER!)
+                elif is_picon:
+                    target_dir = get_direct_hdd_root_path()
+                    safe_filename = filename if filename.lower().endswith(".zip") else (filename + ".zip")
+                    dest_path = os.path.join(target_dir, safe_filename)
+                    cmd = "sync"
+                    self.download_is_system_image = False
+                    self.download_is_picon = True
+
+                # 3. STANDARD UNTOUCHED LOGIC FOR ALL OTHER PACKAGES & ADDONS
                 else:
-                    dest_path = "/tmp/addon.ipk"
-                    cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
-                
-                cmd = cmd.format(filename=filename)
+                    self.download_is_system_image = False
+                    self.download_is_picon = False
+                    if ext == ".deb":
+                        dest_path = "/tmp/addon.deb"
+                        cmd = "dpkg -i /tmp/addon.deb && rm -f /tmp/addon.deb"
+                    elif ext == ".ipk":
+                        dest_path = "/tmp/addon.ipk"
+                        cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
+                    elif ext == ".sh":
+                        dest_path = "/tmp/addon.sh"
+                        cmd = "chmod +x /tmp/addon.sh && /tmp/addon.sh && rm -f /tmp/addon.sh"
+                    elif ext == ".zip":
+                        dest_path = "/tmp/addon.zip"
+                        cmd = "unzip -o /tmp/addon.zip -d / && rm -f /tmp/addon.zip"
+                    elif ext in [".tar.gz", ".tgz"]:
+                        dest_path = "/tmp/addon.tar.gz"
+                        cmd = "tar -xzf /tmp/addon.tar.gz -C / && rm -f /tmp/addon.tar.gz"
+                    elif ext == ".tar":
+                        dest_path = "/tmp/addon.tar"
+                        cmd = "tar -xf /tmp/addon.tar -C / && rm -f /tmp/addon.tar"
+                    elif ext == ".tv":
+                        dest_path = os.path.join("/etc/enigma2", filename)
+                        cmd = (
+                            "if ! grep -q '{filename}' /etc/enigma2/bouquets.tv; then "
+                            "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"{filename}\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
+                            "fi && "
+                            "(wget -qO - http://127.0.0.1/web/servicelistreload?mode=0 || "
+                            "curl -s http://127.0.0.1/web/servicelistreload?mode=0 || "
+                            "enigma2-web-reload || true)"
+                        )
+                    elif ext == ".py":
+                        dest_path = "/tmp/addon.py"
+                        cmd = "(python /tmp/addon.py || python3 /tmp/addon.py) && rm -f /tmp/addon.py"
+                    else:
+                        dest_path = "/tmp/addon.ipk"
+                        cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
+                    
+                    cmd = cmd.format(filename=filename)
+
                 self.install_cmd = cmd
                 self.install_item_name = str(item.get("name", ""))
                 
@@ -1437,6 +1510,7 @@ class MohamedStore(Screen):
             if self.download_timer:
                 self.download_timer.stop()
             
+            # 1. Update Script Callback
             if self.download_is_update_script:
                 self.download_is_update_script = False
                 self["description"].setText("Executing Mohamed Store Update Script...\nPlease wait...")
@@ -1447,6 +1521,56 @@ class MohamedStore(Screen):
                 except:
                     pass
                 self.my_console.ePopen(self.install_cmd + " 2>&1", self.update_finished)
+
+            # 2. System Image Callback (Saved directly to NeoBoot ImagesUpload folder, NO UNZIP!)
+            elif self.download_is_system_image:
+                self.download_is_system_image = False
+                try:
+                    self["progress"].hide()
+                    self["percentage"].hide()
+                    self["speed"].hide()
+                    self["size"].hide()
+                    self["status"].hide()
+                except:
+                    pass
+                    
+                self["key_red"].setText("Exit")
+                file_size_mb = float(self.downloaded_bytes) / (1024.0 * 1024.0)
+                success_msg = u"Image downloaded successfully as a ZIP file!\n\nSize: %.1f MB\nPath: %s\n\nYou can now open NeoBoot and install it." % (file_size_mb, str(self.download_dest_path))
+                self["description"].setText(success_msg)
+                
+                self.session.open(
+                    MessageBox,
+                    success_msg,
+                    MessageBox.TYPE_INFO
+                )
+                self.item_changed()
+
+            # 3. Picon Callback (Saved directly as ZIP on HDD root, NO UNZIP!)
+            elif self.download_is_picon:
+                self.download_is_picon = False
+                try:
+                    self["progress"].hide()
+                    self["percentage"].hide()
+                    self["speed"].hide()
+                    self["size"].hide()
+                    self["status"].hide()
+                except:
+                    pass
+                    
+                self["key_red"].setText("Exit")
+                file_size_mb = float(self.downloaded_bytes) / (1024.0 * 1024.0)
+                success_msg = u"Picons ZIP package downloaded directly to HDD!\n\nSize: %.1f MB\nPath: %s" % (file_size_mb, str(self.download_dest_path))
+                self["description"].setText(success_msg)
+                
+                self.session.open(
+                    MessageBox,
+                    success_msg,
+                    MessageBox.TYPE_INFO
+                )
+                self.item_changed()
+
+            # 4. Regular Addons / Plugins / Skins Callback
             else:
                 try:
                     self["progress"].hide()
