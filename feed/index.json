@@ -106,8 +106,8 @@
                 "image": ""
             },
             {
-                "name": "Zoom",
-                "description": "اداة تثبيت ايمو",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
                 "image": ""
             },
@@ -193,168 +193,6 @@
                 "name": "FootOnSat",
                 "description": "جدول مباريات اليوم والقنوات الناقلة والترددات مباشرة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENDROID لجهاز SF8008",
-                "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENDROID لجهاز SF8008",
-                "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENDROID لجهاز VUSOLO4K",
-                "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUSOLO4K",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENDROID لجهاز VUUNO4K",
-                "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUUNO4K",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز GBQUAD4K",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbquad4k-13-20230501_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز GBTRIO4K",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4K",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4k-13-20230502_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز GBTRIO4KPRO",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4KPRO",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز SF3038",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF3038",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf3038-11-20230415_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز SF4008",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF4008",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf4008-14-20230506_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز SF8008",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF8008",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sf8008-72-20260528_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز SX88V2",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX88V2",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx88v2-72-20260528_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OPENHDF لجهاز SX988",
-                "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX988",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx988-72-20260528_mmc.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K SE",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 4K",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Solo SE",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Ultimo 4K",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K SE",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Zero",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip",
-                "image": ""
-            },
-            {
-                "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
-                "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)",
-                "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip",
                 "image": ""
             }
         ],
@@ -625,18 +463,6 @@
                         "description": "سكين octelfhd_2 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk",
                         "image": ""
-                    },
-                    {
-                        "name": "extreme fhd all v1.0",
-                        "description": "سكين extreme fhd all v1.0 عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/enigma2-plugin-skins-extreme-fhd-all_v1.0_all.ipk",
-                        "image": ""
-                    },
-                    {
-                        "name": "extremegolden fhd all v1.0",
-                        "description": "سكين extremegolden fhd all v1.0 عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/enigma2-plugin-skins-extremegolden-fhd-all_v1.0_all.ipk",
-                        "image": ""
                     }
                 ]
             },
@@ -729,13 +555,13 @@
                         "name": "q darkblue fhd bh 1.0 20191029",
                         "description": "سكين q-darkblue-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all.ipk",
-                        "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/qrcode.png"
+                        "image": ""
                     },
                     {
                         "name": "q purple fhd bh 1.0 20191029",
                         "description": "سكين q-purple-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all.ipk",
-                        "image": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/images/qrcode.png"
+                        "image": ""
                     },
                     {
                         "name": "waves4 fire weather by mamba65 v1",
@@ -1159,6 +985,30 @@
                         "image": ""
                     },
                     {
+                        "name": "صورة OPENDROID لجهاز SF8008",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENDROID لجهاز SF8008",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENDROID لجهاز VUSOLO4K",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUSOLO4K",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENDROID لجهاز VUUNO4K",
+                        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUUNO4K",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "صورة OPENDROID لجهاز VUZERO4K",
                         "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip",
@@ -1168,7 +1018,56 @@
             },
             {
                 "name": "OpenHDF",
-                "items": []
+                "items": [
+                    {
+                        "name": "صورة OPENHDF لجهاز GBQUAD4K",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbquad4k-13-20230501_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز GBTRIO4K",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4K",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4k-13-20230502_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز GBTRIO4KPRO",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4KPRO",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز SF3038",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF3038",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf3038-11-20230415_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز SF4008",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF4008",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.2-sf4008-14-20230506_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز SF8008",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF8008",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sf8008-72-20260528_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز SX88V2",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX88V2",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx88v2-72-20260528_mmc.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OPENHDF لجهاز SX988",
+                        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX988",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openhdf-7.5-sx988-72-20260528_mmc.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenPLi",
@@ -1320,7 +1219,98 @@
             },
             {
                 "name": "OpenVision",
-                "items": []
+                "items": [
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K SE",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo SE",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Ultimo 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K SE",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
+                        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenViX",
@@ -1645,7 +1635,7 @@
             },
             {
                 "name": "KeyAdder",
-                "description": "يُتيح لك إدخال الشفرة الجديدة وحفظها فوراً",
+                "description": "Novaler Package",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/KeyAdder.tar.gz",
                 "image": ""
             },
