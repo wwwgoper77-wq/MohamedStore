@@ -54,13 +54,13 @@
             {
                 "name": "MC Oscam",
                 "description": "بلجن خاص بنا أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC%20oscam.zip",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
             {
                 "name": "MC Stream",
                 "description": "بلجن خاص بنا مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC%20stream.zip",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
             {
@@ -186,7 +186,7 @@
             {
                 "name": "IPAudio Pro3.12",
                 "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ipa%20udio%20pro_1.7.ipk",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ipa udio pro_1.7.ipk",
                 "image": ""
             },
             {
@@ -602,14 +602,7 @@
             },
             {
                 "name": "OpenHDF",
-                "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenHDF/readme.txt",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenP",
@@ -618,12 +611,6 @@
                         "name": "Copper FHD v1.0 MNASR",
                         "description": "سكين Copper FHD v1.0 MNASR عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/Copper-FHD-v1.0-MNASR.tar.gz",
-                        "image": ""
-                    },
-                    {
-                        "name": "README",
-                        "description": "سكين README عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenP/README.mdL",
                         "image": ""
                     },
                     {
@@ -669,7 +656,7 @@
                     {
                         "name": "ESTUARY SKIN COVER INFOBAR 12 BY CHARI7",
                         "description": "سكين ESTUARY SKIN COVER INFOBAR 12 BY CHARI7 عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Pure2/ESTUARY%20SKIN%20COVER%20INFOBAR%2012_BY-CHARI7.zip",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Pure2/ESTUARY SKIN COVER INFOBAR 12_BY-CHARI7.zip",
                         "image": ""
                     },
                     {
@@ -720,7 +707,7 @@
             {
                 "name": "تثبيت محاكي Ncam v15.8",
                 "description": "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/Ncam%20v15.8.sh",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/Ncam v15.8.sh",
                 "image": ""
             },
             {
@@ -786,13 +773,13 @@
             {
                 "name": "Oscam All Images r798 (ARM+MIPS)",
                 "description": "محاكي أوسكام الشامل لجميع الصور ومعالجات ARM و MIPS",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11.715-emu-r798-arm%2Bmips_all.ipk",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11.715-emu-r798-arm+mips_all.ipk",
                 "image": ""
             },
             {
                 "name": "Oscam All Images r801 (ARM+MIPS)",
                 "description": "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11791-emu-801-arm%2Bmips_all.ipk",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-softcams-oscam-all-images_11791-emu-801-arm+mips_all.ipk",
                 "image": ""
             },
             {
@@ -867,12 +854,6 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/Egami/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة EGAMI لجهاز VUZERO4K",
                         "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
@@ -908,12 +889,6 @@
                 "name": "OpenATV",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenATV/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OPENATV لجهاز VUDUO4K",
                         "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
@@ -948,12 +923,6 @@
             {
                 "name": "OpenBH",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenBH/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OPENBH لجهاز VUDUO4K",
                         "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4K",
@@ -1002,12 +971,6 @@
                 "name": "OpenDroid",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenDroid/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OPENDROID لجهاز SF4008",
                         "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF4008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
@@ -1048,12 +1011,6 @@
             {
                 "name": "OpenHDF",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenHDF/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OPENHDF لجهاز GBQUAD4K",
                         "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K",
@@ -1108,12 +1065,6 @@
                 "name": "OpenPLi",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenPLi/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OpenPLi لجهاز Multibox 4K Pro",
                         "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip",
@@ -1148,12 +1099,6 @@
             {
                 "name": "OpenSPA",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenSPA/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
                         "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)",
@@ -1268,12 +1213,6 @@
                 "name": "OpenVision",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenVision/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
                         "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip",
@@ -1368,12 +1307,6 @@
             {
                 "name": "OpenViX",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenViX/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OPENVIX لجهاز SX988",
                         "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SX988",
@@ -1488,12 +1421,6 @@
                 "name": "Pure2",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/Pure2/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة PURE2 لجهاز NOVALER4K",
                         "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4k-PurE2-7.6-20260816_multi.zip",
@@ -1565,12 +1492,6 @@
                 "name": "VTI",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/VTI/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة VTI لجهاز VUDUO2",
                         "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO2",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/VTi_15-0-02_vuduo2_202212231310_usb.zip",
@@ -1637,7 +1558,7 @@
             {
                 "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
                 "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon%207.ow.zip",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon 7.ow.zip",
                 "image": ""
             },
             {
@@ -1684,12 +1605,6 @@
             }
         ],
         "channels": [
-            {
-                "name": "ملف قنوات ومفضلات هوتبيرد (Morph883)",
-                "description": "ملف قنوات ومفضلات مرتب وشامل لقمر هوتبيرد",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/Settings_Morph883_13E.tar%20%E2%80%AB%E2%80%AC.gz",
-                "image": ""
-            },
             {
                 "name": "ملف قنوات ومفضلات مرتب (MNASR)",
                 "description": "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية",
