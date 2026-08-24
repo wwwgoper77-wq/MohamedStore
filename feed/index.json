@@ -1616,6 +1616,12 @@
                 "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_openATV_20260602_000828.tar.gz",
                 "image": ""
+            },
+            {
+                "name": "Channels Hotbird 13E (Morph883)",
+                "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/e2-morph883-13e-160826_160826-r1_noarch.ipk",
+                "image": ""
             }
         ],
         "novaler": [
