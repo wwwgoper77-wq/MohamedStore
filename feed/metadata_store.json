@@ -1162,5 +1162,61 @@
     "enigma2-plugin-skins-extremegolden-fhd-all_v1.0_all.ipk": {
         "name": "extremegolden fhd all v1.0",
         "description": "سكين extremegolden fhd all v1.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "MC%20oscam.zip": {
+        "name": "MC Oscam",
+        "description": "بلجن خاص بنا أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam"
+    },
+    "MC%20stream.zip": {
+        "name": "MC Stream",
+        "description": "بلجن خاص بنا مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة"
+    },
+    "ipa%20udio%20pro_1.7.ipk": {
+        "name": "IPAudio Pro3.12",
+        "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي"
+    },
+    "plugins.json": {
+        "name": "plugins",
+        "description": "Plugin Extension"
+    },
+    "r": {
+        "name": "r",
+        "description": "سكين r عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "index.json": {
+        "name": "index",
+        "description": "سكين index عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "readme.txt": {
+        "name": "صورة VTI لجهاز Enigma2 Device",
+        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device"
+    },
+    "README.mdL": {
+        "name": "README",
+        "description": "سكين README عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "ESTUARY%20SKIN%20COVER%20INFOBAR%2012_BY-CHARI7.zip": {
+        "name": "ESTUARY SKIN COVER INFOBAR 12 BY CHARI7",
+        "description": "سكين ESTUARY SKIN COVER INFOBAR 12 BY CHARI7 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "Ncam%20v15.8.sh": {
+        "name": "تثبيت محاكي Ncam v15.8",
+        "description": "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam"
+    },
+    "enigma2-softcams-oscam-all-images_11.715-emu-r798-arm%2Bmips_all.ipk": {
+        "name": "Oscam All Images r798 (ARM+MIPS)",
+        "description": "محاكي أوسكام الشامل لجميع الصور ومعالجات ARM و MIPS"
+    },
+    "enigma2-softcams-oscam-all-images_11791-emu-801-arm%2Bmips_all.ipk": {
+        "name": "Oscam All Images r801 (ARM+MIPS)",
+        "description": "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور"
+    },
+    "Picon%207.ow.zip": {
+        "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
+        "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
+    },
+    "Settings_Morph883_13E.tar%20%E2%80%AB%E2%80%AC.gz": {
+        "name": "ملف قنوات ومفضلات Hotbird 13E (Morph883)",
+        "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883"
     }
 }

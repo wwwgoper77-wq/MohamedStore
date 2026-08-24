@@ -779,8 +779,8 @@
                         "image": ""
                     },
                     {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenDroid/readme.txt",
                         "image": ""
                     }
@@ -790,8 +790,8 @@
                 "name": "OpenEight",
                 "items": [
                     {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenEight/readme.txt",
                         "image": ""
                     }
@@ -801,8 +801,8 @@
                 "name": "OpenHDF",
                 "items": [
                     {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenHDF/readme.txt",
                         "image": ""
                     }
@@ -859,8 +859,8 @@
                         "image": ""
                     },
                     {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenSPA/readme.txt",
                         "image": ""
                     }
@@ -870,8 +870,8 @@
                 "name": "OpenVision",
                 "items": [
                     {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenVision/readme.txt",
                         "image": ""
                     }
@@ -893,8 +893,8 @@
                         "image": ""
                     },
                     {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Pure2/readme.txt",
                         "image": ""
                     }
@@ -931,12 +931,6 @@
                         "name": "enigna2 skin whiteshadowfhd sharp987 vti r1.00",
                         "description": "سكين enigna2 skin whiteshadowfhd sharp987 vti r1.00 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/VTI/enigna2-skin-whiteshadowfhd_sharp987_vti-r1.00_all.ipk",
-                        "image": ""
-                    },
-                    {
-                        "name": "readme",
-                        "description": "سكين readme عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/VTI/readme.txt",
                         "image": ""
                     }
                 ]
@@ -1093,8 +1087,8 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "صورة Egami لجهاز Enigma2 Device",
-                        "description": "صورة نظام Egami الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/Egami/readme.txt",
                         "image": ""
                     },
@@ -1134,8 +1128,8 @@
                 "name": "OpenATV",
                 "items": [
                     {
-                        "name": "صورة OpenATV لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenATV الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenATV/readme.txt",
                         "image": ""
                     },
@@ -1175,8 +1169,8 @@
                 "name": "OpenBH",
                 "items": [
                     {
-                        "name": "صورة OpenBH لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenBH الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenBH/readme.txt",
                         "image": ""
                     },
@@ -1228,8 +1222,8 @@
                 "name": "OpenDroid",
                 "items": [
                     {
-                        "name": "صورة OpenDroid لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenDroid الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenDroid/readme.txt",
                         "image": ""
                     },
@@ -1251,8 +1245,8 @@
                 "name": "OpenHDF",
                 "items": [
                     {
-                        "name": "صورة OpenHDF لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenHDF الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenHDF/readme.txt",
                         "image": ""
                     }
@@ -1262,8 +1256,8 @@
                 "name": "OpenPLi",
                 "items": [
                     {
-                        "name": "صورة OpenPLi لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenPLi الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenPLi/readme.txt",
                         "image": ""
                     },
@@ -1303,8 +1297,8 @@
                 "name": "OpenSPA",
                 "items": [
                     {
-                        "name": "صورة OpenSPA لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenSPA الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenSPA/readme.txt",
                         "image": ""
                     },
@@ -1422,8 +1416,8 @@
                 "name": "OpenVision",
                 "items": [
                     {
-                        "name": "صورة OpenVision لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenVision الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenVision/readme.txt",
                         "image": ""
                     }
@@ -1433,8 +1427,8 @@
                 "name": "OpenViX",
                 "items": [
                     {
-                        "name": "صورة OpenViX لجهاز Enigma2 Device",
-                        "description": "صورة نظام OpenViX الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenViX/readme.txt",
                         "image": ""
                     },
@@ -1552,8 +1546,8 @@
                 "name": "Pure2",
                 "items": [
                     {
-                        "name": "صورة Pure2 لجهاز Enigma2 Device",
-                        "description": "صورة نظام Pure2 الرسمية لجهاز Enigma2 Device",
+                        "name": "صورة VTI لجهاز Enigma2 Device",
+                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/Pure2/readme.txt",
                         "image": ""
                     },
