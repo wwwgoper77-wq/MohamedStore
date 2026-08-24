@@ -32,7 +32,7 @@ def get_file_basename(url_or_path):
         return ""
     return str(url_or_path).split("?")[0].split("/")[-1].strip()
 
-# 1. قراءة الخزنة
+# 1. قراءة التعديلات اليدوية المحفوظة
 if os.path.exists(META_STORE_FILE):
     try:
         with open(META_STORE_FILE, "r", encoding="utf-8") as f:
@@ -40,7 +40,6 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# 2. قراءة التعديلات اليدوية المحفوظة
 if os.path.exists(INDEX_FILE):
     try:
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
@@ -69,7 +68,7 @@ if os.path.exists(INDEX_FILE):
                     elif isinstance(el, dict):
                         sync_user_edits(el)
     except Exception as e:
-        print("Notice reading index.json:", e)
+        pass
 
 
 CUSTOM_MAP = {
@@ -169,7 +168,6 @@ DEVICE_MAP = [
     ("gbue4k", "GigaBlue UE 4K")
 ]
 
-# تجاهل الملفات غير الصالحة أو السكربتات المؤقتة داخل حافظات الصور
 IGNORED_FILES = {".ds_store", "thumbs.db", ".gitkeep", "readme.md", ".gitignore"}
 VALID_SYS_IMAGE_EXTS = {".zip", ".tar.gz", ".tar.xz", ".nfi", ".img", ".bin", ".bz2"}
 
@@ -219,7 +217,6 @@ def format_system_image(fn, brand_disp="Image"):
 
     brand = detect_brand_from_filename(fn.lower())
     if brand == "All" and brand_disp != "Image" and brand_disp != "All":
-        # تنظيف اسم الحافظة مثل OpenBH (NeoBoot Safe)
         clean_brand_folder = brand_disp.split("(")[0].strip()
         brand = clean_brand_folder if clean_brand_folder else brand_disp
 
@@ -247,7 +244,7 @@ def format_system_image(fn, brand_disp="Image"):
 def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder=""):
     clean_k = get_file_basename(fn)
     
-    # 1. التعديل اليدوي المحفوظ
+    # 1. التعديل اليدوي
     if clean_k in metadata_store:
         u_name = metadata_store[clean_k].get("name", "").strip()
         u_desc = metadata_store[clean_k].get("description", "").strip()
@@ -264,7 +261,7 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
         skin_desc = f"سكين {eng_skin_name} عالي الدقة FHD بتصميم أنيق وخفيف"
         return eng_skin_name, skin_desc
 
-    # 4. التسميات التلقائية
+    # 4. التسميات التلقائية للأقسام الأخرى
     auto_name = clean_name
     auto_desc = default_desc
     fn_l = fn.lower()
@@ -395,13 +392,14 @@ while True:
             break
         page += 1
     except Exception as e:
-        print("Releases notice:", e)
         break
 
 assigned_releases = set()
 globally_seen = set()
 
-# 1. System Images
+# ==========================================
+# 1. قسم صور النظام (System Images)
+# ==========================================
 sys_folders = {}
 
 if os.path.isdir("system_images"):
@@ -416,7 +414,6 @@ if os.path.isdir("system_images"):
         for fn in sorted(os.listdir(fpath)):
             if fn.lower() in IGNORED_FILES or fn.startswith("."):
                 continue
-            # التأكد أن الملف له امتداد صورة حقيقي
             if not any(fn.lower().endswith(ext) for ext in VALID_SYS_IMAGE_EXTS):
                 continue
 
@@ -443,7 +440,7 @@ if os.path.isdir("system_images"):
                 "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
             })
 
-# شرط صور النظام في الـ Releases: (اسم الصورة + موديل الجهاز)
+# معالجة صور النظام المرفوعة في الـ Releases (اسم الصورة + الموديل)
 for asset in release_assets_pool:
     fn = asset["filename"]
     fn_lower = fn.lower()
@@ -487,7 +484,9 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins
+# ==========================================
+# 2. قسم السكينات (Skins)
+# ==========================================
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -525,6 +524,7 @@ if os.path.isdir("skins"):
                 "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
             })
 
+# معالجة السكينات المرفوعة في الـ Releases (كلمة skin + توجيه للحافظة المناسبة)
 for asset in release_assets_pool:
     fn = asset["filename"]
     fn_norm = normalize_text(fn)
@@ -533,6 +533,7 @@ for asset in release_assets_pool:
         assigned_releases.add(fn_norm)
         globally_seen.add(fn_norm)
         
+        # البحث عن اسم الحافظة في اسم الملف (مثل egami, openatv, pure2...)
         matched = "all"
         for norm_k in skin_folders.keys():
             if norm_k != "all" and norm_k in fn_norm:
@@ -560,7 +561,9 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. باقي الأقسام
+# ==========================================
+# 3. باقي الأقسام (Plugins, Tools, Channels, Picons, Novaler)
+# ==========================================
 def handle_category_without_restrictions(cat_key, release_matcher, default_desc):
     items = []
     seen_in_cat = set()
@@ -638,4 +641,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Clean UI & No Mixed Text Glitches!")
+print("🎉 Successfully generated feed/index.json: Perfect Skins & System Images Layout!")
