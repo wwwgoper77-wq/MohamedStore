@@ -190,12 +190,6 @@
                 "image": ""
             },
             {
-                "name": "plugins",
-                "description": "Plugin Extension",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/plugins.json",
-                "image": ""
-            },
-            {
                 "name": "FootOnSat",
                 "description": "جدول مباريات اليوم والقنوات الناقلة والترددات مباشرة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",
