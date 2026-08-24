@@ -867,12 +867,6 @@
                 "name": "Egami",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/Egami/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة EGAMI لجهاز VUZERO4K",
                         "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز VUZERO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip",
@@ -908,12 +902,6 @@
                 "name": "OpenATV",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenATV/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OPENATV لجهاز VUDUO4K",
                         "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUDUO4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip",
@@ -948,12 +936,6 @@
             {
                 "name": "OpenBH",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenBH/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OPENBH لجهاز VUDUO4K",
                         "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4K",
@@ -1002,12 +984,6 @@
                 "name": "OpenDroid",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenDroid/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OPENDROID لجهاز SF4008",
                         "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF4008",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip",
@@ -1048,12 +1024,6 @@
             {
                 "name": "OpenHDF",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenHDF/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OPENHDF لجهاز GBQUAD4K",
                         "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K",
@@ -1108,12 +1078,6 @@
                 "name": "OpenPLi",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenPLi/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة OpenPLi 9.2 لجهاز VU+ Duo 4K SE",
                         "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Duo 4K SE (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openpli-9.2-release-vuduo4kse-20260816_usb.zip",
@@ -1142,12 +1106,6 @@
             {
                 "name": "OpenSPA",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenSPA/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
                         "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)",
@@ -1260,24 +1218,11 @@
             },
             {
                 "name": "OpenVision",
-                "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenVision/readme.txt",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "OpenViX",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/OpenViX/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة OPENVIX لجهاز SX988",
                         "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SX988",
@@ -1392,12 +1337,6 @@
                 "name": "Pure2",
                 "items": [
                     {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/Pure2/readme.txt",
-                        "image": ""
-                    },
-                    {
                         "name": "صورة PURE2 لجهاز NOVALER4K",
                         "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4K",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/novaler4k-PurE2-7.6-20260816_multi.zip",
@@ -1468,12 +1407,6 @@
             {
                 "name": "VTI",
                 "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/system_images/VTI/readme.txt",
-                        "image": ""
-                    },
                     {
                         "name": "صورة VTI لجهاز VUDUO2",
                         "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO2",
@@ -1589,7 +1522,7 @@
         ],
         "channels": [
             {
-                "name": "ملف قنوات ومفضلات Hotbird 13E (Morph883)",
+                "name": "Channels Hotbird 13E (Morph883)",
                 "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/Settings_Morph883_13E.tar%20%E2%80%AB%E2%80%AC.gz",
                 "image": ""
