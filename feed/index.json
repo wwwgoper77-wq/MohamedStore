@@ -580,6 +580,12 @@
                         "description": "سكين enigma2-alienaware-obh4_all عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/skin-enigma2-alienaware-obh4_all.ipk",
                         "image": ""
+                    },
+                    {
+                        "name": "armynextgengradient",
+                        "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
+                        "image": ""
                     }
                 ]
             },
@@ -857,17 +863,6 @@
             }
         ],
         "system_images": [
-            {
-                "name": "All",
-                "items": [
-                    {
-                        "name": "armynextgengradient",
-                        "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk",
-                        "image": ""
-                    }
-                ]
-            },
             {
                 "name": "Egami",
                 "items": [
@@ -1690,8 +1685,8 @@
         ],
         "channels": [
             {
-                "name": "ملف قنوات ومفضلات Hotbird 13E (Morph883)",
-                "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883",
+                "name": "ملف قنوات ومفضلات هوتبيرد (Morph883)",
+                "description": "ملف قنوات ومفضلات مرتب وشامل لقمر هوتبيرد",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/Settings_Morph883_13E.tar%20%E2%80%AB%E2%80%AC.gz",
                 "image": ""
             },
