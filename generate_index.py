@@ -35,7 +35,7 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت في index.json وحفظه فوراً في الخزنة
+# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت وحفظه
 if os.path.exists(INDEX_FILE):
     try:
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
@@ -64,7 +64,7 @@ if os.path.exists(INDEX_FILE):
                     elif isinstance(el, dict):
                         sync_user_edits(el)
     except Exception as e:
-        print("Notice reading index.json:", e)
+        pass
 
 
 CUSTOM_MAP = {
@@ -162,16 +162,26 @@ DEVICE_MAP = [
     ("gbue4k", "GigaBlue UE 4K")
 ]
 
-# تجاهل فقط ملفات النظام غير المرغوبة
-IGNORED_FILES = {".ds_store", "thumbs.db", ".gitkeep", "readme.md", ".gitignore", "license"}
+# منع وتجاهل ملفات الـ README وملفات التوثيق والنظام نهائياً
+IGNORED_FILES = {
+    ".ds_store", "thumbs.db", ".gitkeep", "readme.md", "readme", ".gitignore", "license",
+    "readme.txt", "readme.mdl", "read me.md"
+}
 
-def is_valid_file(filename):
-    """التحقق من أن الملف ليس ملفاً مخفياً أو نصياً غير صالح"""
+def is_valid_package_file(filename):
+    """التحقق الصارم من أن الملف ليس ملف توثيق أو ملف نصي"""
+    if not filename:
+        return False
     fn = filename.lower().strip()
-    if fn in IGNORED_FILES or fn.startswith("."):
+    if fn.startswith("."):
         return False
-    if fn.endswith((".txt", ".md", ".json", ".git", ".bak")):
+    if "readme" in fn:
         return False
+    if fn in IGNORED_FILES:
+        return False
+    for bad_ext in [".md", ".mdl", ".txt", ".json", ".git", ".bak", ".html", ".htm"]:
+        if fn.endswith(bad_ext):
+            return False
     return True
 
 
@@ -239,7 +249,7 @@ def format_system_image(fn, brand_disp="Image"):
 
 
 def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder=""):
-    clean_k = item_fn = fn.split("?")[0].split("/")[-1].strip()
+    clean_k = fn.split("?")[0].split("/")[-1].strip()
 
     if clean_k in metadata_store:
         u_name = metadata_store[clean_k].get("name", "").strip()
@@ -376,7 +386,7 @@ while True:
             rel_body = release.get("body", "") or release.get("name", "")
             for asset in release.get("assets", []):
                 filename = asset.get("name", "")
-                if is_valid_file(filename):
+                if is_valid_package_file(filename):
                     release_assets_pool.append({
                         "filename": filename,
                         "url": asset.get("browser_download_url", ""),
@@ -387,7 +397,6 @@ while True:
             break
         page += 1
     except Exception as e:
-        print("Releases notice:", e)
         break
 
 assigned_releases = set()
@@ -405,7 +414,7 @@ if os.path.isdir("system_images"):
         sys_folders[norm] = {"display_name": disp, "items": [], "seen": set()}
 
         for fn in sorted(os.listdir(fpath)):
-            if not is_valid_file(fn):
+            if not is_valid_package_file(fn):
                 continue
             norm_fn = normalize_text(fn)
             sys_folders[norm]["seen"].add(norm_fn)
@@ -488,7 +497,7 @@ if os.path.isdir("skins"):
         skin_folders[norm] = {"display_name": disp, "items": [], "seen": set()}
 
         for fn in sorted(os.listdir(fpath)):
-            if not is_valid_file(fn):
+            if not is_valid_package_file(fn):
                 continue
             norm_fn = normalize_text(fn)
             skin_folders[norm]["seen"].add(norm_fn)
@@ -559,7 +568,7 @@ def handle_flat(cat_key, matcher_func, default_desc):
     if os.path.isdir(cat_key):
         for root, dirs, files in os.walk(cat_key):
             for fn in sorted(files):
-                if not is_valid_file(fn):
+                if not is_valid_package_file(fn):
                     continue
                 norm_fn = normalize_text(fn)
                 if norm_fn in seen:
@@ -628,4 +637,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Best of both worlds (Stable & Flexible)!")
+print("🎉 Successfully generated feed/index.json: Ignored all README and system files completely!")
