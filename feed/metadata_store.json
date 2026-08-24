@@ -1152,7 +1152,7 @@
         "description": "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر"
     },
     "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
-        "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all",
-        "description": "Novaler Package"
+        "name": "enigma2-plugin-softcams-supcam-ncam-nova",
+        "description": "هو حزمة تثبيت مدمجة لإيمو"
     }
 }
