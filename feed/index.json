@@ -1567,49 +1567,57 @@
                 "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
                 "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/picons/Picon 7.ow.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "بيكونات قمر هوتبيرد (Hotbird 13E)",
                 "description": "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon-13E.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "picon",
                 "description": "e",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "بيكونات قمر يوتلسات (Eutelsat 16E)",
                 "description": "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_16.0E.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "بيكونات قمر عربسات بدر (Badr 26E)",
                 "description": "شعارات وقنوات قمر عربسات بدر 26 شرق",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_26.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "بيكونات قمر هيلاسات (Hellas Sat 39E)",
                 "description": "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_39E.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
                 "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_8.0W.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             },
             {
                 "name": "حزمة البيكونات الشاملة (جميع الأقمار)",
                 "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon_ALL.zip",
-                "image": ""
+                "image": "",
+                "type": "picon"
             }
         ],
         "channels": [
