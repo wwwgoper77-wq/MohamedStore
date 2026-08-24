@@ -223,7 +223,6 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
     if fn in metadata_store:
         u_name = metadata_store[fn].get("name", "").strip()
         u_desc = metadata_store[fn].get("description", "").strip()
-        # نتحقق أن الاسم المحفوظ ليس الاسم الإنجليزي الخام للملف
         if u_name and u_name != fn and u_name != clean_name:
             if is_skin and u_name.startswith("سكين "):
                 u_name = clean_skin_name(fn)
@@ -283,16 +282,17 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
         elif "798" in fn: return "Oscam All Images r798 (ARM+MIPS)", "محاكي أوسكام الشامل لجميع الصور ومعالجات ARM و MIPS"
         elif "801" in fn: return "Oscam All Images r801 (ARM+MIPS)", "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور"
 
+    # تخصيص أسماء وأوصاف البيكونات بدقة فائقة
     if "picon" in fn.lower() or "picons" in fn.lower():
-        if "7.0w" in fn.lower() or "7.ow" in fn.lower() or "8.0w" in fn.lower():
+        if "7.0w" in fn.lower() or "7.ow" in fn.lower() or "8.0w" in fn.lower() or "nile" in fn.lower():
             return "بيكونات قمر نايل سات (Nilesat 7W / 8W)", "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
-        elif "13e" in fn.lower():
+        elif "13e" in fn.lower() or "hotbird" in fn.lower():
             return "بيكونات قمر هوتبيرد (Hotbird 13E)", "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق"
-        elif "16.0e" in fn.lower():
+        elif "16.0e" in fn.lower() or "16e" in fn.lower():
             return "بيكونات قمر يوتلسات (Eutelsat 16E)", "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية"
-        elif "26" in fn.lower():
+        elif "26" in fn.lower() or "badr" in fn.lower():
             return "بيكونات قمر عربسات بدر (Badr 26E)", "شعارات وقنوات قمر عربسات بدر 26 شرق"
-        elif "39e" in fn.lower():
+        elif "39e" in fn.lower() or "hellas" in fn.lower():
             return "بيكونات قمر هيلاسات (Hellas Sat 39E)", "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي"
         elif "all" in fn.lower():
             return "حزمة البيكونات الشاملة (جميع الأقمار)", "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
@@ -340,7 +340,7 @@ def normalize_text(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
 
-# جلب الـ Releases
+# جلب الـ Releases مع ضمان الروابط المباشرة
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
 
@@ -455,7 +455,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins (أسماء إنجليزية نظيفة + أوصاف عربية)
+# 2. Skins
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -526,8 +526,8 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. Flat categories (plugins, tools, novaler, picons, channels)
-def handle_flat(cat_key, matcher_func, default_desc):
+# 3. Flat categories (مع ضبط قسم البيكونات picons خصيصاً)
+def handle_flat(cat_key, matcher_func, default_desc, force_item_type=None):
     items = []
     seen = set()
 
@@ -548,13 +548,17 @@ def handle_flat(cat_key, matcher_func, default_desc):
 
             final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc, is_skin=False, is_sys_img=False)
 
-            items.append({
+            item_obj = {
                 "name": final_name,
                 "description": final_desc,
                 "file": f_url,
                 "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
-            })
+            }
+            if force_item_type:
+                item_obj["type"] = force_item_type
+            items.append(item_obj)
 
+    # التقاط ملفات الـ Releases الخاصة بالقسم
     for asset in release_assets_pool:
         fn = asset["filename"]
         fn_norm = normalize_text(fn)
@@ -568,18 +572,22 @@ def handle_flat(cat_key, matcher_func, default_desc):
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
             final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc, is_skin=False, is_sys_img=False)
 
-            items.append({
+            item_obj = {
                 "name": final_name,
                 "description": final_desc,
                 "file": asset["url"],
                 "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
-            })
+            }
+            if force_item_type:
+                item_obj["type"] = force_item_type
+            items.append(item_obj)
 
     data["categories"][cat_key] = items
 
 
+# الترتيب الدقيق للأقسام (البيكونات تلتقط أولاً بروابط الـ Releases المباشرة)
 handle_flat("novaler", lambda n: "novaler" in n or "noflayer" in n, "Novaler Package")
-handle_flat("picons", lambda n: "picon" in n or "snp" in n or "srp" in n, "Picons Package")
+handle_flat("picons", lambda n: "picon" in n or "snp" in n or "srp" in n, "Picons Package", force_item_type="picon")
 handle_flat("channels", lambda n: any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav"]), "Channels Settings")
 handle_flat("tools", lambda n: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "tool", "script", "tweak"]), "Tool Package")
 handle_flat("plugins", lambda n: True, "Plugin Extension")
@@ -605,4 +613,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Auto formatted System Images with brand and device perfectly!")
+print("🎉 Successfully generated feed/index.json: Picons and Releases processed perfectly!")
