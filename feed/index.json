@@ -1576,8 +1576,8 @@
                 "image": ""
             },
             {
-                "name": "picon",
-                "description": "e",
+                "name": "حزمة البيكونات الشاملة لكافة الاقمار ملف اخر",
+                "description": "بيكونات  قمر متحرك",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/picon.zip",
                 "image": ""
             },
@@ -1833,7 +1833,7 @@
             },
             {
                 "name": "petazetas",
-                "description": "يُستخدم لجلب وتشغيل روابط قنوات IPTV",
+                 "description": "يُستخدم لجلب وتشغيل روابط قنوات IPTV",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/novaler/enigma2-plugin-extensions-petazetas_1.1_all.ipk",
                 "image": ""
             },
