@@ -1606,13 +1606,13 @@
         ],
         "channels": [
             {
-                "name": "ملف قنوات ومفضلات مرتب (MNASR)",
+                "name": "ملف backup قنوات ومفضلات مرتب (MNASR)",
                 "description": "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_MNASR_20260527.tar.gz",
                 "image": ""
             },
             {
-                "name": "ملف قنوات ومفضلات صورة OpenATV",
+                "name": "ملف backup قنوات ومفضلات صورة OpenATV",
                 "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_openATV_20260602_000828.tar.gz",
                 "image": ""
@@ -1624,13 +1624,13 @@
                 "image": ""
             },
             {
-                "name": "Channels Hotbird 13E (Morph883)",
+                "name": "Channels Hotbird 13e-19 (Morph883)",
                 "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/e2-morph883-13e-19.2e-160826_160826-r1_noarch.ipk",
                 "image": ""
             },
             {
-                "name": "Channels  (Morph883)",
+                "name": "Channels motor  (Morph883)",
                 "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/e2-morph883-motor-160826_160826-r1_noarch.ipk",
                 "image": ""
