@@ -53,13 +53,13 @@
             },
             {
                 "name": "MC Oscam",
-                "description": " بلجن خاص بنا أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam",
+                "description": "بلجن خاص بنا أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC oscam.zip",
                 "image": ""
             },
             {
                 "name": "MC Stream",
-                "description": " بلجن خاص بنا مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة",
+                "description": "بلجن خاص بنا مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MC stream.zip",
                 "image": ""
             },
@@ -106,8 +106,8 @@
                 "image": ""
             },
             {
-                "name": "Zoom",
-                "description": "اداة تثبيت ايمو",
+                "name": "Zoom Screen",
+                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
                 "image": ""
             },

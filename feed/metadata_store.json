@@ -33,11 +33,11 @@
     },
     "MC oscam.zip": {
         "name": "MC Oscam",
-        "description": "أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam"
+        "description": "بلجن خاص بنا أداة إدارة وتشغيل سيرفرات ومحاكي الأوسكام Oscam"
     },
     "MC stream.zip": {
         "name": "MC Stream",
-        "description": "مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة"
+        "description": "بلجن خاص بنا مشغل ومحول تدفقات البث والوسائط المتعددة للأجهزة"
     },
     "MixAudio.sh": {
         "name": "Mix Audio",
@@ -45,7 +45,7 @@
     },
     "MyTranslator.zip": {
         "name": "My Translator",
-        "description": "ترجمة سريعة للقوائم والأحداث والمحتوى التلفزيوني"
+        "description": "بلجن ترجمة"
     },
     "RaedQuickSignal.zip": {
         "name": "Raed Quick Signal",
@@ -117,15 +117,15 @@
     },
     "enigma2-plugin-timeshift-delay-egami_3.0_all.ipk": {
         "name": "timeshift",
-        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز الجهاز"
+        "description": "اداة تايم شفت صورة ايجامي فقط عند انتهاء التثبيت اضغط AUDIO"
     },
     "ipa udio pro_1.7.ipk": {
-        "name": "IPAudio Pro All",
+        "name": "IPAudio Pro3.12",
         "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي"
     },
     "FootOnSat.plugin.zip": {
         "name": "FootOnSat",
-        "description": "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة"
+        "description": "جدول مباريات اليوم والقنوات الناقلة والترددات مباشرة"
     },
     "MX-HC2-MOD-By-RAED.ipk": {
         "name": "MX HC2 MOD By RAED",
