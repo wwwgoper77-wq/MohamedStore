@@ -965,22 +965,22 @@
     },
     "KeyAdder.tar.gz": {
         "name": "KeyAdder",
-        "description": "Novaler Package"
+        "description": "يُتيح لك إدخال الشفرة الجديدة وحفظها فوراً"
     },
     "RaedQuickSignal-12.0.tar.gz": {
         "name": "Raed Quick Signal",
         "description": "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع"
     },
     "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all.ipk": {
-        "name": "bissfeed-autokey_20201016-V2.8-By-momi133-OE2_all",
-        "description": "Novaler Package"
+        "name": "bissfeed-autokey",
+        "description": "جلب شفرات BISS"
     },
     "cfg_Zoom_Final_FIX7x_all.ipk": {
-        "name": "Zoom Screen",
-        "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار"
+        "name": "Zoom",
+        "description": "اداة تثبيت الايمو"
     },
     "enigma2-plugin-extensions-Athantimes_2.8_PY3.ipk": {
-        "name": "مواقيت الأذان AthanTimes",
+        "name": "مواقيت الأذان",
         "description": "بلجن عرض أوقات الصلاة والأذان بدقة للشاشات"
     },
     "enigma2-plugin-extensions-ajpanel_v8.8.5_all.ipk": {
@@ -1036,16 +1036,16 @@
         "description": "جلب وتحديث سيرفرات الشيرنج المجانية تلقائياً"
     },
     "enigma2-plugin-extensions-internet-speedtest_1.2_all.ipk": {
-        "name": "enigma2-plugin-extensions-internet-speedtest_1.2_all",
-        "description": "Novaler Package"
+        "name": "internet-speedtest",
+        "description": "اختبار سرعة الانترنيت"
     },
     "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all.ipk": {
-        "name": "enigma2-plugin-extensions-jedimakerxtream_6.36-r3_20240210_py3.12_all",
-        "description": "Novaler Package"
+        "name": "jedimakerxtream",
+        "description": "يُستخدم لتحويل اشتراكات IPTV"
     },
     "enigma2-plugin-extensions-multiboot-flashonline_5.9_all.ipk": {
-        "name": "enigma2-plugin-extensions-multiboot-flashonline_5.9_all",
-        "description": "Novaler Package"
+        "name": "multiboot",
+        "description": "يُتيح لك تثبيت وتشغيل أكثر من صورة"
     },
     "enigma2-plugin-extensions-netspeedtest_2.1.3_all.ipk": {
         "name": "Net SpeedTest",
@@ -1096,16 +1096,16 @@
         "description": "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات"
     },
     "enigma2-plugin-extensions-petazetas_1.1_all.ipk": {
-        "name": "enigma2-plugin-extensions-petazetas_1.1_all",
-        "description": "Novaler Package"
+        "name": "petazetas",
+        "description": "يُستخدم لجلب وتشغيل روابط قنوات IPTV"
     },
     "enigma2-plugin-extensions-plutotv_20240220_all.ipk": {
-        "name": "enigma2-plugin-extensions-plutotv_20240220_all",
-        "description": "Novaler Package"
+        "name": "plutotv",
+        "description": "يتيح لك تشغيل قنوات ومحتوى منصة Pluto TV المجانية مباشرة على أجهزة الإنكما2"
     },
     "enigma2-plugin-extensions-rakutentv_20240324_all.ipk": {
-        "name": "enigma2-plugin-extensions-rakutentv_20240324_all",
-        "description": "Novaler Package"
+        "name": "rakutentv",
+        "description": "يتيح لك تشغيل قنوات ومحتوى خدمة Rakuten TV"
     },
     "enigma2-plugin-extensions-screengrabber_2.6_all.ipk": {
         "name": "Screen Grabber",
