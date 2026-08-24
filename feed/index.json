@@ -832,17 +832,6 @@
                 ]
             },
             {
-                "name": "OpenVision",
-                "items": [
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenVision/readme.txt",
-                        "image": ""
-                    }
-                ]
-            },
-            {
                 "name": "Pure2",
                 "items": [
                     {
@@ -855,12 +844,6 @@
                         "name": "xDreamy 6.0.0",
                         "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Pure2/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Pure2/readme.txt",
                         "image": ""
                     }
                 ]
