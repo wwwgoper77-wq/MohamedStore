@@ -27,11 +27,6 @@ INDEX_FILE = "feed/index.json"
 
 metadata_store = {}
 
-def get_file_basename(url_or_path):
-    if not url_or_path:
-        return ""
-    return str(url_or_path).split("?")[0].split("/")[-1].strip()
-
 # 1. قراءة الخزنة الحالية
 if os.path.exists(META_STORE_FILE):
     try:
@@ -49,7 +44,7 @@ if os.path.exists(INDEX_FILE):
         def sync_user_edits(item):
             if not isinstance(item, dict):
                 return
-            fn = get_file_basename(item.get("file", ""))
+            fn = item.get("file", "").split("/")[-1].split("?")[0]
             c_name = item.get("name", "").strip()
             desc = item.get("description", "").strip()
             if fn:
@@ -179,21 +174,28 @@ def clean_filename(filename):
         name = os.path.splitext(name)[0]
     return name.strip()
 
+
 def clean_skin_name(fn):
+    """تنظيف اسم السكين ليظهر بالإنجليزية فقط وبدون زوائد"""
     name = clean_filename(fn)
     name = re.sub(r'^(enigma2-plugin-skins?-|enigma2-skin-|skin-)', '', name, flags=re.IGNORECASE)
     name = re.sub(r'(_all|_mips|_arm.*)$', '', name, flags=re.IGNORECASE)
     name = name.replace("-", " ").replace("_", " ").strip()
     return name
 
+
 def format_system_image(fn, brand_disp="Image"):
+    """تنسيق وتوليد اسم ووصف صور النظام بدقة فائقة لجميع الأجهزة والفرق"""
     fn_clean = fn.lower().replace(".", "").replace("-", "").replace("_", "").replace(" ", "")
+    
+    # 1. تحديد اسم الجهاز
     dev_name = "Enigma2 Device"
     for k, disp in DEVICE_MAP:
         if k in fn_clean:
             dev_name = disp
             break
 
+    # 2. تحديد اسم الصورة / الفريق
     brand = brand_disp
     fn_lower = fn.lower()
     if "openatv" in fn_lower: brand = "OpenATV"
@@ -209,9 +211,11 @@ def format_system_image(fn, brand_disp="Image"):
     elif "openvision" in fn_lower: brand = "OpenVision"
     elif "openeight" in fn_lower: brand = "OpenEight"
 
+    # 3. تحديد رقم الإصدار إن وجد
     ver_match = re.search(r'(\d+\.\d+(\.\d+)?)', fn)
     ver_str = f" {ver_match.group(1)}" if ver_match else ""
 
+    # 4. نوع التثبيت (USB, MMC, Multi, EMMC)
     install_type = ""
     if "usb" in fn_lower: install_type = " (USB)"
     elif "mmc" in fn_lower: install_type = " (MMC)"
@@ -222,42 +226,31 @@ def format_system_image(fn, brand_disp="Image"):
     final_desc = f"صورة نظام {brand}{ver_str} الرسمية لجهاز {dev_name}{install_type}"
     return final_name, final_desc
 
+
 def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder=""):
-    clean_k = get_file_basename(fn)
-    
     # 1. إذا كان لديك تعديل يدوي محفوظ، هو الأقوى دائماً
+    clean_k = fn.split("/")[-1].split("?")[0].strip()
     if clean_k in metadata_store:
         u_name = metadata_store[clean_k].get("name", "").strip()
         u_desc = metadata_store[clean_k].get("description", "").strip()
         if u_name or u_desc:
             return (u_name if u_name else clean_name), (u_desc if u_desc else default_desc)
 
-    # 2. صور النظام
+    # 2. معالجة صور النظام System Images
     if is_sys_img:
         return format_system_image(fn, disp_folder)
 
-    # 3. السكينات
+    # 3. معالجة السكينات Skins
     if is_skin:
         eng_skin_name = clean_skin_name(fn)
         skin_desc = f"سكين {eng_skin_name} عالي الدقة FHD بتصميم أنيق وخفيف"
         return eng_skin_name, skin_desc
 
-    # 4. التسميات التلقائية
+    # 4. معالجة باقي الأقسام والبلجنات
     auto_name = clean_name
     auto_desc = default_desc
-    fn_l = fn.lower()
 
-    if "morph883" in fn_l or "morph" in fn_l:
-        sat = "Hotbird 13E" if "13" in fn_l else ""
-        return f"ملف قنوات ومفضلات {sat} (Morph883)".strip(), "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883"
-
-    if "mnasr" in fn_l:
-        return "ملف قنوات ومفضلات مرتب (MNASR)", "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية"
-        
-    if "openatv" in fn_l and ("channel" in fn_l or "setting" in fn_l):
-        return "ملف قنوات ومفضلات صورة OpenATV", "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
-
-    if "ipaudiopro" in fn_l or "ipa udio" in fn_l:
+    if "ipaudiopro" in fn.lower() or "ipa udio" in fn.lower():
         if "py2.7" in fn: auto_name = "IPAudio Pro v1.7 (Py2.7)"
         elif "py3.11" in fn: auto_name = "IPAudio Pro v1.7 (Py3.11)"
         elif "py3.12" in fn: auto_name = "IPAudio Pro v1.9 (Py3.12)"
@@ -269,27 +262,27 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
         auto_desc = "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي"
         return auto_name, auto_desc
 
-    if "beengo" in fn_l:
+    if "beengo" in fn.lower():
         ver = fn.split("beengo-")[-1].split("_")[0]
         return f"Beengo IPTV ({ver})", "مشغل الوسائط والبث المباشر لخدمة بينجو"
 
-    if "novacam-supreme" in fn_l:
+    if "novacam-supreme" in fn.lower():
         ver = fn.split("novacam-supreme-")[-1].split("_")[0]
         return f"Novacam Supreme ({ver})", "سيرفر ومحاكي نوفاكام سوبريم المطور للقنوات المشفرة"
 
-    if "novacampro" in fn_l:
+    if "novacampro" in fn.lower():
         ver = fn.split("novacampro-")[-1].split("_")[0]
         return f"Novacam Pro ({ver})", "محاكي وسيرفر نوفاكام برو لأجهزة نوفالير"
 
-    if "novalerstore" in fn_l:
+    if "novalerstore" in fn.lower():
         ver = fn.split("novalerstore-")[-1].split("_")[0]
         return f"Novaler Store ({ver})", "متجر وبنل نوفالير الرسمي لتثبيت وتحديث الإضافات"
 
-    if "suptv" in fn_l:
+    if "suptv" in fn.lower():
         ver = fn.split("suptv-")[-1].split("_")[0]
         return f"SupTV ({ver})", "تطبيق وسيرفر سوب تيفي الشهير للشيرنج و IPTV"
 
-    if "oscam" in fn_l:
+    if "oscam" in fn.lower():
         if "levi45" in fn: return "Oscam Emu Levi45 v11965", "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
         elif "11878" in fn: return "Oscam Emu r802 v11878", "محاكي أوسكام إيمو مستقر وسريع في كسر التشفير"
         elif "11886" in fn: return "Oscam Emu r803 v11886", "محاكي أوسكام إيمو محدث لفتح القنوات الفضائية"
@@ -297,22 +290,30 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
         elif "798" in fn: return "Oscam All Images r798 (ARM+MIPS)", "محاكي أوسكام الشامل لجميع الصور ومعالجات ARM و MIPS"
         elif "801" in fn: return "Oscam All Images r801 (ARM+MIPS)", "أحدث إصدار من أوسكام الشامل المتوافق مع كافة الصور"
 
-    if "picon" in fn_l or "picons" in fn_l:
-        if "7.0w" in fn_l or "7.ow" in fn_l or "8.0w" in fn_l or "nile" in fn_l:
+    if "picon" in fn.lower() or "picons" in fn.lower():
+        if "7.0w" in fn.lower() or "7.ow" in fn.lower() or "8.0w" in fn.lower():
             return "بيكونات قمر نايل سات (Nilesat 7W / 8W)", "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
-        elif "13e" in fn_l or "hotbird" in fn_l:
+        elif "13e" in fn.lower():
             return "بيكونات قمر هوتبيرد (Hotbird 13E)", "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق"
-        elif "16.0e" in fn_l or "16e" in fn_l:
+        elif "16.0e" in fn.lower():
             return "بيكونات قمر يوتلسات (Eutelsat 16E)", "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية"
-        elif "26" in fn_l or "badr" in fn_l:
+        elif "26" in fn.lower():
             return "بيكونات قمر عربسات بدر (Badr 26E)", "شعارات وقنوات قمر عربسات بدر 26 شرق"
-        elif "39e" in fn_l or "hellas" in fn_l:
+        elif "39e" in fn.lower():
             return "بيكونات قمر هيلاسات (Hellas Sat 39E)", "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي"
-        elif "all" in fn_l:
+        elif "all" in fn.lower():
             return "حزمة البيكونات الشاملة (جميع الأقمار)", "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
 
+    if "channels" in fn.lower() or "mnasr" in fn.lower() or "morph" in fn.lower():
+        if "mnasr" in fn.lower():
+            return "ملف قنوات ومفضلات مرتب (MNASR)", "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية"
+        elif "morph" in fn.lower():
+            return "ملف قنوات ومفضلات هوتبيرد (Morph883)", "ملف قنوات ومفضلات مرتب وشامل لقمر هوتبيرد"
+        elif "openatv" in fn.lower():
+            return "ملف قنوات ومفضلات صورة OpenATV", "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+
     for k, (n, d) in CUSTOM_MAP.items():
-        if k.lower() in fn_l or k.lower() in clean_name.lower():
+        if k.lower() in fn.lower() or k.lower() in clean_name.lower():
             return n, d
 
     if release_body and release_body.strip():
@@ -321,6 +322,7 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
             auto_desc = lines[0]
 
     return auto_name, auto_desc
+
 
 def image_url(prefix):
     if not prefix:
@@ -333,31 +335,15 @@ def image_url(prefix):
                     return f"{BASE_URL}/{folder}/{quote(file)}"
     return ""
 
+
+EXTENSIONS = (".ipk", ".sh", ".deb", ".zip", ".tar.gz", ".tgz", ".tar", ".py", ".tv", ".img", ".nfi", ".tar.xz", ".bin", ".rar", ".7z")
+
+
 def normalize_text(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
-def is_system_image_file(fn):
-    fn_norm = normalize_text(fn)
-    fn_l = fn.lower()
-    
-    # فحص صيغ الصور والكلمات الدالة
-    img_keywords = [
-        "openatv", "egami", "pure2", "vti", "openbh", "blackhole", "openpli",
-        "openspa", "openvix", "opendroid", "openhdf", "openvision", "openeight",
-        "systemimage", "recovery", "rootfs", "multibox", "sf8008", "sf4008",
-        "zgemma", "vuplus", "vuduo", "vuuno", "vusolo", "vuzero", "dreambox",
-        "dm900", "dm920", "dm820", "dm7080", "gigablue", "gbquad", "gbtrio"
-    ]
-    
-    img_exts = ["usb.zip", "emmc.zip", "mmc.zip", "recovery.zip", "rootfs.tar.bz2", ".nfi", ".img"]
-    
-    if any(ext in fn_l for ext in img_exts):
-        return True
-    if any(k in fn_norm for k in img_keywords) and not any(skip in fn_norm for k_skip in ["plugin", "picon", "channel", "ncam", "oscam", "softcam"] if (skip := k_skip) in fn_norm):
-        return True
-    return False
 
-# جلب الـ Releases
+# جلب الـ Releases (كما هي في كودك بالضبط)
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
 
@@ -395,7 +381,6 @@ while True:
         break
 
 assigned_releases = set()
-globally_seen_files = set()
 
 # 1. System Images
 sys_folders = {}
@@ -411,18 +396,15 @@ if os.path.isdir("system_images"):
         for fn in sorted(os.listdir(fpath)):
             if fn.lower() in IGNORED_FILES or fn.startswith("."):
                 continue
-            norm_fn = normalize_text(fn)
-            sys_folders[norm]["seen"].add(norm_fn)
-            globally_seen_files.add(norm_fn)
-            
+            sys_folders[norm]["seen"].add(fn.lower())
             clean = clean_filename(fn)
             f_url = f"{BASE_URL}/system_images/{quote(folder)}/{quote(fn)}"
             body_desc = ""
             for asset in release_assets_pool:
-                if normalize_text(asset["filename"]) == norm_fn:
+                if asset["filename"].lower() == fn.lower():
                     f_url = asset["url"]
                     body_desc = asset.get("body", "")
-                    assigned_releases.add(normalize_text(asset["filename"]))
+                    assigned_releases.add(asset["filename"].lower())
                     break
 
             final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp)
@@ -436,12 +418,17 @@ if os.path.isdir("system_images"):
 
 for asset in release_assets_pool:
     fn = asset["filename"]
+    fn_lower = fn.lower()
     fn_norm = normalize_text(fn)
 
-    if is_system_image_file(fn) and fn_norm not in assigned_releases and fn_norm not in globally_seen_files:
-        assigned_releases.add(fn_norm)
-        globally_seen_files.add(fn_norm)
-        
+    is_sys_img = False
+    if any(k in fn_norm for k in ["vti", "openpli", "openatv", "openbh", "blackhole", "egami", "pure2", "openspa", "openvix", "systemimage"]):
+        is_sys_img = True
+    elif any(ext in fn_lower for ext in ["usb.zip", "emmc.zip", "mmc.zip", "recovery.zip", "rootfs.tar.bz2", ".nfi", ".img"]):
+        is_sys_img = True
+
+    if is_sys_img and not any(k in fn_norm for k in ["plugin", "skin", "picon", "channel", "ncam", "oscam"]):
+        assigned_releases.add(fn.lower())
         matched = None
         for norm_k in sys_folders.keys():
             if norm_k != "all" and norm_k in fn_norm:
@@ -453,16 +440,18 @@ for asset in release_assets_pool:
             if matched not in sys_folders:
                 sys_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
 
-        clean = clean_filename(fn)
-        disp = sys_folders[matched]["display_name"]
-        final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp)
+        if fn.lower() not in sys_folders[matched]["seen"]:
+            sys_folders[matched]["seen"].add(fn.lower())
+            clean = clean_filename(fn)
+            disp = sys_folders[matched]["display_name"]
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp)
 
-        sys_folders[matched]["items"].append({
-            "name": final_name,
-            "description": final_desc,
-            "file": asset["url"],
-            "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
-        })
+            sys_folders[matched]["items"].append({
+                "name": final_name,
+                "description": final_desc,
+                "file": asset["url"],
+                "image": image_url(clean.split("_")[0]) or image_url(disp) or image_url("system_images")
+            })
 
 for norm_k, f_data in sorted(sys_folders.items()):
     data["categories"]["system_images"].append({
@@ -470,7 +459,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins
+# 2. Skins (أسماء إنجليزية نظيفة + أوصاف عربية)
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -484,19 +473,16 @@ if os.path.isdir("skins"):
         for fn in sorted(os.listdir(fpath)):
             if fn.lower() in IGNORED_FILES or fn.startswith("."):
                 continue
-            norm_fn = normalize_text(fn)
-            skin_folders[norm]["seen"].add(norm_fn)
-            globally_seen_files.add(norm_fn)
-            
+            skin_folders[norm]["seen"].add(fn.lower())
             clean = clean_filename(fn)
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             f_url = f"{BASE_URL}/skins/{quote(folder)}/{quote(fn)}"
             body_desc = ""
             for asset in release_assets_pool:
-                if normalize_text(asset["filename"]) == norm_fn:
+                if asset["filename"].lower() == fn.lower():
                     f_url = asset["url"]
                     body_desc = asset.get("body", "")
-                    assigned_releases.add(normalize_text(asset["filename"]))
+                    assigned_releases.add(asset["filename"].lower())
                     break
 
             final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin", is_skin=True, is_sys_img=False)
@@ -512,10 +498,8 @@ for asset in release_assets_pool:
     fn = asset["filename"]
     fn_norm = normalize_text(fn)
 
-    if "skin" in fn_norm and not is_system_image_file(fn) and fn_norm not in assigned_releases and fn_norm not in globally_seen_files:
-        assigned_releases.add(fn_norm)
-        globally_seen_files.add(fn_norm)
-        
+    if "skin" in fn_norm and fn.lower() not in assigned_releases:
+        assigned_releases.add(fn.lower())
         matched = None
         for norm_k in skin_folders.keys():
             if norm_k != "all" and norm_k in fn_norm:
@@ -527,17 +511,19 @@ for asset in release_assets_pool:
             if matched not in skin_folders:
                 skin_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
 
-        clean = clean_filename(fn)
-        disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
-        disp = skin_folders[matched]["display_name"]
-        final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin", is_skin=True, is_sys_img=False)
+        if fn.lower() not in skin_folders[matched]["seen"]:
+            skin_folders[matched]["seen"].add(fn.lower())
+            clean = clean_filename(fn)
+            disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
+            disp = skin_folders[matched]["display_name"]
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin", is_skin=True, is_sys_img=False)
 
-        skin_folders[matched]["items"].append({
-            "name": final_name,
-            "description": final_desc,
-            "file": asset["url"],
-            "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
-        })
+            skin_folders[matched]["items"].append({
+                "name": final_name,
+                "description": final_desc,
+                "file": asset["url"],
+                "image": image_url(disp_skin.split("_")[0]) or image_url("skins")
+            })
 
 for norm_k, f_data in sorted(skin_folders.items()):
     data["categories"]["skins"].append({
@@ -545,36 +531,30 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. الأقسام المباشرة مع منع التكرار والعزل الصارم
-def handle_category_clean(cat_key, matcher_func, default_desc):
+# 3. Flat categories (قراءة أي ملف بداخل المجلد وفروعه بدون أي شرط + الـ Releases كما هي)
+def handle_flat(cat_key, matcher_func, default_desc):
     items = []
-    seen_in_cat = set()
+    seen = set()
 
-    # أ. قراءة ملفات المجلدات الفعلية
+    # قراءة كل شيء داخل المجلد دون أي قيد أو شرط
     if os.path.isdir(cat_key):
         for root, dirs, files in os.walk(cat_key):
             for fn in sorted(files):
                 if fn.lower() in IGNORED_FILES or fn.startswith("."):
                     continue
-                norm_fn = normalize_text(fn)
-                if norm_fn in seen_in_cat:
-                    continue
-                seen_in_cat.add(norm_fn)
-                globally_seen_files.add(norm_fn)
-                
+                seen.add(fn.lower())
                 clean = clean_filename(fn)
                 disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
                 rel_path = os.path.relpath(os.path.join(root, fn), cat_key).replace("\\", "/")
-                
                 parts = rel_path.split("/")
                 quoted_rel_path = "/".join([quote(p) for p in parts])
                 f_url = f"{BASE_URL}/{cat_key}/{quoted_rel_path}"
                 body_desc = ""
                 for asset in release_assets_pool:
-                    if normalize_text(asset["filename"]) == norm_fn:
+                    if asset["filename"].lower() == fn.lower():
                         f_url = asset["url"]
                         body_desc = asset.get("body", "")
-                        assigned_releases.add(normalize_text(asset["filename"]))
+                        assigned_releases.add(asset["filename"].lower())
                         break
 
                 final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc, is_skin=False, is_sys_img=False)
@@ -586,23 +566,16 @@ def handle_category_clean(cat_key, matcher_func, default_desc):
                     "image": image_url(disp_name.split("_")[0]) or image_url(cat_key)
                 })
 
-    # ب. فرز ملفات الـ Releases بدون تكرار
+    # عمل الـ Releases الخاص بك كما هو بالضبط
     for asset in release_assets_pool:
         fn = asset["filename"]
         fn_norm = normalize_text(fn)
-        
-        # منع إضافة أي صورة نظام أو ملف تم استخدامه سابقاً
-        if fn_norm in assigned_releases or fn_norm in globally_seen_files or fn_norm in seen_in_cat:
-            continue
-            
-        if is_system_image_file(fn) and cat_key != "system_images":
+        if fn.lower() in seen or fn.lower() in assigned_releases:
             continue
 
-        if matcher_func(fn_norm, fn.lower()):
-            assigned_releases.add(fn_norm)
-            globally_seen_files.add(fn_norm)
-            seen_in_cat.add(fn_norm)
-            
+        if matcher_func(fn_norm):
+            assigned_releases.add(fn.lower())
+            seen.add(fn.lower())
             clean = clean_filename(fn)
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
             final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc, is_skin=False, is_sys_img=False)
@@ -617,16 +590,13 @@ def handle_category_clean(cat_key, matcher_func, default_desc):
     data["categories"][cat_key] = items
 
 
-# معالجة الأقسام بالترتيب الدقيق مع شروط واضحة
-handle_category_clean("novaler", lambda n, l: ("novaler" in n or "novacam" in n or "noflayer" in n) and "skin" not in n, "Novaler Package")
-handle_category_clean("picons", lambda n, l: ("picon" in n or "snp" in n or "srp" in n) and "skin" not in n, "Picons Package")
-handle_category_clean("channels", lambda n, l: any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav", "mnasr", "morph"]) or l.endswith(".tv"), "Channels Settings")
-handle_category_clean("tools", lambda n, l: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "script", "clean", "backup", "restart", "network"]), "Tool Package")
+handle_flat("novaler", lambda n: "novaler" in n or "noflayer" in n, "Novaler Package")
+handle_flat("picons", lambda n: "picon" in n or "snp" in n or "srp" in n, "Picons Package")
+handle_flat("channels", lambda n: any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav"]), "Channels Settings")
+handle_flat("tools", lambda n: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "tool", "script", "tweak"]), "Tool Package")
+handle_flat("plugins", lambda n: True, "Plugin Extension")
 
-# قسم البلجنات: يستقبل فقط البلجنات الحقيقية المتبقية (ويمنع دخول صور النظام أو السكينات أو التكرار)
-handle_category_clean("plugins", lambda n, l: not is_system_image_file(l) and "skin" not in n, "Plugin Extension")
-
-# حفظ وتثبيت index.json و metadata_store.json
+# حفظ وتثبيت الخزنة والـ index
 os.makedirs("feed", exist_ok=True)
 with open(INDEX_FILE, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
@@ -634,4 +604,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: 0 duplicates, System Images locked to their category & 100% clean isolation!")
+print("🎉 Successfully generated feed/index.json!")
