@@ -621,12 +621,6 @@
                         "image": ""
                     },
                     {
-                        "name": "r",
-                        "description": "سكين r عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/r",
-                        "image": ""
-                    },
-                    {
                         "name": "MX_Graphite",
                         "description": "بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk",
@@ -665,12 +659,6 @@
                         "name": "beta pro fhd v1.5 XtraEvent By Bahaa",
                         "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz",
-                        "image": ""
-                    },
-                    {
-                        "name": "index",
-                        "description": "سكين index عالي الدقة FHD بتصميم أنيق وخفيف",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/index.json",
                         "image": ""
                     }
                 ]
@@ -776,12 +764,6 @@
                         "name": "xDreamy 6.0.0",
                         "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenDroid/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk",
-                        "image": ""
-                    },
-                    {
-                        "name": "صورة VTI لجهاز Enigma2 Device",
-                        "description": "صورة نظام VTI الرسمية لجهاز Enigma2 Device",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenDroid/readme.txt",
                         "image": ""
                     }
                 ]
