@@ -482,6 +482,12 @@
                 "name": "Egami",
                 "items": [
                     {
+                        "name": "Skin LiiS8 FHD+ v1",
+                        "description": "سكين Skin LiiS8 FHD+ v1 عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/Skin%20LiiS8%20FHD%2B%20v1.0.ipk",
+                        "image": ""
+                    },
+                    {
                         "name": "luka",
                         "description": "بتصميم أنيق وخفيف",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk",
@@ -557,6 +563,12 @@
             {
                 "name": "OpenBlack",
                 "items": [
+                    {
+                        "name": "Skin LiiS8 FHD+ v1",
+                        "description": "سكين Skin LiiS8 FHD+ v1 عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenBlack/Skin%20LiiS8%20FHD%2B%20v1.0.ipk",
+                        "image": ""
+                    },
                     {
                         "name": "mx hq10 2 by mamba65 v2",
                         "description": "سكين mx-hq10-2-by-mamba65_v2_all عالي الدقة FHD بتصميم أنيق وخفيف",
