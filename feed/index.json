@@ -10,6 +10,12 @@
                 "image": ""
             },
             {
+                "name": "Alkuds ipaudio MAC Xtreme",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Alkuds%20ipaudio%20MAC%20Xtreme.sh",
+                "image": ""
+            },
+            {
                 "name": "Arabic Savior",
                 "description": "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
