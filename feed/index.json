@@ -724,7 +724,7 @@
             },
             {
                 "name": "OSCam 11964-VU",
-                "description": "Tool Package",
+                "description": "محاكي اوسكام",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/OSCam%2011964-VU",
                 "image": ""
             },
@@ -861,8 +861,8 @@
                 "image": ""
             },
             {
-                "name": "softcams-oscam-emu-ALL Images mips – arm – arm64_11964_all",
-                "description": "Tool Package",
+                "name": "softcams-oscam-emu-mips – arm_11964",
+                "description": "محاكي اوسكام لأجهزة الدريم بوكس",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/softcams-oscam-emu-ALL%20Images%20mips%20%E2%80%93%20arm%20%E2%80%93%20arm64_11964_all.deb",
                 "image": ""
             },
