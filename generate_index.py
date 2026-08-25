@@ -2,7 +2,7 @@ import os
 import json
 import re
 import urllib.request
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 GITHUB_USER = "wwwgoper77-wq"
 REPO_NAME = "MohamedStore"
@@ -27,6 +27,12 @@ INDEX_FILE = "feed/index.json"
 
 metadata_store = {}
 
+def get_file_basename(url_or_path):
+    if not url_or_path:
+        return ""
+    clean_path = unquote(str(url_or_path).split("?")[0]).replace("\\", "/")
+    return clean_path.split("/")[-1].strip()
+
 # 1. قراءة الخزنة الحالية
 if os.path.exists(META_STORE_FILE):
     try:
@@ -35,7 +41,7 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# 2. قراءة أحدث تعديل يدوي قمت بكتابته أنت وحفظه
+# 2. قراءة كل تعديلاتك اليدوية في index.json وحفظها في الخزنة
 if os.path.exists(INDEX_FILE):
     try:
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
@@ -44,7 +50,7 @@ if os.path.exists(INDEX_FILE):
         def sync_user_edits(item):
             if not isinstance(item, dict):
                 return
-            fn = item.get("file", "").split("?")[0].split("/")[-1].strip()
+            fn = get_file_basename(item.get("file", ""))
             c_name = item.get("name", "").strip()
             desc = item.get("description", "").strip()
             if fn:
@@ -162,14 +168,12 @@ DEVICE_MAP = [
     ("gbue4k", "GigaBlue UE 4K")
 ]
 
-# منع وتجاهل ملفات الـ README وملفات التوثيق والنظام نهائياً
 IGNORED_FILES = {
     ".ds_store", "thumbs.db", ".gitkeep", "readme.md", "readme", ".gitignore", "license",
     "readme.txt", "readme.mdl", "read me.md"
 }
 
 def is_valid_package_file(filename):
-    """التحقق الصارم من أن الملف ليس ملف توثيق أو ملف نصي"""
     if not filename:
         return False
     fn = filename.lower().strip()
@@ -249,24 +253,26 @@ def format_system_image(fn, brand_disp="Image"):
 
 
 def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder=""):
-    clean_k = fn.split("?")[0].split("/")[-1].strip()
+    clean_k = get_file_basename(fn)
 
+    # 1. التعديل اليدوي المحفوظ (أولوية مطلقة لأي قسم من الأقسام الـ 7 بالكامل)
     if clean_k in metadata_store:
         u_name = metadata_store[clean_k].get("name", "").strip()
         u_desc = metadata_store[clean_k].get("description", "").strip()
-        if u_name and u_name != fn and u_name != clean_name:
-            if is_skin and u_name.startswith("سكين "):
-                u_name = clean_skin_name(fn)
-            return u_name, (u_desc or default_desc)
+        if u_name or u_desc:
+            return (u_name if u_name else clean_name), (u_desc if u_desc else default_desc)
 
+    # 2. صور النظام
     if is_sys_img:
         return format_system_image(fn, disp_folder)
 
+    # 3. السكينات
     if is_skin:
         eng_skin_name = clean_skin_name(fn)
         skin_desc = f"سكين {eng_skin_name} عالي الدقة FHD بتصميم أنيق وخفيف"
         return eng_skin_name, skin_desc
 
+    # 4. التسميات التلقائية للأقسام الأخرى
     auto_name = clean_name
     auto_desc = default_desc
     fn_l = fn.lower()
@@ -560,7 +566,7 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. باقي الأقسام
+# 3. باقي الأقسام (Tools, Plugins, Channels, Picons, Novaler)
 def handle_flat(cat_key, matcher_func, default_desc):
     items = []
     seen = set()
@@ -637,4 +643,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Ignored all README and system files completely!")
+print("🎉 Successfully generated feed/index.json: 100% User edit persistence across all categories!")
