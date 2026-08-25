@@ -1246,5 +1246,17 @@
     "softcams-oscam-emu-ALL%20Images%20mips%20%E2%80%93%20arm%20%E2%80%93%20arm64_11964_all.deb": {
         "name": "softcams-oscam-emu-ALL Images mips – arm – arm64_11964_all",
         "description": "Tool Package"
+    },
+    "Skin SimpleGray.ipk": {
+        "name": "Skin SimpleGray",
+        "description": "سكين Skin SimpleGray عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "OSCam 11964-VU": {
+        "name": "OSCam 11964-VU",
+        "description": "Tool Package"
+    },
+    "softcams-oscam-emu-ALL Images mips – arm – arm64_11964_all.deb": {
+        "name": "softcams-oscam-emu-ALL Images mips – arm – arm64_11964_all",
+        "description": "Tool Package"
     }
 }
