@@ -417,7 +417,7 @@
     },
     "enigma2-plugin-softcams-ncam-mips_V10.0-r0_all.ipk": {
         "name": "enigma2-plugin-softcams-ncam-mips",
-        "description": "Tool Package"
+        "description": "محاكي اوسكام ايمو"
     },
     "enigma2-plugin-softcams-oscam-emu-levi45_11965-803_all.ipk": {
         "name": "Oscam Emu Levi45 v11965",
@@ -1238,5 +1238,13 @@
     "Skin%20SimpleGray.ipk": {
         "name": "Skin SimpleGray",
         "description": "سكين Skin SimpleGray عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "OSCam%2011964-VU": {
+        "name": "OSCam 11964-VU",
+        "description": "محاكي اوسكام ايمو"
+    },
+    "softcams-oscam-emu-ALL%20Images%20mips%20%E2%80%93%20arm%20%E2%80%93%20arm64_11964_all.deb": {
+        "name": "softcams-oscam-emu-ALL- mips – arm –11964",
+        "description": "محاكي اوسكام لأجهزة الدريم بوكس"
     }
 }
