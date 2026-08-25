@@ -76,6 +76,12 @@
                 "image": ""
             },
             {
+                "name": "NeoBoot",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.zip",
+                "image": ""
+            },
+            {
                 "name": "Raed Quick Signal",
                 "description": "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
