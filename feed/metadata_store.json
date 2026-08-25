@@ -1262,5 +1262,9 @@
     "egami-10.5-r1-vuultimo4k-20240125_usb.zip": {
         "name": "Egami 10.5 - VU+ Ultimo 4K",
         "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "Alkuds ipaudio MAC Xtreme.sh": {
+        "name": "Alkuds ipaudio MAC Xtreme",
+        "description": "تشغيل ملفات M3U وملفات اخرى"
     }
 }
