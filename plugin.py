@@ -128,7 +128,6 @@ def get_neoboot_images_upload_path():
     return "/media/hdd/ImagesUpload"
 
 def get_direct_hdd_root_path():
-    """Detect and return valid direct HDD/USB root directory for saving ZIP directly."""
     for drive in ["/media/hdd", "/media/usb", "/media/mmc", "/data"]:
         if os.path.exists(drive):
             return drive
@@ -333,48 +332,48 @@ class MohamedStore(Screen):
     <ePixmap position="0,0" size="1724,920" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/background.png" zPosition="-10" transparent="0" alphatest="off" />
 
     <!-- TOP HEADER PANEL WITH LIVE HARDWARE TELEMETRY -->
-    <eLabel position="20,15" size="1684,80" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="20,15" size="1684,84" backgroundColor="#0f111a" zPosition="-1" />
     <eLabel position="20,15" size="1684,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,15" size="4,80" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,15" size="4,80" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="20,95" size="1684,2" backgroundColor="#e11d48" />
+    <eLabel position="20,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="1700,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="20,99" size="1684,2" backgroundColor="#e11d48" />
     
     <!-- BRAND / LOGO AREA -->
     <ePixmap position="32,24" size="190,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" transparent="1" alphatest="blend" />
     <eLabel position="230,22" size="210,30" text="MOHAMED STORE" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="230,52" size="70,22" text=" v1.3.2 " font="Regular;16" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+    <eLabel position="230,54" size="75,24" text=" v1.3.2 " font="Regular;17" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
 
-    <!-- CHIP 1: DEVICE & IMAGE -->
-    <eLabel position="450,22" size="310,66" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="450,22" size="310,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="450,22" size="3,66" backgroundColor="#60a5fa" zPosition="2" />
-    <eLabel position="450,86" size="310,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_device" position="460,26" size="290,26" font="Regular;20" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_image" position="460,54" size="290,26" font="Regular;18" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <!-- CHIP 1: DEVICE & IMAGE (ENLARGED & PROMINENT) -->
+    <eLabel position="445,19" size="305,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="445,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="445,19" size="3,74" backgroundColor="#60a5fa" zPosition="2" />
+    <eLabel position="445,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_device" position="455,23" size="290,32" font="Regular;24" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_image" position="455,56" size="290,30" font="Regular;22" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
 
-    <!-- CHIP 2: CPU & TEMP -->
-    <eLabel position="770,22" size="280,66" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="770,22" size="280,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="770,22" size="3,66" backgroundColor="#f43f5e" zPosition="2" />
-    <eLabel position="770,86" size="280,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_cpu" position="780,26" size="260,26" font="Regular;20" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_temp" position="780,54" size="260,26" font="Regular;18" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <!-- CHIP 2: CPU & TEMP (ENLARGED & PROMINENT) -->
+    <eLabel position="760,19" size="300,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="760,19" size="300,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="760,19" size="3,74" backgroundColor="#f43f5e" zPosition="2" />
+    <eLabel position="760,91" size="300,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_cpu" position="770,23" size="285,32" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_temp" position="770,56" size="285,30" font="Regular;22" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
 
-    <!-- CHIP 3: RAM & FLASH -->
-    <eLabel position="1060,22" size="310,66" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="1060,22" size="310,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1060,22" size="3,66" backgroundColor="#34d399" zPosition="2" />
-    <eLabel position="1060,86" size="310,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_ram" position="1070,26" size="290,26" font="Regular;20" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_flash" position="1070,54" size="290,26" font="Regular;18" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <!-- CHIP 3: RAM & FLASH (ENLARGED & PROMINENT) -->
+    <eLabel position="1070,19" size="305,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="1070,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1070,19" size="3,74" backgroundColor="#34d399" zPosition="2" />
+    <eLabel position="1070,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_ram" position="1080,23" size="290,32" font="Regular;24" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_flash" position="1080,56" size="290,30" font="Regular;22" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
 
-    <!-- CHIP 4: IP & NETWORK -->
-    <eLabel position="1380,22" size="305,66" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="1380,22" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1380,22" size="3,66" backgroundColor="#38bdf8" zPosition="2" />
-    <eLabel position="1380,86" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_ip" position="1390,26" size="285,26" font="Regular;20" foregroundColor="#38bdf8" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_net" position="1390,54" size="285,26" font="Regular;18" foregroundColor="#818cf8" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <!-- CHIP 4: IP & NETWORK (ENLARGED & PROMINENT) -->
+    <eLabel position="1385,19" size="305,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="1385,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1385,19" size="3,74" backgroundColor="#38bdf8" zPosition="2" />
+    <eLabel position="1385,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_ip" position="1395,23" size="290,32" font="Regular;24" foregroundColor="#38bdf8" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_net" position="1395,56" size="290,30" font="Regular;22" foregroundColor="#818cf8" backgroundColor="#070913" transparent="1" zPosition="3" />
 
     <!-- LEFT PANEL: CATEGORIES -->
     <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
@@ -1272,7 +1271,6 @@ class MohamedStore(Screen):
                 dest_path = ""
                 cmd = ""
 
-                # 1. SPECIAL LOGIC FOR SYSTEM IMAGES ONLY (Download ZIP to NeoBoot folder, NO UNZIP!)
                 if is_system_image:
                     target_dir = get_neoboot_images_upload_path()
                     safe_filename = filename if filename.lower().endswith(".zip") else (filename + ".zip")
@@ -1281,7 +1279,6 @@ class MohamedStore(Screen):
                     self.download_is_system_image = True
                     self.download_is_picon = False
 
-                # 2. SPECIAL LOGIC FOR PICONS ONLY (Download full ZIP directly to HDD root, NO UNZIP, NO PICON FOLDER!)
                 elif is_picon:
                     target_dir = get_direct_hdd_root_path()
                     safe_filename = filename if filename.lower().endswith(".zip") else (filename + ".zip")
@@ -1290,7 +1287,6 @@ class MohamedStore(Screen):
                     self.download_is_system_image = False
                     self.download_is_picon = True
 
-                # 3. STANDARD UNTOUCHED LOGIC FOR ALL OTHER PACKAGES & ADDONS
                 else:
                     self.download_is_system_image = False
                     self.download_is_picon = False
@@ -1510,7 +1506,6 @@ class MohamedStore(Screen):
             if self.download_timer:
                 self.download_timer.stop()
             
-            # 1. Update Script Callback
             if self.download_is_update_script:
                 self.download_is_update_script = False
                 self["description"].setText("Executing Mohamed Store Update Script...\nPlease wait...")
@@ -1522,7 +1517,6 @@ class MohamedStore(Screen):
                     pass
                 self.my_console.ePopen(self.install_cmd + " 2>&1", self.update_finished)
 
-            # 2. System Image Callback (Saved directly to NeoBoot ImagesUpload folder, NO UNZIP!)
             elif self.download_is_system_image:
                 self.download_is_system_image = False
                 try:
@@ -1546,7 +1540,6 @@ class MohamedStore(Screen):
                 )
                 self.item_changed()
 
-            # 3. Picon Callback (Saved directly as ZIP on HDD root, NO UNZIP!)
             elif self.download_is_picon:
                 self.download_is_picon = False
                 try:
@@ -1570,7 +1563,6 @@ class MohamedStore(Screen):
                 )
                 self.item_changed()
 
-            # 4. Regular Addons / Plugins / Skins Callback
             else:
                 try:
                     self["progress"].hide()
