@@ -1230,5 +1230,9 @@
     "e2-morph883-13e-19.2e-160826_160826-r1_noarch.ipk": {
         "name": "Channels Hotbird 13e-19 (Morph883)",
         "description": "ملف قنوات ومفضلات مرتب وشامل من إعداد Morph883"
+    },
+    "NeoBoot.zip": {
+        "name": "NeoBoot 3.13.12",
+        "description": "تثبيت صور متعددة"
     }
 }
