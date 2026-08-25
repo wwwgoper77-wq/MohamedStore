@@ -1258,5 +1258,9 @@
     "softcams-oscam-emu-ALL Images mips – arm – arm64_11964_all.deb": {
         "name": "softcams-oscam-emu-mips – arm_11964",
         "description": "محاكي اوسكام لأجهزة الدريم بوكس"
+    },
+    "egami-10.5-r1-vuultimo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Ultimo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Ultimo 4K (USB)"
     }
 }

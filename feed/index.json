@@ -112,12 +112,6 @@
                 "image": ""
             },
             {
-                "name": "Zoom Screen",
-                "description": "تكبير وتعديل أبعاد الشاشة ومطابقة الفيديو للإطار",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Zoom.zip",
-                "image": ""
-            },
-            {
                 "name": "IPAudio Pro v1.7 (Py2.7)",
                 "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.7_armv7ahf-neon_py2.7_ff4.4.3.ipk",
