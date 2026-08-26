@@ -2510,5 +2510,13 @@
     "novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
         "name": "enigma2-plugin-softcams-supcam-ncam-nova",
         "description": "هو حزمة تثبيت مدمجة لإيمو"
+    },
+    "v1.0/egami-10.5-r1-vuduo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Duo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "egami-10.5-r1-vuduo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Duo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
     }
 }

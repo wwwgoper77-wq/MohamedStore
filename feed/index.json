@@ -896,6 +896,12 @@
                 "name": "Egami",
                 "items": [
                     {
+                        "name": "Egami 10.5 - VU+ Duo 4K",
+                        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.5-r1-vuduo4k-20240125_usb.zip",
+                        "image": ""
+                    },
+                    {
                         "name": "Egami 10.5 - VU+ Ultimo 4K",
                         "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Ultimo 4K (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-10.5-r1-vuultimo4k-20240125_usb.zip",
