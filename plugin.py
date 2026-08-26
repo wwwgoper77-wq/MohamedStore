@@ -164,22 +164,22 @@ def build_responsive_skin(scaler=None):
     # Right Panel: Information & Box
     info_x, info_w = sx(1204), sx(500)
     info_title_x, info_title_y, info_title_w, info_title_h = sx(1222), sy(126), sx(464), sy(35)
-    desc_x, desc_y, desc_w, desc_h = sx(1222), sy(178), sx(464), sy(338)
+    desc_x, desc_y, desc_w, desc_h = sx(1222), sy(174), sx(464), sy(376)
 
     # FB Box (Right-Aligned Flush to Edge)
-    fb_box_x, fb_box_y, fb_box_w, fb_box_h = sx(1220), sy(530), sx(468), sy(118)
-    avatar_x, avatar_y, avatar_w, avatar_h = sx(1230), sy(544), sx(80), sy(84)
-    qr_x, qr_y, qr_w, qr_h = sx(1318), sy(544), sx(84), sy(84)
-    fb_ttl_x, fb_ttl_y, fb_ttl_w, fb_ttl_h = sx(1410), sy(544), sx(268), sy(30)
-    fb_lbl_x, fb_lbl_y, fb_lbl_w, fb_lbl_h = sx(1410), sy(576), sx(268), sy(52)
+    fb_box_x, fb_box_y, fb_box_w, fb_box_h = sx(1220), sy(558), sx(468), sy(110)
+    avatar_x, avatar_y, avatar_w, avatar_h = sx(1230), sy(571), sx(78), sy(82)
+    qr_x, qr_y, qr_w, qr_h = sx(1316), sy(571), sx(82), sy(82)
+    fb_ttl_x, fb_ttl_y, fb_ttl_w, fb_ttl_h = sx(1408), sy(571), sx(270), sy(28)
+    fb_lbl_x, fb_lbl_y, fb_lbl_w, fb_lbl_h = sx(1408), sy(601), sx(270), sy(50)
 
     # Progress Box
-    prog_box_x, prog_box_y, prog_box_w, prog_box_h = sx(1220), sy(658), sx(468), sy(132)
-    pbar_x, pbar_y, pbar_w, pbar_h = sx(1238), sy(670), sx(432), sy(14)
-    pct_x, pct_y, pct_w, pct_h = sx(1238), sy(690), sx(120), sy(24)
-    spd_x, spd_y, spd_w, spd_h = sx(1378), sy(690), sx(292), sy(24)
-    sz_x, sz_y, sz_w, sz_h = sx(1238), sy(720), sx(432), sy(24)
-    st_x, st_y, st_w, st_h = sx(1238), sy(748), sx(432), sy(32)
+    prog_box_x, prog_box_y, prog_box_w, prog_box_h = sx(1220), sy(676), sx(468), sy(114)
+    pbar_x, pbar_y, pbar_w, pbar_h = sx(1236), sy(686), sx(436), sy(12)
+    pct_x, pct_y, pct_w, pct_h = sx(1236), sy(703), sx(120), sy(22)
+    spd_x, spd_y, spd_w, spd_h = sx(1366), sy(703), sx(306), sy(22)
+    sz_x, sz_y, sz_w, sz_h = sx(1236), sy(728), sx(436), sy(22)
+    st_x, st_y, st_w, st_h = sx(1236), sy(752), sx(436), sy(28)
 
     # Footer
     ftr_x, ftr_y, ftr_w, ftr_h = sx(20), sy(812), sx(1684), sy(93)
@@ -270,7 +270,7 @@ def build_responsive_skin(scaler=None):
     <eLabel position="{info_title_x},{info_sep_y}" size="{info_title_w},2" backgroundColor="#be185d" />
     
     <!-- Item Description -->
-    <widget name="description" position="{desc_x},{desc_y}" size="{desc_w},{desc_h}" font="Regular;{f_28}" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
+    <widget name="description" position="{desc_x},{desc_y}" size="{desc_w},{desc_h}" font="Regular;{f_24}" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
 
     <!-- FACEBOOK INFO BOX -->
     <eLabel position="{fb_box_x},{fb_box_y}" size="{fb_box_w},{fb_box_h}" backgroundColor="#05070c" zPosition="1" />
@@ -1298,7 +1298,7 @@ class MohamedStore(Screen):
             
             if item.get("type") == "tool":
                 self["key_green"].setText("Execute")
-                info_text = "Section: %s\n\nTool Name: %s\n\nDescription:\n%s" % (
+                info_text = "Section: %s\nTool Name: %s\n\nDescription:\n%s" % (
                     path_str,
                     str(item.get("name", "")),
                     str(item.get("description", "System tool execution."))
@@ -1306,33 +1306,33 @@ class MohamedStore(Screen):
             elif "items" in item and isinstance(item["items"], list):
                 self["key_green"].setText("Install")
                 sub_count = count_items_recursive(item["items"])
-                info_text = "Section: %s\n\nFolder: %s\nPackages inside: %d\n\nPress OK to view packages inside this folder." % (
+                info_text = "Section: %s\nFolder: %s (Packages: %d)\n\nPress OK to view packages inside this folder." % (
                     path_str,
                     str(item.get("name", "")),
                     sub_count
                 )
             elif is_sys_img:
                 self["key_green"].setText("Download")
-                info_text = "Section: %s (NeoBoot Safe)\n\nImage: %s\nVersion: %s\n\nDescription:\n%s\n\n* Will be downloaded as a ZIP file directly into NeoBoot ImagesUpload folder." % (
+                info_text = "Section: %s (NeoBoot Safe)\nImage: %s\nVersion: %s\n\nDescription:\n%s\n\n* Note: Downloaded directly as ZIP into NeoBoot ImagesUpload." % (
                     path_str,
                     str(item.get("name", "")),
-                    str(item.get("version", "")),
+                    str(item.get("version", "-")),
                     str(item.get("description", "Enigma2 System Image for NeoBoot."))
                 )
             elif is_picon:
                 self["key_green"].setText("Download")
-                info_text = "Section: %s (Direct HDD ZIP)\n\nName: %s\nVersion: %s\n\nDescription:\n%s\n\n* Will be downloaded as a direct ZIP file directly into HDD root (/media/hdd/)." % (
+                info_text = "Section: %s (Direct HDD ZIP)\nName: %s\nVersion: %s\n\nDescription:\n%s\n\n* Note: Downloaded directly into /media/hdd/." % (
                     path_str,
                     str(item.get("name", "")),
-                    str(item.get("version", "")),
+                    str(item.get("version", "-")),
                     str(item.get("description", "Channel Picons Package."))
                 )
             else:
                 self["key_green"].setText("Install")
-                info_text = "Section: %s\n\nName: %s\nVersion: %s\n\nDescription:\n%s" % (
+                info_text = "Section: %s\nName: %s\nVersion: %s\n\nDescription:\n%s" % (
                     path_str,
                     str(item.get("name", "")),
-                    str(item.get("version", "")),
+                    str(item.get("version", "-")),
                     str(item.get("description", "No description available."))
                 )
             self["description"].setText(info_text)
