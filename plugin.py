@@ -76,26 +76,311 @@ CACHE_FILE = os.path.join(PLUGIN_DIR, "store_cache.json")
 ICON_FOLDER = os.path.join(PLUGIN_DIR, "images", "Icons")
 FALLBACK_ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons"
 
-BUILTIN_SYSTEM_TOOLS = [
-    {
-        "name": u"\u0625\u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u062a",
-        "type": "tool",
-        "cmd": "opkg update && opkg install --force-reinstall python-requests curl ffmpeg python-json python-codecs openssl",
-        "description": u"\u062a\u062d\u062f\u062b \u062d\u0632\u0645 \u0627\u0644\u0646\u0638\u0627\u0645 \u0648\u0625\u0639\u0627\u062f\u0629 \u062a\u062b\u0628\u064a\u062a \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0627\u0644\u0646\u0627\u0642\u0635\u0629."
-    },
-    {
-        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
-        "type": "tool",
-        "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
-        "description": u"\u062d\u0632\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
-    },
-    {
-        "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
-        "type": "tool",
-        "cmd": "restart_gui",
-        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u0633\u062a\u0645."
-    }
-]
+# =========================================================================
+# DYNAMIC RESOLUTION DETECTOR & AUTO-SCALING ENGINE (HD 720p / FHD 1080p / 4K)
+# =========================================================================
+def get_desktop_resolution():
+    """Detect actual Enigma2 screen resolution dynamically."""
+    try:
+        if enigma and hasattr(enigma, 'getDesktop'):
+            d = enigma.getDesktop(0)
+            if d:
+                w = d.size().width()
+                h = d.size().height()
+                if w > 0 and h > 0:
+                    return w, h
+    except Exception as e:
+        pass
+    return 1920, 1080
+
+class ScreenScaler(object):
+    """Calculates responsive coordinates, dimensions, fonts, and widget sizes."""
+    def __init__(self, desk_w=None, desk_h=None):
+        if desk_w is None or desk_h is None:
+            desk_w, desk_h = get_desktop_resolution()
+        self.desk_w = desk_w
+        self.desk_h = desk_h
+
+        # Reference resolution: 1920x1080
+        self.rx = float(desk_w) / 1920.0
+        self.ry = float(desk_h) / 1080.0
+        self.rf = min(self.rx, self.ry)
+
+    def sx(self, val):
+        """Scale X axis coordinate/width."""
+        return int(round(val * self.rx))
+
+    def sy(self, val):
+        """Scale Y axis coordinate/height."""
+        return int(round(val * self.ry))
+
+    def sf(self, val, min_val=10):
+        """Scale font size proportionally with min clamp."""
+        return max(min_val, int(round(val * self.rf)))
+
+# Global default scaler
+_GLOBAL_SCALER = ScreenScaler()
+
+def build_responsive_skin(scaler=None):
+    """Dynamically generates the Enigma2 skin XML according to exact resolution."""
+    if scaler is None:
+        scaler = ScreenScaler()
+    sx = scaler.sx
+    sy = scaler.sy
+    sf = scaler.sf
+
+    # Screen dimensions
+    scr_w = sx(1724)
+    scr_h = sy(920)
+
+    # Header calculations
+    hdr_x, hdr_y, hdr_w, hdr_h = sx(20), sy(15), sx(1684), sy(84)
+    logo_x, logo_y, logo_w, logo_h = sx(32), sy(24), sx(190), sy(44)
+    title_x, title_y, title_w, title_h = sx(230), sy(22), sx(210), sy(30)
+    ver_x, ver_y, ver_w, ver_h = sx(230), sy(54), sx(75), sy(24)
+
+    # Header Chips
+    chip1_x, chip_y, chip_w, chip_h = sx(445), sy(19), sx(305), sy(74)
+    chip2_x = sx(760)
+    chip3_x = sx(1070)
+    chip4_x = sx(1385)
+
+    # Panel Y & H
+    body_y = sy(112)
+    body_h = sy(688)
+
+    # Left Panel: Categories
+    cat_x, cat_w = sx(20), sx(380)
+    cat_title_x, cat_title_y, cat_title_w, cat_title_h = sx(32), sy(126), sx(356), sy(35)
+    cat_list_x, cat_list_y, cat_list_w, cat_list_h = sx(25), sy(176), sx(370), sy(616)
+    cat_item_h = sy(80)
+
+    # Center Panel: Packages
+    pkg_x, pkg_w = sx(412), sx(780)
+    pkg_title_x, pkg_title_y, pkg_title_w, pkg_title_h = sx(428), sy(126), sx(748), sy(35)
+    pkg_list_x, pkg_list_y, pkg_list_w, pkg_list_h = sx(417), sy(176), sx(768), sy(616)
+    pkg_item_h = sy(76)
+
+    # Right Panel: Information & Box
+    info_x, info_w = sx(1204), sx(500)
+    info_title_x, info_title_y, info_title_w, info_title_h = sx(1222), sy(126), sx(464), sy(35)
+    desc_x, desc_y, desc_w, desc_h = sx(1222), sy(178), sx(464), sy(338)
+
+    # FB Box (Right-Aligned Flush to Edge)
+    fb_box_x, fb_box_y, fb_box_w, fb_box_h = sx(1220), sy(530), sx(468), sy(118)
+    avatar_x, avatar_y, avatar_w, avatar_h = sx(1230), sy(544), sx(80), sy(84)
+    qr_x, qr_y, qr_w, qr_h = sx(1318), sy(544), sx(84), sy(84)
+    fb_ttl_x, fb_ttl_y, fb_ttl_w, fb_ttl_h = sx(1410), sy(544), sx(268), sy(30)
+    fb_lbl_x, fb_lbl_y, fb_lbl_w, fb_lbl_h = sx(1410), sy(576), sx(268), sy(52)
+
+    # Progress Box
+    prog_box_x, prog_box_y, prog_box_w, prog_box_h = sx(1220), sy(658), sx(468), sy(132)
+    pbar_x, pbar_y, pbar_w, pbar_h = sx(1238), sy(670), sx(432), sy(14)
+    pct_x, pct_y, pct_w, pct_h = sx(1238), sy(690), sx(120), sy(24)
+    spd_x, spd_y, spd_w, spd_h = sx(1378), sy(690), sx(292), sy(24)
+    sz_x, sz_y, sz_w, sz_h = sx(1238), sy(720), sx(432), sy(24)
+    st_x, st_y, st_w, st_h = sx(1238), sy(748), sx(432), sy(32)
+
+    # Footer
+    ftr_x, ftr_y, ftr_w, ftr_h = sx(20), sy(812), sx(1684), sy(93)
+    btn_w, btn_h = sx(395), sy(68)
+    btn_y = sy(824)
+    btn1_x = sx(40)
+    btn2_x = sx(451)
+    btn3_x = sx(862)
+    btn4_x = sx(1273)
+    btn_text_offset_x = sx(18)
+    btn_text_w = sx(365)
+
+    skin_template = """
+<screen name="MohamedStore" position="center,center" size="{scr_w},{scr_h}" title="Mohamed Store" flags="wfNoBorder">
+    <!-- Background Base -->
+    <eLabel position="0,0" size="{scr_w},{scr_h}" backgroundColor="#05070c" zPosition="-11" />
+    <ePixmap position="0,0" size="{scr_w},{scr_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/background.png" zPosition="-10" transparent="0" alphatest="off" />
+
+    <!-- TOP HEADER PANEL WITH LIVE HARDWARE TELEMETRY -->
+    <eLabel position="{hdr_x},{hdr_y}" size="{hdr_w},{hdr_h}" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="{hdr_x},{hdr_y}" size="{hdr_w},2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="{hdr_x},{hdr_y}" size="4,{hdr_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{hdr_r},{hdr_y}" size="4,{hdr_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{hdr_x},{hdr_b}" size="{hdr_w},2" backgroundColor="#e11d48" />
+    
+    <!-- BRAND / LOGO AREA -->
+    <ePixmap position="{logo_x},{logo_y}" size="{logo_w},{logo_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" scale="1" transparent="1" alphatest="blend" />
+    <eLabel position="{title_x},{title_y}" size="{title_w},{title_h}" text="MOHAMED STORE" font="Regular;{f_24}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="{ver_x},{ver_y}" size="{ver_w},{ver_h}" text=" v1.3.2 " font="Regular;{f_17}" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+
+    <!-- CHIP 1: DEVICE & IMAGE -->
+    <eLabel position="{chip1_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="{chip1_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="{chip1_x},{chip_y}" size="3,{chip_h}" backgroundColor="#60a5fa" zPosition="2" />
+    <eLabel position="{chip1_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_device" position="{chip1_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_image" position="{chip1_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <!-- CHIP 2: CPU & TEMP -->
+    <eLabel position="{chip2_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="{chip2_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="{chip2_x},{chip_y}" size="3,{chip_h}" backgroundColor="#f43f5e" zPosition="2" />
+    <eLabel position="{chip2_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_cpu" position="{chip2_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_temp" position="{chip2_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <!-- CHIP 3: RAM & FLASH -->
+    <eLabel position="{chip3_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="{chip3_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="{chip3_x},{chip_y}" size="3,{chip_h}" backgroundColor="#34d399" zPosition="2" />
+    <eLabel position="{chip3_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_ram" position="{chip3_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_flash" position="{chip3_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <!-- CHIP 4: IP & NETWORK -->
+    <eLabel position="{chip4_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="{chip4_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="{chip4_x},{chip_y}" size="3,{chip_h}" backgroundColor="#38bdf8" zPosition="2" />
+    <eLabel position="{chip4_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_ip" position="{chip4_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#38bdf8" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_net" position="{chip4_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#818cf8" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <!-- LEFT PANEL: CATEGORIES -->
+    <eLabel position="{cat_x},{body_y}" size="{cat_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="{cat_x},{body_y}" size="{cat_w},2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="{cat_x},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{cat_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{cat_title_x},{cat_title_y}" size="{cat_title_w},{cat_title_h}" text="CATEGORIES" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="{cat_title_x},{cat_sep_y}" size="{cat_title_w},2" backgroundColor="#be185d" />
+    
+    <widget name="categories_list" position="{cat_list_x},{cat_list_y}" size="{cat_list_w},{cat_list_h}" itemHeight="{cat_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;{f_30}" />
+
+    <!-- CENTER PANEL: PACKAGES -->
+    <eLabel position="{pkg_x},{body_y}" size="{pkg_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="{pkg_x},{body_y}" size="{pkg_w},2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="{pkg_x},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{pkg_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{pkg_title_x},{pkg_title_y}" size="{pkg_title_w},{pkg_title_h}" text="AVAILABLE PACKAGES" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="{pkg_title_x},{pkg_sep_y}" size="{pkg_title_w},2" backgroundColor="#be185d" />
+    <widget name="items_list" position="{pkg_list_x},{pkg_list_y}" size="{pkg_list_w},{pkg_list_h}" itemHeight="{pkg_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;{f_32}" />
+
+    <!-- RIGHT PANEL: DETAILS & COMPACT PROGRESS / FACEBOOK -->
+    <eLabel position="{info_x},{body_y}" size="{info_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="{info_x},{body_y}" size="{info_w},2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="{info_x},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{info_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{info_title_x},{info_title_y}" size="{info_title_w},{info_title_h}" text="INFORMATION" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="{info_title_x},{info_sep_y}" size="{info_title_w},2" backgroundColor="#be185d" />
+    
+    <!-- Item Description -->
+    <widget name="description" position="{desc_x},{desc_y}" size="{desc_w},{desc_h}" font="Regular;{f_28}" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
+
+    <!-- FACEBOOK INFO BOX -->
+    <eLabel position="{fb_box_x},{fb_box_y}" size="{fb_box_w},{fb_box_h}" backgroundColor="#05070c" zPosition="1" />
+    <eLabel position="{fb_box_x},{fb_box_y}" size="{fb_box_w},2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="{fb_box_x},{fb_box_y}" size="2,{fb_box_h}" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="{fb_r},{fb_box_y}" size="2,{fb_box_h}" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="{fb_box_x},{fb_b}" size="{fb_box_w},2" backgroundColor="#be185d" zPosition="2" />
+    
+    <!-- Image 1: Avatar -->
+    <ePixmap position="{avatar_x},{avatar_y}" size="{avatar_w},{avatar_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
+    
+    <!-- Image 2: QR Barcode -->
+    <ePixmap position="{qr_x},{qr_y}" size="{qr_w},{qr_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/qrcode.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
+    
+    <!-- Facebook Title & Link (Right-Aligned Flush to Edge) -->
+    <widget name="facebook_title" position="{fb_ttl_x},{fb_ttl_y}" size="{fb_ttl_w},{fb_ttl_h}" font="Regular;{f_24}" foregroundColor="#60a5fa" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
+    <widget name="facebook_label" position="{fb_lbl_x},{fb_lbl_y}" size="{fb_lbl_w},{fb_lbl_h}" text="https://www.facebook.com/share/1G8inRhUib/" font="Regular;{f_18}" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
+
+    <!-- COMPACT DOWNLOAD / PROGRESS BOX -->
+    <eLabel position="{prog_box_x},{prog_box_y}" size="{prog_box_w},{prog_box_h}" backgroundColor="#05070c" zPosition="1" />
+    <eLabel position="{prog_box_x},{prog_box_y}" size="{prog_box_w},2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="{prog_box_x},{prog_box_y}" size="2,{prog_box_h}" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="{prog_r},{prog_box_y}" size="2,{prog_box_h}" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="{prog_box_x},{prog_b}" size="{prog_box_w},2" backgroundColor="#be185d" zPosition="2" />
+    
+    <widget name="progress" position="{pbar_x},{pbar_y}" size="{pbar_w},{pbar_h}" borderWidth="2" borderColor="#be185d" backgroundColor="#0f111a" zPosition="3" />
+    <widget name="percentage" position="{pct_x},{pct_y}" size="{pct_w},{pct_h}" font="Regular;{f_22}" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
+    <widget name="speed" position="{spd_x},{spd_y}" size="{spd_w},{spd_h}" font="Regular;{f_22}" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
+    <widget name="size" position="{sz_x},{sz_y}" size="{sz_w},{sz_h}" font="Regular;{f_20}" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
+    <widget name="status" position="{st_x},{st_y}" size="{st_w},{st_h}" font="Regular;{f_20}" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
+
+    <!-- FOOTER BAR -->
+    <eLabel position="{ftr_x},{ftr_y}" size="{ftr_w},{ftr_h}" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="{ftr_x},{ftr_y}" size="{ftr_w},2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="{ftr_x},{ftr_y}" size="4,{ftr_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{ftr_r},{ftr_y}" size="4,{ftr_h}" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="{ftr_x},{ftr_b}" size="{ftr_w},2" backgroundColor="#be185d" zPosition="1" />
+
+    <!-- Red Button: Exit -->
+    <eLabel position="{btn1_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
+    <eLabel position="{btn1_x},{btn_y}" size="6,{btn_h}" backgroundColor="#ef4444" zPosition="2" />
+    <widget name="key_red" position="{btn1_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+
+    <!-- Green Button: Install -->
+    <eLabel position="{btn2_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
+    <eLabel position="{btn2_x},{btn_y}" size="6,{btn_h}" backgroundColor="#22c55e" zPosition="2" />
+    <widget name="key_green" position="{btn2_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+
+    <!-- Yellow Button: Refresh Store -->
+    <eLabel position="{btn3_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
+    <eLabel position="{btn3_x},{btn_y}" size="6,{btn_h}" backgroundColor="#eab308" zPosition="2" />
+    <widget name="key_yellow" position="{btn3_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+
+    <!-- Blue Button: Update Script -->
+    <eLabel position="{btn4_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
+    <eLabel position="{btn4_x},{btn_y}" size="6,{btn_h}" backgroundColor="#2563eb" zPosition="2" />
+    <widget name="key_blue" position="{btn4_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#60a5fa" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
+</screen>
+""".format(
+        scr_w=scr_w, scr_h=scr_h,
+        hdr_x=hdr_x, hdr_y=hdr_y, hdr_w=hdr_w, hdr_h=hdr_h,
+        hdr_r=hdr_x + hdr_w - 4, hdr_b=hdr_y + hdr_h,
+        logo_x=logo_x, logo_y=logo_y, logo_w=logo_w, logo_h=logo_h,
+        title_x=title_x, title_y=title_y, title_w=title_w, title_h=title_h,
+        ver_x=ver_x, ver_y=ver_y, ver_w=ver_w, ver_h=ver_h,
+        chip1_x=chip1_x, chip2_x=chip2_x, chip3_x=chip3_x, chip4_x=chip4_x,
+        chip_y=chip_y, chip_w=chip_w, chip_h=chip_h, chip_b=chip_y + chip_h - 2,
+        chip1_tx=chip1_x + sx(10), chip2_tx=chip2_x + sx(10), chip3_tx=chip3_x + sx(10), chip4_tx=chip4_x + sx(10),
+        chip_t1_y=chip_y + sy(4), chip_t2_y=chip_y + sy(37),
+        chip_tw=chip_w - sx(15), chip_th1=sy(32), chip_th2=sy(30),
+        cat_x=cat_x, cat_w=cat_w, cat_r=cat_x + cat_w - 4,
+        body_y=body_y, body_h=body_h,
+        cat_title_x=cat_title_x, cat_title_y=cat_title_y, cat_title_w=cat_title_w, cat_title_h=cat_title_h,
+        cat_sep_y=cat_title_y + cat_title_h + sy(5),
+        cat_list_x=cat_list_x, cat_list_y=cat_list_y, cat_list_w=cat_list_w, cat_list_h=cat_list_h,
+        cat_item_h=cat_item_h,
+        pkg_x=pkg_x, pkg_w=pkg_w, pkg_r=pkg_x + pkg_w - 4,
+        pkg_title_x=pkg_title_x, pkg_title_y=pkg_title_y, pkg_title_w=pkg_title_w, pkg_title_h=pkg_title_h,
+        pkg_sep_y=pkg_title_y + pkg_title_h + sy(5),
+        pkg_list_x=pkg_list_x, pkg_list_y=pkg_list_y, pkg_list_w=pkg_list_w, pkg_list_h=pkg_list_h,
+        pkg_item_h=pkg_item_h,
+        info_x=info_x, info_w=info_w, info_r=info_x + info_w - 4,
+        info_title_x=info_title_x, info_title_y=info_title_y, info_title_w=info_title_w, info_title_h=info_title_h,
+        info_sep_y=info_title_y + info_title_h + sy(5),
+        desc_x=desc_x, desc_y=desc_y, desc_w=desc_w, desc_h=desc_h,
+        fb_box_x=fb_box_x, fb_box_y=fb_box_y, fb_box_w=fb_box_w, fb_box_h=fb_box_h,
+        fb_r=fb_box_x + fb_box_w - 2, fb_b=fb_box_y + fb_box_h - 2,
+        avatar_x=avatar_x, avatar_y=avatar_y, avatar_w=avatar_w, avatar_h=avatar_h,
+        qr_x=qr_x, qr_y=qr_y, qr_w=qr_w, qr_h=qr_h,
+        fb_ttl_x=fb_ttl_x, fb_ttl_y=fb_ttl_y, fb_ttl_w=fb_ttl_w, fb_ttl_h=fb_ttl_h,
+        fb_lbl_x=fb_lbl_x, fb_lbl_y=fb_lbl_y, fb_lbl_w=fb_lbl_w, fb_lbl_h=fb_lbl_h,
+        prog_box_x=prog_box_x, prog_box_y=prog_box_y, prog_box_w=prog_box_w, prog_box_h=prog_box_h,
+        prog_r=prog_box_x + prog_box_w - 2, prog_b=prog_box_y + prog_box_h - 2,
+        pbar_x=pbar_x, pbar_y=pbar_y, pbar_w=pbar_w, pbar_h=pbar_h,
+        pct_x=pct_x, pct_y=pct_y, pct_w=pct_w, pct_h=pct_h,
+        spd_x=spd_x, spd_y=spd_y, spd_w=spd_w, spd_h=spd_h,
+        sz_x=sz_x, sz_y=sz_y, sz_w=sz_w, sz_h=sz_h,
+        st_x=st_x, st_y=st_y, st_w=st_w, st_h=st_h,
+        ftr_x=ftr_x, ftr_y=ftr_y, ftr_w=ftr_w, ftr_h=ftr_h,
+        ftr_r=ftr_x + ftr_w - 4, ftr_b=ftr_y + ftr_h - 2,
+        btn1_x=btn1_x, btn2_x=btn2_x, btn3_x=btn3_x, btn4_x=btn4_x,
+        btn_y=btn_y, btn_w=btn_w, btn_h=btn_h,
+        btn1_tx=btn1_x + btn_text_offset_x, btn2_tx=btn2_x + btn_text_offset_x,
+        btn3_tx=btn3_x + btn_text_offset_x, btn4_tx=btn4_x + btn_text_offset_x,
+        btn_text_w=btn_text_w,
+        f_17=sf(17), f_18=sf(18), f_20=sf(20), f_22=sf(22),
+        f_24=sf(24), f_28=sf(28), f_30=sf(30), f_32=sf(32)
+    )
+    return skin_template
+
 
 def get_neoboot_images_upload_path():
     candidates = [
@@ -323,151 +608,43 @@ def load_json_network(url):
         print("[MohamedStore] network error: " + str(e))
         return None
 
+BUILTIN_SYSTEM_TOOLS = [
+    {
+        "name": u"\u0625\u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u062a",
+        "type": "tool",
+        "cmd": "opkg update && opkg install --force-reinstall python-requests curl ffmpeg python-json python-codecs openssl",
+        "description": u"\u062a\u062d\u062f\u062b \u062d\u0632\u0645 \u0627\u0644\u0646\u0638\u0627\u0645 \u0648\u0625\u0639\u0627\u062f\u0629 \u062a\u062b\u0628\u064a\u062a \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0627\u0644\u0646\u0627\u0642\u0635\u0629."
+    },
+    {
+        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
+        "type": "tool",
+        "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
+        "description": u"\u062d\u0632\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
+    },
+    {
+        "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
+        "type": "tool",
+        "cmd": "restart_gui",
+        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u0633\u062a\u0645."
+    }
+]
+
 
 class MohamedStore(Screen):
-    skin = """
-<screen name="MohamedStore" position="center,center" size="1724,920" title="Mohamed Store" flags="wfNoBorder">
-    <!-- Background Base -->
-    <eLabel position="0,0" size="1724,920" backgroundColor="#05070c" zPosition="-11" />
-    <ePixmap position="0,0" size="1724,920" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/background.png" zPosition="-10" transparent="0" alphatest="off" />
-
-    <!-- TOP HEADER PANEL WITH LIVE HARDWARE TELEMETRY -->
-    <eLabel position="20,15" size="1684,84" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="20,15" size="1684,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="20,99" size="1684,2" backgroundColor="#e11d48" />
-    
-    <!-- BRAND / LOGO AREA -->
-    <ePixmap position="32,24" size="190,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" transparent="1" alphatest="blend" />
-    <eLabel position="230,22" size="210,30" text="MOHAMED STORE" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="230,54" size="75,24" text=" v1.3.2 " font="Regular;17" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
-
-    <!-- CHIP 1: DEVICE & IMAGE (ENLARGED & PROMINENT) -->
-    <eLabel position="445,19" size="305,74" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="445,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="445,19" size="3,74" backgroundColor="#60a5fa" zPosition="2" />
-    <eLabel position="445,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_device" position="455,23" size="290,32" font="Regular;24" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_image" position="455,56" size="290,30" font="Regular;22" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
-
-    <!-- CHIP 2: CPU & TEMP (ENLARGED & PROMINENT) -->
-    <eLabel position="760,19" size="300,74" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="760,19" size="300,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="760,19" size="3,74" backgroundColor="#f43f5e" zPosition="2" />
-    <eLabel position="760,91" size="300,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_cpu" position="770,23" size="285,32" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_temp" position="770,56" size="285,30" font="Regular;22" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
-
-    <!-- CHIP 3: RAM & FLASH (ENLARGED & PROMINENT) -->
-    <eLabel position="1070,19" size="305,74" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="1070,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1070,19" size="3,74" backgroundColor="#34d399" zPosition="2" />
-    <eLabel position="1070,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_ram" position="1080,23" size="290,32" font="Regular;24" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_flash" position="1080,56" size="290,30" font="Regular;22" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
-
-    <!-- CHIP 4: IP & NETWORK (ENLARGED & PROMINENT) -->
-    <eLabel position="1385,19" size="305,74" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="1385,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1385,19" size="3,74" backgroundColor="#38bdf8" zPosition="2" />
-    <eLabel position="1385,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_ip" position="1395,23" size="290,32" font="Regular;24" foregroundColor="#38bdf8" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_net" position="1395,56" size="290,30" font="Regular;22" foregroundColor="#818cf8" backgroundColor="#070913" transparent="1" zPosition="3" />
-
-    <!-- LEFT PANEL: CATEGORIES -->
-    <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="20,112" size="380,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="396,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="32,166" size="356,2" backgroundColor="#be185d" />
-    
-    <widget name="categories_list" position="25,176" size="370,616" itemHeight="80" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;30" />
-
-    <!-- CENTER PANEL: PACKAGES -->
-    <eLabel position="412,112" size="780,688" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="412,112" size="780,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="412,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1188,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="428,126" size="748,35" text="AVAILABLE PACKAGES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="428,166" size="748,2" backgroundColor="#be185d" />
-    <widget name="items_list" position="417,176" size="768,616" itemHeight="76" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;32" />
-
-    <!-- RIGHT PANEL: DETAILS & COMPACT PROGRESS / FACEBOOK -->
-    <eLabel position="1204,112" size="500,688" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="1204,112" size="500,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="1204,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="1222,166" size="464,2" backgroundColor="#be185d" />
-    
-    <!-- Item Description -->
-    <widget name="description" position="1222,178" size="464,338" font="Regular;28" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
-
-    <!-- FACEBOOK INFO BOX -->
-    <eLabel position="1220,530" size="468,118" backgroundColor="#05070c" zPosition="1" />
-    <eLabel position="1220,530" size="468,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1220,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="1686,530" size="2,118" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="1220,646" size="468,2" backgroundColor="#be185d" zPosition="2" />
-    
-    <!-- Image 1: Avatar -->
-    <ePixmap position="1230,544" size="88,88" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" transparent="1" alphatest="blend" />
-    
-    <!-- Image 2: QR Barcode -->
-    <ePixmap position="1326,544" size="88,88" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/qrcode.png" zPosition="3" transparent="1" alphatest="blend" />
-    
-    <!-- Facebook Title & Link -->
-    <ePixmap position="1424,548" size="24,24" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/facebook.png" zPosition="3" transparent="1" alphatest="blend" />
-    <widget name="facebook_title" position="1454,546" size="224,26" font="Regular;22" foregroundColor="#60a5fa" backgroundColor="#05070c" transparent="1" zPosition="3" />
-    <widget name="facebook_label" position="1424,578" size="254,50" text="https://www.facebook.com/share/1G8inRhUib/" font="Regular;18" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" />
-
-    <!-- COMPACT DOWNLOAD / PROGRESS BOX -->
-    <eLabel position="1220,658" size="468,132" backgroundColor="#05070c" zPosition="1" />
-    <eLabel position="1220,658" size="468,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="1220,658" size="2,132" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="1686,658" size="2,132" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="1220,788" size="468,2" backgroundColor="#be185d" zPosition="2" />
-    
-    <widget name="progress" position="1238,670" size="432,14" borderWidth="2" borderColor="#be185d" backgroundColor="#0f111a" zPosition="3" />
-    <widget name="percentage" position="1238,690" size="120,24" font="Regular;22" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
-    <widget name="speed" position="1378,690" size="292,24" font="Regular;22" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
-    <widget name="size" position="1238,720" size="432,24" font="Regular;20" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
-    <widget name="status" position="1238,748" size="432,32" font="Regular;20" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
-
-    <!-- FOOTER BAR -->
-    <eLabel position="20,812" size="1684,93" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="20,812" size="1684,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="20,903" size="1684,2" backgroundColor="#be185d" zPosition="1" />
-
-    <!-- Red Button: Exit -->
-    <eLabel position="40,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="40,824" size="6,68" backgroundColor="#ef4444" zPosition="2" />
-    <widget name="key_red" position="58,824" size="365,68" font="Regular;32" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-
-    <!-- Green Button: Install -->
-    <eLabel position="451,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="451,824" size="6,68" backgroundColor="#22c55e" zPosition="2" />
-    <widget name="key_green" position="469,824" size="365,68" font="Regular;32" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-
-    <!-- Yellow Button: Refresh Store -->
-    <eLabel position="862,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="862,824" size="6,68" backgroundColor="#eab308" zPosition="2" />
-    <widget name="key_yellow" position="880,824" size="365,68" font="Regular;32" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-
-    <!-- Blue Button: Update Script -->
-    <eLabel position="1273,824" size="395,68" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="1273,824" size="6,68" backgroundColor="#2563eb" zPosition="2" />
-    <widget name="key_blue" position="1291,824" size="365,68" font="Regular;32" foregroundColor="#60a5fa" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-</screen>
-"""
+    # Static skin fallback (auto-generated)
+    skin = build_responsive_skin(_GLOBAL_SCALER)
 
     def __init__(self, session):
+        # Auto-detect screen resolution & instantiate dynamic scaler
+        self.scaler = ScreenScaler()
+        self.skin = build_responsive_skin(self.scaler)
+        
         Screen.__init__(self, session)
         
+        sx = self.scaler.sx
+        sy = self.scaler.sy
+        sf = self.scaler.sf
+
         self.categories_list_has_multicontent = False
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
@@ -479,8 +656,8 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["categories_list"].l.setFont(0, gFont("Regular", 30))
-                        self["categories_list"].l.setFont(1, gFont("Regular", 22))
+                        self["categories_list"].l.setFont(0, gFont("Regular", sf(30)))
+                        self["categories_list"].l.setFont(1, gFont("Regular", sf(22)))
                     except Exception as fe:
                         print("[MohamedStore] Failed to set font for categories_list: " + str(fe))
                 self["categories_list"].l.setBuildFunc(self.build_category_entry)
@@ -502,7 +679,7 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["items_list"].l.setFont(0, gFont("Regular", 32))
+                        self["items_list"].l.setFont(0, gFont("Regular", sf(32)))
                     except Exception as fe:
                         print("[MohamedStore] Failed to set font for items_list: " + str(fe))
                 self["items_list"].l.setBuildFunc(self.build_item_entry)
@@ -811,6 +988,10 @@ class MohamedStore(Screen):
         return info
 
     def build_category_entry(self, *args):
+        scaler = getattr(self, 'scaler', _GLOBAL_SCALER)
+        sx = scaler.sx
+        sy = scaler.sy
+
         count = 0
         if len(args) == 1 and isinstance(args[0], tuple):
             if len(args[0]) >= 3:
@@ -839,25 +1020,36 @@ class MohamedStore(Screen):
 
         res = [category_id]
         
+        # Responsive dimensions for category entry
+        icon_pos_x, icon_pos_y = sx(12), sy(12)
+        icon_size_w, icon_size_h = sx(56), sy(56)
+        entry_h = sy(80)
+        
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
-            res.append(MultiContentEntryPixmapAlphaTest(pos=(12, 12), size=(56, 56), png=pixmap))
-            text_x = 76
-            text_w = 210
+            res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_size_w, icon_size_h), png=pixmap))
+            text_x = sx(76)
+            text_w = sx(210)
         else:
-            text_x = 15
-            text_w = 270
+            text_x = sx(15)
+            text_w = sx(270)
 
         if HAS_MULTICONTENT and MultiContentEntryText:
             align_left = RT_HALIGN_LEFT | RT_VALIGN_CENTER
             align_right = RT_HALIGN_RIGHT | RT_VALIGN_CENTER
             
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 80), font=0, flags=align_left, text=str(display_name)))
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, entry_h), font=0, flags=align_left, text=str(display_name)))
             count_str = "[%d]" % int(count) if count is not None else "[0]"
-            res.append(MultiContentEntryText(pos=(286, 0), size=(74, 80), font=0, flags=align_right, text=count_str))
+            count_x = sx(286)
+            count_w = sx(74)
+            res.append(MultiContentEntryText(pos=(count_x, 0), size=(count_w, entry_h), font=0, flags=align_right, text=count_str))
             
         return res
 
     def build_item_entry(self, *args):
+        scaler = getattr(self, 'scaler', _GLOBAL_SCALER)
+        sx = scaler.sx
+        sy = scaler.sy
+
         if len(args) == 1 and isinstance(args[0], tuple):
             item, display_text, category_id = args[0]
         elif len(args) >= 3:
@@ -881,17 +1073,22 @@ class MohamedStore(Screen):
 
         res = [item]
         
+        # Responsive dimensions for items entry
+        icon_pos_x, icon_pos_y = sx(10), sy(10)
+        icon_size_w, icon_size_h = sx(56), sy(56)
+        entry_h = sy(76)
+
         if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
-            res.append(MultiContentEntryPixmapAlphaTest(pos=(10, 10), size=(56, 56), png=pixmap))
-            text_x = 78
-            text_w = 670
+            res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_size_w, icon_size_h), png=pixmap))
+            text_x = sx(78)
+            text_w = sx(670)
         else:
-            text_x = 15
-            text_w = 740
+            text_x = sx(15)
+            text_w = sx(740)
 
         if HAS_MULTICONTENT and MultiContentEntryText:
             align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, 76), font=0, flags=align, text=display_text))
+            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, entry_h), font=0, flags=align, text=display_text))
             
         return res
 
