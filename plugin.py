@@ -250,7 +250,7 @@ def build_responsive_skin(scaler=None):
     <eLabel position="{cat_title_x},{cat_title_y}" size="{cat_title_w},{cat_title_h}" text="CATEGORIES" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="{cat_title_x},{cat_sep_y}" size="{cat_title_w},2" backgroundColor="#be185d" />
     
-    <widget name="categories_list" position="{cat_list_x},{cat_list_y}" size="{cat_list_w},{cat_list_h}" itemHeight="{cat_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;{f_30}" />
+    <widget name="categories_list" position="{cat_list_x},{cat_list_y}" size="{cat_list_w},{cat_list_h}" itemHeight="{cat_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
 
     <!-- CENTER PANEL: PACKAGES -->
     <eLabel position="{pkg_x},{body_y}" size="{pkg_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
@@ -259,7 +259,7 @@ def build_responsive_skin(scaler=None):
     <eLabel position="{pkg_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
     <eLabel position="{pkg_title_x},{pkg_title_y}" size="{pkg_title_w},{pkg_title_h}" text="AVAILABLE PACKAGES" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="{pkg_title_x},{pkg_sep_y}" size="{pkg_title_w},2" backgroundColor="#be185d" />
-    <widget name="items_list" position="{pkg_list_x},{pkg_list_y}" size="{pkg_list_w},{pkg_list_h}" itemHeight="{pkg_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" selectionColor="#be185d" selectionFontColor="#ffffff" font="Regular;{f_32}" />
+    <widget name="items_list" position="{pkg_list_x},{pkg_list_y}" size="{pkg_list_w},{pkg_list_h}" itemHeight="{pkg_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
 
     <!-- RIGHT PANEL: DETAILS & COMPACT PROGRESS / FACEBOOK -->
     <eLabel position="{info_x},{body_y}" size="{info_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
