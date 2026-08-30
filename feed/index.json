@@ -889,6 +889,12 @@
                 "description": "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_packages.sh",
                 "image": ""
+            },
+            {
+                "name": "read",
+                "description": "Tool Package",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/read.me",
+                "image": ""
             }
         ],
         "system_images": [
