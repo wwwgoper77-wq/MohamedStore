@@ -594,7 +594,86 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. باقي الأقسام (Tools, Plugins, Channels, Picons, Novaler)
+# 3. Tools (دعم الحافظات مثل audio و portals وحفظ الملفات داخلها)
+tool_folders = {}
+tool_direct_items = []
+if os.path.isdir("tools"):
+    for entry in sorted(os.listdir("tools")):
+        fpath = os.path.join("tools", entry)
+        if os.path.isdir(fpath):
+            norm = normalize_text(entry)
+            disp = "Audio" if norm == "audio" else ("Portals" if norm in ["portals", "portal"] else entry)
+            tool_folders[norm] = {"display_name": disp, "items": [], "seen": set()}
+
+            for fn in sorted(os.listdir(fpath)):
+                if not is_valid_package_file(fn):
+                    continue
+                norm_fn = normalize_text(fn)
+                tool_folders[norm]["seen"].add(norm_fn)
+                globally_seen.add(norm_fn)
+
+                clean = clean_filename(fn)
+                disp_tool = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
+                f_url = f"{BASE_URL}/tools/{quote(entry)}/{quote(fn)}"
+                rel_key = f"tools/{entry}/{fn}"
+                
+                body_desc = ""
+                for asset in release_assets_pool:
+                    if normalize_text(asset["filename"]) == norm_fn:
+                        f_url = asset["url"]
+                        body_desc = asset.get("body", "")
+                        assigned_releases.add(norm_fn)
+                        break
+
+                final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Tool", is_skin=False, is_sys_img=False, specific_rel_key=rel_key)
+
+                tool_folders[norm]["items"].append({
+                    "name": final_name,
+                    "description": final_desc,
+                    "file": f_url,
+                    "image": image_url(disp_tool.split("_")[0]) or image_url(norm) or image_url("tools")
+                })
+        elif os.path.isfile(fpath):
+            fn = entry
+            if not is_valid_package_file(fn):
+                continue
+            norm_fn = normalize_text(fn)
+            globally_seen.add(norm_fn)
+            clean = clean_filename(fn)
+            disp_tool = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
+            f_url = f"{BASE_URL}/tools/{quote(fn)}"
+            rel_key = f"tools/{fn}"
+            
+            body_desc = ""
+            for asset in release_assets_pool:
+                if normalize_text(asset["filename"]) == norm_fn:
+                    f_url = asset["url"]
+                    body_desc = asset.get("body", "")
+                    assigned_releases.add(norm_fn)
+                    break
+
+            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, "Tool Package", is_skin=False, is_sys_img=False, specific_rel_key=rel_key)
+
+            tool_direct_items.append({
+                "name": final_name,
+                "description": final_desc,
+                "file": f_url,
+                "image": image_url(disp_tool.split("_")[0]) or image_url("tools")
+            })
+
+tools_list = []
+for norm_k, f_data in sorted(tool_folders.items()):
+    if f_data["items"]:
+        tools_list.append({
+            "name": f_data["display_name"],
+            "items": f_data["items"]
+        })
+for item in tool_direct_items:
+    tools_list.append(item)
+
+data["categories"]["tools"] = tools_list
+
+# 4. باقي الأقسام (Plugins, Channels, Picons, Novaler)
 def handle_flat(cat_key, matcher_func, default_desc):
     items = []
     seen = set()
@@ -662,7 +741,6 @@ def handle_flat(cat_key, matcher_func, default_desc):
 handle_flat("novaler", lambda n, l: ("novaler" in n or "novacam" in n or "noflayer" in n) and "skin" not in n, "Novaler Package")
 handle_flat("picons", lambda n, l: ("picon" in n or "snp" in n or "srp" in n) and "skin" not in n, "Picons Package")
 handle_flat("channels", lambda n, l: (any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav", "mnasr", "morph"]) or l.endswith(".tv")) and "plugin" not in n, "Channels Settings")
-handle_flat("tools", lambda n, l: any(k in n for k in ["ncam", "oscam", "softcam", "emu", "script", "clean", "backup", "restart", "network"]), "Tool Package")
 handle_flat("plugins", lambda n, l: ("plugin" in n or "extension" in n) and "skin" not in n, "Plugin Extension")
 
 # تحديث وتثبيت الخزنة بدقة كاملة لكل حافظة وملف
