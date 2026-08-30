@@ -735,6 +735,28 @@
         ],
         "tools": [
             {
+                "name": "Audio",
+                "items": [
+                    {
+                        "name": "read",
+                        "description": "Tool Package",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/audio/read.me",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "name": "Portals",
+                "items": [
+                    {
+                        "name": "read",
+                        "description": "Tool Package",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/read.me",
+                        "image": ""
+                    }
+                ]
+            },
+            {
                 "name": "تثبيت محاكي Ncam v15.8",
                 "description": "سكربت تثبيت وتحديث أحدث إصدار من محاكي الشفرات Ncam",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/Ncam%20v15.8.sh",
@@ -888,12 +910,6 @@
                 "name": "تحديث حزم وفيدات الصورة",
                 "description": "سكربت تحديث مستودعات وفيد الصورة وإصلاح الحزم المفقودة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/update_packages.sh",
-                "image": ""
-            },
-            {
-                "name": "read",
-                "description": "Tool Package",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/read.me",
                 "image": ""
             }
         ],

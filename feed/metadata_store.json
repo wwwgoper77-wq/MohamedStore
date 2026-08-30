@@ -2526,5 +2526,9 @@
     "read.me": {
         "name": "read",
         "description": "Tool Package"
+    },
+    "audio/read.me": {
+        "name": "read",
+        "description": "Tool Package"
     }
 }
