@@ -2518,5 +2518,13 @@
     "egami-10.5-r1-vuduo4k-20240125_usb.zip": {
         "name": "Egami 10.5 - VU+ Duo 4K",
         "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "portals/read.me": {
+        "name": "read",
+        "description": "Tool Package"
+    },
+    "read.me": {
+        "name": "read",
+        "description": "Tool Package"
     }
 }
