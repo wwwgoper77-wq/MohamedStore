@@ -35,8 +35,10 @@ def get_rel_key(url_or_path):
     if BASE_URL in clean:
         clean = clean.replace(BASE_URL, "").lstrip("/")
     parts = [p for p in clean.split("/") if p]
-    if len(parts) >= 2:
-        return "/".join(parts[-2:]) # مثل: egami/skin.ipk أو skins/egami/skin.ipk
+    if len(parts) >= 3:
+        return "/".join(parts[-3:]) # مثل: tools/portals/server.sh
+    elif len(parts) == 2:
+        return "/".join(parts[-2:]) # مثل: portals/server.sh
     elif len(parts) == 1:
         return parts[0]
     return ""
@@ -77,7 +79,11 @@ if os.path.exists(INDEX_FILE):
             if entry:
                 if rel_k:
                     metadata_store[rel_k] = entry
-                if fn and fn not in metadata_store:
+                    # حفظ المفاتيح البديلة لقسم البورتال لمنع أي فقدان
+                    parts = rel_k.split("/")
+                    if len(parts) >= 2:
+                        metadata_store["/".join(parts[-2:])] = entry
+                if fn:
                     metadata_store[fn] = entry
 
         for cat, items in old_index.get("categories", {}).items():
@@ -278,8 +284,16 @@ def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is
     saved = None
     if specific_rel_key and specific_rel_key in metadata_store:
         saved = metadata_store[specific_rel_key]
-    elif clean_k in metadata_store:
-        saved = metadata_store[clean_k]
+    else:
+        # فحص المسار الجزئي (مثل: portals/server.sh)
+        if specific_rel_key:
+            parts = specific_rel_key.split("/")
+            if len(parts) >= 2:
+                sub_k = "/".join(parts[-2:])
+                if sub_k in metadata_store:
+                    saved = metadata_store[sub_k]
+        if not saved and clean_k in metadata_store:
+            saved = metadata_store[clean_k]
 
     if saved and isinstance(saved, dict):
         u_name = saved.get("name", "").strip()
@@ -517,7 +531,7 @@ for norm_k, f_data in sorted(sys_folders.items()):
         "items": f_data["items"]
     })
 
-# 2. Skins (حفظ مستقل 100% لكل حافظة حتى لو تشابهت أسماء الملفات)
+# 2. Skins
 skin_folders = {}
 if os.path.isdir("skins"):
     for folder in sorted(os.listdir("skins")):
@@ -594,7 +608,7 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. Tools (دعم الحافظات مثل audio و portals وحفظ الملفات داخلها)
+# 3. Tools (دعم الحافظات مثل audio و portals وحفظ الملفات داخلها بشكل دائم)
 tool_folders = {}
 tool_direct_items = []
 if os.path.isdir("tools"):
@@ -758,6 +772,12 @@ for cat, items in data["categories"].items():
                             "name": it.get("name", ""),
                             "description": it.get("description", "")
                         }
+                        parts = rel_k.split("/")
+                        if len(parts) >= 2:
+                            metadata_store["/".join(parts[-2:])] = {
+                                "name": it.get("name", ""),
+                                "description": it.get("description", "")
+                            }
                     if fn and fn not in metadata_store:
                         metadata_store[fn] = {
                             "name": it.get("name", ""),
