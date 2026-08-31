@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+# =========================================================================
+# Mohamed Store - Universal Auto-Scaling Edition (Vu+, Dreambox, 4K, FHD, HD)
+# Compatible with: OpenATV, OpenPLi, Egami, BlackHole, OBH, VTi, DreamOS (OE2.5/2.6)
+# Python 2.7 & Python 3.x (3.9 - 3.12) Universal Support
+# =========================================================================
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -14,6 +19,7 @@ import struct
 import fcntl
 import threading
 import time
+import re
 
 try:
     from Screens.Standby import TryQuitMainloop
@@ -61,10 +67,74 @@ try:
 except ImportError:
     ProgressBar = None
 
+# =========================================================================
+# UNIVERSAL RESOLUTION DETECTION & AUTO-SCALING ENGINE
+# =========================================================================
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
+
+try:
+    from enigma import getDesktop
+    desk = getDesktop(0)
+    if desk:
+        d_size = desk.size()
+        SCREEN_WIDTH = d_size.width()
+        SCREEN_HEIGHT = d_size.height()
+except Exception:
+    pass
+
+# Scale factors relative to FHD 1920x1080 base design
+SCALE_X = float(SCREEN_WIDTH) / 1920.0
+SCALE_Y = float(SCREEN_HEIGHT) / 1080.0
+
+def scale_x(val):
+    return int(round(val * SCALE_X))
+
+def scale_y(val):
+    return int(round(val * SCALE_Y))
+
+def scale_font(size):
+    return max(12, int(round(size * SCALE_Y)))
+
+def scale_skin_layout(xml_layout):
+    """
+    Dynamically scales all skin attributes (position, size, font, itemHeight, borderWidth)
+    to match the active receiver's desktop resolution (HD 720p, FHD 1080p, 4K UHD 2160p).
+    """
+    if abs(SCALE_X - 1.0) < 0.005 and abs(SCALE_Y - 1.0) < 0.005:
+        return xml_layout
+
+    def _sub_pos(m):
+        px, py = int(m.group(1)), int(m.group(2))
+        return 'position="%d,%d"' % (scale_x(px), scale_y(py))
+
+    def _sub_size(m):
+        sw, sh = int(m.group(1)), int(m.group(2))
+        return 'size="%d,%d"' % (scale_x(sw), scale_y(sh))
+
+    def _sub_font(m):
+        fname, fsize = m.group(1), int(m.group(2))
+        return 'font="%s;%d"' % (fname, scale_font(fsize))
+
+    def _sub_item_height(m):
+        ih = int(m.group(1))
+        return 'itemHeight="%d"' % scale_y(ih)
+
+    def _sub_border(m):
+        bw = int(m.group(1))
+        return 'borderWidth="%d"' % max(1, scale_x(bw))
+
+    out = xml_layout
+    out = re.sub(r'position="(\d+),(\d+)"', _sub_pos, out)
+    out = re.sub(r'size="(\d+),(\d+)"', _sub_size, out)
+    out = re.sub(r'font="([^;]+);(\d+)"', _sub_font, out)
+    out = re.sub(r'itemHeight="(\d+)"', _sub_item_height, out)
+    out = re.sub(r'borderWidth="(\d+)"', _sub_border, out)
+    return out
+
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
-FACEBOOK_URL = "https://www.facebook.com/share/1G8inRhUib/"
 PLUGIN_VERSION = "1.3.2"
 
 try:
@@ -75,341 +145,477 @@ except NameError:
 CACHE_FILE = os.path.join(PLUGIN_DIR, "store_cache.json")
 ICON_FOLDER = os.path.join(PLUGIN_DIR, "images", "Icons")
 FALLBACK_ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons"
+PROGRESS_PNG_PATH = os.path.join(PLUGIN_DIR, "images", "progress.png")
+FALLBACK_PROGRESS_PNG = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/progress.png"
+
+def ensure_gradient_progress_png():
+    """Generates an auto-scaled multi-color gradient progress bar PNG"""
+    import zlib
+    target_paths = [PROGRESS_PNG_PATH, FALLBACK_PROGRESS_PNG]
+    for p in target_paths:
+        try:
+            if not os.path.exists(p):
+                width = max(200, scale_x(436))
+                height = max(8, scale_y(14))
+                raw_data = bytearray()
+                for y in range(height):
+                    raw_data.append(0)  # Filter: None
+                    for x in range(width):
+                        t = float(x) / max(1.0, float(width - 1))
+                        if t < 0.33:
+                            st = t / 0.33
+                            r = int(245 + (56 - 245) * st)
+                            g = int(158 + (189 - 158) * st)
+                            b = int(11 + (248 - 11) * st)
+                        elif t < 0.66:
+                            st = (t - 0.33) / 0.33
+                            r = int(56 + (168 - 56) * st)
+                            g = int(189 + (85 - 189) * st)
+                            b = int(248 + (247 - 248) * st)
+                        else:
+                            st = (t - 0.66) / 0.34
+                            r = int(168 + (236 - 168) * st)
+                            g = int(85 + (72 - 85) * st)
+                            b = int(247 + (153 - 247) * st)
+                        raw_data.extend([max(0, min(255, r)), max(0, min(255, g)), max(0, min(255, b))])
+
+                png = bytearray(b'\x89PNG\r\n\x1a\n')
+                ihdr = struct.pack('>IIBBBBB', width, height, 8, 2, 0, 0, 0)
+                png.extend(struct.pack('>I', 13) + b'IHDR' + ihdr + struct.pack('>I', zlib.crc32(b'IHDR' + ihdr) & 0xffffffff))
+                compressed = zlib.compress(bytes(raw_data))
+                png.extend(struct.pack('>I', len(compressed)) + b'IDAT' + compressed + struct.pack('>I', zlib.crc32(b'IDAT' + compressed) & 0xffffffff))
+                png.extend(struct.pack('>I', 0) + b'IEND' + struct.pack('>I', zlib.crc32(b'IEND') & 0xffffffff))
+
+                dirp = os.path.dirname(p)
+                if not os.path.exists(dirp):
+                    os.makedirs(dirp)
+                with open(p, 'wb') as f:
+                    f.write(png)
+        except Exception:
+            pass
+
+try:
+    ensure_gradient_progress_png()
+except Exception:
+    pass
 
 # =========================================================================
-# DYNAMIC RESOLUTION DETECTOR & AUTO-SCALING ENGINE (HD 720p / FHD 1080p / 4K)
+# OSCAM SMART TOGGLE / SWITCHER
 # =========================================================================
-def get_desktop_resolution():
-    """Detect actual Enigma2 screen resolution dynamically."""
+def set_reader_blocks_state(content, is_enable_paid, is_enable_free):
+    blocks = []
+    current = []
+    for line in content.split("\n"):
+        if line.strip().startswith("[reader]"):
+            if current:
+                blocks.append(current)
+            current = [line]
+        else:
+            current.append(line)
+    if current:
+        blocks.append(current)
+
+    final_blocks = []
+    for b in blocks:
+        block_txt = "\n".join(b)
+        if not block_txt.strip().startswith("[reader]"):
+            final_blocks.append(block_txt)
+            continue
+            
+        is_tiger = ("tigerhd4k" in block_txt.lower()) or ("free_tigerhd" in block_txt.lower())
+        target_enable = 1 if (is_tiger and is_enable_free) or (not is_tiger and is_enable_paid) else 0
+        
+        new_lines = []
+        has_enable = False
+        for l in b:
+            if l.strip().startswith("enable"):
+                new_lines.append("enable                        = %d" % target_enable)
+                has_enable = True
+            else:
+                new_lines.append(l)
+        if not has_enable:
+            new_lines.insert(1, "enable                        = %d" % target_enable)
+            
+        final_blocks.append("\n".join(new_lines))
+        
+    return "\n".join(final_blocks)
+
+def generate_tigerhd_server():
     try:
-        if enigma and hasattr(enigma, 'getDesktop'):
-            d = enigma.getDesktop(0)
-            if d:
-                w = d.size().width()
-                h = d.size().height()
-                if w > 0 and h > 0:
-                    return w, h
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import urllib.parse as urllib_parse
+            import ssl
+            import http.cookiejar as cookiejar
+            context = ssl._create_unverified_context()
+        else:
+            import urllib2
+            import urllib as urllib_parse
+            import ssl
+            import cookielib as cookiejar
+            try:
+                context = ssl._create_unverified_context()
+            except AttributeError:
+                context = None
+
+        main_oscam_path = "/etc/tuxbox/config/oscam.server"
+        c_host, c_port, c_user, c_pass = "", "", "", ""
+        clines = []
+
+        try:
+            cj = cookiejar.CookieJar()
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+            req = urllib2.Request('https://tigerhd4k.com/testoscam/', headers=headers)
+            res = opener.open(req, timeout=8)
+            page = res.read()
+            if isinstance(page, bytes):
+                page = page.decode('utf-8', 'ignore')
+
+            token_m = re.search(r'name="_token"\s+value="([^"]+)"', page) or re.search(r"name='_token'\s+value='([^']+)'", page)
+            trial_m = re.search(r'name="trial"\s+value="([^"]+)"', page) or re.search(r"name='trial'\s+value='([^']+)'", page)
+            cs_m = re.search(r'name="CS"\s+value="([^"]+)"', page) or re.search(r"name='CS'\s+value='([^']+)'", page)
+
+            if token_m and trial_m:
+                post_fields = {
+                    '_token': token_m.group(1),
+                    'trial-ok': '1',
+                    'trial': trial_m.group(1),
+                    'CS': cs_m.group(1) if cs_m else "2021"
+                }
+                encoded_data = urllib_parse.urlencode(post_fields)
+                if isinstance(encoded_data, str) and sys.version_info >= (3, 0):
+                    encoded_data = encoded_data.encode('utf-8')
+
+                post_headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+                    'Referer': 'https://tigerhd4k.com/testoscam/',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+                post_req = urllib2.Request('https://tigerhd4k.com/testoscam/', data=encoded_data, headers=post_headers)
+                post_res = opener.open(post_req, timeout=10)
+                post_html = post_res.read()
+                if isinstance(post_html, bytes):
+                    post_html = post_html.decode('utf-8', 'ignore')
+
+                clines = re.findall(r'C:\s*[\w\.\-]+\s+\d+\s+[\w\.\-]+\s+[\w\.\-]+', post_html)
+                if clines:
+                    parts = clines[0].split()
+                    if len(parts) >= 5:
+                        c_host, c_port, c_user, c_pass = parts[1], parts[2], parts[3], parts[4]
+        except Exception:
+            pass
+
+        if not c_host and not clines:
+            try:
+                update_url = "https://raw.githubusercontent.com/wwwgoper77-wq/epg-pro-licensing/main/oscam.server"
+                fb_req = urllib2.Request(update_url, headers={'User-Agent': 'Mozilla/5.0'})
+                fb_res = urllib2.urlopen(fb_req, timeout=6)
+                fb_data = fb_res.read()
+                if isinstance(fb_data, bytes):
+                    fb_data = fb_data.decode('utf-8', 'ignore')
+                
+                clines_m = re.findall(r'C:\s*[\w\.\-]+\s+\d+\s+[\w\.\-]+\s+[\w\.\-]+', fb_data)
+                if clines_m:
+                    clines = clines_m
+                    parts = clines[0].split()
+                    c_host, c_port, c_user, c_pass = parts[1], parts[2], parts[3], parts[4]
+            except Exception:
+                pass
+
+        if not c_host and not clines:
+            return (False, "Could not obtain free server.")
+
+        free_reader_block = (
+            "### FREE_TIGERHD_START ###\n"
+            "[reader]\n"
+            "label                         = Store_CCcam_Daily\n"
+            "enable                        = 1\n"
+            "protocol                      = cccam\n"
+            "device                        = %s,%s\n"
+            "user                          = %s\n"
+            "password                      = %s\n"
+            "group                         = 1\n"
+            "cccversion                    = 2.3.2\n"
+            "ccckeepalive                  = 1\n"
+            "### FREE_TIGERHD_END ###\n"
+        ) % (c_host or "tigerhd4k.com", c_port or "37000", c_user or "1daytest", c_pass or "2021")
+
+        all_oscam_paths = [
+            "/etc/tuxbox/config/oscam.server",
+            "/etc/tuxbox/config/oscam-emu/oscam.server",
+            "/etc/tuxbox/config/oscam/oscam.server",
+            "/etc/tuxbox/config/ncam.server"
+        ]
+
+        for op in all_oscam_paths:
+            if op == main_oscam_path or os.path.exists(op):
+                try:
+                    existing_text = ""
+                    if os.path.exists(op):
+                        with open(op, "r") as rf:
+                            existing_text = rf.read()
+                    
+                    if "### FREE_TIGERHD_START ###" in existing_text:
+                        before = existing_text.split("### FREE_TIGERHD_START ###")[0]
+                        after = existing_text.split("### FREE_TIGERHD_END ###")[-1]
+                        existing_text = (before.rstrip() + "\n" + after.lstrip()).strip()
+                    
+                    if existing_text:
+                        existing_text = set_reader_blocks_state(existing_text, is_enable_paid=False, is_enable_free=False)
+                        final_content = existing_text + "\n\n" + free_reader_block
+                    else:
+                        final_content = free_reader_block
+                    
+                    with open(op, "w") as f:
+                        f.write(final_content.strip() + "\n")
+                except Exception:
+                    pass
+
+        os.system("killall -9 oscam oscam_svn oscam-oe2.0 oscam-emu ncam ncam.arm gcam 2>/dev/null; sleep 1; oscam -b 2>/dev/null || oscam & 2>/dev/null; /etc/init.d/softcam restart 2>/dev/null")
+
+        res_msg = "Store Daily CCcam Activated Successfully!\n\n"
+        res_msg += "Description: Server opening most world packages\n\n"
+        res_msg += "Status:\n- Store Server (Store CCcam): ACTIVE (ON)\n- Paid Server: PAUSED (OFF)\n\nOSCam restarted automatically."
+        return (True, res_msg)
     except Exception as e:
-        pass
-    return 1920, 1080
+        return (False, "Error: " + str(e))
 
-class ScreenScaler(object):
-    """Calculates responsive coordinates, dimensions, fonts, and widget sizes."""
-    def __init__(self, desk_w=None, desk_h=None):
-        if desk_w is None or desk_h is None:
-            desk_w, desk_h = get_desktop_resolution()
-        self.desk_w = desk_w
-        self.desk_h = desk_h
+def restore_paid_oscam():
+    all_oscam_paths = [
+        "/etc/tuxbox/config/oscam.server",
+        "/etc/tuxbox/config/oscam-emu/oscam.server",
+        "/etc/tuxbox/config/oscam/oscam.server",
+        "/etc/tuxbox/config/ncam.server"
+    ]
+    try:
+        for op in all_oscam_paths:
+            if os.path.exists(op):
+                with open(op, "r") as f:
+                    content = f.read()
+                
+                if "### FREE_TIGERHD_START ###" in content:
+                    before = content.split("### FREE_TIGERHD_START ###")[0]
+                    after = content.split("### FREE_TIGERHD_END ###")[-1]
+                    content = (before.rstrip() + "\n" + after.lstrip()).strip()
+                elif "tigerhd4k" in content or "Store_CCcam_Daily" in content:
+                    lines = []
+                    skip = False
+                    for line in content.split("\n"):
+                        if line.strip().startswith("[reader]"):
+                            skip = False
+                        if "tigerhd4k" in line or "Store_CCcam_Daily" in line:
+                            skip = True
+                        if not skip:
+                            lines.append(line)
+                    content = "\n".join(lines).strip()
+                
+                new_content = set_reader_blocks_state(content, is_enable_paid=True, is_enable_free=False)
+                with open(op, "w") as f:
+                    f.write(new_content.strip() + "\n")
 
-        # Reference resolution: 1920x1080
-        self.rx = float(desk_w) / 1920.0
-        self.ry = float(desk_h) / 1080.0
-        self.rf = min(self.rx, self.ry)
+        os.system("killall -9 oscam oscam_svn oscam-oe2.0 oscam-emu ncam ncam.arm gcam 2>/dev/null; sleep 1; oscam -b 2>/dev/null || oscam & 2>/dev/null; /etc/init.d/softcam restart 2>/dev/null")
+        
+        msg = "Paid Server Restored Successfully!\n\nStatus:\n- Paid Server: ACTIVE (ON)\n- Store Free Server: DISABLED (OFF)\n\nOSCam restarted automatically."
+        return (True, msg)
+    except Exception as e:
+        return (False, "Error: " + str(e))
 
-    def sx(self, val):
-        """Scale X axis coordinate/width."""
-        return int(round(val * self.rx))
+def get_active_oscam_status():
+    all_oscam_paths = [
+        "/etc/tuxbox/config/oscam.server",
+        "/etc/tuxbox/config/oscam-emu/oscam.server",
+        "/etc/tuxbox/config/oscam/oscam.server",
+        "/etc/tuxbox/config/ncam.server"
+    ]
+    found_path = None
+    content = ""
+    for path in all_oscam_paths:
+        if os.path.exists(path):
+            try:
+                with open(path, "r") as f:
+                    content = f.read().strip()
+                if content:
+                    found_path = path
+                    break
+            except Exception:
+                pass
 
-    def sy(self, val):
-        """Scale Y axis coordinate/height."""
-        return int(round(val * self.ry))
+    if not found_path or not content:
+        return (False, u"[!] \u0644\u0645 \u064a\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u0645\u0644\u0641 \u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0627\u0644\u0633\u064a\u0631\u0641\u0631!\nFile /etc/tuxbox/config/oscam.server not found or empty.")
 
-    def sf(self, val, min_val=10):
-        """Scale font size proportionally with min clamp."""
-        return max(min_val, int(round(val * self.rf)))
+    try:
+        blocks = []
+        current = []
+        for line in content.split("\n"):
+            if line.strip().startswith("[reader]"):
+                if current:
+                    blocks.append("\n".join(current))
+                current = [line]
+            else:
+                current.append(line)
+        if current:
+            blocks.append("\n".join(current))
 
-# Global default scaler
-_GLOBAL_SCALER = ScreenScaler()
+        active_readers = []
 
-def build_responsive_skin(scaler=None):
-    """Dynamically generates the Enigma2 skin XML according to exact resolution."""
-    if scaler is None:
-        scaler = ScreenScaler()
-    sx = scaler.sx
-    sy = scaler.sy
-    sf = scaler.sf
+        for b in blocks:
+            if not b.strip().startswith("[reader]"):
+                continue
+            
+            lbl_match = re.search(r'label\s*=\s*([^\n\r]+)', b, re.IGNORECASE)
+            raw_label = lbl_match.group(1).strip() if lbl_match else "Reader"
 
-    # Screen dimensions
-    scr_w = sx(1724)
-    scr_h = sy(920)
+            dev_match = re.search(r'device\s*=\s*([^\n\r]+)', b, re.IGNORECASE)
+            dev_val = dev_match.group(1).strip() if dev_match else "N/A"
 
-    # Header calculations
-    hdr_x, hdr_y, hdr_w, hdr_h = sx(20), sy(15), sx(1684), sy(84)
-    logo_x, logo_y, logo_w, logo_h = sx(32), sy(24), sx(190), sy(44)
-    title_x, title_y, title_w, title_h = sx(230), sy(22), sx(210), sy(30)
-    ver_x, ver_y, ver_w, ver_h = sx(230), sy(54), sx(75), sy(24)
+            proto_match = re.search(r'protocol\s*=\s*([^\n\r]+)', b, re.IGNORECASE)
+            proto_val = proto_match.group(1).strip() if proto_match else "cccam"
 
-    # Header Chips
-    chip1_x, chip_y, chip_w, chip_h = sx(445), sy(19), sx(305), sy(74)
-    chip2_x = sx(760)
-    chip3_x = sx(1070)
-    chip4_x = sx(1385)
+            low_lbl = raw_label.lower()
+            low_proto = proto_val.lower()
+            low_dev = dev_val.lower()
+            if low_proto in ["emu", "ecmbin", "constcw", "internal", "softcam"] or \
+               low_lbl in ["emulator", "ecmemu", "streamrelay", "icam", "softcam"] or \
+               low_dev in ["emulator", "ecmemu"] or \
+               "emu" in low_proto or "emu" in low_lbl or "ecm" in low_proto or "ecm" in low_lbl:
+                continue
 
-    # Panel Y & H
-    body_y = sy(112)
-    body_h = sy(688)
+            en_match = re.search(r'enable\s*=\s*(\d+)', b, re.IGNORECASE)
+            is_enabled = (en_match.group(1).strip() != "0") if en_match else True
+            
+            if not is_enabled:
+                continue
 
-    # Left Panel: Categories
-    cat_x, cat_w = sx(20), sx(380)
-    cat_title_x, cat_title_y, cat_title_w, cat_title_h = sx(32), sy(126), sx(356), sy(35)
-    cat_list_x, cat_list_y, cat_list_w, cat_list_h = sx(25), sy(176), sx(370), sy(616)
-    cat_item_h = sy(80)
+            is_store_server = ("tigerhd" in b.lower()) or ("free_tigerhd" in b.lower()) or ("store" in b.lower()) or ("store" in raw_label.lower())
+            
+            user_match = re.search(r'user\s*=\s*([^\n\r]+)', b, re.IGNORECASE)
+            user_val = user_match.group(1).strip() if user_match else "N/A"
 
-    # Center Panel: Packages
-    pkg_x, pkg_w = sx(412), sx(780)
-    pkg_title_x, pkg_title_y, pkg_title_w, pkg_title_h = sx(428), sy(126), sx(748), sy(35)
-    pkg_list_x, pkg_list_y, pkg_list_w, pkg_list_h = sx(417), sy(176), sx(768), sy(616)
-    pkg_item_h = sy(76)
+            grp_match = re.search(r'group\s*=\s*([^\n\r]+)', b, re.IGNORECASE)
+            grp_val = grp_match.group(1).strip() if grp_match else "1"
 
-    # Right Panel: Information & Box
-    info_x, info_w = sx(1204), sx(500)
-    info_title_x, info_title_y, info_title_w, info_title_h = sx(1222), sy(126), sx(464), sy(35)
-    desc_x, desc_y, desc_w, desc_h = sx(1222), sy(174), sx(464), sy(376)
+            ccc_ver_match = re.search(r'cccversion\s*=\s*([^\n\r]+)', b, re.IGNORECASE)
+            ccc_ver = ccc_ver_match.group(1).strip() if ccc_ver_match else ""
 
-    # FB Box (Right-Aligned Flush to Edge)
-    fb_box_x, fb_box_y, fb_box_w, fb_box_h = sx(1220), sy(558), sx(468), sy(110)
-    avatar_x, avatar_y, avatar_w, avatar_h = sx(1230), sy(571), sx(78), sy(82)
-    qr_x, qr_y, qr_w, qr_h = sx(1316), sy(571), sx(82), sy(82)
-    fb_ttl_x, fb_ttl_y, fb_ttl_w, fb_ttl_h = sx(1408), sy(571), sx(270), sy(28)
-    fb_lbl_x, fb_lbl_y, fb_lbl_w, fb_lbl_h = sx(1408), sy(601), sx(270), sy(50)
+            if is_store_server:
+                label_val = u"\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062a\u062c\u0631 (Store Server)"
+                server_type = u"\u0633\u064a\u0631\u0641\u0631 \u0633\u064a\u0633\u0643\u0627\u0645 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u064a\u0648\u0645\u064a"
+                card_info = [
+                    u"[+] \u0627\u0644\u0646\u0648\u0639: %s" % server_type,
+                    u"[+] \u0627\u0644\u0625\u0633\u0645 (Label): %s" % label_val,
+                    u"[+] \u0627\u0644\u0648\u0635\u0641: \u0633\u064a\u0631\u0641\u0631 \u0641\u0627\u062a\u062d \u0627\u063a\u0644\u0628 \u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629",
+                    u"[+] \u0627\u0644\u062d\u0627\u0644\u0629: [ACTIVE - ON] \u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062a\u062c\u0631 \u0634\u063a\u0627\u0644 \u0648\u0646\u0634\u0637"
+                ]
+            else:
+                label_val = raw_label
+                server_type = u"\u0633\u064a\u0631\u0641\u0631 \u0645\u062f\u0641\u0648\u0639 / \u062e\u0627\u0635 (Paid/Custom)"
+                card_info = [
+                    u"[+] \u0627\u0644\u0646\u0648\u0639: %s" % server_type,
+                    u"[+] \u0627\u0644\u0625\u0633\u0645 (Label): %s" % label_val,
+                    u"[+] \u0627\u0644\u0628\u0631\u0648\u062a\u0648\u0643\u0648\u0644: %s %s" % (proto_val, ("(v%s)" % ccc_ver) if ccc_ver else ""),
+                    u"[+] \u0627\u0644\u0639\u0646\u0648\u0627\u0646 (Host/Port): %s" % dev_val,
+                    u"[+] \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645 (User): %s" % user_val,
+                    u"[+] \u0627\u0644\u0645\u062c\u0645\u0648\u0639\u0629 (Group): %s" % grp_val,
+                    u"[+] \u0627\u0644\u062d\u0627\u0644\u0629: [ACTIVE - ON] \u0634\u063a\u0627\u0644 \u0648\u0646\u0634\u0637"
+                ]
+            
+            active_readers.append("\n".join(card_info))
 
-    # Progress Box
-    prog_box_x, prog_box_y, prog_box_w, prog_box_h = sx(1220), sy(676), sx(468), sy(114)
-    pbar_x, pbar_y, pbar_w, pbar_h = sx(1236), sy(686), sx(436), sy(12)
-    pct_x, pct_y, pct_w, pct_h = sx(1236), sy(703), sx(120), sy(22)
-    spd_x, spd_y, spd_w, spd_h = sx(1366), sy(703), sx(306), sy(22)
-    sz_x, sz_y, sz_w, sz_h = sx(1236), sy(728), sx(436), sy(22)
-    st_x, st_y, st_w, st_h = sx(1236), sy(752), sx(436), sy(28)
+        if not active_readers:
+            msg = (
+                u"[!] \u0644\u0627 \u064a\u0648\u062c\u062f \u0623\u064a \u0633\u064a\u0631\u0641\u0631 \u0646\u0634\u0637 \u062d\u0627\u0644\u064a\u0627\u064b!\n"
+                "----------------------------------------\n"
+                u"[-] \u062c\u0645\u064a\u0639 \u0627\u0644\u0633\u064a\u0631\u0641\u0631\u0627\u062a \u0641\u064a oscam.server \u0645\u0639\u0637\u0644\u0629 (enable = 0) \u0623\u0648 \u063a\u064a\u0631 \u0645\u0636\u0627\u0641\u0629.\n\n"
+                u"[+] \u0644\u062a\u0634\u063a\u064a\u0644 \u0633\u064a\u0631\u0641\u0631:\n"
+                u"- \u064a\u0645\u0643\u0646\u0643 \u0627\u062e\u062a\u064a\u0627\u0631 '\u0633\u064a\u0631\u0641\u0631 \u0633\u064a\u0633\u0643\u0627\u0645 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u064a\u0648\u0645\u064a'\n"
+                u"- \u0623\u0648 \u0627\u062e\u062a\u064a\u0627\u0631 '\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062f\u0641\u0648\u0639'"
+            )
+            return (True, msg)
 
-    # Footer
-    ftr_x, ftr_y, ftr_w, ftr_h = sx(20), sy(812), sx(1684), sy(93)
-    btn_w, btn_h = sx(395), sy(68)
-    btn_y = sy(824)
-    btn1_x = sx(40)
-    btn2_x = sx(451)
-    btn3_x = sx(862)
-    btn4_x = sx(1273)
-    btn_text_offset_x = sx(18)
-    btn_text_w = sx(365)
+        emu_running = False
+        try:
+            p_check = os.popen("pgrep -x oscam || pgrep -x oscam-emu || pgrep -x ncam || pidof oscam").read().strip()
+            if p_check:
+                emu_running = True
+        except Exception:
+            pass
 
-    skin_template = """
-<screen name="MohamedStore" position="center,center" size="{scr_w},{scr_h}" title="Mohamed Store" flags="wfNoBorder">
-    <!-- Background Base -->
-    <eLabel position="0,0" size="{scr_w},{scr_h}" backgroundColor="#05070c" zPosition="-11" />
-    <ePixmap position="0,0" size="{scr_w},{scr_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/background.png" zPosition="-10" transparent="0" alphatest="off" />
+        msg = u"[*] \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0646\u0634\u0637 (\u0627\u0644\u0634\u063a\u0627\u0644 \u062d\u0627\u0644\u064a\u0627\u064b):\n"
+        msg += "========================================\n"
+        if emu_running:
+            msg += u"[*] \u062d\u0627\u0644\u0629 \u0627\u0644\u0625\u064a\u0645\u0648: \u0634\u063a\u0627\u0644 \u0641\u064a \u0627\u0644\u062e\u0644\u0641\u064a\u0629 (OSCam Running)\n"
+        msg += "[*] Path: %s\n" % found_path
+        msg += "========================================\n\n"
+        msg += "\n\n----------------------------------------\n\n".join(active_readers)
 
-    <!-- TOP HEADER PANEL WITH LIVE HARDWARE TELEMETRY -->
-    <eLabel position="{hdr_x},{hdr_y}" size="{hdr_w},{hdr_h}" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="{hdr_x},{hdr_y}" size="{hdr_w},2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="{hdr_x},{hdr_y}" size="4,{hdr_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{hdr_r},{hdr_y}" size="4,{hdr_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{hdr_x},{hdr_b}" size="{hdr_w},2" backgroundColor="#e11d48" />
-    
-    <!-- BRAND / LOGO AREA -->
-    <ePixmap position="{logo_x},{logo_y}" size="{logo_w},{logo_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" scale="1" transparent="1" alphatest="blend" />
-    <eLabel position="{title_x},{title_y}" size="{title_w},{title_h}" text="MOHAMED STORE" font="Regular;{f_24}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="{ver_x},{ver_y}" size="{ver_w},{ver_h}" text=" v1.3.2 " font="Regular;{f_17}" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+        return (True, msg)
+    except Exception as e:
+        return (False, u"\u062d\u062f\u062b \u062e\u0637\u0623 \u0623\u062b\u0646\u0627\u0621 \u0641\u062d\u0635 \u0627\u0644\u0633\u064a\u0631\u0641\u0631: " + str(e))
 
-    <!-- CHIP 1: DEVICE & IMAGE -->
-    <eLabel position="{chip1_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="{chip1_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="{chip1_x},{chip_y}" size="3,{chip_h}" backgroundColor="#60a5fa" zPosition="2" />
-    <eLabel position="{chip1_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_device" position="{chip1_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_image" position="{chip1_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
+def restart_oscam_service():
+    try:
+        os.system("killall -9 oscam oscam_svn oscam-oe2.0 oscam-emu ncam ncam.arm gcam 2>/dev/null; sleep 1; oscam -b 2>/dev/null || oscam & 2>/dev/null; /etc/init.d/softcam restart 2>/dev/null")
+        return (True, "OSCam / SoftCam restarted successfully!")
+    except Exception as e:
+        return (False, "Restart error: " + str(e))
 
-    <!-- CHIP 2: CPU & TEMP -->
-    <eLabel position="{chip2_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="{chip2_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="{chip2_x},{chip_y}" size="3,{chip_h}" backgroundColor="#f43f5e" zPosition="2" />
-    <eLabel position="{chip2_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_cpu" position="{chip2_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_temp" position="{chip2_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
+def stop_oscam_service():
+    try:
+        os.system("killall -9 oscam oscam_svn oscam-oe2.0 oscam-emu ncam ncam.arm gcam 2>/dev/null")
+        return (True, "OSCam / SoftCam stopped successfully!")
+    except Exception as e:
+        return (False, "Stop error: " + str(e))
 
-    <!-- CHIP 3: RAM & FLASH -->
-    <eLabel position="{chip3_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="{chip3_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="{chip3_x},{chip_y}" size="3,{chip_h}" backgroundColor="#34d399" zPosition="2" />
-    <eLabel position="{chip3_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_ram" position="{chip3_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_flash" position="{chip3_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
-
-    <!-- CHIP 4: IP & NETWORK -->
-    <eLabel position="{chip4_x},{chip_y}" size="{chip_w},{chip_h}" backgroundColor="#070913" zPosition="1" />
-    <eLabel position="{chip4_x},{chip_y}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="{chip4_x},{chip_y}" size="3,{chip_h}" backgroundColor="#38bdf8" zPosition="2" />
-    <eLabel position="{chip4_x},{chip_b}" size="{chip_w},2" backgroundColor="#be185d" zPosition="2" />
-    <widget name="sys_ip" position="{chip4_tx},{chip_t1_y}" size="{chip_tw},{chip_th1}" font="Regular;{f_24}" foregroundColor="#38bdf8" backgroundColor="#070913" transparent="1" zPosition="3" />
-    <widget name="sys_net" position="{chip4_tx},{chip_t2_y}" size="{chip_tw},{chip_th2}" font="Regular;{f_22}" foregroundColor="#818cf8" backgroundColor="#070913" transparent="1" zPosition="3" />
-
-    <!-- LEFT PANEL: CATEGORIES -->
-    <eLabel position="{cat_x},{body_y}" size="{cat_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="{cat_x},{body_y}" size="{cat_w},2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="{cat_x},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{cat_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{cat_title_x},{cat_title_y}" size="{cat_title_w},{cat_title_h}" text="CATEGORIES" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="{cat_title_x},{cat_sep_y}" size="{cat_title_w},2" backgroundColor="#be185d" />
-    
-    <widget name="categories_list" position="{cat_list_x},{cat_list_y}" size="{cat_list_w},{cat_list_h}" itemHeight="{cat_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
-
-    <!-- CENTER PANEL: PACKAGES -->
-    <eLabel position="{pkg_x},{body_y}" size="{pkg_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="{pkg_x},{body_y}" size="{pkg_w},2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="{pkg_x},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{pkg_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{pkg_title_x},{pkg_title_y}" size="{pkg_title_w},{pkg_title_h}" text="AVAILABLE PACKAGES" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="{pkg_title_x},{pkg_sep_y}" size="{pkg_title_w},2" backgroundColor="#be185d" />
-    <widget name="items_list" position="{pkg_list_x},{pkg_list_y}" size="{pkg_list_w},{pkg_list_h}" itemHeight="{pkg_item_h}" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
-
-    <!-- RIGHT PANEL: DETAILS & COMPACT PROGRESS / FACEBOOK -->
-    <eLabel position="{info_x},{body_y}" size="{info_w},{body_h}" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="{info_x},{body_y}" size="{info_w},2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="{info_x},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{info_r},{body_y}" size="4,{body_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{info_title_x},{info_title_y}" size="{info_title_w},{info_title_h}" text="INFORMATION" font="Regular;{f_30}" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="{info_title_x},{info_sep_y}" size="{info_title_w},2" backgroundColor="#be185d" />
-    
-    <!-- Item Description -->
-    <widget name="description" position="{desc_x},{desc_y}" size="{desc_w},{desc_h}" font="Regular;{f_24}" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
-
-    <!-- FACEBOOK INFO BOX -->
-    <eLabel position="{fb_box_x},{fb_box_y}" size="{fb_box_w},{fb_box_h}" backgroundColor="#05070c" zPosition="1" />
-    <eLabel position="{fb_box_x},{fb_box_y}" size="{fb_box_w},2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="{fb_box_x},{fb_box_y}" size="2,{fb_box_h}" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="{fb_r},{fb_box_y}" size="2,{fb_box_h}" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="{fb_box_x},{fb_b}" size="{fb_box_w},2" backgroundColor="#be185d" zPosition="2" />
-    
-    <!-- Image 1: Avatar -->
-    <ePixmap position="{avatar_x},{avatar_y}" size="{avatar_w},{avatar_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
-    
-    <!-- Image 2: QR Barcode -->
-    <ePixmap position="{qr_x},{qr_y}" size="{qr_w},{qr_h}" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/qrcode.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
-    
-    <!-- Facebook Title & Link (Right-Aligned Flush to Edge) -->
-    <widget name="facebook_title" position="{fb_ttl_x},{fb_ttl_y}" size="{fb_ttl_w},{fb_ttl_h}" font="Regular;{f_24}" foregroundColor="#60a5fa" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
-    <widget name="facebook_label" position="{fb_lbl_x},{fb_lbl_y}" size="{fb_lbl_w},{fb_lbl_h}" text="https://www.facebook.com/share/1G8inRhUib/" font="Regular;{f_18}" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
-
-    <!-- COMPACT DOWNLOAD / PROGRESS BOX -->
-    <eLabel position="{prog_box_x},{prog_box_y}" size="{prog_box_w},{prog_box_h}" backgroundColor="#05070c" zPosition="1" />
-    <eLabel position="{prog_box_x},{prog_box_y}" size="{prog_box_w},2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="{prog_box_x},{prog_box_y}" size="2,{prog_box_h}" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="{prog_r},{prog_box_y}" size="2,{prog_box_h}" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="{prog_box_x},{prog_b}" size="{prog_box_w},2" backgroundColor="#be185d" zPosition="2" />
-    
-    <widget name="progress" position="{pbar_x},{pbar_y}" size="{pbar_w},{pbar_h}" borderWidth="2" borderColor="#be185d" backgroundColor="#0f111a" zPosition="3" />
-    <widget name="percentage" position="{pct_x},{pct_y}" size="{pct_w},{pct_h}" font="Regular;{f_22}" foregroundColor="#f43f5e" backgroundColor="#05070c" transparent="1" zPosition="3" halign="left" />
-    <widget name="speed" position="{spd_x},{spd_y}" size="{spd_w},{spd_h}" font="Regular;{f_22}" foregroundColor="#c084fc" backgroundColor="#05070c" transparent="1" zPosition="3" halign="right" />
-    <widget name="size" position="{sz_x},{sz_y}" size="{sz_w},{sz_h}" font="Regular;{f_20}" foregroundColor="#f3f4f6" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
-    <widget name="status" position="{st_x},{st_y}" size="{st_w},{st_h}" font="Regular;{f_20}" foregroundColor="#e879f9" backgroundColor="#05070c" transparent="1" zPosition="3" halign="center" />
-
-    <!-- FOOTER BAR -->
-    <eLabel position="{ftr_x},{ftr_y}" size="{ftr_w},{ftr_h}" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="{ftr_x},{ftr_y}" size="{ftr_w},2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="{ftr_x},{ftr_y}" size="4,{ftr_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{ftr_r},{ftr_y}" size="4,{ftr_h}" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="{ftr_x},{ftr_b}" size="{ftr_w},2" backgroundColor="#be185d" zPosition="1" />
-
-    <!-- Red Button: Exit -->
-    <eLabel position="{btn1_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="{btn1_x},{btn_y}" size="6,{btn_h}" backgroundColor="#ef4444" zPosition="2" />
-    <widget name="key_red" position="{btn1_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#f87171" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-
-    <!-- Green Button: Install -->
-    <eLabel position="{btn2_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="{btn2_x},{btn_y}" size="6,{btn_h}" backgroundColor="#22c55e" zPosition="2" />
-    <widget name="key_green" position="{btn2_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#4ade80" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-
-    <!-- Yellow Button: Refresh Store -->
-    <eLabel position="{btn3_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="{btn3_x},{btn_y}" size="6,{btn_h}" backgroundColor="#eab308" zPosition="2" />
-    <widget name="key_yellow" position="{btn3_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#facc15" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-
-    <!-- Blue Button: Update Script -->
-    <eLabel position="{btn4_x},{btn_y}" size="{btn_w},{btn_h}" backgroundColor="#1a1025" zPosition="1" />
-    <eLabel position="{btn4_x},{btn_y}" size="6,{btn_h}" backgroundColor="#2563eb" zPosition="2" />
-    <widget name="key_blue" position="{btn4_tx},{btn_y}" size="{btn_text_w},{btn_h}" font="Regular;{f_32}" foregroundColor="#60a5fa" backgroundColor="transparent" transparent="1" zPosition="3" halign="left" valign="center" />
-</screen>
-""".format(
-        scr_w=scr_w, scr_h=scr_h,
-        hdr_x=hdr_x, hdr_y=hdr_y, hdr_w=hdr_w, hdr_h=hdr_h,
-        hdr_r=hdr_x + hdr_w - 4, hdr_b=hdr_y + hdr_h,
-        logo_x=logo_x, logo_y=logo_y, logo_w=logo_w, logo_h=logo_h,
-        title_x=title_x, title_y=title_y, title_w=title_w, title_h=title_h,
-        ver_x=ver_x, ver_y=ver_y, ver_w=ver_w, ver_h=ver_h,
-        chip1_x=chip1_x, chip2_x=chip2_x, chip3_x=chip3_x, chip4_x=chip4_x,
-        chip_y=chip_y, chip_w=chip_w, chip_h=chip_h, chip_b=chip_y + chip_h - 2,
-        chip1_tx=chip1_x + sx(10), chip2_tx=chip2_x + sx(10), chip3_tx=chip3_x + sx(10), chip4_tx=chip4_x + sx(10),
-        chip_t1_y=chip_y + sy(4), chip_t2_y=chip_y + sy(37),
-        chip_tw=chip_w - sx(15), chip_th1=sy(32), chip_th2=sy(30),
-        cat_x=cat_x, cat_w=cat_w, cat_r=cat_x + cat_w - 4,
-        body_y=body_y, body_h=body_h,
-        cat_title_x=cat_title_x, cat_title_y=cat_title_y, cat_title_w=cat_title_w, cat_title_h=cat_title_h,
-        cat_sep_y=cat_title_y + cat_title_h + sy(5),
-        cat_list_x=cat_list_x, cat_list_y=cat_list_y, cat_list_w=cat_list_w, cat_list_h=cat_list_h,
-        cat_item_h=cat_item_h,
-        pkg_x=pkg_x, pkg_w=pkg_w, pkg_r=pkg_x + pkg_w - 4,
-        pkg_title_x=pkg_title_x, pkg_title_y=pkg_title_y, pkg_title_w=pkg_title_w, pkg_title_h=pkg_title_h,
-        pkg_sep_y=pkg_title_y + pkg_title_h + sy(5),
-        pkg_list_x=pkg_list_x, pkg_list_y=pkg_list_y, pkg_list_w=pkg_list_w, pkg_list_h=pkg_list_h,
-        pkg_item_h=pkg_item_h,
-        info_x=info_x, info_w=info_w, info_r=info_x + info_w - 4,
-        info_title_x=info_title_x, info_title_y=info_title_y, info_title_w=info_title_w, info_title_h=info_title_h,
-        info_sep_y=info_title_y + info_title_h + sy(5),
-        desc_x=desc_x, desc_y=desc_y, desc_w=desc_w, desc_h=desc_h,
-        fb_box_x=fb_box_x, fb_box_y=fb_box_y, fb_box_w=fb_box_w, fb_box_h=fb_box_h,
-        fb_r=fb_box_x + fb_box_w - 2, fb_b=fb_box_y + fb_box_h - 2,
-        avatar_x=avatar_x, avatar_y=avatar_y, avatar_w=avatar_w, avatar_h=avatar_h,
-        qr_x=qr_x, qr_y=qr_y, qr_w=qr_w, qr_h=qr_h,
-        fb_ttl_x=fb_ttl_x, fb_ttl_y=fb_ttl_y, fb_ttl_w=fb_ttl_w, fb_ttl_h=fb_ttl_h,
-        fb_lbl_x=fb_lbl_x, fb_lbl_y=fb_lbl_y, fb_lbl_w=fb_lbl_w, fb_lbl_h=fb_lbl_h,
-        prog_box_x=prog_box_x, prog_box_y=prog_box_y, prog_box_w=prog_box_w, prog_box_h=prog_box_h,
-        prog_r=prog_box_x + prog_box_w - 2, prog_b=prog_box_y + prog_box_h - 2,
-        pbar_x=pbar_x, pbar_y=pbar_y, pbar_w=pbar_w, pbar_h=pbar_h,
-        pct_x=pct_x, pct_y=pct_y, pct_w=pct_w, pct_h=pct_h,
-        spd_x=spd_x, spd_y=spd_y, spd_w=spd_w, spd_h=spd_h,
-        sz_x=sz_x, sz_y=sz_y, sz_w=sz_w, sz_h=sz_h,
-        st_x=st_x, st_y=st_y, st_w=st_w, st_h=st_h,
-        ftr_x=ftr_x, ftr_y=ftr_y, ftr_w=ftr_w, ftr_h=ftr_h,
-        ftr_r=ftr_x + ftr_w - 4, ftr_b=ftr_y + ftr_h - 2,
-        btn1_x=btn1_x, btn2_x=btn2_x, btn3_x=btn3_x, btn4_x=btn4_x,
-        btn_y=btn_y, btn_w=btn_w, btn_h=btn_h,
-        btn1_tx=btn1_x + btn_text_offset_x, btn2_tx=btn2_x + btn_text_offset_x,
-        btn3_tx=btn3_x + btn_text_offset_x, btn4_tx=btn4_x + btn_text_offset_x,
-        btn_text_w=btn_text_w,
-        f_17=sf(17), f_18=sf(18), f_20=sf(20), f_22=sf(22),
-        f_24=sf(24), f_28=sf(28), f_30=sf(30), f_32=sf(32)
-    )
-    return skin_template
-
+BUILTIN_SYSTEM_TOOLS = [
+    {
+        "name": u"\u0639\u0631\u0636 \u062d\u0627\u0644\u0629 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0646\u0634\u0637 (Check OSCam Status)",
+        "type": "tool",
+        "action": "check_oscam_status",
+        "description": u"\u0641\u062d\u0635 \u0645\u0644\u0641 oscam.server \u0648\u0639\u0631\u0636 \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u0634\u063a\u0627\u0644 \u0641\u0642\u0637 (Active Only)."
+    },
+    {
+        "name": u"\u0633\u064a\u0631\u0641\u0631 \u0633\u064a\u0633\u0643\u0627\u0645 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u064a\u0648\u0645\u064a (Store Daily CCcam Server)",
+        "type": "tool",
+        "action": "tiger_server",
+        "description": u"\u0633\u064a\u0631\u0641\u0631 \u0641\u0627\u062a\u062d \u0627\u063a\u0644\u0628 \u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629"
+    },
+    {
+        "name": u"\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062f\u0641\u0648\u0639 (Restore Paid OSCam)",
+        "type": "tool",
+        "action": "restore_paid",
+        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0641\u0639\u064a\u0644 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062f\u0641\u0648\u0639 \u0627\u0644\u0623\u0635\u0644\u064a \u0648\u0625\u064a\u0642\u0627\u0641 \u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062a\u062c\u0631."
+    },
+    {
+        "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0625\u064a\u0645\u0648 OSCam (Restart OSCam)",
+        "type": "tool",
+        "action": "restart_oscam",
+        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0625\u064a\u0645\u0648 OSCam / NCam \u0644\u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a."
+    },
+    {
+        "name": u"\u0625\u064a\u0642\u0627\u0641 \u0625\u064a\u0645\u0648 OSCam (Stop OSCam)",
+        "type": "tool",
+        "action": "stop_oscam",
+        "description": u"\u0625\u064a\u0642\u0627\u0641 \u062a\u0634\u063a\u064a\u0644 \u0625\u064a\u0645\u0648 OSCam / NCam."
+    },
+    {
+        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
+        "type": "tool",
+        "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
+        "description": u"\u062d\u0630\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0645\u0624\u0642\u062a\u0629 \u0645\u0646 /tmp."
+    },
+    {
+        "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
+        "type": "tool",
+        "cmd": "restart_gui",
+        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u0633\u062a\u0645."
+    }
+]
 
 def get_neoboot_images_upload_path():
-    candidates = [
-        "/media/hdd/ImagesUpload",
-        "/media/usb/ImagesUpload",
-        "/media/mmc/ImagesUpload",
-        "/data/ImagesUpload",
-        "/media/hdd",
-        "/media/usb"
-    ]
-    for p in candidates:
-        if "/ImagesUpload" in p:
-            parent = os.path.dirname(p)
-            if os.path.exists(parent):
-                if not os.path.exists(p):
-                    try:
-                        os.makedirs(p)
-                    except:
-                        pass
-                return p
-    for p in ["/media/hdd", "/media/usb"]:
+    for p in ["/media/hdd/ImagesUpload", "/media/usb/ImagesUpload", "/media/mmc/ImagesUpload", "/data/ImagesUpload", "/media/hdd", "/media/usb"]:
         if os.path.exists(p):
-            target = os.path.join(p, "ImagesUpload")
-            try:
-                if not os.path.exists(target):
-                    os.makedirs(target)
-                return target
-            except:
-                pass
+            return p
     return "/media/hdd/ImagesUpload"
 
 def get_direct_hdd_root_path():
@@ -419,156 +625,105 @@ def get_direct_hdd_root_path():
     return "/media/hdd"
 
 def get_real_box_ip():
-    interfaces = ["eth0", "wlan0", "eth1", "ra0", "wlan1", "lan0", "enp3s0"]
-    for ifname in interfaces:
+    for ifname in ["eth0", "wlan0", "eth1", "ra0", "wlan1", "lan0", "enp3s0"]:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             ifname_bytes = ifname.encode('utf-8') if sys.version_info >= (3, 0) else ifname
-            ip = socket.inet_ntoa(fcntl.ioctl(
-                s.fileno(),
-                0x8915,
-                struct.pack('256s', ifname_bytes[:15])
-            )[20:24])
+            ip = socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', ifname_bytes[:15]))[20:24])
             s.close()
             if ip and not ip.startswith("127."):
                 return ip
         except Exception:
             pass
-
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.settimeout(0.2)
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
-        s.close()
-        if ip and not ip.startswith("127."):
-            return ip
-    except Exception:
-        pass
-
-    try:
-        import subprocess
-        output = subprocess.check_output(["ip", "route", "get", "1"]).decode('utf-8', 'ignore')
-        for part in output.split():
-            if part.count('.') == 3 and not part.startswith("127."):
-                return part
-    except Exception:
-        pass
-
-    try:
-        ip = socket.gethostbyname(socket.gethostname())
-        if ip and not ip.startswith("127."):
-            return ip
-    except Exception:
-        pass
-
     return "192.168.1.1"
 
 def get_category_icon_path(category_id):
-    cat_lower = str(category_id).lower().replace("_", "").replace(" ", "")
-    if "plugin" in cat_lower:
-        filename = "plugins.png"
-    elif "skin" in cat_lower:
-        filename = "skins.png"
-    elif "tool" in cat_lower:
-        filename = "tools.png"
-    elif "image" in cat_lower or "system" in cat_lower:
-        filename = "system_images.png"
-    elif "picon" in cat_lower:
-        filename = "picons.png"
-    elif "channel" in cat_lower or "setting" in cat_lower:
-        filename = "channels.png"
-    elif "softcam" in cat_lower or "cam" in cat_lower or "emu" in cat_lower:
-        filename = "softcam.png"
-    elif "noflayer" in cat_lower or "novaler" in cat_lower or "novalayer" in cat_lower:
-        filename = "novaler.png"
-    else:
-        filename = None
-        
-    if filename:
-        search_folders = [
-            ICON_FOLDER,
-            FALLBACK_ICON_FOLDER,
-            os.path.join(PLUGIN_DIR, "images"),
-            os.path.join(PLUGIN_DIR, "images", "Icons"),
-            os.path.join(PLUGIN_DIR, "images", "icons"),
-            "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images",
-            "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons",
-            "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/icons"
-        ]
-        candidates = [filename, "novaler.png", "noflayer.png"] if ("noval" in str(filename) or "nofla" in str(filename)) else [filename]
-        
-        for folder in search_folders:
-            for name in candidates:
-                full_p = os.path.join(folder, name)
-                if os.path.exists(full_p):
-                    return full_p
+    try:
+        cat_lower = str(category_id).lower().replace("_", "").replace(" ", "")
+        if "plugin" in cat_lower:
+            filename = "plugins.png"
+        elif "skin" in cat_lower:
+            filename = "skins.png"
+        elif "tool" in cat_lower:
+            filename = "tools.png"
+        elif "image" in cat_lower or "system" in cat_lower:
+            filename = "system_images.png"
+        elif "picon" in cat_lower:
+            filename = "picons.png"
+        elif "channel" in cat_lower or "setting" in cat_lower:
+            filename = "channels.png"
+        elif "softcam" in cat_lower or "cam" in cat_lower or "emu" in cat_lower:
+            filename = "softcam.png"
+        elif "noval" in cat_lower or "nofla" in cat_lower:
+            filename = "novaler.png"
+        else:
+            filename = None
+            
+        if filename:
+            for folder in [ICON_FOLDER, FALLBACK_ICON_FOLDER, os.path.join(PLUGIN_DIR, "images")]:
+                try:
+                    full_p = os.path.join(folder, filename)
+                    if os.path.exists(full_p):
+                        return full_p
+                except Exception:
+                    pass
+    except Exception:
+        pass
     return None
 
 def get_item_icon_path(item, category_id):
-    if not isinstance(item, dict):
+    try:
+        if not isinstance(item, dict):
+            return get_category_icon_path(category_id)
+
+        for key in ("icon", "image", "thumbnail"):
+            val = item.get(key)
+            if val and isinstance(val, (str, getattr(sys, 'unicode', str))):
+                val = val.strip()
+                try:
+                    if os.path.isabs(val) and os.path.exists(val):
+                        return val
+                except Exception:
+                    pass
+                for folder in [ICON_FOLDER, FALLBACK_ICON_FOLDER, os.path.join(PLUGIN_DIR, "images")]:
+                    try:
+                        p = os.path.join(folder, val)
+                        if os.path.exists(p):
+                            return p
+                    except Exception:
+                        pass
+
+        item_id = item.get("id") or item.get("name") or ""
+        if item_id:
+            clean_name = str(item_id).lower().replace(" ", "_").replace("-", "_") + ".png"
+            for folder in [ICON_FOLDER, FALLBACK_ICON_FOLDER, os.path.join(PLUGIN_DIR, "images")]:
+                try:
+                    p = os.path.join(folder, clean_name)
+                    if os.path.exists(p):
+                        return p
+                except Exception:
+                    pass
+
+        if "items" in item and isinstance(item["items"], list):
+            for folder_icon in ("folder.png", "subfolder.png"):
+                try:
+                    p = os.path.join(ICON_FOLDER, folder_icon)
+                    if os.path.exists(p):
+                        return p
+                except Exception:
+                    pass
+
+        if item.get("type") == "tool":
+            try:
+                p = os.path.join(ICON_FOLDER, "tools.png")
+                if os.path.exists(p):
+                    return p
+            except Exception:
+                pass
+
         return get_category_icon_path(category_id)
-
-    for key in ("icon", "image", "thumbnail"):
-        val = item.get(key)
-        if val and isinstance(val, (str, getattr(sys, 'unicode', str))):
-            val = val.strip()
-            if os.path.isabs(val) and os.path.exists(val):
-                return val
-            path1 = os.path.join(ICON_FOLDER, val)
-            if os.path.exists(path1):
-                return path1
-            path2 = os.path.join(FALLBACK_ICON_FOLDER, val)
-            if os.path.exists(path2):
-                return path2
-            path3 = os.path.join(PLUGIN_DIR, "images", val)
-            if os.path.exists(path3):
-                return path3
-
-    item_id = item.get("id") or item.get("name") or ""
-    if item_id:
-        clean_name = str(item_id).lower().replace(" ", "_").replace("-", "_") + ".png"
-        path1 = os.path.join(ICON_FOLDER, clean_name)
-        if os.path.exists(path1):
-            return path1
-        path2 = os.path.join(FALLBACK_ICON_FOLDER, clean_name)
-        if os.path.exists(path2):
-            return path2
-        path3 = os.path.join(PLUGIN_DIR, "images", clean_name)
-        if os.path.exists(path3):
-            return path3
-
-    if "items" in item and isinstance(item["items"], list):
-        for folder_icon in ("folder.png", "subfolder.png", "directory.png"):
-            path1 = os.path.join(ICON_FOLDER, folder_icon)
-            if os.path.exists(path1):
-                return path1
-            path2 = os.path.join(FALLBACK_ICON_FOLDER, folder_icon)
-            if os.path.exists(path2):
-                return path2
-
-    if item.get("type") == "tool":
-        for tool_icon in ("tools.png", "tool.png"):
-            path1 = os.path.join(ICON_FOLDER, tool_icon)
-            if os.path.exists(path1):
-                return path1
-            path2 = os.path.join(FALLBACK_ICON_FOLDER, tool_icon)
-            if os.path.exists(path2):
-                return path2
-
-    cat_icon = get_category_icon_path(category_id)
-    if cat_icon:
-        return cat_icon
-
-    for generic in ("package.png", "default.png", "plugins.png"):
-        path1 = os.path.join(ICON_FOLDER, generic)
-        if os.path.exists(path1):
-            return path1
-        path2 = os.path.join(FALLBACK_ICON_FOLDER, generic)
-        if os.path.exists(path2):
-            return path2
-
-    return None
+    except Exception:
+        return None
 
 def count_items_recursive(items_list):
     if not isinstance(items_list, list):
@@ -595,7 +750,7 @@ def load_json_network(url):
             except AttributeError:
                 context = None
         
-        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         if context:
             response = urllib2.urlopen(req, timeout=5, context=context)
         else:
@@ -604,47 +759,173 @@ def load_json_network(url):
         if isinstance(data, bytes):
             data = data.decode('utf-8')
         return json.loads(data)
-    except Exception as e:
-        print("[MohamedStore] network error: " + str(e))
+    except Exception:
         return None
 
-BUILTIN_SYSTEM_TOOLS = [
-    {
-        "name": u"\u0625\u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u062a",
-        "type": "tool",
-        "cmd": "opkg update && opkg install --force-reinstall python-requests curl ffmpeg python-json python-codecs openssl",
-        "description": u"\u062a\u062d\u062f\u062b \u062d\u0632\u0645 \u0627\u0644\u0646\u0638\u0627\u0645 \u0648\u0625\u0639\u0627\u062f\u0629 \u062a\u062b\u0628\u064a\u062a \u0627\u0644\u0645\u0643\u062a\u0628\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0627\u0644\u0646\u0627\u0642\u0635\u0629."
-    },
-    {
-        "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
-        "type": "tool",
-        "cmd": "rm -rf /tmp/*.ipk /tmp/*.tar.gz /tmp/*.zip /var/volatile/tmp/*",
-        "description": u"\u062d\u0632\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062a\u062b\u0628\u064a\u062a \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 /tmp."
-    },
-    {
-        "name": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 (Restart GUI)",
-        "type": "tool",
-        "cmd": "restart_gui",
-        "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u0633\u062a\u0645."
-    }
-]
+# Base Full HD reference XML layout
+RAW_SKIN_LAYOUT = """
+<screen name="MohamedStore" position="center,center" size="1724,920" title="Mohamed Store" flags="wfNoBorder">
+    <eLabel position="0,0" size="1724,920" backgroundColor="#05070c" zPosition="-11" />
+    <ePixmap position="0,0" size="1724,920" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/background.png" zPosition="-10" transparent="0" alphatest="off" />
 
+    <!-- HEADER PANEL -->
+    <eLabel position="20,15" size="1684,84" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="20,15" size="1684,2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="20,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="1700,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="20,99" size="1684,2" backgroundColor="#e11d48" />
+    
+    <ePixmap position="32,24" size="190,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" scale="1" transparent="1" alphatest="blend" />
+    <eLabel position="230,22" size="120,30" text="MOHAMED" font="Regular;24" foregroundColor="#f59e0b" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="350,22" size="90,30" text="STORE" font="Regular;24" foregroundColor="#38bdf8" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="230,50" size="70,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="300,50" size="70,2" backgroundColor="#38bdf8" zPosition="2" />
+    <eLabel position="370,50" size="70,2" backgroundColor="#ec4899" zPosition="2" />
+    <eLabel position="230,56" size="75,22" text=" v1.3.2 " font="Regular;17" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+
+    <!-- HARDWARE CHIPS -->
+    <eLabel position="445,19" size="305,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="445,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="445,19" size="3,74" backgroundColor="#60a5fa" zPosition="2" />
+    <eLabel position="445,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_device" position="455,23" size="290,32" font="Regular;24" foregroundColor="#60a5fa" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_image" position="455,56" size="290,30" font="Regular;22" foregroundColor="#c084fc" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <eLabel position="760,19" size="300,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="760,19" size="300,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="760,19" size="3,74" backgroundColor="#f43f5e" zPosition="2" />
+    <eLabel position="760,91" size="300,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_cpu" position="770,23" size="285,32" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_temp" position="770,56" size="285,30" font="Regular;22" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <eLabel position="1070,19" size="305,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="1070,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1070,19" size="3,74" backgroundColor="#34d399" zPosition="2" />
+    <eLabel position="1070,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_ram" position="1080,23" size="290,32" font="Regular;24" foregroundColor="#34d399" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_flash" position="1080,56" size="290,30" font="Regular;22" foregroundColor="#a7f3d0" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <eLabel position="1385,19" size="305,74" backgroundColor="#070913" zPosition="1" />
+    <eLabel position="1385,19" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1385,19" size="3,74" backgroundColor="#38bdf8" zPosition="2" />
+    <eLabel position="1385,91" size="305,2" backgroundColor="#be185d" zPosition="2" />
+    <widget name="sys_ip" position="1395,23" size="290,32" font="Regular;24" foregroundColor="#38bdf8" backgroundColor="#070913" transparent="1" zPosition="3" />
+    <widget name="sys_net" position="1395,56" size="290,30" font="Regular;22" foregroundColor="#818cf8" backgroundColor="#070913" transparent="1" zPosition="3" />
+
+    <!-- LEFT PANEL: CATEGORIES -->
+    <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="20,112" size="380,2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="20,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="396,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="32,166" size="356,2" backgroundColor="#be185d" />
+    <widget name="categories_list" position="25,176" size="370,616" itemHeight="80" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
+
+    <!-- CENTER PANEL: PACKAGES -->
+    <eLabel position="412,112" size="780,688" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="412,112" size="780,2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="412,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="1188,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="428,126" size="748,35" text="AVAILABLE PACKAGES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="428,166" size="748,2" backgroundColor="#be185d" />
+    <widget name="items_list" position="417,176" size="768,616" itemHeight="76" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
+
+    <!-- RIGHT PANEL: DETAILS & FACEBOOK & PROGRESS -->
+    <eLabel position="1204,112" size="500,688" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="1204,112" size="500,2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="1204,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="1700,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="1222,166" size="464,2" backgroundColor="#be185d" />
+    
+    <widget name="description" position="1222,174" size="464,376" font="Regular;24" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
+
+    <!-- FACEBOOK & BARCODE BOX -->
+    <eLabel position="1220,558" size="468,110" backgroundColor="#120e1a" zPosition="1" />
+    <eLabel position="1220,558" size="468,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1220,558" size="2,110" backgroundColor="#0284c7" zPosition="2" />
+    <eLabel position="1686,558" size="2,110" backgroundColor="#ec4899" zPosition="2" />
+    <eLabel position="1220,666" size="468,2" backgroundColor="#f59e0b" zPosition="2" />
+    
+    <ePixmap position="1230,571" size="78,82" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
+    <ePixmap position="1316,571" size="82,82" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/qrcode.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
+    
+    <eLabel position="1408,568" size="90,34" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1498,568" size="90,34" backgroundColor="#0284c7" zPosition="2" />
+    <eLabel position="1588,568" size="90,34" backgroundColor="#be185d" zPosition="2" />
+    <eLabel position="1410,570" size="266,30" backgroundColor="#1a1426" zPosition="3" />
+    <widget name="facebook_title" position="1408,568" size="260,34" font="Regular;24" foregroundColor="#fde047" backgroundColor="#1a1426" transparent="1" zPosition="4" halign="right" />
+    <widget name="facebook_label" position="1408,608" size="270,46" text="https://www.facebook.com/share/1G8inRhUib/" font="Regular;18" foregroundColor="#38bdf8" backgroundColor="#120e1a" transparent="1" zPosition="3" halign="right" />
+
+    <!-- PROGRESS BOX WITH MULTI-COLOR ACCENTS -->
+    <eLabel position="1220,676" size="468,114" backgroundColor="#0c0714" zPosition="1" />
+    <eLabel position="1220,676" size="117,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1337,676" size="117,2" backgroundColor="#0284c7" zPosition="2" />
+    <eLabel position="1454,676" size="117,2" backgroundColor="#a855f7" zPosition="2" />
+    <eLabel position="1571,676" size="117,2" backgroundColor="#ec4899" zPosition="2" />
+    <eLabel position="1220,676" size="2,114" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1686,676" size="2,114" backgroundColor="#ec4899" zPosition="2" />
+    <eLabel position="1220,788" size="117,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1337,788" size="117,2" backgroundColor="#0284c7" zPosition="2" />
+    <eLabel position="1454,788" size="117,2" backgroundColor="#a855f7" zPosition="2" />
+    <eLabel position="1571,788" size="117,2" backgroundColor="#ec4899" zPosition="2" />
+    
+    <widget name="progress" position="1236,686" size="436,14" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/progress.png" borderWidth="2" borderColor="#0284c7" backgroundColor="#1e1035" foregroundColor="#38bdf8" zPosition="3" />
+    <widget name="percentage" position="1236,705" size="120,22" font="Regular;22" foregroundColor="#fde047" backgroundColor="#0c0714" transparent="1" zPosition="3" halign="left" />
+    <widget name="speed" position="1366,705" size="306,22" font="Regular;22" foregroundColor="#38bdf8" backgroundColor="#0c0714" transparent="1" zPosition="3" halign="right" />
+    <widget name="size" position="1236,730" size="436,22" font="Regular;20" foregroundColor="#fbbf24" backgroundColor="#0c0714" transparent="1" zPosition="3" halign="center" />
+    <widget name="status" position="1236,754" size="436,28" font="Regular;20" foregroundColor="#f472b6" backgroundColor="#0c0714" transparent="1" zPosition="3" halign="center" />
+
+    <!-- FOOTER BUTTONS -->
+    <eLabel position="20,812" size="1684,93" backgroundColor="#0f111a" zPosition="-1" />
+    <eLabel position="20,812" size="1684,2" backgroundColor="#be185d" zPosition="0" />
+    <eLabel position="20,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="1700,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
+    <eLabel position="20,903" size="1684,2" backgroundColor="#be185d" zPosition="1" />
+
+    <eLabel position="40,824" size="395,68" backgroundColor="#1e111d" zPosition="1" />
+    <eLabel position="40,824" size="395,2" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="40,824" size="3,68" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="432,824" size="3,68" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="40,890" size="395,2" backgroundColor="#e11d48" zPosition="2" />
+    <ePixmap position="56,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_red.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
+    <widget name="key_red" position="114,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#1e111d" transparent="1" zPosition="3" halign="left" valign="center" />
+
+    <eLabel position="451,824" size="395,68" backgroundColor="#0d1f19" zPosition="1" />
+    <eLabel position="451,824" size="395,2" backgroundColor="#059669" zPosition="2" />
+    <eLabel position="451,824" size="3,68" backgroundColor="#059669" zPosition="2" />
+    <eLabel position="843,824" size="3,68" backgroundColor="#059669" zPosition="2" />
+    <eLabel position="451,890" size="395,2" backgroundColor="#059669" zPosition="2" />
+    <ePixmap position="467,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_green.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
+    <widget name="key_green" position="525,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#0d1f19" transparent="1" zPosition="3" halign="left" valign="center" />
+
+    <eLabel position="862,824" size="395,68" backgroundColor="#1f180c" zPosition="1" />
+    <eLabel position="862,824" size="395,2" backgroundColor="#d97706" zPosition="2" />
+    <eLabel position="862,824" size="3,68" backgroundColor="#d97706" zPosition="2" />
+    <eLabel position="1254,824" size="3,68" backgroundColor="#d97706" zPosition="2" />
+    <eLabel position="862,890" size="395,2" backgroundColor="#d97706" zPosition="2" />
+    <ePixmap position="878,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_yellow.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
+    <widget name="key_yellow" position="936,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#1f180c" transparent="1" zPosition="3" halign="left" valign="center" />
+
+    <eLabel position="1273,824" size="395,68" backgroundColor="#0f152b" zPosition="1" />
+    <eLabel position="1273,824" size="395,2" backgroundColor="#4f46e5" zPosition="2" />
+    <eLabel position="1273,824" size="3,68" backgroundColor="#4f46e5" zPosition="2" />
+    <eLabel position="1665,824" size="3,68" backgroundColor="#4f46e5" zPosition="2" />
+    <eLabel position="1273,890" size="395,2" backgroundColor="#4f46e5" zPosition="2" />
+    <ePixmap position="1289,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_blue.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
+    <widget name="key_blue" position="1347,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#0f152b" transparent="1" zPosition="3" halign="left" valign="center" />
+</screen>
+"""
+
+# Apply Auto-Scaling to Skin Layout dynamically
+SKIN_LAYOUT = scale_skin_layout(RAW_SKIN_LAYOUT)
 
 class MohamedStore(Screen):
-    # Static skin fallback (auto-generated)
-    skin = build_responsive_skin(_GLOBAL_SCALER)
+    skin = SKIN_LAYOUT
 
     def __init__(self, session):
-        # Auto-detect screen resolution & instantiate dynamic scaler
-        self.scaler = ScreenScaler()
-        self.skin = build_responsive_skin(self.scaler)
-        
         Screen.__init__(self, session)
         
-        sx = self.scaler.sx
-        sy = self.scaler.sy
-        sf = self.scaler.sf
-
         self.categories_list_has_multicontent = False
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
@@ -656,14 +937,13 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["categories_list"].l.setFont(0, gFont("Regular", sf(30)))
-                        self["categories_list"].l.setFont(1, gFont("Regular", sf(22)))
-                    except Exception as fe:
-                        print("[MohamedStore] Failed to set font for categories_list: " + str(fe))
+                        self["categories_list"].l.setFont(0, gFont("Regular", scale_font(30)))
+                        self["categories_list"].l.setFont(1, gFont("Regular", scale_font(22)))
+                    except Exception:
+                        pass
                 self["categories_list"].l.setBuildFunc(self.build_category_entry)
                 self.categories_list_has_multicontent = True
-            except Exception as e:
-                print("[MohamedStore] Failed to init categories_list with eListboxPythonMultiContent: " + str(e))
+            except Exception:
                 self["categories_list"] = MenuList([])
         else:
             self["categories_list"] = MenuList([])
@@ -679,13 +959,12 @@ class MohamedStore(Screen):
                 
                 if gFont:
                     try:
-                        self["items_list"].l.setFont(0, gFont("Regular", sf(32)))
-                    except Exception as fe:
-                        print("[MohamedStore] Failed to set font for items_list: " + str(fe))
+                        self["items_list"].l.setFont(0, gFont("Regular", scale_font(32)))
+                    except Exception:
+                        pass
                 self["items_list"].l.setBuildFunc(self.build_item_entry)
                 self.items_list_has_multicontent = True
-            except Exception as e:
-                print("[MohamedStore] Failed to init items_list with eListboxPythonMultiContent: " + str(e))
+            except Exception:
                 self["items_list"] = MenuList([])
         else:
             self["items_list"] = MenuList([])
@@ -706,6 +985,7 @@ class MohamedStore(Screen):
         
         self["facebook_title"] = Label(u"\u062a\u0627\u0628\u0639\u0646\u0627 \u0639\u0644\u0649 \u0641\u064a\u0633\u0628\u0648\u0643")
         self["facebook_label"] = Label("https://www.facebook.com/share/1G8inRhUib/")
+        
         self["key_red"] = Label("Exit")
         self["key_green"] = Label("Install")
         self["key_yellow"] = Label("Refresh Store")
@@ -726,7 +1006,7 @@ class MohamedStore(Screen):
             self["speed"].hide()
             self["size"].hide()
             self["status"].hide()
-        except:
+        except Exception:
             pass
 
         self.download_in_progress = False
@@ -752,7 +1032,7 @@ class MohamedStore(Screen):
             except AttributeError:
                 try:
                     self.download_timer.callback.append(self.update_download_ui)
-                except:
+                except Exception:
                     pass
         
         self.store_data = {}
@@ -789,7 +1069,7 @@ class MohamedStore(Screen):
         except AttributeError:
             try:
                 self.bg_sync_timer.callback.append(self.start_background_sync)
-            except:
+            except Exception:
                 pass
         self.onLayoutFinish.append(self.schedule_bg_sync)
 
@@ -801,8 +1081,8 @@ class MohamedStore(Screen):
                     if cached_data and "categories" in cached_data:
                         self.apply_store_data(cached_data)
                         return True
-        except Exception as e:
-            print("[MohamedStore] Cache load error: " + str(e))
+        except Exception:
+            pass
         return False
 
     def schedule_bg_sync(self):
@@ -818,7 +1098,7 @@ class MohamedStore(Screen):
         try:
             current_ip = get_real_box_ip()
             self["sys_ip"].setText("IP: %s" % current_ip)
-        except:
+        except Exception:
             pass
 
         try:
@@ -828,12 +1108,12 @@ class MohamedStore(Screen):
                 try:
                     with open(CACHE_FILE, "w") as f:
                         json.dump(data, f)
-                except Exception as e:
+                except Exception:
                     pass
             elif not self.categories:
                 self["description"].setText("Failed to connect to GitHub feed.")
-        except Exception as e:
-            print("[MohamedStore] Background sync error: " + str(e))
+        except Exception:
+            pass
 
     def apply_store_data(self, data):
         try:
@@ -869,8 +1149,8 @@ class MohamedStore(Screen):
                 self["categories_list"].setList(display_cats)
                 self.current_path = []
                 self.category_changed()
-        except Exception as e:
-            print("[MohamedStore] apply_store_data error: " + str(e))
+        except Exception:
+            pass
 
     def get_system_telemetry_info(self):
         info = {
@@ -883,7 +1163,6 @@ class MohamedStore(Screen):
             "ip": "IP: --",
             "net": "Net: Online"
         }
-        
         try:
             device_name = "Enigma2"
             image_name = "EGAMI"
@@ -893,12 +1172,6 @@ class MohamedStore(Screen):
             elif os.path.exists("/proc/stb/info/boxtype"):
                 with open("/proc/stb/info/boxtype", "r") as f:
                     device_name = f.read().strip().upper()
-            elif os.path.exists("/etc/image-version"):
-                with open("/etc/image-version", "r") as f:
-                    for line in f:
-                        if "box_type" in line or "model" in line:
-                            device_name = line.split("=")[-1].strip().upper()
-                            break
 
             if os.path.exists("/etc/image-version"):
                 with open("/etc/image-version", "r") as f:
@@ -911,17 +1184,12 @@ class MohamedStore(Screen):
                                 
             info["device"] = "Box: %s" % device_name
             info["image"] = "OS: %s" % image_name
-        except Exception as e:
+        except Exception:
             pass
 
         try:
             temp_val = None
-            for temp_path in (
-                "/proc/stb/sensors/temp0/value",
-                "/proc/stb/fp/temp_sensor",
-                "/proc/stb/sensors/temp/value",
-                "/sys/class/thermal/thermal_zone0/temp"
-            ):
+            for temp_path in ("/proc/stb/sensors/temp0/value", "/proc/stb/fp/temp_sensor", "/sys/class/thermal/thermal_zone0/temp"):
                 if os.path.exists(temp_path):
                     with open(temp_path, "r") as f:
                         t_str = f.read().strip()
@@ -931,27 +1199,20 @@ class MohamedStore(Screen):
                                 t_num = int(t_num / 1000)
                             temp_val = t_num
                             break
-            if temp_val is not None:
-                info["temp"] = "Temp: %d C" % temp_val
-            else:
-                info["temp"] = "Temp: 42 C"
+            info["temp"] = ("Temp: %d C" % temp_val) if temp_val is not None else "Temp: 42 C"
 
-            load_avg = ""
             if os.path.exists("/proc/loadavg"):
                 with open("/proc/loadavg", "r") as f:
-                    load_avg = f.read().split()[0]
-            if load_avg:
-                info["cpu"] = "CPU Load: %s" % load_avg
+                    info["cpu"] = "CPU Load: %s" % f.read().split()[0]
             else:
                 info["cpu"] = "CPU: Ready"
-        except Exception as e:
+        except Exception:
             pass
 
         try:
             if os.path.exists("/proc/meminfo"):
                 mem_total = 0
                 mem_free = 0
-                mem_avail = 0
                 with open("/proc/meminfo", "r") as f:
                     for line in f:
                         parts = line.split(":")
@@ -960,137 +1221,137 @@ class MohamedStore(Screen):
                             v = parts[1].strip().split()[0]
                             if k == "MemTotal":
                                 mem_total = int(v)
-                            elif k == "MemFree":
+                            elif k in ["MemFree", "MemAvailable"]:
                                 mem_free = int(v)
-                            elif k == "MemAvailable":
-                                mem_avail = int(v)
                 if mem_total > 0:
-                    if mem_avail == 0:
-                        mem_avail = mem_free
-                    used_ram = mem_total - mem_avail
-                    pct = int((float(used_ram) / float(mem_total)) * 100)
-                    free_mb = int(mem_avail / 1024)
-                    info["ram"] = "RAM: %d%% (%dM Free)" % (pct, free_mb)
-                else:
-                    info["ram"] = "RAM: 38% (1.2G Free)"
+                    pct = int((float(mem_total - mem_free) / float(mem_total)) * 100)
+                    info["ram"] = "RAM: %d%% (%dM Free)" % (pct, int(mem_free / 1024))
 
             stat = os.statvfs('/')
-            free_bytes = stat.f_bavail * stat.f_frsize
-            free_gb = float(free_bytes) / (1024.0 * 1024.0 * 1024.0)
-            if free_gb >= 1.0:
-                info["flash"] = "Flash: %.1f GB Free" % free_gb
-            else:
-                free_mb = float(free_bytes) / (1024.0 * 1024.0)
-                info["flash"] = "Flash: %d MB Free" % int(free_mb)
-        except Exception as e:
+            free_gb = float(stat.f_bavail * stat.f_frsize) / (1024.0 * 1024.0 * 1024.0)
+            info["flash"] = "Flash: %.1f GB Free" % free_gb
+        except Exception:
             pass
 
         return info
 
     def build_category_entry(self, *args):
-        scaler = getattr(self, 'scaler', _GLOBAL_SCALER)
-        sx = scaler.sx
-        sy = scaler.sy
-
-        count = 0
-        if len(args) == 1 and isinstance(args[0], tuple):
-            if len(args[0]) >= 3:
-                category_id, display_name, count = args[0][0], args[0][1], args[0][2]
-            elif len(args[0]) == 2:
-                category_id, display_name = args[0][0], args[0][1]
-            else:
-                category_id = args[0][0]
-                display_name = str(category_id)
-        elif len(args) >= 3:
-            category_id, display_name, count = args[0], args[1], args[2]
-        elif len(args) == 2:
-            category_id, display_name = args[0], args[1]
-        else:
+        try:
             category_id = "unknown"
             display_name = "Unknown"
+            count = 0
 
-        icon_path = get_category_icon_path(category_id)
-        pixmap = None
-        if icon_path:
-            try:
-                if loadPNG:
+            if len(args) == 1:
+                arg0 = args[0]
+                if isinstance(arg0, (list, tuple)):
+                    if len(arg0) >= 1:
+                        category_id = arg0[0]
+                    if len(arg0) >= 2:
+                        display_name = str(arg0[1])
+                    if len(arg0) >= 3:
+                        try:
+                            count = int(arg0[2])
+                        except Exception:
+                            count = 0
+                else:
+                    category_id = str(arg0)
+                    display_name = str(arg0)
+            elif len(args) >= 2:
+                category_id = args[0]
+                display_name = str(args[1])
+                if len(args) >= 3:
+                    try:
+                        count = int(args[2])
+                    except Exception:
+                        count = 0
+
+            icon_path = get_category_icon_path(category_id)
+            pixmap = None
+            if icon_path and loadPNG:
+                try:
                     pixmap = loadPNG(icon_path)
-            except Exception as e:
-                pass
+                except Exception:
+                    pixmap = None
 
-        res = [category_id]
-        
-        # Responsive dimensions for category entry
-        icon_pos_x, icon_pos_y = sx(12), sy(12)
-        icon_size_w, icon_size_h = sx(56), sy(56)
-        entry_h = sy(80)
-        
-        if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
-            res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_size_w, icon_size_h), png=pixmap))
-            text_x = sx(76)
-            text_w = sx(210)
-        else:
-            text_x = sx(15)
-            text_w = sx(270)
+            res = [category_id]
+            # Scaled sizes and coordinates for MultiContent
+            icon_w = scale_x(70)
+            icon_h = scale_y(70)
+            icon_pos_x = scale_x(8)
+            icon_pos_y = scale_y(5)
+            row_h = scale_y(80)
 
-        if HAS_MULTICONTENT and MultiContentEntryText:
-            align_left = RT_HALIGN_LEFT | RT_VALIGN_CENTER
-            align_right = RT_HALIGN_RIGHT | RT_VALIGN_CENTER
-            
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, entry_h), font=0, flags=align_left, text=str(display_name)))
-            count_str = "[%d]" % int(count) if count is not None else "[0]"
-            count_x = sx(286)
-            count_w = sx(74)
-            res.append(MultiContentEntryText(pos=(count_x, 0), size=(count_w, entry_h), font=0, flags=align_right, text=count_str))
-            
-        return res
+            if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_w, icon_h), png=pixmap))
+                text_x = scale_x(86)
+                text_w = scale_x(200)
+            else:
+                text_x = scale_x(15)
+                text_w = scale_x(270)
+
+            if HAS_MULTICONTENT and MultiContentEntryText:
+                res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, row_h), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=str(display_name)))
+                count_str = "[%d]" % int(count)
+                res.append(MultiContentEntryText(pos=(scale_x(286), 0), size=(scale_x(74), row_h), font=0, flags=RT_HALIGN_RIGHT | RT_VALIGN_CENTER, text=count_str))
+                
+            return res
+        except Exception:
+            return [str(args[0]) if args else "Category"]
 
     def build_item_entry(self, *args):
-        scaler = getattr(self, 'scaler', _GLOBAL_SCALER)
-        sx = scaler.sx
-        sy = scaler.sy
-
-        if len(args) == 1 and isinstance(args[0], tuple):
-            item, display_text, category_id = args[0]
-        elif len(args) >= 3:
-            item, display_text, category_id = args[0], args[1], args[2]
-        elif len(args) == 2:
-            item, display_text = args[0], args[1]
-            category_id = "unknown"
-        else:
+        try:
             item = {}
-            display_text = "Unknown Item"
+            display_text = "Unknown"
             category_id = "unknown"
 
-        icon_path = get_item_icon_path(item, category_id)
-        pixmap = None
-        if icon_path:
-            try:
-                if loadPNG:
+            if len(args) == 1:
+                arg0 = args[0]
+                if isinstance(arg0, (list, tuple)):
+                    if len(arg0) >= 1:
+                        item = arg0[0]
+                    if len(arg0) >= 2:
+                        display_text = str(arg0[1])
+                    if len(arg0) >= 3:
+                        category_id = str(arg0[2])
+                else:
+                    item = {"name": str(arg0)}
+                    display_text = str(arg0)
+            elif len(args) >= 2:
+                item = args[0]
+                display_text = str(args[1])
+                if len(args) >= 3:
+                    category_id = str(args[2])
+
+            icon_path = get_item_icon_path(item, category_id)
+            pixmap = None
+            if icon_path and loadPNG:
+                try:
                     pixmap = loadPNG(icon_path)
-            except Exception as e:
-                pass
+                except Exception:
+                    pixmap = None
 
-        res = [item]
-        
-        # Responsive dimensions for items entry
-        icon_pos_x, icon_pos_y = sx(10), sy(10)
-        icon_size_w, icon_size_h = sx(56), sy(56)
-        entry_h = sy(76)
+            res = [item]
+            # Scaled sizes and coordinates for Item MultiContent
+            icon_w = scale_x(56)
+            icon_h = scale_y(56)
+            icon_pos_x = scale_x(10)
+            icon_pos_y = scale_y(10)
+            row_h = scale_y(76)
 
-        if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
-            res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_size_w, icon_size_h), png=pixmap))
-            text_x = sx(78)
-            text_w = sx(670)
-        else:
-            text_x = sx(15)
-            text_w = sx(740)
+            if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_w, icon_h), png=pixmap))
+                text_x = scale_x(78)
+                text_w = scale_x(670)
+            else:
+                text_x = scale_x(15)
+                text_w = scale_x(740)
 
-        if HAS_MULTICONTENT and MultiContentEntryText:
-            align = RT_HALIGN_LEFT | RT_VALIGN_CENTER
-            res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, entry_h), font=0, flags=align, text=display_text))
-            
-        return res
+            if HAS_MULTICONTENT and MultiContentEntryText:
+                res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, row_h), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=str(display_text)))
+                
+            return res
+        except Exception:
+            return [str(args[0]) if args else "Item"]
 
     def load_store(self):
         self["description"].setText("Refreshing feed from GitHub...")
@@ -1130,7 +1391,7 @@ class MohamedStore(Screen):
         self.download_last_update_time = self.download_start_time
         self.download_current_speed = 0.0
 
-        self["description"].setText("Downloading update script...\nProgress & counter active.\nPress RED or BACK to cancel.")
+        self["description"].setText("Downloading update script...\nPress RED or BACK to cancel.")
         self["key_red"].setText("Cancel")
 
         try:
@@ -1145,7 +1406,7 @@ class MohamedStore(Screen):
             self["speed"].setText("0 KB/s")
             self["size"].setText("Downloading script...")
             self["status"].setText("Updating plugin...")
-        except:
+        except Exception:
             pass
 
         self.download_in_progress = True
@@ -1164,7 +1425,7 @@ class MohamedStore(Screen):
             self["speed"].hide()
             self["size"].hide()
             self["status"].hide()
-        except:
+        except Exception:
             pass
         self["key_red"].setText("Exit")
 
@@ -1176,10 +1437,7 @@ class MohamedStore(Screen):
                 MessageBox.TYPE_YESNO
             )
         else:
-            error = result.strip() if result else "Unknown network or execution error"
-            self["description"].setText(
-                "Self-Update Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
-            )
+            self["description"].setText("Self-Update Failed! Exit Code: " + str(retval))
 
     def restartGUICallback(self, answer):
         if answer:
@@ -1188,14 +1446,11 @@ class MohamedStore(Screen):
                     self.session.open(TryQuitMainloop, 3)
                 else:
                     enigma.quitMainloop(3)
-            except:
+            except Exception:
                 try:
                     enigma.quitMainloop(3)
-                except:
-                    try:
-                        enigma.eApp.getInstance().quit(3)
-                    except:
-                        pass
+                except Exception:
+                    pass
         else:
             self.load_store()
 
@@ -1209,7 +1464,6 @@ class MohamedStore(Screen):
                 return
             
             selected_cat = self.categories[idx]
-            
             if selected_cat == "tools":
                 remote_tools = self.store_data.get("tools", [])
                 self.visible_items = BUILTIN_SYSTEM_TOOLS + remote_tools
@@ -1240,7 +1494,7 @@ class MohamedStore(Screen):
             for folder in self.current_path:
                 items = folder.get("items", [])
             self.visible_items = items
-        except Exception as e:
+        except Exception:
             self.visible_items = []
 
     def update_items_list(self):
@@ -1372,7 +1626,7 @@ class MohamedStore(Screen):
                 self["categories_list"].up()
             else:
                 self["items_list"].up()
-        except:
+        except Exception:
             pass
 
     def go_down(self):
@@ -1383,7 +1637,7 @@ class MohamedStore(Screen):
                 self["categories_list"].down()
             else:
                 self["items_list"].down()
-        except:
+        except Exception:
             pass
 
     def press_ok(self):
@@ -1424,6 +1678,58 @@ class MohamedStore(Screen):
                 item = self.visible_items[idx]
                 
                 if item.get("type") == "tool":
+                    action = item.get("action", "")
+                    if action == "check_oscam_status":
+                        success, msg = get_active_oscam_status()
+                        self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
+                        self.item_changed()
+                        return
+
+                    elif action == "tiger_server":
+                        self["description"].setText("Activating Free 24h Server...\nDisabling Paid Server...\nPlease wait...")
+                        def _run_tiger():
+                            success, msg = generate_tigerhd_server()
+                            def _show_res():
+                                if success:
+                                    self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
+                                else:
+                                    self.session.open(MessageBox, "Failed to activate server:\n" + msg, MessageBox.TYPE_ERROR)
+                                self.item_changed()
+                            if sys.version_info >= (3, 0):
+                                try:
+                                    from twisted.internet import reactor
+                                    reactor.callFromThread(_show_res)
+                                except Exception:
+                                    _show_res()
+                            else:
+                                _show_res()
+                        
+                        t = threading.Thread(target=_run_tiger)
+                        t.daemon = True
+                        t.start()
+                        return
+
+                    elif action == "restore_paid":
+                        success, msg = restore_paid_oscam()
+                        if success:
+                            self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
+                        else:
+                            self.session.open(MessageBox, msg, MessageBox.TYPE_WARNING)
+                        self.item_changed()
+                        return
+
+                    elif action == "restart_oscam":
+                        success, msg = restart_oscam_service()
+                        self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
+                        self.item_changed()
+                        return
+
+                    elif action == "stop_oscam":
+                        success, msg = stop_oscam_service()
+                        self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
+                        self.item_changed()
+                        return
+
                     cmd = item.get("cmd", "")
                     if cmd == "restart_gui":
                         if TryQuitMainloop:
@@ -1508,12 +1814,11 @@ class MohamedStore(Screen):
                     elif ext == ".tv":
                         dest_path = os.path.join("/etc/enigma2", filename)
                         cmd = (
-                            "if ! grep -q '{filename}' /etc/enigma2/bouquets.tv; then "
-                            "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"{filename}\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
+                            "if ! grep -q '" + filename + "' /etc/enigma2/bouquets.tv; then "
+                            "echo '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"" + filename + "\" ORDER BY bouquet' >> /etc/enigma2/bouquets.tv; "
                             "fi && "
                             "(wget -qO - http://127.0.0.1/web/servicelistreload?mode=0 || "
-                            "curl -s http://127.0.0.1/web/servicelistreload?mode=0 || "
-                            "enigma2-web-reload || true)"
+                            "curl -s http://127.0.0.1/web/servicelistreload?mode=0 || true)"
                         )
                     elif ext == ".py":
                         dest_path = "/tmp/addon.py"
@@ -1521,12 +1826,9 @@ class MohamedStore(Screen):
                     else:
                         dest_path = "/tmp/addon.ipk"
                         cmd = "opkg install --force-overwrite /tmp/addon.ipk && rm -f /tmp/addon.ipk"
-                    
-                    cmd = cmd.format(filename=filename)
 
                 self.install_cmd = cmd
                 self.install_item_name = str(item.get("name", ""))
-                
                 self.download_url = url
                 self.download_dest_path = dest_path
                 self.download_is_update_script = False
@@ -1555,11 +1857,10 @@ class MohamedStore(Screen):
                     self["speed"].setText("0 KB/s")
                     self["size"].setText("0 MB / 0 MB")
                     self["status"].setText(os.path.basename(dest_path))
-                except:
+                except Exception:
                     pass
                 
                 self.download_in_progress = True
-                
                 if self.download_timer:
                     self.download_timer.start(100, False)
                     
@@ -1567,16 +1868,14 @@ class MohamedStore(Screen):
                 self.download_thread_obj.daemon = True
                 self.download_thread_obj.start()
                 
-        except Exception as e:
-            print("[MohamedStore] Download Error: " + str(e))
+        except Exception:
             self["description"].setText("Execution error, check system log.")
 
     def tool_execution_finished(self, result, retval, extra_args=None):
         if retval == 0:
             self.session.open(MessageBox, "Tool executed successfully!", MessageBox.TYPE_INFO)
         else:
-            error = result.strip() if result else "Execution error"
-            self.session.open(MessageBox, "Tool execution failed:\n" + str(error), MessageBox.TYPE_ERROR)
+            self.session.open(MessageBox, "Tool execution failed!", MessageBox.TYPE_ERROR)
         self.item_changed()
 
     def start_download_thread(self):
@@ -1603,30 +1902,23 @@ class MohamedStore(Screen):
                     if isinstance(url, unicode):
                         url = url.encode('utf-8')
                 url = urllib_quote(url, safe='/:?=&%')
-            except Exception as qe:
+            except Exception:
                 url = url.replace(" ", "%20")
                 
-            req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-            if context:
-                try:
-                    opener = urllib2.build_opener(urllib2.HTTPSHandler(context=context))
-                except Exception as oe:
-                    opener = urllib2.build_opener()
-            else:
-                opener = urllib2.build_opener()
-                
+            req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            opener = urllib2.build_opener(urllib2.HTTPSHandler(context=context)) if context else urllib2.build_opener()
             response = opener.open(req, timeout=12)
                 
             try:
                 self.download_total_bytes = int(response.info().get('Content-Length', 0))
-            except:
+            except Exception:
                 self.download_total_bytes = 0
                 
             dir_name = os.path.dirname(self.download_dest_path)
             if dir_name and not os.path.exists(dir_name):
                 try:
                     os.makedirs(dir_name)
-                except:
+                except Exception:
                     pass
                 
             self.download_start_time = time.time()
@@ -1645,7 +1937,7 @@ class MohamedStore(Screen):
                 if os.path.exists(self.download_dest_path):
                     try:
                         os.remove(self.download_dest_path)
-                    except:
+                    except Exception:
                         pass
             else:
                 self.download_completed = True
@@ -1654,7 +1946,7 @@ class MohamedStore(Screen):
             if os.path.exists(self.download_dest_path):
                 try:
                     os.remove(self.download_dest_path)
-                except:
+                except Exception:
                     pass
 
     def update_download_ui(self):
@@ -1675,7 +1967,7 @@ class MohamedStore(Screen):
             if ProgressBar:
                 try:
                     self["progress"].setValue(pct)
-                except:
+                except Exception:
                     pass
             self["percentage"].setText("%d%%" % pct)
             
@@ -1686,7 +1978,7 @@ class MohamedStore(Screen):
             if ProgressBar:
                 try:
                     self["progress"].setValue(0)
-                except:
+                except Exception:
                     pass
             self["percentage"].setText("---")
             dl_kb = float(self.downloaded_bytes) / 1024
@@ -1710,7 +2002,7 @@ class MohamedStore(Screen):
                     self["progress"].setValue(100)
                     self["percentage"].setText("100%")
                     self["status"].setText("Executing install.sh...")
-                except:
+                except Exception:
                     pass
                 self.my_console.ePopen(self.install_cmd + " 2>&1", self.update_finished)
 
@@ -1722,19 +2014,14 @@ class MohamedStore(Screen):
                     self["speed"].hide()
                     self["size"].hide()
                     self["status"].hide()
-                except:
+                except Exception:
                     pass
                     
                 self["key_red"].setText("Exit")
                 file_size_mb = float(self.downloaded_bytes) / (1024.0 * 1024.0)
                 success_msg = u"Image downloaded successfully as a ZIP file!\n\nSize: %.1f MB\nPath: %s\n\nYou can now open NeoBoot and install it." % (file_size_mb, str(self.download_dest_path))
                 self["description"].setText(success_msg)
-                
-                self.session.open(
-                    MessageBox,
-                    success_msg,
-                    MessageBox.TYPE_INFO
-                )
+                self.session.open(MessageBox, success_msg, MessageBox.TYPE_INFO)
                 self.item_changed()
 
             elif self.download_is_picon:
@@ -1745,19 +2032,14 @@ class MohamedStore(Screen):
                     self["speed"].hide()
                     self["size"].hide()
                     self["status"].hide()
-                except:
+                except Exception:
                     pass
                     
                 self["key_red"].setText("Exit")
                 file_size_mb = float(self.downloaded_bytes) / (1024.0 * 1024.0)
                 success_msg = u"Picons ZIP package downloaded directly to HDD!\n\nSize: %.1f MB\nPath: %s" % (file_size_mb, str(self.download_dest_path))
                 self["description"].setText(success_msg)
-                
-                self.session.open(
-                    MessageBox,
-                    success_msg,
-                    MessageBox.TYPE_INFO
-                )
+                self.session.open(MessageBox, success_msg, MessageBox.TYPE_INFO)
                 self.item_changed()
 
             else:
@@ -1767,7 +2049,7 @@ class MohamedStore(Screen):
                     self["speed"].hide()
                     self["size"].hide()
                     self["status"].hide()
-                except:
+                except Exception:
                     pass
                     
                 self["key_red"].setText("Exit")
@@ -1791,7 +2073,7 @@ class MohamedStore(Screen):
                 self["speed"].hide()
                 self["size"].hide()
                 self["status"].hide()
-            except:
+            except Exception:
                 pass
                 
             self["key_red"].setText("Exit")
@@ -1809,7 +2091,7 @@ class MohamedStore(Screen):
             self["speed"].hide()
             self["size"].hide()
             self["status"].hide()
-        except:
+        except Exception:
             pass
             
         self["key_red"].setText("Exit")
@@ -1818,18 +2100,15 @@ class MohamedStore(Screen):
         if self.download_dest_path and os.path.exists(self.download_dest_path):
             try:
                 os.remove(self.download_dest_path)
-            except:
+            except Exception:
                 pass
-
-    def install_confirmation_category_callback(self, answer):
-        pass
 
     def install_confirmation_callback(self, answer):
         if answer:
             self["description"].setText("Installing %s...\nPlease wait..." % self.install_item_name)
             self.my_console.ePopen(self.install_cmd + " 2>&1", self.download_finished)
         else:
-            self["description"].setText("Installation completed successfully. Restart skipped.")
+            self["description"].setText("Installation skipped.")
             self.item_changed()
 
     def download_finished(self, result, retval, extra_args=None):
@@ -1837,10 +2116,7 @@ class MohamedStore(Screen):
             self.session.openWithCallback(self.restartCallback, MessageBox, "Installation completed successfully!\n\nRestart GUI now?", MessageBox.TYPE_YESNO)
         else:
             error = result.strip() if result else "Unknown error"
-            print("[MohamedStore] Install output:\n" + str(error))
-            self["description"].setText(
-                "Installation Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error)
-            )
+            self["description"].setText("Installation Failed!\n\nExit Code: " + str(retval) + "\n\n" + str(error))
 
     def restartCallback(self, answer):
         if answer:
@@ -1848,15 +2124,12 @@ class MohamedStore(Screen):
                 if TryQuitMainloop:
                     self.session.open(TryQuitMainloop, 3)
                 else:
-                    enigma2.quitMainloop(3) if 'enigma2' in globals() else enigma.quitMainloop(3)
-            except:
+                    enigma.quitMainloop(3)
+            except Exception:
                 try:
                     enigma.quitMainloop(3)
-                except:
-                    try:
-                        enigma.eApp.getInstance().quit(3)
-                    except:
-                        pass
+                except Exception:
+                    pass
         else:
             self["description"].setText("Installation completed successfully. Restart skipped.")
 
