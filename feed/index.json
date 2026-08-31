@@ -1724,6 +1724,12 @@
         ],
         "channels": [
             {
+                "name": "channels_backup by tarekalashry-ag",
+                "description": "Channels Settings",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup%20by%20tarekalashry-ag.zip",
+                "image": ""
+            },
+            {
                 "name": "ملف backup قنوات ومفضلات مرتب (MNASR)",
                 "description": "ملف قنوات محدث مرتب بعناية لجميع الأقمار والمفضلات العربية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_MNASR_20260527.tar.gz",

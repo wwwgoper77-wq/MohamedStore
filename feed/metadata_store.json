@@ -3414,5 +3414,13 @@
     "download/v1.0/picon_ALL.zip": {
         "name": "حزمة البيكونات الشاملة (جميع الأقمار)",
         "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+    },
+    "channels/channels_backup by tarekalashry-ag.zip": {
+        "name": "channels_backup by tarekalashry-ag",
+        "description": "Channels Settings"
+    },
+    "channels_backup by tarekalashry-ag.zip": {
+        "name": "channels_backup by tarekalashry-ag",
+        "description": "Channels Settings"
     }
 }
