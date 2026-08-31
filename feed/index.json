@@ -184,6 +184,18 @@
                 "image": ""
             },
             {
+                "name": "XC Plugin Forever",
+                "description": "مشغل اشتراكات الـ IPTV بنظام Xtream Codes",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-xcplugin-forever_2.2_all.ipk",
+                "image": ""
+            },
+            {
+                "name": "Xstreamity IPTV",
+                "description": "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-xstreamity_5.58.20260720_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "timeshift",
                 "description": "اداة تايم شفت صورة ايجامي فقط عند انتهاء التثبيت اضغط AUDIO",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-timeshift-delay-egami_3.0_all.ipk",

@@ -2530,5 +2530,21 @@
     "audio/read.me": {
         "name": "read",
         "description": "Tool Package"
+    },
+    "plugins/enigma2-plugin-extensions-xcplugin-forever_2.2_all.ipk": {
+        "name": "XC Plugin Forever",
+        "description": "مشغل اشتراكات الـ IPTV بنظام Xtream Codes"
+    },
+    "enigma2-plugin-extensions-xcplugin-forever_2.2_all.ipk": {
+        "name": "XC Plugin Forever",
+        "description": "مشغل اشتراكات الـ IPTV بنظام Xtream Codes"
+    },
+    "plugins/enigma2-plugin-extensions-xstreamity_5.58.20260720_all.ipk": {
+        "name": "Xstreamity IPTV",
+        "description": "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر"
+    },
+    "enigma2-plugin-extensions-xstreamity_5.58.20260720_all.ipk": {
+        "name": "Xstreamity IPTV",
+        "description": "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر"
     }
 }
