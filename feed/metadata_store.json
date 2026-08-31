@@ -2586,5 +2586,13 @@
     "tvmate_portal_2.sh": {
         "name": "tvmate_portal_2",
         "description": "Portals Tool"
+    },
+    "portals/remorize_soltan.sh": {
+        "name": "remorize_soltan",
+        "description": "Portals Tool"
+    },
+    "remorize_soltan.sh": {
+        "name": "remorize_soltan",
+        "description": "Portals Tool"
     }
 }

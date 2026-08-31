@@ -779,6 +779,12 @@
                         "image": ""
                     },
                     {
+                        "name": "remorize_soltan",
+                        "description": "Portals Tool",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/remorize_soltan.sh",
+                        "image": ""
+                    },
+                    {
                         "name": "tvmate_portal_1",
                         "description": "Portals Tool",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/tvmate_portal_1.sh",
