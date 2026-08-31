@@ -777,6 +777,18 @@
                         "description": "Portals Tool",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/nocable_portal.sh",
                         "image": ""
+                    },
+                    {
+                        "name": "tvmate_portal_1",
+                        "description": "Portals Tool",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/tvmate_portal_1.sh",
+                        "image": ""
+                    },
+                    {
+                        "name": "tvmate_portal_2",
+                        "description": "Portals Tool",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/tvmate_portal_2.sh",
+                        "image": ""
                     }
                 ]
             },

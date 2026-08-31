@@ -2570,5 +2570,21 @@
     "nocable_portal.sh": {
         "name": "nocable_portal",
         "description": "Portals Tool"
+    },
+    "portals/tvmate_portal_1.sh": {
+        "name": "tvmate_portal_1",
+        "description": "Portals Tool"
+    },
+    "tvmate_portal_1.sh": {
+        "name": "tvmate_portal_1",
+        "description": "Portals Tool"
+    },
+    "portals/tvmate_portal_2.sh": {
+        "name": "tvmate_portal_2",
+        "description": "Portals Tool"
+    },
+    "tvmate_portal_2.sh": {
+        "name": "tvmate_portal_2",
+        "description": "Portals Tool"
     }
 }
