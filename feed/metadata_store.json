@@ -2549,50 +2549,870 @@
     },
     "portals/cord_cutter_portal.sh": {
         "name": "cord_cutter_portal",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "cord_cutter_portal.sh": {
         "name": "cord_cutter_portal",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "portals/fastopen_portal.sh": {
         "name": "fastopen_portal",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "fastopen_portal.sh": {
         "name": "fastopen_portal",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "portals/nocable_portal.sh": {
         "name": "nocable_portal",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "nocable_portal.sh": {
         "name": "nocable_portal",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "portals/tvmate_portal_1.sh": {
         "name": "tvmate_portal_1",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "tvmate_portal_1.sh": {
         "name": "tvmate_portal_1",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "portals/tvmate_portal_2.sh": {
         "name": "tvmate_portal_2",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "tvmate_portal_2.sh": {
         "name": "tvmate_portal_2",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "portals/remorize_soltan.sh": {
         "name": "remorize_soltan",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
     },
     "remorize_soltan.sh": {
         "name": "remorize_soltan",
-        "description": "Portals Tool"
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "download/v1.0/FootOnSat.plugin.zip": {
+        "name": "FootOnSat",
+        "description": "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة"
+    },
+    "skins/All/MX-HC2-MOD-By-RAED.ipk": {
+        "name": "MX HC2 MOD By RAED",
+        "description": "سكين MX HC2 MOD By RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/SKIN-BATMAN-VPX-FHD-By-Muaath.ipk": {
+        "name": "BATMAN VPX FHD By Muaath",
+        "description": "سكين SKIN-BATMAN-VPX-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/SKIN-ICONE-VPX-FHD-By-Muaath.ipk": {
+        "name": "ICONE VPX FHD By Muaath",
+        "description": "سكين SKIN-ICONE-VPX-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/SKIN-ICONE-VPX2-FHD-By-Muaath.ipk": {
+        "name": "ICONE VPX2 FHD By Muaath",
+        "description": "سكين SKIN-ICONE-VPX2-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/SKIN-ORANGESKY-XP-FHD-By-Muaath.ipk": {
+        "name": "ORANGESKY XP FHD By Muaath",
+        "description": "سكين SKIN-ORANGESKY-XP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/SKIN-ORANGESKY-XP2-FHD-By-Muaath.ipk": {
+        "name": "ORANGESKY XP2 FHD By Muaath",
+        "description": "سكين SKIN-ORANGESKY-XP2-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin SimpleGray.ipk": {
+        "name": "Skin SimpleGray",
+        "description": "سكين Skin SimpleGray عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-BATMAN-BLACK-P-FHD-By-Muaath.ipk": {
+        "name": "BATMAN BLACK P FHD By Muaath",
+        "description": "سكين Skin-BATMAN-BLACK-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-BATMAN-RED-FHD-By-Muaath.ipk": {
+        "name": "BATMAN RED FHD By Muaath",
+        "description": "سكين Skin-BATMAN-RED-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-BEIN-BLACK-NP-FHD-By-Muaath.ipk": {
+        "name": "BEIN BLACK NP FHD By Muaath",
+        "description": "سكين Skin-BEIN-BLACK-NP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-BEIN-NEP-FHD-By-Muaath.ipk": {
+        "name": "BEIN NEP FHD By Muaath",
+        "description": "سكين Skin-BEIN-NEP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "Beyonce F1 By Matrix10 MOD By RAED",
+        "description": "سكين Skin-Beyonce-F1-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-BundesligaFHD-By-Maggy-MOD-By-RAED.ipk": {
+        "name": "BundesligaFHD By Maggy MOD By RAED",
+        "description": "سكين Skin-BundesligaFHD-By-Maggy-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-CH.LEAGUE-PN-FHD-By-Muaath.ipk": {
+        "name": "CH.LEAGUE PN FHD By Muaath",
+        "description": "سكين Skin-CH عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED.ipk": {
+        "name": "DarkSilverFHD By Sharp987 MOD By RAED",
+        "description": "سكين Skin-DarkSilverFHD-By-Sharp987-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-EUR02020-FHD-N-By-Muaath.ipk": {
+        "name": "EUR02020 FHD N By Muaath",
+        "description": "سكين Skin-EUR02020-FHD-N-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-MX-X6-By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "MX X6 By Matrix10 MOD By RAED",
+        "description": "سكين Skin-MX-X6-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-MX-X7-By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "MX X7 By Matrix10 MOD By RAED",
+        "description": "سكين Skin-MX-X7-By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-MX_HQ9_By-Matrix10-MOD-By-RAED.ipk": {
+        "name": "MX HQ9 By Matrix10 MOD By RAED",
+        "description": "سكين Skin-MX_HQ9_By-Matrix10-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only.ipk": {
+        "name": "Multibox FHD By stein17 Mod By RAED",
+        "description": "سكين Skin-Multibox-FHD-By-stein17-Mod-By-RAED_OpenSource-only عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-OSN-PN-FHD-By-Muaath.ipk": {
+        "name": "OSN PN FHD By Muaath",
+        "description": "سكين Skin-OSN-PN-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-QATAR2022-GPN-FHD-By-Muaath.ipk": {
+        "name": "QATAR2022 GPN FHD By Muaath",
+        "description": "سكين Skin-QATAR2022-GPN-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-ROBOCOP-P-FHD-By-Muaath.ipk": {
+        "name": "ROBOCOP P FHD By Muaath",
+        "description": "سكين Skin-ROBOCOP-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-SPIDERMAN-P-FHD-By-Muaath.ipk": {
+        "name": "SPIDERMAN P FHD By Muaath",
+        "description": "سكين Skin-SPIDERMAN-P-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-SPIDERMAN-SP-FHD-By-Muaath.ipk": {
+        "name": "SPIDERMAN SP FHD By Muaath",
+        "description": "سكين Skin-SPIDERMAN-SP-FHD-By-Muaath عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Skin-Sky-FHD-By-Maggy-MOD-By-RAED.ipk": {
+        "name": "Sky FHD By Maggy MOD By RAED",
+        "description": "سكين Skin-Sky-FHD-By-Maggy-MOD-By-RAED عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-KIII-PRO-by-zelda77_v3.3_all.ipk": {
+        "name": "KIII PRO by zelda77 v3.3",
+        "description": "سكين KIII-PRO-by-zelda77_v3 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-karonte-fhd-all_1.0_all.ipk": {
+        "name": "karonte fhd all 1.0",
+        "description": "سكين karonte-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-kitte888lite-fhd-all_1.3_all.ipk": {
+        "name": "kitte888lite fhd all 1.3",
+        "description": "سكين kitte888lite-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-litehd_1.6_all.ipk": {
+        "name": "litehd 1.6",
+        "description": "سكين litehd_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-madmax-impossible-pli_2.3_all.ipk": {
+        "name": "madmax impossible pli 2.3",
+        "description": "سكين madmax-impossible-pli_2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-madmax-impossible_2.4_all.ipk": {
+        "name": "madmax impossible 2.4",
+        "description": "سكين madmax-impossible_2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-mx--sline-posterx_2.0-mod2ha_all.ipk": {
+        "name": "mx  sline posterx 2.0 mod2ha",
+        "description": "سكين mx--sline-posterx_2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-nitro-fhd-all_1.1_all.ipk": {
+        "name": "nitro fhd all 1.1",
+        "description": "سكين nitro-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-nitrofhd-green-all_2.5-1_all.ipk": {
+        "name": "nitrofhd green all 2.5 1",
+        "description": "سكين nitrofhd-green-all_2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-novaler-s-fhd-indianred_3.3_all.ipk": {
+        "name": "novaler s fhd indianred 3.3",
+        "description": "سكين novaler-s-fhd-indianred_3 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-obselite-fhd-all_1.0_all.ipk": {
+        "name": "obselite fhd all 1.0",
+        "description": "سكين obselite-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-octagon-hd-style-dark_1.3_all.ipk": {
+        "name": "octagon hd style dark 1.3",
+        "description": "سكين octagon-hd-style-dark_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-octagoneightfhd_V4.50_all.ipk": {
+        "name": "octagoneightfhd V4.50",
+        "description": "سكين octagoneightfhd_V4 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-plugin-skins-ozskin-fhd_by.Mmark.v.1.0.0_all.ipk": {
+        "name": "ozskin fhd by.Mmark.v.1.0.0",
+        "description": "سكين ozfhd_by عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-skin-beta-pro-fhd_v1.1_all_BY_BAhaa_1772022_Xtraevent.ipk": {
+        "name": "beta pro fhd v1.1 all BY BAhaa 1772022 Xtraevent",
+        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-skin-metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all.ipk": {
+        "name": "metrixconfluenceatv",
+        "description": "سكين metrixconfluenceatv-adrenalinnrw_1_7full_dragon_multiposter_all عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/enigma2-skin-metrixperience-adrenalinnrw_1.0_all.ipk": {
+        "name": "metrixperience adrenalinnrw 1.0",
+        "description": "سكين metrixperience-adrenalinnrw_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/skin-MX_Graphite_FHD-OpenATV-Mod-Borsalino.ipk": {
+        "name": "MX_Graphite",
+        "description": "بتصميم أنيق وخفيف"
+    },
+    "skins/All/skin-octelfhd_2.2-By-SkinMania-MOD-By-MEHDI_all.ipk": {
+        "name": "octelfhd 2.2 By SkinMania MOD By MEHDI",
+        "description": "سكين octelfhd_2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/Egami/Skin LiiS8 FHD+ v1.0.ipk": {
+        "name": "Skin LiiS8 FHD+ v1",
+        "description": "يعمل على صورة ايجامي 11"
+    },
+    "skins/Egami/enigma2-plugin-skins-luka-fhd_1.0_egami.ipk": {
+        "name": "luka",
+        "description": "بتصميم أنيق وخفيف"
+    },
+    "skins/Egami/enigma2-plugin-skins-ozeta_1.5.2-byhossam_all.ipk": {
+        "name": "ozeta 1.5.2 byhossam",
+        "description": "سكين ozeta_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/Egami/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/Egami/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz": {
+        "name": "beta pro fhd v1.5 XtraEvent By Bahaa",
+        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenATV/Copper-FHD-v1.0-MNASR.tar.gz": {
+        "name": "Copper FHD v1.0 MNASR",
+        "description": "سكين Copper FHD v1.0 MNASR عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenATV/Skin LiiS8 FHD+ v1.0.ipk": {
+        "name": "Skin LiiS8 FHD+ v1",
+        "description": "يعمل على صورة  openatv8.0"
+    },
+    "skins/OpenATV/enigma2-plugin-skin-revolution-pro_full.1.5.Rev.dragon_all.ipk": {
+        "name": "revolution pro full.1.5.Rev.dragon",
+        "description": "سكين revolution-pro_full عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenATV/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk": {
+        "name": "multiposter fhd all 1.0",
+        "description": "سكين multiposter-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenATV/enigma2-plugin-skins-premium-fhd-black_2.4_all.ipk": {
+        "name": "premium fhd black 2.4",
+        "description": "سكين premium-fhd-black_2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenATV/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenATV/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz": {
+        "name": "beta pro fhd v1.5 XtraEvent By Bahaa",
+        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/Skin LiiS8 FHD+ v1.0.ipk": {
+        "name": "Skin LiiS8 FHD+ v1",
+        "description": "يعمل على صورة  openBH 6.1"
+    },
+    "skins/OpenBlack/enigma2-plugin-skins-mx-hq10-2-by-mamba65_v2_all.ipk": {
+        "name": "mx hq10 2 by mamba65 v2",
+        "description": "سكين mx-hq10-2-by-mamba65_v2_all عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/enigma2-plugin-skins-mxgraphite_mod.fhroma_all.ipk": {
+        "name": "mxgraphite mod.fhroma",
+        "description": "سكين mxgraphite_mod عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/enigma2-plugin-skins-q-darkblue-fhd-bh_1.0_20191029_all.ipk": {
+        "name": "q darkblue fhd bh 1.0 20191029",
+        "description": "سكين q-darkblue-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/enigma2-plugin-skins-q-purple-fhd-bh_1.0_20191029_all.ipk": {
+        "name": "q purple fhd bh 1.0 20191029",
+        "description": "سكين q-purple-fhd-bh_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/enigma2-plugin-skins-waves4-fire-weather-by-mamba65_v1_all.ipk": {
+        "name": "waves4 fire weather by mamba65 v1",
+        "description": "سكين waves4-fire-weather-by-mamba65_v1_all عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/skin-enigma2-alienaware-obh4_all.ipk": {
+        "name": "enigma2 alienaware obh4",
+        "description": "سكين enigma2-alienaware-obh4_all عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "download/v1.0/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk": {
+        "name": "armynextgengradient",
+        "description": "سكين OpenBlack-armynextgengradient عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenDroid/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenP/Copper-FHD-v1.0-MNASR.tar.gz": {
+        "name": "Copper FHD v1.0 MNASR",
+        "description": "سكين Copper FHD v1.0 MNASR عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenP/enigma2-plugin-skins-multiposter-fhd-all_1.0_all.ipk": {
+        "name": "multiposter fhd all 1.0",
+        "description": "سكين multiposter-fhd-all_1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenP/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenP/enigma2-skin-beta-pro-fhd_v1.5_XtraEvent_By_Bahaa.tar.gz": {
+        "name": "beta pro fhd v1.5 XtraEvent By Bahaa",
+        "description": "سكين beta-pro-fhd_v1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenP/enigma2-skin-whiteshadowfhd_sharp987_openpli8.3-r1.00_all.ipk": {
+        "name": "whiteshadowfhd",
+        "description": "بتصميم أنيق وخفيف"
+    },
+    "skins/OpenSPA/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/Pure2/ESTUARY SKIN COVER INFOBAR 12_BY-CHARI7.zip": {
+        "name": "ESTUARY SKIN COVER INFOBAR 12 BY CHARI7",
+        "description": "سكين ESTUARY SKIN COVER INFOBAR 12 BY CHARI7 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/Pure2/enigma2-plugin-skins-xDreamy_6.0.0_all.ipk": {
+        "name": "xDreamy 6.0.0",
+        "description": "سكين xDreamy 6.0.0 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/VTI/enigma2-plugin-skin-metrix-curve-fhd_1.0.2_all.ipk": {
+        "name": "metrix curve fhd 1.0.2",
+        "description": "سكين metrix curve fhd 1.0.2 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/VTI/enigma2-plugin-skin-obelixfhd_1.1_all.ipk": {
+        "name": "obelixfhd 1.1",
+        "description": "سكين obelixfhd 1.1 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/VTI/enigma2-skin-aeonfhdmod_sharp987_vti-r3.27_all.ipk": {
+        "name": "aeonfhdmod sharp987 vti r3.27",
+        "description": "سكين aeonfhdmod sharp987 vti r3.27 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/VTI/enigma2-skin-aeonfhdmod_sharp987_vti-r3.29_all.ipk": {
+        "name": "aeonfhdmod sharp987 vti r3.29",
+        "description": "سكين aeonfhdmod sharp987 vti r3.29 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/VTI/enigna2-skin-whiteshadowfhd_sharp987_vti-r1.00_all.ipk": {
+        "name": "enigna2 skin whiteshadowfhd sharp987 vti r1.00",
+        "description": "سكين enigna2 skin whiteshadowfhd sharp987 vti r1.00 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "tools/audio/read.me": {
+        "name": "read",
+        "description": "Tool Package"
+    },
+    "tools/portals/cord_cutter_portal.sh": {
+        "name": "cord_cutter_portal",
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "tools/portals/fastopen_portal.sh": {
+        "name": "fastopen_portal",
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "tools/portals/nocable_portal.sh": {
+        "name": "nocable_portal",
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "tools/portals/remorize_soltan.sh": {
+        "name": "remorize_soltan",
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "tools/portals/tvmate_portal_1.sh": {
+        "name": "tvmate_portal_1",
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "tools/portals/tvmate_portal_2.sh": {
+        "name": "tvmate_portal_2",
+        "description": "بورتال بلجن xstreamity مع صلاحيىة الانتهاء"
+    },
+    "download/v1.0/egami-10.5-r1-vuduo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Duo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "download/v1.0/egami-10.5-r1-vuultimo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Ultimo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "download/v1.0/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip": {
+        "name": "صورة EGAMI لجهاز VUZERO4K",
+        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/egami-11.0-r21-novaler4k-20260519_multi.zip": {
+        "name": "صورة EGAMI لجهاز NOVALER4K",
+        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز NOVALER4K"
+    },
+    "download/v1.0/egami-11.0-r21-novaler4kpro-20260519_multi.zip": {
+        "name": "صورة EGAMI لجهاز NOVALER4KPRO",
+        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز NOVALER4KPRO"
+    },
+    "download/v1.0/egami-11.0-r21-novaler4kse-20260519_multi.zip": {
+        "name": "صورة EGAMI لجهاز NOVALER4KSE",
+        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز NOVALER4KSE"
+    },
+    "download/v1.0/egami-11.0-r21-zgemmah17combo-20260519_multi.zip": {
+        "name": "صورة EGAMI لجهاز ZGEMMAH17COMBO",
+        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز ZGEMMAH17COMBO"
+    },
+    "download/v1.0/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip": {
+        "name": "صورة OPENATV لجهاز VUDUO4K",
+        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUDUO4K"
+    },
+    "download/v1.0/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip": {
+        "name": "صورة OPENATV لجهاز VUSOLO4K",
+        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUSOLO4K"
+    },
+    "download/v1.0/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip": {
+        "name": "صورة OPENATV لجهاز VUULTIMO4K",
+        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUULTIMO4K"
+    },
+    "download/v1.0/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip": {
+        "name": "صورة OPENATV لجهاز VUUNO4K",
+        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUUNO4K"
+    },
+    "download/v1.0/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip": {
+        "name": "صورة OPENATV لجهاز VUZERO4K",
+        "description": "صورة نظام OPENATV الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUDUO4K",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4K"
+    },
+    "download/v1.0/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUDUO4KSE",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4KSE"
+    },
+    "download/v1.0/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUSOLO4K",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUSOLO4K"
+    },
+    "download/v1.0/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUUNO4K",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUUNO4K"
+    },
+    "download/v1.0/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUUNO4KSE",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUUNO4KSE"
+    },
+    "download/v1.0/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUZERO4K",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip": {
+        "name": "صورة OPENBH لجهاز VUULTIMO4K",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUULTIMO4K"
+    },
+    "download/v1.0/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip": {
+        "name": "صورة OPENDROID لجهاز SF4008",
+        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF4008"
+    },
+    "download/v1.0/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip": {
+        "name": "صورة OPENDROID لجهاز SF8008",
+        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008"
+    },
+    "download/v1.0/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip": {
+        "name": "صورة OPENDROID لجهاز SF8008",
+        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز SF8008"
+    },
+    "download/v1.0/opendroid-8.1.1-vusolo4k-20260720_usb.zip": {
+        "name": "صورة OPENDROID لجهاز VUSOLO4K",
+        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUSOLO4K"
+    },
+    "download/v1.0/opendroid-8.1.1-vuuno4k-20260720_usb.zip": {
+        "name": "صورة OPENDROID لجهاز VUUNO4K",
+        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUUNO4K"
+    },
+    "download/v1.0/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip": {
+        "name": "صورة OPENDROID لجهاز VUZERO4K",
+        "description": "صورة نظام OPENDROID الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/openhdf-7.2-gbquad4k-13-20230501_usb.zip": {
+        "name": "صورة OPENHDF لجهاز GBQUAD4K",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K"
+    },
+    "download/v1.0/openhdf-7.2-gbtrio4k-13-20230502_mmc.zip": {
+        "name": "صورة OPENHDF لجهاز GBTRIO4K",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4K"
+    },
+    "download/v1.0/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip": {
+        "name": "صورة OPENHDF لجهاز GBTRIO4KPRO",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBTRIO4KPRO"
+    },
+    "download/v1.0/openhdf-7.2-sf3038-11-20230415_usb.zip": {
+        "name": "صورة OPENHDF لجهاز SF3038",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF3038"
+    },
+    "download/v1.0/openhdf-7.2-sf4008-14-20230506_usb.zip": {
+        "name": "صورة OPENHDF لجهاز SF4008",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF4008"
+    },
+    "download/v1.0/openhdf-7.5-sf8008-72-20260528_mmc.zip": {
+        "name": "صورة OPENHDF لجهاز SF8008",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SF8008"
+    },
+    "download/v1.0/openhdf-7.5-sx88v2-72-20260528_mmc.zip": {
+        "name": "صورة OPENHDF لجهاز SX88V2",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX88V2"
+    },
+    "download/v1.0/openhdf-7.5-sx988-72-20260528_mmc.zip": {
+        "name": "صورة OPENHDF لجهاز SX988",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX988"
+    },
+    "download/v1.0/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip": {
+        "name": "صورة OpenPLi لجهاز Multibox 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)"
+    },
+    "download/v1.0/openpli-9.2-release-vuduo4kse-20260816_usb.zip": {
+        "name": "صورة OpenPLi 9.2 لجهاز VU+ Duo 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "download/v1.0/openpli-9.2-release-vuuno4kse-20260816_usb.zip": {
+        "name": "صورة OpenPLi 9.2 لجهاز VU+ Uno 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "download/v1.0/openpli-9.2-release-vuzero4k-20260816_usb.zip": {
+        "name": "صورة OpenPLi 9.2 لجهاز VU+ Zero 4K",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip": {
+        "name": "صورة OPENPLI لجهاز NOVALER4KPRO",
+        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز NOVALER4KPRO"
+    },
+    "download/v1.0/openspa-8.7.001-sf208-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-sf228-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-sf3038-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF3038",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF3038 (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-sf4008-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF4008 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-sf8008-20260704_mmc.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF8008 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "download/v1.0/openspa-8.7.001-sf8008m-20260704_mmc.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SF8008m",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008m (MMC)"
+    },
+    "download/v1.0/openspa-8.7.001-sfx6008-20260704_multi.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SFX6008",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)"
+    },
+    "download/v1.0/openspa-8.7.001-sx988-20260704_mmc.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SX988 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "download/v1.0/openspa-8.7.001-vuduo2-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vuduo4k-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Duo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vusolo2-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vusolo4k-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vusolose-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Solo SE",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vuultimo4k-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Ultimo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vuuno4k-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Uno 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vuuno4kse-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Uno 4K SE",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vuzero-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Zero",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "download/v1.0/openspa-8.7.001-vuzero4k-20260704_usb.zip": {
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Zero 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 4K SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Solo SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Ultimo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز Enigma2 Device",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز Enigma2 Device (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Uno 4K SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip": {
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "download/v1.0/openvix-6.7.020.release-sx988_mmc.zip": {
+        "name": "صورة OPENVIX لجهاز SX988",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SX988"
+    },
+    "download/v1.0/openvix-6.9.001.release-dm900_mmc.zip": {
+        "name": "صورة OPENVIX لجهاز DM900",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز DM900"
+    },
+    "download/v1.0/openvix-6.9.001.release-dm920_mmc.zip": {
+        "name": "صورة OPENVIX لجهاز DM920",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز DM920"
+    },
+    "download/v1.0/openvix-6.9.001.release-sf8008m_mmc.zip": {
+        "name": "صورة OPENVIX لجهاز SF8008",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SF8008"
+    },
+    "download/v1.0/openvix-6.9.001.release-sfx6008_multi.zip": {
+        "name": "صورة OPENVIX لجهاز SFX6008",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SFX6008"
+    },
+    "download/v1.0/openvix-6.9.001.release-sx88v2_mmc.zip": {
+        "name": "صورة OPENVIX لجهاز SX88V2",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز SX88V2"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuduo2_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUDUO2",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUDUO2"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuduo4kse_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUDUO4KSE",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUDUO4KSE"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuduo4k_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUDUO4K",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUDUO4K"
+    },
+    "download/v1.0/openvix-6.9.001.release-vusolo2_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUSOLO2",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUSOLO2"
+    },
+    "download/v1.0/openvix-6.9.001.release-vusolo4k_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUSOLO4K",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUSOLO4K"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuultimo4k_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUULTIMO4K",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUULTIMO4K"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuuno4kse_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUUNO4KSE",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUUNO4KSE"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuuno4k_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUUNO4K",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUUNO4K"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuzero4k_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUZERO4K",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/openvix-6.9.001.release-vuzero_usb.zip": {
+        "name": "صورة OPENVIX لجهاز VUZERO",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز VUZERO"
+    },
+    "download/v1.0/openvix-6.9.001.release-zgemmah17combo_multi.zip": {
+        "name": "صورة OPENVIX لجهاز ZGEMMAH17COMBO",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز ZGEMMAH17COMBO"
+    },
+    "download/v1.0/openvix-6.9.001.release-zgemmah82h_nand.zip": {
+        "name": "صورة OPENVIX لجهاز ZGEMMAH82H",
+        "description": "صورة نظام OPENVIX الرسمية المحدثة لجهاز ZGEMMAH82H"
+    },
+    "download/v1.0/novaler4k-PurE2-7.6-20260816_multi.zip": {
+        "name": "صورة PURE2 لجهاز NOVALER4K",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4K"
+    },
+    "download/v1.0/novaler4kpro-PurE2-7.6-20260816_multi.zip": {
+        "name": "صورة PURE2 لجهاز NOVALER4KPRO",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4KPRO"
+    },
+    "download/v1.0/novaler4kse-PurE2-7.6-20260816_multi.zip": {
+        "name": "صورة PURE2 لجهاز NOVALER4KSE",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز NOVALER4KSE"
+    },
+    "download/v1.0/sf4008-PurE2-7.6-20260814_usb.zip": {
+        "name": "صورة PURE2 لجهاز SF4008",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز SF4008"
+    },
+    "download/v1.0/sf8008-PurE2-7.6-20260816_mmc.zip": {
+        "name": "صورة PURE2 لجهاز SF8008",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز SF8008"
+    },
+    "download/v1.0/vuduo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "صورة PURE2 لجهاز VUDUO4K",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUDUO4K"
+    },
+    "download/v1.0/vuduo4kse-PurE2-7.6-20260817_usb.zip": {
+        "name": "صورة PURE2 لجهاز VUDUO4KSE",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUDUO4KSE"
+    },
+    "download/v1.0/vusolo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "صورة PURE2 لجهاز VUSOLO4K",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUSOLO4K"
+    },
+    "download/v1.0/vuultimo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "صورة PURE2 لجهاز VUULTIMO4K",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUULTIMO4K"
+    },
+    "download/v1.0/vuuno4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "صورة PURE2 لجهاز VUUNO4K",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUUNO4K"
+    },
+    "download/v1.0/vuzero4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "صورة PURE2 لجهاز VUZERO4K",
+        "description": "صورة نظام PURE2 الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/VTi_15-0-02_vuduo2_202212231310_usb.zip": {
+        "name": "صورة VTI لجهاز VUDUO2",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO2"
+    },
+    "download/v1.0/VTi_15-0-02_vuduo4kse_202212231255_usb.zip": {
+        "name": "صورة VTI لجهاز VUDUO4KSE",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO4KSE"
+    },
+    "download/v1.0/VTi_15-0-02_vuduo4k_202212231257_usb.zip": {
+        "name": "صورة VTI لجهاز VUDUO4K",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUDUO4K"
+    },
+    "download/v1.0/VTi_15-0-02_vusolo2_202212231312_usb.zip": {
+        "name": "صورة VTI لجهاز VUSOLO2",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUSOLO2"
+    },
+    "download/v1.0/VTi_15-0-02_vusolo4k_202212231308_usb.zip": {
+        "name": "صورة VTI لجهاز VUSOLO4K",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUSOLO4K"
+    },
+    "download/v1.0/VTi_15-0-02_vusolose_202212231314_usb.zip": {
+        "name": "صورة VTI لجهاز الجهاز",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز الجهاز"
+    },
+    "download/v1.0/VTi_15-0-02_vuultimo4k_202212231304_usb.zip": {
+        "name": "صورة VTI لجهاز VUULTIMO4K",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUULTIMO4K"
+    },
+    "download/v1.0/VTi_15-0-02_vuuno4kse_202212231259_usb.zip": {
+        "name": "صورة VTI لجهاز VUUNO4KSE",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUUNO4KSE"
+    },
+    "download/v1.0/VTi_15-0-02_vuuno4k_202212231306_usb.zip": {
+        "name": "صورة VTI لجهاز VUUNO4K",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUUNO4K"
+    },
+    "download/v1.0/VTi_15-0-02_vuzero4k_202212231301_usb.zip": {
+        "name": "صورة VTI لجهاز VUZERO4K",
+        "description": "صورة نظام VTI الرسمية المحدثة لجهاز VUZERO4K"
+    },
+    "download/v1.0/picon-13E.zip": {
+        "name": "بيكونات قمر هوتبيرد (Hotbird 13E)",
+        "description": "شعارات وقنوات القمر الأوروبي هوتبيرد 13 شرق"
+    },
+    "download/v1.0/picon.zip": {
+        "name": "حزمة البيكونات الشاملة لكافة الاقمار ملف اخر",
+        "description": "بيكونات  قمر متحرك"
+    },
+    "download/v1.0/picon_16.0E.zip": {
+        "name": "بيكونات قمر يوتلسات (Eutelsat 16E)",
+        "description": "شعارات قنوات قمر يوتلسات 16 شرق بدقة عالية"
+    },
+    "download/v1.0/picon_26.zip": {
+        "name": "بيكونات قمر عربسات بدر (Badr 26E)",
+        "description": "شعارات وقنوات قمر عربسات بدر 26 شرق"
+    },
+    "download/v1.0/picon_39E.zip": {
+        "name": "بيكونات قمر هيلاسات (Hellas Sat 39E)",
+        "description": "شعارات وقنوات قمر هيلاسات 39 شرق الرياضي"
+    },
+    "download/v1.0/picon_8.0W.zip": {
+        "name": "بيكونات قمر نايل سات (Nilesat 7W / 8W)",
+        "description": "شعارات ولوجوهات قنوات نايل سات بجودة عالية وشفافة"
+    },
+    "download/v1.0/picon_ALL.zip": {
+        "name": "حزمة البيكونات الشاملة (جميع الأقمار)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
     }
 }
