@@ -33,6 +33,11 @@ wget -O "$PLUGIN_DIR/images/timeshiftdelay.png" "$BASE_URL/images/timeshiftdelay
 wget -O "$PLUGIN_DIR/images/avatar.png" "$BASE_URL/images/avatar.png"
 wget -O "$PLUGIN_DIR/images/qrcode.png" "$BASE_URL/images/qrcode.png"
 wget -O "$PLUGIN_DIR/images/novaler.png" "$BASE_URL/images/novaler.png"
+wget -O "$PLUGIN_DIR/images/key_red.png" "$BASE_URL/images/key_red.png"
+wget -O "$PLUGIN_DIR/images/key_green.png" "$BASE_URL/images/key_green.png"
+wget -O "$PLUGIN_DIR/images/key_yellow.png" "$BASE_URL/images/key_yellow.png"
+wget -O "$PLUGIN_DIR/images/key_blue.png" "$BASE_URL/images/key_blue.png"
+wget -O "$PLUGIN_DIR/images/progress.png" "$BASE_URL/images/progress.png"
 
 echo "Downloading section icons..."
 wget -O "$PLUGIN_DIR/images/Icons/plugins.png" "$BASE_URL/images/Icons/plugins.png"
