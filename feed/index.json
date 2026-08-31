@@ -777,12 +777,6 @@
                         "description": "Portals Tool",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/nocable_portal.sh",
                         "image": ""
-                    },
-                    {
-                        "name": "read",
-                        "description": "Tool Package",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/read.me",
-                        "image": ""
                     }
                 ]
             },
