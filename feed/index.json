@@ -761,6 +761,24 @@
                 "name": "Portals",
                 "items": [
                     {
+                        "name": "cord_cutter_portal",
+                        "description": "Portals Tool",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/cord_cutter_portal.sh",
+                        "image": ""
+                    },
+                    {
+                        "name": "fastopen_portal",
+                        "description": "Portals Tool",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/fastopen_portal.sh",
+                        "image": ""
+                    },
+                    {
+                        "name": "nocable_portal",
+                        "description": "Portals Tool",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/nocable_portal.sh",
+                        "image": ""
+                    },
+                    {
                         "name": "read",
                         "description": "Tool Package",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/portals/read.me",

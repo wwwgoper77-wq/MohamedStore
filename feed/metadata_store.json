@@ -2546,5 +2546,29 @@
     "enigma2-plugin-extensions-xstreamity_5.58.20260720_all.ipk": {
         "name": "Xstreamity IPTV",
         "description": "مشغل IPTV احترافي للأفلام والمسلسلات والبث المباشر"
+    },
+    "portals/cord_cutter_portal.sh": {
+        "name": "cord_cutter_portal",
+        "description": "Portals Tool"
+    },
+    "cord_cutter_portal.sh": {
+        "name": "cord_cutter_portal",
+        "description": "Portals Tool"
+    },
+    "portals/fastopen_portal.sh": {
+        "name": "fastopen_portal",
+        "description": "Portals Tool"
+    },
+    "fastopen_portal.sh": {
+        "name": "fastopen_portal",
+        "description": "Portals Tool"
+    },
+    "portals/nocable_portal.sh": {
+        "name": "nocable_portal",
+        "description": "Portals Tool"
+    },
+    "nocable_portal.sh": {
+        "name": "nocable_portal",
+        "description": "Portals Tool"
     }
 }
