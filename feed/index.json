@@ -754,12 +754,6 @@
                         "description": "Audio Tool",
                         "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/audio/Fox%26Anis.sh",
                         "image": ""
-                    },
-                    {
-                        "name": "read",
-                        "description": "Tool Package",
-                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/audio/read.me",
-                        "image": ""
                     }
                 ]
             },
