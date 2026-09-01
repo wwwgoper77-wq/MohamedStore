@@ -3422,5 +3422,17 @@
     "channels_backup by tarekalashry-ag.zip": {
         "name": "channels_backup by tarekalashry-ag",
         "description": "Channels Settings"
+    },
+    "tools/audio/Fox&Anis.sh": {
+        "name": "Fox&Anis",
+        "description": "Audio Tool"
+    },
+    "audio/Fox&Anis.sh": {
+        "name": "Fox&Anis",
+        "description": "Audio Tool"
+    },
+    "Fox&Anis.sh": {
+        "name": "Fox&Anis",
+        "description": "Audio Tool"
     }
 }
