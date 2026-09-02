@@ -27,27 +27,73 @@ INDEX_FILE = "feed/index.json"
 
 metadata_store = {}
 
-def get_rel_key(url_or_path):
-    """استخراج مسار المفتاح الدقيق للحافظة والملف لمنع تداخل الملفات المتشابهة"""
-    if not url_or_path:
-        return ""
-    clean = unquote(str(url_or_path).split("?")[0]).replace("\\", "/")
-    if BASE_URL in clean:
-        clean = clean.replace(BASE_URL, "").lstrip("/")
-    parts = [p for p in clean.split("/") if p]
-    if len(parts) >= 3:
-        return "/".join(parts[-3:]) # مثل: tools/portals/server.sh
-    elif len(parts) == 2:
-        return "/".join(parts[-2:]) # مثل: portals/server.sh
-    elif len(parts) == 1:
-        return parts[0]
-    return ""
+def normalize_text(text):
+    return re.sub(r'[^a-z0-9]', '', str(text).lower())
+
+def clean_filename(filename):
+    name = str(filename).strip()
+    for ext in [".tar.gz", ".tar .gz", ".tar.xz", ".tar .xz", ".ipk", ".deb", ".zip", ".sh", ".py", ".tv", ".img", ".nfi", ".bin", ".rar", ".7z"]:
+        if name.lower().endswith(ext):
+            name = name[:-len(ext)]
+            break
+    if "." in name:
+        name = os.path.splitext(name)[0]
+    return name.strip()
 
 def get_file_basename(url_or_path):
     if not url_or_path:
         return ""
     clean_path = unquote(str(url_or_path).split("?")[0]).replace("\\", "/")
     return clean_path.split("/")[-1].strip()
+
+def extract_all_keys(url_or_path, category=""):
+    """
+    توليد كافة المفاتيح الممكنة للملف (المسار الكامل، المسار النسبي، الحافظة الفرعية، اسم الملف، الرابط)
+    لضمان عدم فقدان أي تعديل يدوي في أي قسم أو مجلد فرعي
+    """
+    if not url_or_path:
+        return []
+    keys = []
+    raw = str(url_or_path).strip()
+    clean = unquote(raw.split("?")[0]).replace("\\", "/")
+    
+    # الرابط الأصلي
+    keys.append(raw)
+    keys.append(clean)
+    
+    if BASE_URL in clean:
+        rel = clean.replace(BASE_URL, "").lstrip("/")
+        keys.append(rel)
+        clean = rel
+    
+    parts = [p for p in clean.split("/") if p]
+    if parts:
+        # اسم الملف
+        fn = parts[-1]
+        keys.append(fn)
+        keys.append(clean_filename(fn))
+        
+        # مسارات متعددة المستويات
+        for i in range(1, len(parts) + 1):
+            keys.append("/".join(parts[-i:]))
+            
+    if category:
+        cat_clean = category.strip().strip("/")
+        if parts:
+            keys.append(f"{cat_clean}/{'/'.join(parts)}")
+            keys.append(f"{cat_clean}/{parts[-1]}")
+            if len(parts) >= 2:
+                keys.append(f"{cat_clean}/{parts[-2]}/{parts[-1]}")
+                
+    # إزالة التكرار مع الحفاظ على الترتيب
+    seen = set()
+    unique_keys = []
+    for k in keys:
+        k_str = str(k).strip()
+        if k_str and k_str not in seen:
+            seen.add(k_str)
+            unique_keys.append(k_str)
+    return unique_keys
 
 # 1. قراءة الخزنة الحالية
 if os.path.exists(META_STORE_FILE):
@@ -57,43 +103,59 @@ if os.path.exists(META_STORE_FILE):
     except Exception:
         metadata_store = {}
 
-# 2. قراءة كل تعديلاتك اليدوية وحفظها بمفتاح الحافظة الدقيق لمنع التداخل
+# 2. قراءة كل تعديلاتك اليدوية وحفظها لكافة الأقسام والمجلدات بجميع مستوياتها
+def sync_user_edits(item, current_cat="", current_folder=""):
+    if not isinstance(item, dict):
+        return
+    file_url = item.get("file", "")
+    c_name = str(item.get("name", "")).strip()
+    desc = str(item.get("description", "")).strip()
+    
+    if not c_name and not desc:
+        return
+
+    entry = {}
+    if c_name: entry["name"] = c_name
+    if desc: entry["description"] = desc
+
+    # توليد المفاتيح الشاملة للتخزين
+    keys = extract_all_keys(file_url, category=current_cat)
+    
+    fn = get_file_basename(file_url)
+    if current_folder and fn:
+        keys.append(f"{current_folder}/{fn}")
+        if current_cat:
+            keys.append(f"{current_cat}/{current_folder}/{fn}")
+            
+    for k in keys:
+        if k:
+            metadata_store[k] = entry
+
+def traverse_and_sync(obj, current_cat="", current_folder=""):
+    """دالة فحص شاملة تمر على جميع الأقسام والمجلدات والقوائم الفرعية بعمق غير محدود"""
+    if isinstance(obj, dict):
+        if "file" in obj or "name" in obj or "description" in obj:
+            sync_user_edits(obj, current_cat=current_cat, current_folder=current_folder)
+        if "categories" in obj and isinstance(obj["categories"], dict):
+            for cat_name, cat_val in obj["categories"].items():
+                traverse_and_sync(cat_val, current_cat=cat_name)
+        elif "items" in obj and isinstance(obj["items"], list):
+            folder_name = obj.get("name", current_folder)
+            for sub_it in obj["items"]:
+                traverse_and_sync(sub_it, current_cat=current_cat, current_folder=folder_name)
+        else:
+            for k, v in obj.items():
+                if k not in ["store_name", "version"]:
+                    traverse_and_sync(v, current_cat=current_cat or k)
+    elif isinstance(obj, list):
+        for element in obj:
+            traverse_and_sync(element, current_cat=current_cat, current_folder=current_folder)
+
 if os.path.exists(INDEX_FILE):
     try:
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
             old_index = json.load(f)
-
-        def sync_user_edits(item):
-            if not isinstance(item, dict):
-                return
-            file_url = item.get("file", "")
-            fn = get_file_basename(file_url)
-            rel_k = get_rel_key(file_url)
-            c_name = item.get("name", "").strip()
-            desc = item.get("description", "").strip()
-            
-            entry = {}
-            if c_name: entry["name"] = c_name
-            if desc: entry["description"] = desc
-
-            if entry:
-                if rel_k:
-                    metadata_store[rel_k] = entry
-                    # حفظ المفاتيح البديلة لقسم البورتال لمنع أي فقدان
-                    parts = rel_k.split("/")
-                    if len(parts) >= 2:
-                        metadata_store["/".join(parts[-2:])] = entry
-                if fn:
-                    metadata_store[fn] = entry
-
-        for cat, items in old_index.get("categories", {}).items():
-            if isinstance(items, list):
-                for el in items:
-                    if isinstance(el, dict) and "items" in el:
-                        for it in el.get("items", []):
-                            sync_user_edits(it)
-                    elif isinstance(el, dict):
-                        sync_user_edits(el)
+        traverse_and_sync(old_index)
     except Exception as e:
         pass
 
@@ -213,25 +275,12 @@ def is_valid_package_file(filename):
             return False
     return True
 
-
-def clean_filename(filename):
-    name = filename
-    for ext in [".tar.gz", ".tar .gz", ".tar.xz", ".tar .xz", ".ipk", ".deb", ".zip", ".sh", ".py", ".tv", ".img", ".nfi", ".bin", ".rar", ".7z"]:
-        if name.lower().endswith(ext):
-            name = name[:-len(ext)]
-            break
-    if "." in name:
-        name = os.path.splitext(name)[0]
-    return name.strip()
-
-
 def clean_skin_name(fn):
     name = clean_filename(fn)
     name = re.sub(r'^(enigma2-plugin-skins?-|enigma2-skin-|skin-)', '', name, flags=re.IGNORECASE)
     name = re.sub(r'(_all|_mips|_arm.*)$', '', name, flags=re.IGNORECASE)
     name = name.replace("-", " ").replace("_", " ").strip()
     return name
-
 
 def format_system_image(fn, brand_disp="Image"):
     fn_clean = fn.lower().replace(".", "").replace("-", "").replace("_", "").replace(" ", "")
@@ -276,30 +325,38 @@ def format_system_image(fn, brand_disp="Image"):
 
     return final_name, final_desc
 
+def lookup_saved_edit(fn, specific_rel_key="", file_url="", category=""):
+    """
+    البحث الشامل والدقيق عن أي تعديل يدوي محفوظ مسبقاً، بالأولوية الهرمية:
+    1. المسار النسبي الدقيق المحدد (مثل: tools/portals/server.sh أو system_images/openatv/file.zip)
+    2. الرابط الكامل للملف
+    3. مسار المجلد الفرعي (مثل: portals/server.sh)
+    4. اسم الملف الكامل (مثل: server.sh)
+    5. الاسم النظيف بدون امتداد
+    """
+    candidates = []
+    if specific_rel_key:
+        candidates.extend(extract_all_keys(specific_rel_key, category=category))
+    if file_url:
+        candidates.extend(extract_all_keys(file_url, category=category))
+    if fn:
+        candidates.extend(extract_all_keys(fn, category=category))
+        
+    for k in candidates:
+        if k in metadata_store:
+            val = metadata_store[k]
+            if isinstance(val, dict):
+                u_name = val.get("name", "").strip()
+                u_desc = val.get("description", "").strip()
+                if u_name or u_desc:
+                    return u_name, u_desc
+    return None, None
 
-def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder="", specific_rel_key=""):
-    clean_k = get_file_basename(fn)
-    
-    # 1. فحص التعديل اليدوي الخاص بهذه الحافظة بالتحديد أولاً لمنع التداخل
-    saved = None
-    if specific_rel_key and specific_rel_key in metadata_store:
-        saved = metadata_store[specific_rel_key]
-    else:
-        # فحص المسار الجزئي (مثل: portals/server.sh)
-        if specific_rel_key:
-            parts = specific_rel_key.split("/")
-            if len(parts) >= 2:
-                sub_k = "/".join(parts[-2:])
-                if sub_k in metadata_store:
-                    saved = metadata_store[sub_k]
-        if not saved and clean_k in metadata_store:
-            saved = metadata_store[clean_k]
-
-    if saved and isinstance(saved, dict):
-        u_name = saved.get("name", "").strip()
-        u_desc = saved.get("description", "").strip()
-        if u_name or u_desc:
-            return (u_name if u_name else clean_name), (u_desc if u_desc else default_desc)
+def get_smart_name_and_desc(fn, clean_name, release_body="", default_desc="", is_skin=False, is_sys_img=False, disp_folder="", specific_rel_key="", file_url="", category=""):
+    # 1. فحص التعديلات اليدوية المحفوظة أولاً (الأولوية القصوى للتعديل اليدوي في كل الأقسام والمجلدات)
+    u_name, u_desc = lookup_saved_edit(fn, specific_rel_key=specific_rel_key, file_url=file_url, category=category)
+    if u_name or u_desc:
+        return (u_name if u_name else clean_name), (u_desc if u_desc else default_desc)
 
     # 2. صور النظام
     if is_sys_img:
@@ -404,10 +461,6 @@ def image_url(prefix):
     return ""
 
 
-def normalize_text(text):
-    return re.sub(r'[^a-z0-9]', '', str(text).lower())
-
-
 # جلب ملفات الـ Releases
 release_assets_pool = []
 github_token = os.environ.get("GITHUB_TOKEN", "")
@@ -456,7 +509,7 @@ if os.path.isdir("system_images"):
             continue
         norm = normalize_text(folder)
         disp = "All" if norm == "all" else folder
-        sys_folders[norm] = {"display_name": disp, "items": [], "seen": set()}
+        sys_folders[norm] = {"display_name": disp, "items": [], "seen": set(), "folder": folder}
 
         for fn in sorted(os.listdir(fpath)):
             if not is_valid_package_file(fn):
@@ -467,7 +520,7 @@ if os.path.isdir("system_images"):
 
             clean = clean_filename(fn)
             f_url = f"{BASE_URL}/system_images/{quote(folder)}/{quote(fn)}"
-            rel_key = f"{folder}/{fn}"
+            rel_key = f"system_images/{folder}/{fn}"
             body_desc = ""
             for asset in release_assets_pool:
                 if normalize_text(asset["filename"]) == norm_fn:
@@ -476,7 +529,11 @@ if os.path.isdir("system_images"):
                     assigned_releases.add(norm_fn)
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp, specific_rel_key=rel_key)
+            final_name, final_desc = get_smart_name_and_desc(
+                fn, clean, body_desc, f"{disp} Image",
+                is_skin=False, is_sys_img=True, disp_folder=disp,
+                specific_rel_key=rel_key, file_url=f_url, category="system_images"
+            )
 
             sys_folders[norm]["items"].append({
                 "name": final_name,
@@ -512,11 +569,18 @@ for asset in release_assets_pool:
             if not matched:
                 matched = "all"
                 if matched not in sys_folders:
-                    sys_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
+                    sys_folders[matched] = {"display_name": "All", "items": [], "seen": set(), "folder": "all"}
 
             clean = clean_filename(fn)
             disp = sys_folders[matched]["display_name"]
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Image", is_skin=False, is_sys_img=True, disp_folder=disp)
+            folder_name = sys_folders[matched].get("folder", matched)
+            rel_key = f"system_images/{folder_name}/{fn}"
+            
+            final_name, final_desc = get_smart_name_and_desc(
+                fn, clean, asset.get("body", ""), f"{disp} Image",
+                is_skin=False, is_sys_img=True, disp_folder=disp,
+                specific_rel_key=rel_key, file_url=asset["url"], category="system_images"
+            )
 
             sys_folders[matched]["items"].append({
                 "name": final_name,
@@ -540,7 +604,7 @@ if os.path.isdir("skins"):
             continue
         norm = normalize_text(folder)
         disp = "All" if norm == "all" else folder
-        skin_folders[norm] = {"display_name": disp, "items": [], "seen": set()}
+        skin_folders[norm] = {"display_name": disp, "items": [], "seen": set(), "folder": folder}
 
         for fn in sorted(os.listdir(fpath)):
             if not is_valid_package_file(fn):
@@ -552,7 +616,7 @@ if os.path.isdir("skins"):
             clean = clean_filename(fn)
             disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
             f_url = f"{BASE_URL}/skins/{quote(folder)}/{quote(fn)}"
-            rel_key = f"{folder}/{fn}"
+            rel_key = f"skins/{folder}/{fn}"
             
             body_desc = ""
             for asset in release_assets_pool:
@@ -562,7 +626,11 @@ if os.path.isdir("skins"):
                     assigned_releases.add(norm_fn)
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Skin", is_skin=True, is_sys_img=False, specific_rel_key=rel_key)
+            final_name, final_desc = get_smart_name_and_desc(
+                fn, clean, body_desc, f"{disp} Skin",
+                is_skin=True, is_sys_img=False,
+                specific_rel_key=rel_key, file_url=f_url, category="skins"
+            )
 
             skin_folders[norm]["items"].append({
                 "name": final_name,
@@ -588,12 +656,19 @@ for asset in release_assets_pool:
         if not matched:
             matched = "all"
             if matched not in skin_folders:
-                skin_folders[matched] = {"display_name": "All", "items": [], "seen": set()}
+                skin_folders[matched] = {"display_name": "All", "items": [], "seen": set(), "folder": "all"}
 
         clean = clean_filename(fn)
         disp_skin = clean.replace("enigma2-plugin-skins-", "").replace("enigma2-plugin-skin-", "").replace("skin-", "")
         disp = skin_folders[matched]["display_name"]
-        final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), f"{disp} Skin", is_skin=True, is_sys_img=False)
+        folder_name = skin_folders[matched].get("folder", matched)
+        rel_key = f"skins/{folder_name}/{fn}"
+        
+        final_name, final_desc = get_smart_name_and_desc(
+            fn, clean, asset.get("body", ""), f"{disp} Skin",
+            is_skin=True, is_sys_img=False,
+            specific_rel_key=rel_key, file_url=asset["url"], category="skins"
+        )
 
         skin_folders[matched]["items"].append({
             "name": final_name,
@@ -608,7 +683,7 @@ for norm_k, f_data in sorted(skin_folders.items()):
         "items": f_data["items"]
     })
 
-# 3. Tools (دعم الحافظات مثل audio و portals وحفظ الملفات داخلها بشكل دائم)
+# 3. Tools (دعم الحافظات مثل audio و portals وحفظ الملفات داخلها بشكل دائم لكافة المجلدات)
 tool_folders = {}
 tool_direct_items = []
 if os.path.isdir("tools"):
@@ -617,7 +692,7 @@ if os.path.isdir("tools"):
         if os.path.isdir(fpath):
             norm = normalize_text(entry)
             disp = "Audio" if norm == "audio" else ("Portals" if norm in ["portals", "portal"] else entry)
-            tool_folders[norm] = {"display_name": disp, "items": [], "seen": set()}
+            tool_folders[norm] = {"display_name": disp, "items": [], "seen": set(), "folder": entry}
 
             for fn in sorted(os.listdir(fpath)):
                 if not is_valid_package_file(fn):
@@ -639,7 +714,11 @@ if os.path.isdir("tools"):
                         assigned_releases.add(norm_fn)
                         break
 
-                final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, f"{disp} Tool", is_skin=False, is_sys_img=False, specific_rel_key=rel_key)
+                final_name, final_desc = get_smart_name_and_desc(
+                    fn, clean, body_desc, f"{disp} Tool",
+                    is_skin=False, is_sys_img=False,
+                    specific_rel_key=rel_key, file_url=f_url, category="tools"
+                )
 
                 tool_folders[norm]["items"].append({
                     "name": final_name,
@@ -666,7 +745,11 @@ if os.path.isdir("tools"):
                     assigned_releases.add(norm_fn)
                     break
 
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, "Tool Package", is_skin=False, is_sys_img=False, specific_rel_key=rel_key)
+            final_name, final_desc = get_smart_name_and_desc(
+                fn, clean, body_desc, "Tool Package",
+                is_skin=False, is_sys_img=False,
+                specific_rel_key=rel_key, file_url=f_url, category="tools"
+            )
 
             tool_direct_items.append({
                 "name": final_name,
@@ -687,7 +770,7 @@ for item in tool_direct_items:
 
 data["categories"]["tools"] = tools_list
 
-# 4. باقي الأقسام (Plugins, Channels, Picons, Novaler)
+# 4. باقي الأقسام (Plugins, Channels, Picons, Novaler) مع دعم كامل للمجلدات والمجلدات المتداخلة
 def handle_flat(cat_key, matcher_func, default_desc):
     items = []
     seen = set()
@@ -719,7 +802,11 @@ def handle_flat(cat_key, matcher_func, default_desc):
                         assigned_releases.add(norm_fn)
                         break
 
-                final_name, final_desc = get_smart_name_and_desc(fn, clean, body_desc, default_desc, is_skin=False, is_sys_img=False, specific_rel_key=rel_key)
+                final_name, final_desc = get_smart_name_and_desc(
+                    fn, clean, body_desc, default_desc,
+                    is_skin=False, is_sys_img=False,
+                    specific_rel_key=rel_key, file_url=f_url, category=cat_key
+                )
 
                 items.append({
                     "name": final_name,
@@ -740,7 +827,13 @@ def handle_flat(cat_key, matcher_func, default_desc):
             seen.add(fn_norm)
             clean = clean_filename(fn)
             disp_name = clean.replace("enigma2-plugin-extensions-", "").replace("enigma2-plugin-", "")
-            final_name, final_desc = get_smart_name_and_desc(fn, clean, asset.get("body", ""), default_desc, is_skin=False, is_sys_img=False)
+            rel_key = f"{cat_key}/{fn}"
+            
+            final_name, final_desc = get_smart_name_and_desc(
+                fn, clean, asset.get("body", ""), default_desc,
+                is_skin=False, is_sys_img=False,
+                specific_rel_key=rel_key, file_url=asset["url"], category=cat_key
+            )
 
             items.append({
                 "name": final_name,
@@ -757,32 +850,30 @@ handle_flat("picons", lambda n, l: ("picon" in n or "snp" in n or "srp" in n) an
 handle_flat("channels", lambda n, l: (any(k in n for k in ["channel", "setting", "bouquet", "satellites", "fav", "mnasr", "morph"]) or l.endswith(".tv")) and "plugin" not in n, "Channels Settings")
 handle_flat("plugins", lambda n, l: ("plugin" in n or "extension" in n) and "skin" not in n, "Plugin Extension")
 
-# تحديث وتثبيت الخزنة بدقة كاملة لكل حافظة وملف
+# تحديث وتثبيت الخزنة بدقة كاملة وشاملة لكل الأقسام والمجلدات والملفات
+def update_store_for_item(it, cat=""):
+    if not isinstance(it, dict):
+        return
+    f_val = it.get("file", "")
+    c_name = it.get("name", "")
+    desc = it.get("description", "")
+    if not c_name and not desc:
+        return
+    
+    entry = {"name": c_name, "description": desc}
+    keys = extract_all_keys(f_val, category=cat)
+    for k in keys:
+        if k:
+            metadata_store[k] = entry
+
 for cat, items in data["categories"].items():
     if isinstance(items, list):
         for el in items:
-            sub = el.get("items", []) if (isinstance(el, dict) and "items" in el) else [el]
-            for it in sub:
-                if isinstance(it, dict):
-                    f_val = it.get("file", "")
-                    fn = get_file_basename(f_val)
-                    rel_k = get_rel_key(f_val)
-                    if rel_k:
-                        metadata_store[rel_k] = {
-                            "name": it.get("name", ""),
-                            "description": it.get("description", "")
-                        }
-                        parts = rel_k.split("/")
-                        if len(parts) >= 2:
-                            metadata_store["/".join(parts[-2:])] = {
-                                "name": it.get("name", ""),
-                                "description": it.get("description", "")
-                            }
-                    if fn and fn not in metadata_store:
-                        metadata_store[fn] = {
-                            "name": it.get("name", ""),
-                            "description": it.get("description", "")
-                        }
+            if isinstance(el, dict) and "items" in el:
+                for sub_it in el.get("items", []):
+                    update_store_for_item(sub_it, cat=cat)
+            elif isinstance(el, dict):
+                update_store_for_item(el, cat=cat)
 
 os.makedirs("feed", exist_ok=True)
 with open(INDEX_FILE, "w", encoding="utf-8") as f:
@@ -791,4 +882,4 @@ with open(INDEX_FILE, "w", encoding="utf-8") as f:
 with open(META_STORE_FILE, "w", encoding="utf-8") as f:
     json.dump(metadata_store, f, indent=4, ensure_ascii=False)
 
-print("🎉 Successfully generated feed/index.json: Each folder has its own independent description!")
+print("🎉 تم بنجاح توليد feed/index.json وحفظ جميع التعديلات اليدوية لكافة الأقسام والمجلدات دون استثناء!")
