@@ -82,12 +82,6 @@
                 "image": ""
             },
             {
-                "name": "My Translator",
-                "description": "بلجن ترجمة",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MyTranslator.zip",
-                "image": ""
-            },
-            {
                 "name": "NeoBoot 3.13.12",
                 "description": "تثبيت صور متعددة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.zip",
