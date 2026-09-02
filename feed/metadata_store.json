@@ -11626,5 +11626,25 @@
     "channels/channels/channels_backup_openATV_20260813_170623.tar.gz": {
         "name": "OpenATV Channels Backup",
         "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplySports.zip": {
+        "name": "SimplySports",
+        "description": "Plugin Extension"
+    },
+    "plugins/SimplySports.zip": {
+        "name": "SimplySports",
+        "description": "Plugin Extension"
+    },
+    "SimplySports.zip": {
+        "name": "SimplySports",
+        "description": "Plugin Extension"
+    },
+    "SimplySports": {
+        "name": "SimplySports",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/SimplySports.zip": {
+        "name": "SimplySports",
+        "description": "Plugin Extension"
     }
 }
