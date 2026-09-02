@@ -46,6 +46,12 @@
                 "image": ""
             },
             {
+                "name": "GT IPTV playerpro",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/GT%20IPTV%20playerpro.ipk",
+                "image": ""
+            },
+            {
                 "name": "IP Streamer",
                 "description": "بث واستقبال روابط وقنوات البث المباشر عبر الشبكة المنزلية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/IPStreamer.zip",

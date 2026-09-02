@@ -3434,5 +3434,13 @@
     "Fox&Anis.sh": {
         "name": "Fox&Anis",
         "description": "ملف نظيف في بلجن IPAUDioPRO Foxصوتيات انيس و"
+    },
+    "plugins/GT IPTV playerpro.ipk": {
+        "name": "GT IPTV playerpro",
+        "description": "Plugin Extension"
+    },
+    "GT IPTV playerpro.ipk": {
+        "name": "GT IPTV playerpro",
+        "description": "Plugin Extension"
     }
 }
