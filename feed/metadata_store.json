@@ -11678,5 +11678,13 @@
     "tools/Fox-Anis-ahmad yahia-Quran.sh": {
         "name": "Fox-Anis-ahmad yahia-Quran",
         "description": "Audio Tool"
+    },
+    "Audio/Fox-Anis-ahmad yahia-Quran.sh": {
+        "name": "Fox-Anis-ahmad yahia-Quran",
+        "description": "Audio Tool"
+    },
+    "tools/Audio/Fox-Anis-ahmad yahia-Quran.sh": {
+        "name": "Fox-Anis-ahmad yahia-Quran",
+        "description": "Audio Tool"
     }
 }
