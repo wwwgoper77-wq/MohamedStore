@@ -11606,5 +11606,25 @@
     "novaler/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
         "name": "enigma2-plugin-softcams-supcam-ncam-nova",
         "description": "هو حزمة تثبيت مدمجة لإيمو"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_openATV_20260813_170623.tar.gz": {
+        "name": "OpenATV Channels Backup",
+        "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+    },
+    "channels/channels_backup_openATV_20260813_170623.tar.gz": {
+        "name": "OpenATV Channels Backup",
+        "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+    },
+    "channels_backup_openATV_20260813_170623.tar.gz": {
+        "name": "OpenATV Channels Backup",
+        "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+    },
+    "channels_backup_openATV_20260813_170623": {
+        "name": "OpenATV Channels Backup",
+        "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
+    },
+    "channels/channels/channels_backup_openATV_20260813_170623.tar.gz": {
+        "name": "OpenATV Channels Backup",
+        "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة"
     }
 }
