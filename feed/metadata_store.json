@@ -11746,5 +11746,153 @@
     "plugins/plugins/SatellitesXmlUpdater.zip": {
         "name": "SatellitesXmlUpdater",
         "description": "Plugin Extension"
+    },
+    "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "openbh-6.0.002": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/v1.0/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
     }
 }
