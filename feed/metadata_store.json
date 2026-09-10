@@ -11709,43 +11709,43 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabSeed.zip": {
         "name": "ArabSeed",
-        "description": "Plugin Extension"
+        "description": "بلجن موقع عرب سيد خاص بالبنل"
     },
     "plugins/ArabSeed.zip": {
         "name": "ArabSeed",
-        "description": "Plugin Extension"
+        "description": "بلجن موقع عرب سيد خاص بالبنل"
     },
     "ArabSeed.zip": {
         "name": "ArabSeed",
-        "description": "Plugin Extension"
+        "description": "بلجن موقع عرب سيد خاص بالبنل"
     },
     "ArabSeed": {
         "name": "ArabSeed",
-        "description": "Plugin Extension"
+        "description": "بلجن موقع عرب سيد خاص بالبنل"
     },
     "plugins/plugins/ArabSeed.zip": {
         "name": "ArabSeed",
-        "description": "Plugin Extension"
+        "description": "بلجن موقع عرب سيد خاص بالبنل"
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SatellitesXmlUpdater.zip": {
         "name": "SatellitesXmlUpdater",
-        "description": "Plugin Extension"
+        "description": "تحديث ملف الاقمار والترددات بزرواحد خاص بالبنل"
     },
     "plugins/SatellitesXmlUpdater.zip": {
         "name": "SatellitesXmlUpdater",
-        "description": "Plugin Extension"
+        "description": "تحديث ملف الاقمار والترددات بزرواحد خاص بالبنل"
     },
     "SatellitesXmlUpdater.zip": {
         "name": "SatellitesXmlUpdater",
-        "description": "Plugin Extension"
+        "description": "تحديث ملف الاقمار والترددات بزرواحد خاص بالبنل"
     },
     "SatellitesXmlUpdater": {
         "name": "SatellitesXmlUpdater",
-        "description": "Plugin Extension"
+        "description": "تحديث ملف الاقمار والترددات بزرواحد خاص بالبنل"
     },
     "plugins/plugins/SatellitesXmlUpdater.zip": {
         "name": "SatellitesXmlUpdater",
-        "description": "Plugin Extension"
+        "description": "تحديث ملف الاقمار والترددات بزرواحد خاص بالبنل"
     },
     "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
         "name": "OpenBH 6.0.002 - VU+ Duo 2",
@@ -11892,6 +11892,30 @@
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
     },
     "system_images/v1.0/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
         "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
     }
