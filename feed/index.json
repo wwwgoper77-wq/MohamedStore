@@ -17,7 +17,7 @@
             },
             {
                 "name": "ArabSeed",
-                "description": "Plugin Extension",
+                "description": "بلجن موقع عرب سيد خاص بالبنل",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabSeed.zip",
                 "image": ""
             },
@@ -101,7 +101,7 @@
             },
             {
                 "name": "SatellitesXmlUpdater",
-                "description": "Plugin Extension",
+                "description": "تحديث ملف الاقمار والترددات بزرواحد خاص بالبنل",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SatellitesXmlUpdater.zip",
                 "image": ""
             },
