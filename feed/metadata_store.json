@@ -11706,5 +11706,45 @@
     "plugins/plugins/mytranslator_1.74.ipk": {
         "name": "My Translator",
         "description": "ترجمة سريعة للقوائم والأحداث والمحتوى التلفزيوني"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabSeed.zip": {
+        "name": "ArabSeed",
+        "description": "Plugin Extension"
+    },
+    "plugins/ArabSeed.zip": {
+        "name": "ArabSeed",
+        "description": "Plugin Extension"
+    },
+    "ArabSeed.zip": {
+        "name": "ArabSeed",
+        "description": "Plugin Extension"
+    },
+    "ArabSeed": {
+        "name": "ArabSeed",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/ArabSeed.zip": {
+        "name": "ArabSeed",
+        "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SatellitesXmlUpdater.zip": {
+        "name": "SatellitesXmlUpdater",
+        "description": "Plugin Extension"
+    },
+    "plugins/SatellitesXmlUpdater.zip": {
+        "name": "SatellitesXmlUpdater",
+        "description": "Plugin Extension"
+    },
+    "SatellitesXmlUpdater.zip": {
+        "name": "SatellitesXmlUpdater",
+        "description": "Plugin Extension"
+    },
+    "SatellitesXmlUpdater": {
+        "name": "SatellitesXmlUpdater",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/SatellitesXmlUpdater.zip": {
+        "name": "SatellitesXmlUpdater",
+        "description": "Plugin Extension"
     }
 }

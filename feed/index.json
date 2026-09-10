@@ -16,6 +16,12 @@
                 "image": ""
             },
             {
+                "name": "ArabSeed",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabSeed.zip",
+                "image": ""
+            },
+            {
                 "name": "Arabic Savior",
                 "description": "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
@@ -91,6 +97,12 @@
                 "name": "Raed Quick Signal",
                 "description": "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
+                "image": ""
+            },
+            {
+                "name": "SatellitesXmlUpdater",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SatellitesXmlUpdater.zip",
                 "image": ""
             },
             {
