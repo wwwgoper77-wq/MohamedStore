@@ -5656,8 +5656,8 @@
         "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
     },
     "egami-10": {
-        "name": "Egami 10.5 - VU+ Duo 4K",
-        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
+        "name": "صورة EGAMI لجهاز VUZERO4K",
+        "description": "صورة نظام EGAMI الرسمية المحدثة لجهاز VUZERO4K"
     },
     "releases/download/v1.0/egami-10.5-r1-vuduo4k-20240125_usb.zip": {
         "name": "Egami 10.5 - VU+ Duo 4K",
@@ -6196,8 +6196,8 @@
         "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4K"
     },
     "openbh-6.0.001": {
-        "name": "صورة OPENBH لجهاز VUDUO4KSE",
-        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUDUO4KSE"
+        "name": "صورة OPENBH لجهاز VUZERO4K",
+        "description": "صورة نظام OPENBH الرسمية المحدثة لجهاز VUZERO4K"
     },
     "releases/download/v1.0/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip": {
         "name": "صورة OPENBH لجهاز VUDUO4K",
@@ -6796,8 +6796,8 @@
         "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K"
     },
     "openhdf-7": {
-        "name": "صورة OPENHDF لجهاز GBQUAD4K",
-        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز GBQUAD4K"
+        "name": "صورة OPENHDF لجهاز SX988",
+        "description": "صورة نظام OPENHDF الرسمية المحدثة لجهاز SX988"
     },
     "releases/download/v1.0/openhdf-7.2-gbquad4k-13-20230501_usb.zip": {
         "name": "صورة OPENHDF لجهاز GBQUAD4K",
@@ -7384,8 +7384,8 @@
         "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Enigma2 Device (USB)"
     },
     "openspa-8.7": {
-        "name": "صورة OpenSPA 8.7.001 لجهاز Octagon SFX6008",
-        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)"
+        "name": "صورة OpenSPA 8.7.001 لجهاز VU+ Zero 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero 4K (USB)"
     },
     "releases/download/v1.0/openspa-8.7.001-sf208-20260704_usb.zip": {
         "name": "صورة OpenSPA 8.7.001 لجهاز Enigma2 Device",
@@ -8180,8 +8180,8 @@
         "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
     },
     "openvision-e2-develop-py3.11-13": {
-        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero",
-        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)"
+        "name": "صورة OpenVision 3.11 لجهاز VU+ Zero 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)"
     },
     "releases/download/v1.0/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip": {
         "name": "صورة OpenVision 3.11 لجهاز VU+ Duo 2",
@@ -11756,8 +11756,8 @@
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
     },
     "openbh-6.0.002": {
-        "name": "OpenBH 6.0.002 -vuzero",
-        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+        "name": "OpenBH 6.0.002 -vuzero4k",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero4k (USB)"
     },
     "v1.0/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
         "name": "OpenBH 6.0.002 - VU+ Duo 2",
@@ -12420,6 +12420,54 @@
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
     },
     "system_images/OpenBH/openbh-6.0.002.release-vuzero-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "system_images/https:/github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "system_images/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 -vuzero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
+    },
+    "system_images/v1.0/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
         "name": "OpenBH 6.0.002 -vuzero",
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuzero (USB)"
     }
