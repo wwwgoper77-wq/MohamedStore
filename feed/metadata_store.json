@@ -11966,5 +11966,13 @@
     "system_images/v1.0/openbh-6.0.002.release-vusolose-fc7b6ebc_usb.zip": {
         "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vusolose-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vusolose-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
     }
 }
