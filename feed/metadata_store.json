@@ -12478,5 +12478,25 @@
     "system_images/OpenBH/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
         "name": "OpenBH 6.0.002 -vuuno4kse",
         "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز vuuno4kse (USB)"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CinemaStore.zip": {
+        "name": "CinemaStore",
+        "description": "Plugin Extension"
+    },
+    "plugins/CinemaStore.zip": {
+        "name": "CinemaStore",
+        "description": "Plugin Extension"
+    },
+    "CinemaStore.zip": {
+        "name": "CinemaStore",
+        "description": "Plugin Extension"
+    },
+    "CinemaStore": {
+        "name": "CinemaStore",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CinemaStore.zip": {
+        "name": "CinemaStore",
+        "description": "Plugin Extension"
     }
 }
