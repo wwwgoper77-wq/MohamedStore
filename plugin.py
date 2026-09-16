@@ -7,6 +7,8 @@
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
+from Screens.ChoiceBox import ChoiceBox
+from Screens.Console import Console as ConsoleScreen
 from Components.MenuList import MenuList
 from Components.Label import Label
 from Components.ActionMap import ActionMap
@@ -66,6 +68,12 @@ try:
     from Components.ProgressBar import ProgressBar
 except ImportError:
     ProgressBar = None
+
+try:
+	from Tools.Directories import resolveFilename, SCOPE_PLUGINS
+except ImportError:
+	resolveFilename = None
+	SCOPE_PLUGINS = None
 
 # =========================================================================
 # UNIVERSAL RESOLUTION DETECTION & AUTO-SCALING ENGINE
@@ -198,6 +206,216 @@ try:
     ensure_gradient_progress_png()
 except Exception:
     pass
+
+
+# =========================================================================
+# UNINSTALLER - Merged from Uninstaller Plugin by Lululla
+# =========================================================================
+uninstaller_version = '1.0'
+uninstaller_myfile = '/tmp/ipkdb'
+
+
+def uninstaller_delay():
+	if os.path.exists(uninstaller_myfile):
+		os.remove(uninstaller_myfile)
+	try:
+		if os.path.exists('/var/lib/dpkg/info'):
+			cmd = "dpkg -l | grep ^ii | grep enigma2-plugin | awk '{print $2}' > " + uninstaller_myfile
+		else:
+			cmd = "opkg list-installed | grep enigma2-plugin > " + uninstaller_myfile
+		os.system(cmd)
+	except Exception:
+		with open(uninstaller_myfile, 'w') as f:
+			f.write('')
+
+
+def uninstaller_build_list():
+	if os.path.exists(uninstaller_myfile):
+		os.remove(uninstaller_myfile)
+	uninstaller_delay()
+	os.system('sleep 2')
+	if os.path.exists(uninstaller_myfile):
+		with open(uninstaller_myfile) as file_:
+			pkg_list = [line.strip() for line in file_ if line.strip()]
+		if pkg_list:
+			pkg_list.sort()
+			return pkg_list
+	return []
+
+
+class UninstallerCheckList(MenuList):
+	def __init__(self, list, enableWrapAround=True):
+		MenuList.__init__(self, list, enableWrapAround)
+
+class Uninstaller(Screen):
+	skin = """
+		<screen name="Uninstaller" position="center,center" size="1220,650" title="Uninstaller">
+			<widget name="list" position="10,70" size="1200,510" scrollbarMode="showOnDemand" zPosition="2" font="Regular; 30" itemHeight="48" />
+			<widget name="info" position="11,5" zPosition="4" size="1193,60" font="Regular; 38" foregroundColor="#ffffff" transparent="1" halign="center" valign="center" />
+			<widget name="key_red" position="10,592" size="290,48" font="Regular; 32" foregroundColor="#ffffff" backgroundColor="#e11d48" halign="center" valign="center" zPosition="5" />
+			<widget name="key_green" position="310,592" size="290,48" font="Regular; 32" foregroundColor="#ffffff" backgroundColor="#059669" halign="center" valign="center" zPosition="5" />
+			<widget name="key_yellow" position="610,592" size="290,48" font="Regular; 32" foregroundColor="#ffffff" backgroundColor="#d97706" halign="center" valign="center" zPosition="5" />
+			<widget name="key_blue" position="910,592" size="290,48" font="Regular; 32" foregroundColor="#ffffff" backgroundColor="#0284c7" halign="center" valign="center" zPosition="5" />
+		</screen>
+		"""
+
+	if SCREEN_WIDTH == 2560:
+		skin = """
+			<screen name="Uninstaller" position="center,center" size="1980,1200" title="Uninstaller">
+				<widget name="list" position="30,160" size="1900,870" scrollbarMode="showOnDemand" zPosition="2" font="Regular; 52" itemHeight="78" />
+				<widget name="info" position="11,5" zPosition="4" size="1937,140" font="Regular; 62" foregroundColor="#ffffff" transparent="1" halign="center" valign="center" />
+				<widget name="key_red" position="30,1040" size="460,72" font="Regular; 52" foregroundColor="#ffffff" backgroundColor="#e11d48" halign="center" valign="center" zPosition="5" />
+				<widget name="key_green" position="510,1040" size="460,72" font="Regular; 52" foregroundColor="#ffffff" backgroundColor="#059669" halign="center" valign="center" zPosition="5" />
+				<widget name="key_yellow" position="990,1040" size="460,72" font="Regular; 52" foregroundColor="#ffffff" backgroundColor="#d97706" halign="center" valign="center" zPosition="5" />
+				<widget name="key_blue" position="1470,1040" size="460,72" font="Regular; 52" foregroundColor="#ffffff" backgroundColor="#0284c7" halign="center" valign="center" zPosition="5" />
+			</screen>
+			"""
+
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.skin = Uninstaller.skin
+		title = 'Uninstaller v.%s by Lululla' % uninstaller_version
+		self.setTitle(title)
+		self.pkg_list = []
+		self.checked = []
+		self['list'] = UninstallerCheckList([])
+		self['info'] = Label()
+		self['key_red'] = Label(_('Close'))
+		self['key_green'] = Label(_('Delete Selected'))
+		self['key_yellow'] = Label(_('Select All'))
+		self['key_blue'] = Label(_('Deselect All'))
+		self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {
+			'ok': self.toggleCheck,
+			'cancel': self.close,
+			'red': self.close,
+			'green': self.deleteSelected,
+			'yellow': self.selectAll,
+			'blue': self.deselectAll,
+		}, -1)
+		txt = _('Wait Please...')
+		self['info'].setText(txt)
+		self.timerw = eTimer()
+		try:
+			self.timerw_conn = self.timerw.timeout.connect(self.UploadList)
+		except AttributeError:
+			self.timerw.callback.append(self.UploadList)
+		self.timerw.start(100, 1)
+
+	def UploadList(self):
+		if os.path.exists(uninstaller_myfile):
+			os.remove(uninstaller_myfile)
+		self.pkg_list = []
+		self.checked = []
+		uninstaller_delay()
+		os.system('sleep 2')
+		if os.path.exists(uninstaller_myfile):
+			with open(uninstaller_myfile) as file_:
+				for line in file_:
+					pkg = line.strip()
+					if pkg:
+						self.pkg_list.append(pkg)
+						self.checked.append(False)
+		if len(self.pkg_list) > 0:
+			self.pkg_list.sort()
+			self.checked = [False] * len(self.pkg_list)
+			self.refreshList()
+			txt = _('Select packages to remove (OK=check, Green=delete)')
+			self['info'].setText(txt)
+		else:
+			txt = _('No packages found!')
+			self['info'].setText(txt)
+
+	def refreshList(self):
+		display_list = []
+		for i, pkg in enumerate(self.pkg_list):
+			if self.checked[i]:
+				mark = '[X] '
+			else:
+				mark = '[ ] '
+			display_list.append(mark + pkg)
+		self['list'].setList(display_list)
+
+	def toggleCheck(self):
+		idx = self['list'].getSelectionIndex()
+		if idx is not None and idx < len(self.checked):
+			self.checked[idx] = not self.checked[idx]
+			self.refreshList()
+
+	def selectAll(self):
+		self.checked = [True] * len(self.pkg_list)
+		self.refreshList()
+
+	def deselectAll(self):
+		self.checked = [False] * len(self.pkg_list)
+		self.refreshList()
+
+	def deleteSelected(self):
+		selected = [self.pkg_list[i] for i in range(len(self.pkg_list)) if self.checked[i]]
+		if not selected:
+			self.session.open(MessageBox, _('No packages selected!'), MessageBox.TYPE_INFO)
+			return
+		count = len(selected)
+		msg = _('Are you sure you want to delete') + ' ' + str(count) + ' ' + _('packages?')
+		self.session.openWithCallback(self.confirmDelete, MessageBox, msg, MessageBox.TYPE_YESNO)
+
+	def confirmDelete(self, result):
+		if not result:
+			return
+		selected = [self.pkg_list[i] for i in range(len(self.pkg_list)) if self.checked[i]]
+		if not selected:
+			return
+		self.session.openWithCallback(self.chooseMethod, ChoiceBox, title=_('Select removal method:'), list=[(_('Remove'), 'rem'), (_('Force Remove'), 'force')])
+
+	def chooseMethod(self, answer):
+		if not answer or not answer[1]:
+			return
+		self.method = answer[1]
+		selected = [self.pkg_list[i] for i in range(len(self.pkg_list)) if self.checked[i]]
+		if not selected:
+			return
+		if self.method == 'force':
+			if os.path.exists('/var/lib/dpkg/info'):
+				cmd = 'dpkg -r --force-depends ' + ' '.join(selected)
+			else:
+				cmd = 'opkg remove --force-depends ' + ' '.join(selected)
+		else:
+			if os.path.exists('/var/lib/dpkg/info'):
+				cmd = 'apt-get purge --auto-remove --assume-yes ' + ' '.join(selected)
+			else:
+				cmd = 'opkg remove ' + ' '.join(selected)
+		txt = _('Removing') + ' ' + str(len(selected)) + ' ' + _('packages') + ' ...'
+		self['info'].setText(txt)
+		self.my_console = Console()
+		self.my_console.ePopen(cmd + ' 2>&1', self.uninstall_done)
+
+	def uninstall_done(self, result, retval, extra_args=None):
+		try:
+			txt = _('Removing done. Restarting GUI...')
+			self['info'].setText(txt)
+			self.timer_restart = eTimer()
+			try:
+				self.timer_restart_conn = self.timer_restart.timeout.connect(self.restartGui)
+			except AttributeError:
+				self.timer_restart.callback.append(self.restartGui)
+			self.timer_restart.start(1500, 1)
+		except Exception as e:
+			print('uninstall_done error ', e)
+			self.restartGui()
+
+	def restartGui(self):
+		try:
+			if TryQuitMainloop:
+				self.session.open(TryQuitMainloop, 3)
+			elif enigma:
+				enigma.quitMainloop(3)
+			else:
+				os.system('killall -9 enigma2')
+		except Exception as e:
+			print('restart error ', e)
+			try:
+				os.system('killall -9 enigma2')
+			except Exception:
+				pass
 
 # =========================================================================
 # OSCAM SMART TOGGLE / SWITCHER
@@ -575,7 +793,7 @@ BUILTIN_SYSTEM_TOOLS = [
         "description": u"\u0641\u062d\u0635 \u0645\u0644\u0641 oscam.server \u0648\u0639\u0631\u0636 \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u0634\u063a\u0627\u0644 \u0641\u0642\u0637 (Active Only)."
     },
     {
-        "name": u"\u0633\u064a\u0631\u0641\u0631 \u0633\u064a\u0633\u0643\u0627\u0645 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u064a\u0648\u0645\u064a (Store Daily CCcam Server)",
+        "name": u"\u0633\u064a\u0633\u0643\u0627\u0645 \u0627\u0644\u0645\u062a\u062c\u0631 \u0627\u0644\u064a\u0648\u0645\u064a (Store Daily CCcam Server)",
         "type": "tool",
         "action": "tiger_server",
         "description": u"\u0633\u064a\u0631\u0641\u0631 \u0641\u0627\u062a\u062d \u0627\u063a\u0644\u0628 \u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629"
@@ -598,6 +816,39 @@ BUILTIN_SYSTEM_TOOLS = [
         "action": "stop_oscam",
         "description": u"\u0625\u064a\u0642\u0627\u0641 \u062a\u0634\u063a\u064a\u0644 \u0625\u064a\u0645\u0648 OSCam / NCam."
     },
+    {
+        "name": u"\u062d\u0630\u0641 \u0627\u0644\u0628\u0644\u062c\u0646\u0627\u062a \u0648\u0627\u0644\u0633\u0643\u064a\u0646\u0627\u062a (Uninstaller)",
+        "type": "tool",
+        "action": "uninstaller",
+        "description": u"\u062d\u0630\u0641 \u0627\u0644\u0628\u0644\u0627\u062c\u0646\u0627\u062a \u0648\u0627\u0644\u0633\u0643\u064a\u0646\u0627\u062a \u0627\u0644\u0645\u062b\u0628\u062a\u0629 \u062d\u064a\u062b \u064a\u0645\u0643\u0646\u0643 \u0627\u062e\u062a\u064a\u0627\u0631 \u0648\u062d\u0630\u0641 \u0623\u064a \u0625\u0636\u0627\u0641\u0629 (\u062d\u0630\u0641 \u0639\u0627\u062f\u064a \u0623\u0648 \u0625\u062c\u0628\u0627\u0631\u064a)"
+    },
+
+    {
+        "name": u"\u26bd \u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0646\u0627\u0642\u0644\u0629 (Football on TV)",
+        "type": "tool",
+        "action": "football_matches",
+        "description": u"\u0639\u0631\u0636 \u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0643\u0631\u0629 \u0627\u0644\u0642\u062f\u0645 \u0627\u0644\u064a\u0648\u0645 \u0648\u063a\u062f\u0627\u064b \u0648\u0628\u0639\u062f \u063a\u062f \u0645\u0639 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0646\u0627\u0642\u0644\u0629 (\u0627\u0644\u0645\u0635\u062f\u0631: liveonsat.com)"
+    },
+
+    {
+        "name": u"\U0001F324 \u062d\u0627\u0644\u0629 \u0627\u0644\u0637\u0642\u0633 (Weather)",
+        "type": "tool",
+        "action": "weather",
+        "description": u"\u0639\u0631\u0636 \u062d\u0627\u0644\u0629 \u0627\u0644\u0637\u0642\u0633 \u0627\u0644\u062d\u0627\u0644\u064a\u0629 \u0648\u062a\u0648\u0642\u0639\u0627\u062a 5 \u0623\u064a\u0627\u0645 \u0644\u0623\u064a \u0645\u062f\u064a\u0646\u0629 \u0641\u064a \u0627\u0644\u0639\u0627\u0644\u0645 \u0645\u0639 \u0627\u0644\u0628\u062d\u062b (\u0627\u0644\u0645\u0635\u062f\u0631: open-meteo)"
+    },
+    {
+        "name": u"\U0001F4FA \u0642\u0646\u0648\u0627\u062a IPTV \u0645\u062c\u0627\u0646\u064a\u0629 (IPTV)",
+        "type": "tool",
+        "action": "iptv",
+        "description": u"\u0642\u0648\u0627\u0626\u0645 \u0642\u0646\u0648\u0627\u062a IPTV \u0645\u062c\u0627\u0646\u064a\u0629 \u062d\u0633\u0628 \u0627\u0644\u062f\u0648\u0644\u0629 \u0645\u0639 \u0625\u0645\u0643\u0627\u0646\u064a\u0629 \u0627\u0644\u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0645\u0628\u0627\u0634\u0631 (\u0627\u0644\u0645\u0635\u062f\u0631: iptv-org)"
+    },
+    {
+        "name": u"\U0001F4E1 \u0627\u0644\u062a\u0631\u062f\u062f\u0627\u062a \u0648\u0627\u0644\u0623\u0642\u0645\u0627\u0631 (Frequencies)",
+        "type": "tool",
+        "action": "kingofsat",
+        "description": u"\u0639\u0631\u0636 \u062a\u0631\u062f\u062f\u0627\u062a \u0648\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0623\u0642\u0645\u0627\u0631 \u0627\u0644\u0635\u0646\u0627\u0639\u064a\u0629 (\u0646\u0627\u064a\u0644 \u0633\u0627\u062a\u060c \u0639\u0631\u0628 \u0633\u0627\u062a\u060c \u0625\u0633 \u0647\u0627\u064a\u0644...) (\u0627\u0644\u0645\u0635\u062f\u0631: KingOfSat)"
+    },
+
     {
         "name": u"\u062a\u0646\u0638\u064a\u0641 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0645\u0624\u0642\u062a\u0629",
         "type": "tool",
@@ -919,6 +1170,1281 @@ RAW_SKIN_LAYOUT = """
 
 # Apply Auto-Scaling to Skin Layout dynamically
 SKIN_LAYOUT = scale_skin_layout(RAW_SKIN_LAYOUT)
+
+# =========================================================================
+# Football on TV (LiveOnSat) - Added feature (Tools section)
+# Shows today's / tomorrow's / whole-week football matches with the
+# broadcasting channels, parsed live from liveonsat.com.
+# =========================================================================
+LIVEONSAT_BASE = "https://liveonsat.com/2day.php"
+
+FOOTBALL_RAW_SKIN = """<screen name="FootballMatches" position="center,center" size="1420,940" title="Football on TV">
+    <widget name="title" position="20,10" size="1380,55" font="Regular;34" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="daylabel" position="20,70" size="1380,42" font="Regular;28" halign="center" transparent="1" foregroundColor="#00ffffff"/>
+    <widget name="list" position="25,120" size="1370,725" font="Regular;25" itemHeight="36" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,852" size="1380,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,898" size="330,32" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="380,898" size="330,32" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="730,898" size="330,32" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="1080,898" size="330,32" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+
+FOOTBALL_SKIN = scale_skin_layout(FOOTBALL_RAW_SKIN)
+
+def _make_ms_skin(screen_name, title):
+    try:
+        raw = FOOTBALL_RAW_SKIN.replace('name="FootballMatches"', 'name="%s"' % screen_name)
+        raw = raw.replace('title="Football on TV"', 'title="%s"' % title)
+        return scale_skin_layout(raw)
+    except Exception:
+        return FOOTBALL_SKIN
+
+WEATHER_SKIN = _make_ms_skin("MS_WeatherScreen", "Weather")
+IPTV_SKIN = _make_ms_skin("MS_IPTVScreen", "IPTV")
+KOS_SKIN = _make_ms_skin("MS_KingOfSatScreen", "Frequencies")
+NEWS_SKIN = _make_ms_skin("MS_NewsScreen", "News")
+
+def _strip_emoji(txt):
+    try:
+        return u''.join(ch for ch in txt if ord(ch) < 0x1F000).strip()
+    except Exception:
+        return txt
+
+def _call_ui(fn):
+    if sys.version_info >= (3, 0):
+        try:
+            from twisted.internet import reactor
+            reactor.callFromThread(fn)
+            return
+        except Exception:
+            pass
+    fn()
+
+def _los_clean(raw):
+    try:
+        txt = re.sub(r'<[^>]+>', '', raw)
+        for a, b in [('&amp;', '&'), ('&nbsp;', ' '), ('&ndash;', '-'),
+                     ('&quot;', '"'), ('&#039;', "'"), ('&deg;', 'deg'),
+                     ('&lt;', '<'), ('&gt;', '>')]:
+            txt = txt.replace(a, b)
+        # drop emoji / high codepoints that box fonts cannot render
+        txt = u''.join(ch for ch in txt if ord(ch) < 0x1F000)
+        return txt.strip()
+    except Exception:
+        return raw.strip()
+
+def parse_liveonsat(html):
+    """Parse the liveonsat schedule page into a list of match dicts."""
+    matches = []
+    try:
+        team_re = re.compile(r'<div class = fLeft style="[^"]*#ffd379[^"]*">(.*?)</div>', re.S)
+        comp_re = re.compile(r'<span class = comp_head>(.*?)</span>', re.S)
+        day_re = re.compile(r'<h2 class = time_head>(.*?)</h2>', re.S)
+        time_re = re.compile(r'ST:\s*([0-9]{1,2}:[0-9]{2})')
+        chan_re = re.compile(r'onmouseout="return nd\(\);">(.*?)</a>', re.S)
+
+        comps = [(m.start(), _los_clean(m.group(1))) for m in comp_re.finditer(html)]
+        days = [(m.start(), _los_clean(m.group(1))) for m in day_re.finditer(html)]
+        teams = list(team_re.finditer(html))
+
+        for i, tm in enumerate(teams):
+            start = tm.start()
+            end = teams[i + 1].start() if i + 1 < len(teams) else len(html)
+            block = html[start:end]
+
+            comp = ""
+            for pos, name in comps:
+                if pos < start:
+                    comp = name
+                else:
+                    break
+            day = ""
+            for pos, name in days:
+                if pos < start:
+                    day = name
+                else:
+                    break
+
+            team = _los_clean(tm.group(1))
+            tmo = time_re.search(block)
+            stime = tmo.group(1) if tmo else "--:--"
+
+            chans = []
+            for cm in chan_re.finditer(block):
+                c = _los_clean(cm.group(1))
+                if c and c not in chans:
+                    chans.append(c)
+
+            if team:
+                matches.append({
+                    "day": day, "comp": comp, "team": team,
+                    "time": stime, "channels": chans
+                })
+    except Exception:
+        pass
+    return matches
+
+def fetch_liveonsat(start_date, end_date):
+    """Download the liveonsat page for the given date range. Returns (ok, html_or_err)."""
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import ssl
+        else:
+            import urllib2
+            import ssl
+        try:
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+        except Exception:
+            context = None
+
+        url = ("%s?start_dd=%02d&start_mm=%02d&start_yyyy=%d"
+               "&end_dd=%02d&end_mm=%02d&end_yyyy=%d#") % (
+            LIVEONSAT_BASE,
+            start_date.day, start_date.month, start_date.year,
+            end_date.day, end_date.month, end_date.year)
+
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+        if context:
+            resp = urllib2.urlopen(req, timeout=20, context=context)
+        else:
+            resp = urllib2.urlopen(req, timeout=20)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode('utf-8', 'ignore')
+        return True, data
+    except Exception as e:
+        return False, str(e)
+
+class FootballMatches(Screen):
+    skin = FOOTBALL_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\u26bd \u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0646\u0627\u0642\u0644\u0629 (Football on TV)")
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u062a\u062d\u062f\u064a\u062b (Refresh)")
+        self["key_yellow"] = Label(u"\u064a\u0648\u0645 \u0633\u0627\u0628\u0642 (Prev)")
+        self["key_blue"] = Label(u"\u064a\u0648\u0645 \u062a\u0627\u0644\u064a (Next)")
+
+        self.day_offset = 0
+        self.week_mode = False
+        self.is_loading = False
+
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.reload_matches,
+            "red": self.close,
+            "green": self.reload_matches,
+            "yellow": self.prev_day,
+            "blue": self.next_day,
+            "left": self.prev_day,
+            "right": self.next_day,
+        }, -1)
+
+        self.onLayoutFinish.append(self.reload_matches)
+
+    def _get_dates(self):
+        import datetime
+        today = datetime.date.today()
+        if self.week_mode:
+            start = today
+            end = today + datetime.timedelta(days=6)
+        else:
+            start = today + datetime.timedelta(days=self.day_offset)
+            end = start
+        return start, end
+
+    def _day_title(self):
+        import datetime
+        if self.week_mode:
+            return u"\u0643\u0627\u0645\u0644 \u0627\u0644\u0623\u0633\u0628\u0648\u0639 (Whole Week)"
+        names = {
+            0: u"\u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0627\u0644\u064a\u0648\u0645 (Today)",
+            1: u"\u0645\u0628\u0627\u0631\u064a\u0627\u062a \u063a\u062f\u0627\u064b (Tomorrow)",
+            2: u"\u0628\u0639\u062f \u063a\u062f (Day After Tomorrow)",
+        }
+        base = names.get(self.day_offset)
+        d = datetime.date.today() + datetime.timedelta(days=self.day_offset)
+        ds = d.strftime("%A %d/%m/%Y")
+        if base:
+            return "%s  -  %s" % (base, ds)
+        return ds
+
+    def prev_day(self):
+        if self.is_loading:
+            return
+        self.week_mode = False
+        self.day_offset -= 1
+        self.reload_matches()
+
+    def next_day(self):
+        if self.is_loading:
+            return
+        self.week_mode = False
+        self.day_offset += 1
+        self.reload_matches()
+
+    def reload_matches(self):
+        if self.is_loading:
+            return
+        self.is_loading = True
+        self["daylabel"].setText(self._day_title())
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631... (Please wait)")
+        start, end = self._get_dates()
+
+        def _worker():
+            ok, payload = fetch_liveonsat(start, end)
+            matches = parse_liveonsat(payload) if ok else []
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0627\u0644\u0645\u0648\u0642\u0639 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Network error)")
+                    return
+                self._render(matches)
+
+            if sys.version_info >= (3, 0):
+                try:
+                    from twisted.internet import reactor
+                    reactor.callFromThread(_apply)
+                except Exception:
+                    _apply()
+            else:
+                _apply()
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def _render(self, matches):
+        entries = []
+        if not matches:
+            entries.append(u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0644\u0647\u0630\u0627 \u0627\u0644\u064a\u0648\u0645 (No matches found)")
+            self["list"].setList(entries)
+            self["status"].setText("0 \u0645\u0628\u0627\u0631\u0627\u0629")
+            return
+
+        last_day = None
+        for m in matches:
+            if self.week_mode and m.get("day") and m["day"] != last_day:
+                last_day = m["day"]
+                entries.append(u"==== %s ====" % m["day"])
+            header = u"\u23f0 %s   %s" % (m["time"], m["team"])
+            entries.append(header)
+            if m.get("comp"):
+                entries.append(u"      \u2022 %s" % m["comp"])
+            chans = m.get("channels") or []
+            if chans:
+                per = []
+                for c in chans:
+                    per.append(c)
+                    if len(per) >= 3:
+                        entries.append(u"      " + " , ".join(per))
+                        per = []
+                if per:
+                    entries.append(u"      " + " , ".join(per))
+            else:
+                entries.append(u"      (\u0644\u0627 \u062a\u0648\u062c\u062f \u0642\u0646\u0627\u0629 / no channel listed)")
+            entries.append(" ")
+
+        self["list"].setList(entries)
+        self["status"].setText(u"%d \u0645\u0628\u0627\u0631\u0627\u0629  |  \u0627\u0644\u0623\u0632\u0631\u0627\u0631: \u0623\u0635\u0641\u0631=\u0633\u0627\u0628\u0642  \u0623\u0632\u0631\u0642=\u062a\u0627\u0644\u064a  \u0623\u062e\u0636\u0631=\u062a\u062d\u062f\u064a\u062b" % len(matches))
+
+# =========================================================================
+# Weather (open-meteo) - Added feature (Tools section)
+# =========================================================================
+WEATHER_CITIES = [
+    (u"\u0628\u063a\u062f\u0627\u062f (Baghdad)", 33.34, 44.40),
+    (u"\u0627\u0644\u0628\u0635\u0631\u0629 (Basra)", 30.51, 47.78),
+    (u"\u0623\u0631\u0628\u064a\u0644 (Erbil)", 36.19, 44.01),
+    (u"\u0627\u0644\u0645\u0648\u0635\u0644 (Mosul)", 36.34, 43.13),
+    (u"\u0627\u0644\u0646\u062c\u0641 (Najaf)", 32.00, 44.33),
+    (u"\u0643\u0631\u0628\u0644\u0627\u0621 (Karbala)", 32.61, 44.02),
+    (u"\u0627\u0644\u0642\u0627\u0647\u0631\u0629 (Cairo)", 30.04, 31.24),
+    (u"\u0627\u0644\u0631\u064a\u0627\u0636 (Riyadh)", 24.71, 46.68),
+    (u"\u062c\u062f\u0629 (Jeddah)", 21.49, 39.19),
+    (u"\u0645\u0643\u0629 (Makkah)", 21.39, 39.86),
+    (u"\u0627\u0644\u0645\u062f\u064a\u0646\u0629 (Madinah)", 24.52, 39.57),
+    (u"\u062f\u0628\u064a (Dubai)", 25.20, 55.27),
+    (u"\u0623\u0628\u0648\u0638\u0628\u064a (Abu Dhabi)", 24.45, 54.38),
+    (u"\u0639\u0645\u0627\u0646 (Amman)", 31.95, 35.93),
+    (u"\u062f\u0645\u0634\u0642 (Damascus)", 33.51, 36.29),
+    (u"\u0628\u064a\u0631\u0648\u062a (Beirut)", 33.89, 35.50),
+    (u"\u0627\u0644\u062f\u0648\u062d\u0629 (Doha)", 25.28, 51.53),
+    (u"\u0627\u0644\u0643\u0648\u064a\u062a (Kuwait)", 29.37, 47.98),
+    (u"\u0627\u0644\u0645\u0646\u0627\u0645\u0629 (Manama)", 26.22, 50.58),
+    (u"\u0645\u0633\u0642\u0637 (Muscat)", 23.59, 58.41),
+    (u"\u0635\u0646\u0639\u0627\u0621 (Sanaa)", 15.37, 44.19),
+    (u"\u0627\u0644\u062e\u0631\u0637\u0648\u0645 (Khartoum)", 15.50, 32.56),
+    (u"\u0637\u0631\u0627\u0628\u0644\u0633 (Tripoli)", 32.89, 13.19),
+    (u"\u062a\u0648\u0646\u0633 (Tunis)", 36.81, 10.18),
+    (u"\u0627\u0644\u062c\u0632\u0627\u0626\u0631 (Algiers)", 36.75, 3.06),
+    (u"\u0627\u0644\u062f\u0627\u0631 \u0627\u0644\u0628\u064a\u0636\u0627\u0621 (Casablanca)", 33.57, -7.59),
+    (u"\u0627\u0644\u0631\u0628\u0627\u0637 (Rabat)", 34.02, -6.83),
+    (u"\u0627\u0633\u0637\u0646\u0628\u0648\u0644 (Istanbul)", 41.01, 28.98),
+    (u"\u0623\u0646\u0642\u0631\u0629 (Ankara)", 39.93, 32.86),
+    (u"\u0637\u0647\u0631\u0627\u0646 (Tehran)", 35.69, 51.39),
+    (u"\u0644\u0646\u062f\u0646 (London)", 51.51, -0.13),
+    (u"\u0628\u0627\u0631\u064a\u0633 (Paris)", 48.85, 2.35),
+    (u"\u0628\u0631\u0644\u064a\u0646 (Berlin)", 52.52, 13.40),
+    (u"\u0631\u0648\u0645\u0627 (Rome)", 41.90, 12.50),
+    (u"\u0645\u062f\u0631\u064a\u062f (Madrid)", 40.42, -3.70),
+    (u"\u0645\u0648\u0633\u0643\u0648 (Moscow)", 55.75, 37.62),
+    (u"\u0646\u064a\u0648\u064a\u0648\u0631\u0643 (New York)", 40.71, -74.01),
+    (u"\u0648\u0627\u0634\u0646\u0637\u0646 (Washington)", 38.90, -77.04),
+    (u"\u062a\u0648\u0631\u0646\u062a\u0648 (Toronto)", 43.65, -79.38),
+    (u"\u0637\u0648\u0643\u064a\u0648 (Tokyo)", 35.68, 139.69),
+    (u"\u0628\u0643\u064a\u0646 (Beijing)", 39.90, 116.41),
+    (u"\u0646\u064a\u0648\u062f\u0644\u0647\u064a (New Delhi)", 28.61, 77.21),
+    (u"\u0625\u0633\u0644\u0627\u0645 \u0623\u0628\u0627\u062f (Islamabad)", 33.68, 73.05),
+    (u"\u0643\u0648\u0627\u0644\u0627\u0644\u0645\u0628\u0648\u0631 (Kuala Lumpur)", 3.14, 101.69),
+    (u"\u062c\u0627\u0643\u0631\u062a\u0627 (Jakarta)", -6.21, 106.85),
+    (u"\u0633\u064a\u062f\u0646\u064a (Sydney)", -33.87, 151.21),
+]
+
+WEATHER_CODES = {
+    0: u"\u0635\u0627\u0641\u064a \u2600", 1: u"\u0635\u0627\u0641\u064d \u063a\u0627\u0644\u0628\u0627\u064b \U0001F324",
+    2: u"\u063a\u0627\u0626\u0645 \u062c\u0632\u0626\u064a\u0627\u064b \u26c5", 3: u"\u063a\u0627\u0626\u0645 \u2601",
+    45: u"\u0636\u0628\u0627\u0628 \U0001F32B", 48: u"\u0636\u0628\u0627\u0628 \U0001F32B",
+    51: u"\u0631\u0630\u0627\u0630 \U0001F327", 53: u"\u0631\u0630\u0627\u0630 \U0001F327", 55: u"\u0631\u0630\u0627\u0630 \U0001F327",
+    61: u"\u0645\u0637\u0631 \u062e\u0641\u064a\u0641 \U0001F327", 63: u"\u0645\u0637\u0631 \U0001F327", 65: u"\u0645\u0637\u0631 \u063a\u0632\u064a\u0631 \U0001F327",
+    71: u"\u062b\u0644\u062c \u2744", 73: u"\u062b\u0644\u062c \u2744", 75: u"\u062b\u0644\u062c \u2744",
+    80: u"\u0632\u062e\u0627\u062a \u0645\u0637\u0631 \U0001F326", 81: u"\u0632\u062e\u0627\u062a \u0645\u0637\u0631 \U0001F326", 82: u"\u0632\u062e\u0627\u062a \u063a\u0632\u064a\u0631\u0629 \U0001F326",
+    95: u"\u0639\u0627\u0635\u0641\u0629 \u0631\u0639\u062f\u064a\u0629 \u26c8", 96: u"\u0639\u0627\u0635\u0641\u0629 \u0631\u0639\u062f\u064a\u0629 \u26c8", 99: u"\u0639\u0627\u0635\u0641\u0629 \u0631\u0639\u062f\u064a\u0629 \u26c8",
+}
+
+def _weather_desc(code):
+    try:
+        d = WEATHER_CODES.get(int(code), u"-")
+        return u''.join(ch for ch in d if ord(ch) < 0x1F000).strip()
+    except Exception:
+        return u"-"
+
+def fetch_weather(lat, lon):
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import ssl
+        else:
+            import urllib2
+            import ssl
+        try:
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+        except Exception:
+            context = None
+        url = ("https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s"
+               "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code"
+               "&daily=temperature_2m_max,temperature_2m_min,weather_code"
+               "&timezone=auto&forecast_days=5") % (lat, lon)
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        if context:
+            resp = urllib2.urlopen(req, timeout=15, context=context)
+        else:
+            resp = urllib2.urlopen(req, timeout=15)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode('utf-8', 'ignore')
+        return True, json.loads(data)
+    except Exception as e:
+        return False, str(e)
+
+def fetch_geocode(query):
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import urllib.parse as urlparse
+            import ssl
+            q = urlparse.quote(query)
+        else:
+            import urllib2
+            import urllib as urlparse
+            import ssl
+            q = urlparse.quote(query.encode('utf-8'))
+        try:
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+        except Exception:
+            context = None
+        url = ("https://geocoding-api.open-meteo.com/v1/search?name=%s"
+               "&count=10&language=ar&format=json") % q
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        if context:
+            resp = urllib2.urlopen(req, timeout=15, context=context)
+        else:
+            resp = urllib2.urlopen(req, timeout=15)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode('utf-8', 'ignore')
+        j = json.loads(data)
+        results = []
+        for r in j.get("results", []) or []:
+            nm = r.get("name", "")
+            country = r.get("country", "")
+            admin = r.get("admin1", "")
+            label = nm
+            if admin and admin != nm:
+                label += u", " + admin
+            if country:
+                label += u" - " + country
+            results.append((label, r.get("latitude"), r.get("longitude")))
+        return True, results
+    except Exception as e:
+        return False, str(e)
+
+class WeatherScreen(Screen):
+    skin = WEATHER_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001F324 \u062d\u0627\u0644\u0629 \u0627\u0644\u0637\u0642\u0633 (Weather - open-meteo)")
+        try:
+            self.setTitle(u"\u062d\u0627\u0644\u0629 \u0627\u0644\u0637\u0642\u0633 (Weather)")
+        except Exception:
+            pass
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0631\u062c\u0648\u0639 (Back)")
+        self["key_green"] = Label(u"\u0639\u0631\u0636 (Open)")
+        self["key_yellow"] = Label(u"\u0628\u062d\u062b \u0639\u0646 \u0645\u062f\u064a\u0646\u0629 (Search)")
+        self["key_blue"] = Label(u"\u062a\u062d\u062f\u064a\u062b (Refresh)")
+        self.mode = "menu"
+        self.is_loading = False
+        self.search_results = []
+        self.cur_city = None
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.go_back, "ok": self.ok_pressed,
+            "red": self.go_back, "green": self.ok_pressed,
+            "yellow": self.do_search, "blue": self.refresh_current,
+        }, -1)
+        self.onLayoutFinish.append(self.show_menu)
+
+    def show_menu(self):
+        self.mode = "menu"
+        self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u0645\u062f\u064a\u0646\u0629 \u0623\u0648 \u0627\u0636\u063a\u0637 \u0623\u0635\u0641\u0631 \u0644\u0644\u0628\u062d\u062b (Select or Search)")
+        items = [u"\U0001F50D \u0628\u062d\u062b \u0639\u0646 \u0645\u062f\u064a\u0646\u0629 \u0641\u064a \u0627\u0644\u0639\u0627\u0644\u0645 (Search city)"]
+        items += [c[0] for c in WEATHER_CITIES]
+        self["list"].setList([_strip_emoji(x) for x in items])
+        self["status"].setText(u"OK = \u0639\u0631\u0636 \u0627\u0644\u0637\u0642\u0633  |  \u0623\u0635\u0641\u0631 = \u0628\u062d\u062b")
+
+    def go_back(self):
+        if self.is_loading:
+            return
+        if self.mode in ("detail", "search"):
+            self.show_menu()
+        else:
+            self.close()
+
+    def ok_pressed(self):
+        if self.is_loading:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx < 0:
+            return
+        if self.mode == "menu":
+            if idx == 0:
+                self.do_search()
+            else:
+                c = WEATHER_CITIES[idx - 1]
+                self.cur_city = (c[0], c[1], c[2])
+                self.load_detail()
+        elif self.mode == "search":
+            if 0 <= idx < len(self.search_results):
+                r = self.search_results[idx]
+                self.cur_city = (r[0], r[1], r[2])
+                self.load_detail()
+
+    def refresh_current(self):
+        if self.mode == "detail" and self.cur_city and not self.is_loading:
+            self.load_detail()
+
+    def do_search(self):
+        if self.is_loading:
+            return
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(self._search_cb, VirtualKeyBoard,
+                                          title=u"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u062f\u064a\u0646\u0629 (City name)")
+        except Exception as e:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0631 \u0641\u062a\u062d \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d:\n%s" % str(e), MessageBox.TYPE_ERROR)
+
+    def _search_cb(self, text):
+        if not text:
+            return
+        self.is_loading = True
+        self.mode = "search"
+        self["daylabel"].setText(u"\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b: %s" % text)
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b... (Searching...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, payload = fetch_geocode(text)
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self.search_results = payload
+                if not payload:
+                    self["list"].setList([u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c (No results)"])
+                    self["status"].setText(u"\u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639")
+                else:
+                    self["list"].setList([_strip_emoji(r[0]) for r in payload])
+                    self["status"].setText(u"%d \u0646\u062a\u064a\u062c\u0629  |  OK = \u0639\u0631\u0636 \u0627\u0644\u0637\u0642\u0633  |  \u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639" % len(payload))
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def load_detail(self):
+        self.is_loading = True
+        self.mode = "detail"
+        name, lat, lon = self.cur_city
+        self["daylabel"].setText(name)
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, payload = fetch_weather(lat, lon)
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self._render(payload)
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def _render(self, data):
+        entries = []
+        try:
+            cur = data.get("current", {})
+            entries.append(u"\u2554\u2550 \u0627\u0644\u0622\u0646 (Now) \u2550\u2557")
+            entries.append(u"  \u0627\u0644\u062d\u0631\u0627\u0631\u0629: %s\u00b0C" % cur.get("temperature_2m", "-"))
+            entries.append(u"  \u0627\u0644\u062d\u0627\u0644\u0629: %s" % _weather_desc(cur.get("weather_code", -1)))
+            entries.append(u"  \u0627\u0644\u0631\u0637\u0648\u0628\u0629: %s%%" % cur.get("relative_humidity_2m", "-"))
+            entries.append(u"  \u0627\u0644\u0631\u064a\u0627\u062d: %s km/h" % cur.get("wind_speed_10m", "-"))
+            entries.append(" ")
+            entries.append(u"\u2554\u2550 \u062a\u0648\u0642\u0639\u0627\u062a 5 \u0623\u064a\u0627\u0645 (5-Day) \u2550\u2557")
+            daily = data.get("daily", {})
+            days = daily.get("time", [])
+            tmax = daily.get("temperature_2m_max", [])
+            tmin = daily.get("temperature_2m_min", [])
+            wc = daily.get("weather_code", [])
+            for i in range(len(days)):
+                mx = tmax[i] if i < len(tmax) else "-"
+                mn = tmin[i] if i < len(tmin) else "-"
+                cc = wc[i] if i < len(wc) else -1
+                entries.append(u"  %s   %s\u00b0/%s\u00b0   %s" % (days[i], mx, mn, _weather_desc(cc)))
+        except Exception as e:
+            entries.append(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a: %s" % str(e))
+        self["list"].setList(entries)
+        self["status"].setText(u"\u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639  |  \u0623\u0632\u0631\u0642 = \u062a\u062d\u062f\u064a\u062b")
+
+# =========================================================================
+# IPTV (iptv-org) - Added feature (Tools section)
+# =========================================================================
+IPTV_COUNTRIES = [
+    (u"\u0627\u0644\u0639\u0631\u0627\u0642 (Iraq)", "iq"),
+    (u"\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629 (Saudi Arabia)", "sa"),
+    (u"\u0645\u0635\u0631 (Egypt)", "eg"),
+    (u"\u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062a (UAE)", "ae"),
+    (u"\u0627\u0644\u0623\u0631\u062f\u0646 (Jordan)", "jo"),
+    (u"\u0627\u0644\u0643\u0648\u064a\u062a (Kuwait)", "kw"),
+    (u"\u0642\u0637\u0631 (Qatar)", "qa"),
+    (u"\u0627\u0644\u0645\u063a\u0631\u0628 (Morocco)", "ma"),
+    (u"\u0627\u0644\u062c\u0632\u0627\u0626\u0631 (Algeria)", "dz"),
+    (u"\u062a\u0648\u0646\u0633 (Tunisia)", "tn"),
+    (u"\u0644\u0628\u0646\u0627\u0646 (Lebanon)", "lb"),
+    (u"\u0633\u0648\u0631\u064a\u0627 (Syria)", "sy"),
+    (u"\u0641\u0644\u0633\u0637\u064a\u0646 (Palestine)", "ps"),
+    (u"\u0644\u064a\u0628\u064a\u0627 (Libya)", "ly"),
+    (u"\u0627\u0644\u0633\u0648\u062f\u0627\u0646 (Sudan)", "sd"),
+    (u"\u0639\u0645\u0627\u0646 (Oman)", "om"),
+    (u"\u0627\u0644\u064a\u0645\u0646 (Yemen)", "ye"),
+    (u"\u0643\u0644 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0639\u0631\u0628\u064a\u0629 (All Arabic)", "@ara"),
+]
+
+def fetch_iptv(code):
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import ssl
+        else:
+            import urllib2
+            import ssl
+        try:
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+        except Exception:
+            context = None
+        if code == "@ara":
+            url = "https://iptv-org.github.io/iptv/languages/ara.m3u"
+        else:
+            url = "https://iptv-org.github.io/iptv/countries/%s.m3u" % code
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        if context:
+            resp = urllib2.urlopen(req, timeout=20, context=context)
+        else:
+            resp = urllib2.urlopen(req, timeout=20)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode('utf-8', 'ignore')
+        return True, data
+    except Exception as e:
+        return False, str(e)
+
+def parse_m3u(text):
+    channels = []
+    try:
+        name = None
+        for line in text.splitlines():
+            line = line.strip()
+            if line.startswith("#EXTINF"):
+                if "," in line:
+                    name = line.split(",", 1)[1].strip()
+                else:
+                    name = "Channel"
+            elif line and not line.startswith("#"):
+                if name:
+                    channels.append((name, line))
+                    name = None
+    except Exception:
+        pass
+    return channels
+
+IPTV_BASE = "https://iptv-org.github.io/iptv"
+IPTV_API = "https://iptv-org.github.io/api"
+
+IPTV_AR_COUNTRY = {
+    "iq": u"\u0627\u0644\u0639\u0631\u0627\u0642", "sa": u"\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629",
+    "eg": u"\u0645\u0635\u0631", "ae": u"\u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062a",
+    "jo": u"\u0627\u0644\u0623\u0631\u062f\u0646", "kw": u"\u0627\u0644\u0643\u0648\u064a\u062a",
+    "qa": u"\u0642\u0637\u0631", "ma": u"\u0627\u0644\u0645\u063a\u0631\u0628",
+    "dz": u"\u0627\u0644\u062c\u0632\u0627\u0626\u0631", "tn": u"\u062a\u0648\u0646\u0633",
+    "lb": u"\u0644\u0628\u0646\u0627\u0646", "sy": u"\u0633\u0648\u0631\u064a\u0627",
+    "ps": u"\u0641\u0644\u0633\u0637\u064a\u0646", "ly": u"\u0644\u064a\u0628\u064a\u0627",
+    "sd": u"\u0627\u0644\u0633\u0648\u062f\u0627\u0646", "om": u"\u0639\u0645\u0627\u0646",
+    "ye": u"\u0627\u0644\u064a\u0645\u0646", "bh": u"\u0627\u0644\u0628\u062d\u0631\u064a\u0646",
+    "mr": u"\u0645\u0648\u0631\u064a\u062a\u0627\u0646\u064a\u0627", "so": u"\u0627\u0644\u0635\u0648\u0645\u0627\u0644",
+    "dj": u"\u062c\u064a\u0628\u0648\u062a\u064a", "km": u"\u062c\u0632\u0631 \u0627\u0644\u0642\u0645\u0631",
+    "tr": u"\u062a\u0631\u0643\u064a\u0627", "ir": u"\u0625\u064a\u0631\u0627\u0646",
+    "us": u"\u0627\u0644\u0648\u0644\u0627\u064a\u0627\u062a \u0627\u0644\u0645\u062a\u062d\u062f\u0629", "gb": u"\u0628\u0631\u064a\u0637\u0627\u0646\u064a\u0627",
+    "fr": u"\u0641\u0631\u0646\u0633\u0627", "de": u"\u0623\u0644\u0645\u0627\u0646\u064a\u0627",
+}
+
+def _http_get(url, timeout=25):
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import ssl
+        else:
+            import urllib2
+            import ssl
+        try:
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+        except Exception:
+            context = None
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        if context:
+            resp = urllib2.urlopen(req, timeout=timeout, context=context)
+        else:
+            resp = urllib2.urlopen(req, timeout=timeout)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode('utf-8', 'ignore')
+        return True, data
+    except Exception as e:
+        return False, str(e)
+
+def fetch_iptv_index():
+    index = []
+    index.append((u"\u2605 \u0643\u0644 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0639\u0631\u0628\u064a\u0629 (All Arabic)", IPTV_BASE + "/languages/ara.m3u"))
+    okc, cdata = _http_get(IPTV_API + "/categories.json")
+    if okc:
+        try:
+            for c in json.loads(cdata):
+                cid = c.get("id")
+                nm = c.get("name", "")
+                if cid:
+                    index.append((u"[\u062a\u0635\u0646\u064a\u0641] %s" % nm, IPTV_BASE + "/categories/%s.m3u" % cid))
+        except Exception:
+            pass
+    oks, sdata = _http_get(IPTV_API + "/countries.json")
+    if oks:
+        try:
+            arr = json.loads(sdata)
+            arr = sorted(arr, key=lambda x: x.get("name", ""))
+            for c in arr:
+                code = c.get("code")
+                nm = c.get("name", "")
+                if code:
+                    ar = IPTV_AR_COUNTRY.get(code.lower())
+                    label = (u"%s (%s)" % (ar, nm)) if ar else nm
+                    index.append((label, IPTV_BASE + "/countries/%s.m3u" % code.lower()))
+        except Exception:
+            pass
+    return index
+
+class IPTVScreen(Screen):
+    skin = IPTV_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001F4FA \u0642\u0646\u0648\u0627\u062a IPTV (iptv-org)")
+        try:
+            self.setTitle(u"\u0642\u0646\u0648\u0627\u062a IPTV (IPTV)")
+        except Exception:
+            pass
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0631\u062c\u0648\u0639 (Back)")
+        self["key_green"] = Label(u"\u062a\u0634\u063a\u064a\u0644 (Play)")
+        self["key_yellow"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0639\u0644\u0649 (Page Up)")
+        self["key_blue"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0633\u0641\u0644 (Page Down)")
+        self.mode = "menu"
+        self.index = []
+        self.is_loading = False
+        self.channels = []
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.go_back, "ok": self.ok_pressed,
+            "red": self.go_back, "green": self.ok_pressed,
+            "yellow": self.page_up, "blue": self.page_down,
+        }, -1)
+        self.onLayoutFinish.append(self.load_index)
+
+    def page_up(self):
+        try:
+            self["list"].pageUp()
+        except Exception:
+            pass
+
+    def page_down(self):
+        try:
+            self["list"].pageDown()
+        except Exception:
+            pass
+
+    def load_index(self):
+        self.is_loading = True
+        self.mode = "menu"
+        self["daylabel"].setText(u"\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062f\u0648\u0644 \u0648\u0627\u0644\u062a\u0635\u0646\u064a\u0641\u0627\u062a... (Loading...)")
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            index = fetch_iptv_index()
+
+            def _apply():
+                self.is_loading = False
+                if not index:
+                    self.index = [(c[0], (IPTV_BASE + "/languages/ara.m3u") if c[1] == "@ara" else (IPTV_BASE + "/countries/%s.m3u" % c[1])) for c in IPTV_COUNTRIES]
+                else:
+                    self.index = index
+                self.show_menu()
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def show_menu(self):
+        self.mode = "menu"
+        self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u062f\u0648\u0644\u0629 \u0623\u0648 \u062a\u0635\u0646\u064a\u0641 \u062b\u0645 OK (Select then OK)")
+        self["list"].setList([_strip_emoji(x[0]) for x in self.index])
+        self["status"].setText(u"%d \u0639\u0646\u0635\u0631  |  OK = \u0641\u062a\u062d \u0627\u0644\u0642\u0646\u0648\u0627\u062a  |  \u0623\u0635\u0641\u0631/\u0623\u0632\u0631\u0642 = \u062a\u0635\u0641\u062d" % len(self.index))
+
+    def go_back(self):
+        if self.is_loading:
+            return
+        if self.mode == "channels":
+            self.show_menu()
+        else:
+            self.close()
+
+    def ok_pressed(self):
+        if self.is_loading:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx < 0:
+            return
+        if self.mode == "menu":
+            if 0 <= idx < len(self.index):
+                self.load_channels(self.index[idx])
+        else:
+            if 0 <= idx < len(self.channels):
+                self.play_channel(self.channels[idx])
+
+    def load_channels(self, entry):
+        self.is_loading = True
+        name, url = entry
+        self["daylabel"].setText(_strip_emoji(name))
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, payload = _http_get(url, 25)
+            chans = parse_m3u(payload) if ok else []
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self.mode = "channels"
+                self.channels = chans
+                if not chans:
+                    self["list"].setList([u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0642\u0646\u0648\u0627\u062a (No channels)"])
+                else:
+                    self["list"].setList([u"%d. %s" % (i + 1, _strip_emoji(c[0])) for i, c in enumerate(chans)])
+                self["status"].setText(u"%d \u0642\u0646\u0627\u0629  |  OK = \u062a\u0634\u063a\u064a\u0644  |  \u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639  |  \u0645\u0644\u0627\u062d\u0638\u0629: \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0634\u064a\u0631\u0646\u0651\u064c \u063a\u064a\u0631 \u0645\u062a\u0648\u0641\u0631\u0629 \u0647\u0646\u0627" % len(chans))
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def play_channel(self, ch):
+        name, url = ch
+        try:
+            from enigma import eServiceReference
+            safe = url.replace(":", "%3a")
+            ref = eServiceReference("4097:0:1:0:0:0:0:0:0:0:" + safe)
+            try:
+                ref.setName(name)
+            except Exception:
+                pass
+            self.session.nav.playService(ref)
+            self["status"].setText(u"\u062c\u0627\u0631\u064a \u062a\u0634\u063a\u064a\u0644: %s" % name)
+        except Exception as e:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0631 \u0627\u0644\u062a\u0634\u063a\u064a\u0644:\n%s" % str(e), MessageBox.TYPE_ERROR)
+
+# =========================================================================
+# KingOfSat frequencies - Added feature (Tools section)
+# =========================================================================
+KOS_SATS = [
+    (u"\u0646\u0627\u064a\u0644 \u0633\u0627\u062a / Eutelsat 7W (7.0\u00b0W)", "7.0W"),
+    (u"\u0639\u0631\u0628 \u0633\u0627\u062a / Badr (26.0\u00b0E)", "26.0E"),
+    (u"\u0625\u0633 \u0647\u0627\u064a\u0644 (25.5\u00b0E)", "25.5E"),
+    (u"\u0647\u0648\u062a \u0628\u064a\u0631\u062f (13.0\u00b0E)", "13.0E"),
+    (u"Astra (19.2\u00b0E)", "19.2E"),
+    (u"\u062a\u0631\u0643 \u0633\u0627\u062a (42.0\u00b0E)", "42.0E"),
+    (u"\u064a\u0627\u0647 \u0633\u0627\u062a (52.5\u00b0E)", "52.5E"),
+]
+
+def fetch_kingofsat(pos):
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+            import ssl
+        else:
+            import urllib2
+            import ssl
+        try:
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+        except Exception:
+            context = None
+        url = ("https://en.kingofsat.net/freqs.php?pos=%s&lim=0"
+               "&standard=All&ordre=freq&filtre=no") % pos
+        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+        if context:
+            resp = urllib2.urlopen(req, timeout=30, context=context)
+        else:
+            resp = urllib2.urlopen(req, timeout=30)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode('utf-8', 'ignore')
+        return True, data
+    except Exception as e:
+        return False, str(e)
+
+def parse_kingofsat(html):
+    transponders = []
+    try:
+        hdr = re.compile(r'class="bld">(\d+\.\d+)</td>\s*<td[^>]*class="bld">([HVLR])</td>', re.I)
+        srfec = re.compile(r'<a class="bld">(\d+)</a>\s*<a class="bld">(\d+/\d+)</a>', re.I)
+        chan = re.compile(r'<td class="ch">(.*?)</td>', re.S | re.I)
+        heads = list(hdr.finditer(html))
+        for i, m in enumerate(heads):
+            start = m.start()
+            end = heads[i + 1].start() if i + 1 < len(heads) else len(html)
+            block = html[start:end]
+            freq = m.group(1)
+            pol = m.group(2)
+            sf = srfec.search(block)
+            sr = sf.group(1) if sf else "?"
+            fec = sf.group(2) if sf else "?"
+            chans = []
+            for c in chan.findall(block):
+                name = _los_clean(c)
+                if name and name.lower() != "name":
+                    chans.append(name)
+            if chans:
+                transponders.append((freq, pol, sr, fec, chans))
+    except Exception:
+        pass
+    return transponders
+
+def fetch_kos_satellites():
+    ok, html = _http_get("https://en.kingofsat.net/satellites.php", 30)
+    if not ok:
+        return []
+    sats = []
+    seen = set()
+    try:
+        for m in re.finditer(r'href="pos-([^"]+)"[^>]*>([^<]+)</a>', html):
+            pos = m.group(1)
+            postxt = _los_clean(m.group(2))
+            tail = html[m.end():m.end() + 400]
+            nm = re.search(r'href="sat-[^"]+"[^>]*>([^<]+)</a>', tail)
+            name = _los_clean(nm.group(1)) if nm else ""
+            if name:
+                label = u"%s  (%s)" % (name, postxt)
+            else:
+                label = postxt
+            key = (pos, name)
+            if key in seen:
+                continue
+            seen.add(key)
+            sats.append((label, pos))
+    except Exception:
+        return []
+    return sats
+
+class KingOfSatScreen(Screen):
+    skin = KOS_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001F4E1 \u0627\u0644\u062a\u0631\u062f\u062f\u0627\u062a \u0648\u0627\u0644\u0623\u0642\u0645\u0627\u0631 (KingOfSat)")
+        try:
+            self.setTitle(u"\u0627\u0644\u062a\u0631\u062f\u062f\u0627\u062a \u0648\u0627\u0644\u0623\u0642\u0645\u0627\u0631 (Frequencies)")
+        except Exception:
+            pass
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0631\u062c\u0648\u0639 (Back)")
+        self["key_green"] = Label(u"\u0639\u0631\u0636 (Open)")
+        self["key_yellow"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0639\u0644\u0649 (Page Up)")
+        self["key_blue"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0633\u0641\u0644 (Page Down)")
+        self.mode = "sats"
+        self.sat_idx = 0
+        self.is_loading = False
+        self.sats = list(KOS_SATS)
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.go_back, "ok": self.ok_pressed,
+            "red": self.go_back, "green": self.ok_pressed,
+            "yellow": self.prev_sat, "blue": self.next_sat,
+        }, -1)
+        self.onLayoutFinish.append(self.load_sats)
+
+    def load_sats(self):
+        self.is_loading = True
+        self.mode = "sats"
+        self["daylabel"].setText(u"\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0623\u0642\u0645\u0627\u0631... (Loading...)")
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            sats = fetch_kos_satellites()
+
+            def _apply():
+                self.is_loading = False
+                if sats:
+                    self.sats = sats
+                else:
+                    self.sats = list(KOS_SATS)
+                self.show_sats()
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def show_sats(self):
+        self.mode = "sats"
+        self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u0627\u0644\u0642\u0645\u0631 \u062b\u0645 OK (Select satellite)")
+        self["list"].setList([_strip_emoji(s[0]) for s in self.sats])
+        self["status"].setText(u"%d \u0642\u0645\u0631  |  OK = \u0639\u0631\u0636 \u0627\u0644\u062a\u0631\u062f\u062f\u0627\u062a  |  \u0623\u0635\u0641\u0631/\u0623\u0632\u0631\u0642 = \u062a\u0635\u0641\u062d" % len(self.sats))
+
+    def prev_sat(self):
+        if self.mode == "sats" and not self.is_loading:
+            try:
+                self["list"].pageUp()
+            except Exception:
+                pass
+
+    def next_sat(self):
+        if self.mode == "sats" and not self.is_loading:
+            try:
+                self["list"].pageDown()
+            except Exception:
+                pass
+
+    def go_back(self):
+        if self.mode == "freqs":
+            self.show_sats()
+        else:
+            self.close()
+
+    def ok_pressed(self):
+        if self.is_loading:
+            return
+        if self.mode == "sats":
+            self.sat_idx = self["list"].getSelectionIndex()
+            if self.sat_idx < 0:
+                return
+            self.load_freqs()
+
+    def load_freqs(self):
+        self.is_loading = True
+        name, pos = self.sats[self.sat_idx]
+        self["daylabel"].setText(_strip_emoji(name))
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, payload = fetch_kingofsat(pos)
+            tps = parse_kingofsat(payload) if ok else []
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self.mode = "freqs"
+                self._render(tps)
+
+            if sys.version_info >= (3, 0):
+                try:
+                    from twisted.internet import reactor
+                    reactor.callFromThread(_apply)
+                except Exception:
+                    _apply()
+            else:
+                _apply()
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def _render(self, tps):
+        entries = []
+        total = 0
+        if not tps:
+            entries.append(u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0628\u064a\u0627\u0646\u0627\u062a (No data)")
+        for freq, pol, sr, fec, chans in tps:
+            total += len(chans)
+            entries.append(u"\u2554\u2550 %s %s  SR:%s  FEC:%s \u2550\u2557" % (freq, pol, sr, fec))
+            per = []
+            for c in chans:
+                per.append(c)
+                if len(per) >= 2:
+                    entries.append(u"   " + "  |  ".join(per))
+                    per = []
+            if per:
+                entries.append(u"   " + "  |  ".join(per))
+            entries.append(" ")
+        self["list"].setList(entries)
+        self["status"].setText(u"%d \u062a\u0631\u062f\u062f  |  %d \u0642\u0646\u0627\u0629  |  \u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639" % (len(tps), total))
+
+# =========================================================================
+# News (RSS) - Added feature (Tools section)
+# =========================================================================
+NEWS_FEEDS = [
+    (u"\u0627\u0644\u062c\u0632\u064a\u0631\u0629 (Al Jazeera)", "https://www.aljazeera.net/aljazeerarss"),
+    (u"\u0633\u0643\u0627\u064a \u0646\u064a\u0648\u0632 \u0639\u0631\u0628\u064a\u0629 (Sky News Arabia)", "https://www.skynewsarabia.com/rss"),
+    (u"\u0628\u064a \u0628\u064a \u0633\u064a \u0639\u0631\u0628\u064a (BBC Arabic)", "https://feeds.bbci.co.uk/arabic/rss.xml"),
+    (u"\u0631\u0648\u0633\u064a\u0627 \u0627\u0644\u064a\u0648\u0645 (RT Arabic)", "https://arabic.rt.com/rss/"),
+    (u"\u0633\u064a \u0627\u0646 \u0627\u0646 \u0628\u0627\u0644\u0639\u0631\u0628\u064a\u0629 (CNN Arabic)", "https://arabic.cnn.com/api/v1/rss/rss.xml"),
+    (u"\u0633\u064a \u0627\u0646 \u0627\u0646 - \u0631\u064a\u0627\u0636\u0629 (CNN Sports AR)", "https://arabic.cnn.com/api/v1/rss/sport/rss.xml"),
+]
+
+def _rss_clean(raw):
+    try:
+        txt = raw
+        m = re.search(r'<!\[CDATA\[(.*?)\]\]>', txt, re.S)
+        if m:
+            txt = m.group(1)
+        txt = re.sub(r'<[^>]+>', '', txt)
+        for a, b in [('&amp;', '&'), ('&nbsp;', ' '), ('&ndash;', '-'),
+                     ('&mdash;', '-'), ('&quot;', '"'), ('&#039;', "'"),
+                     ('&apos;', "'"), ('&lt;', '<'), ('&gt;', '>'), ('&laquo;', '"'), ('&raquo;', '"')]:
+            txt = txt.replace(a, b)
+        txt = u''.join(ch for ch in txt if ord(ch) < 0x1F000)
+        return txt.strip()
+    except Exception:
+        return raw
+
+def parse_rss(text):
+    items = []
+    try:
+        blocks = re.findall(r'<item[ >](.*?)</item>', text, re.S | re.I)
+        if not blocks:
+            blocks = re.findall(r'<entry[ >](.*?)</entry>', text, re.S | re.I)
+        for b in blocks:
+            tm = re.search(r'<title>(.*?)</title>', b, re.S | re.I)
+            title = _rss_clean(tm.group(1)) if tm else ""
+            lm = re.search(r'<link>(.*?)</link>', b, re.S | re.I)
+            link = _rss_clean(lm.group(1)) if lm else ""
+            if not link:
+                lm2 = re.search(r'<link[^>]*href="([^"]+)"', b, re.I)
+                link = lm2.group(1) if lm2 else ""
+            dm = re.search(r'<pubDate>(.*?)</pubDate>', b, re.S | re.I)
+            pub = _rss_clean(dm.group(1)) if dm else ""
+            gm = re.search(r'<description>(.*?)</description>', b, re.S | re.I)
+            desc = _rss_clean(gm.group(1)) if gm else ""
+            if title:
+                items.append({"title": title, "link": link, "date": pub, "desc": desc})
+    except Exception:
+        pass
+    return items
+
+class NewsScreen(Screen):
+    skin = NEWS_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001F4F0 \u0627\u0644\u0623\u062e\u0628\u0627\u0631 \u0627\u0644\u0639\u0627\u062c\u0644\u0629 (News - RSS)")
+        try:
+            self.setTitle(u"\u0627\u0644\u0623\u062e\u0628\u0627\u0631 \u0627\u0644\u0639\u0627\u062c\u0644\u0629 (News)")
+        except Exception:
+            pass
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0631\u062c\u0648\u0639 (Back)")
+        self["key_green"] = Label(u"\u0641\u062a\u062d (Open)")
+        self["key_yellow"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0639\u0644\u0649 (Page Up)")
+        self["key_blue"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0633\u0641\u0644 (Page Down)")
+        self.mode = "feeds"
+        self.is_loading = False
+        self.articles = []
+        self.cur_feed = ""
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.go_back, "ok": self.ok_pressed,
+            "red": self.go_back, "green": self.ok_pressed,
+            "yellow": self.page_up, "blue": self.page_down,
+        }, -1)
+        self.onLayoutFinish.append(self.show_feeds)
+
+    def page_up(self):
+        try:
+            self["list"].pageUp()
+        except Exception:
+            pass
+
+    def page_down(self):
+        try:
+            self["list"].pageDown()
+        except Exception:
+            pass
+
+    def show_feeds(self):
+        self.mode = "feeds"
+        self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u0627\u0644\u0645\u0635\u062f\u0631 \u062b\u0645 OK (Select source)")
+        self["list"].setList([_strip_emoji(f[0]) for f in NEWS_FEEDS])
+        self["status"].setText(u"OK = \u0639\u0631\u0636 \u0627\u0644\u0623\u062e\u0628\u0627\u0631")
+
+    def go_back(self):
+        if self.is_loading:
+            return
+        if self.mode == "articles":
+            self.show_feeds()
+        else:
+            self.close()
+
+    def ok_pressed(self):
+        if self.is_loading:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx < 0:
+            return
+        if self.mode == "feeds":
+            if 0 <= idx < len(NEWS_FEEDS):
+                self.load_articles(NEWS_FEEDS[idx])
+        else:
+            if 0 <= idx < len(self.articles):
+                self.show_article(self.articles[idx])
+
+    def load_articles(self, feed):
+        self.is_loading = True
+        name, url = feed
+        self.cur_feed = name
+        self["daylabel"].setText(_strip_emoji(name))
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, payload = _http_get(url, 25)
+            arts = parse_rss(payload) if ok else []
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self.mode = "articles"
+                self.articles = arts
+                if not arts:
+                    self["list"].setList([u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0623\u062e\u0628\u0627\u0631 (No news)"])
+                else:
+                    self["list"].setList([u"%d. %s" % (i + 1, a["title"]) for i, a in enumerate(arts)])
+                self["status"].setText(u"%d \u062e\u0628\u0631  |  OK = \u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062a\u0641\u0627\u0635\u064a\u0644  |  \u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639" % len(arts))
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def show_article(self, art):
+        try:
+            msg = art.get("title", "")
+            if art.get("date"):
+                msg += u"\n\n\U0001F551 " + art["date"]
+            if art.get("desc"):
+                msg += u"\n\n" + art["desc"]
+            if art.get("link"):
+                msg += u"\n\n\U0001F517 " + art["link"]
+            msg = u''.join(ch for ch in msg if ord(ch) < 0x1F000 or ch in u"\U0001F551\U0001F517")
+            self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
+        except Exception as e:
+            self.session.open(MessageBox, str(e), MessageBox.TYPE_ERROR)
 
 class MohamedStore(Screen):
     skin = SKIN_LAYOUT
@@ -1728,6 +3254,30 @@ class MohamedStore(Screen):
                         success, msg = stop_oscam_service()
                         self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
                         self.item_changed()
+                        return
+
+                    elif action == "uninstaller":
+                        self.session.open(Uninstaller)
+                        return
+
+                    elif action == "football_matches":
+                        self.session.open(FootballMatches)
+                        return
+
+                    elif action == "weather":
+                        self.session.open(WeatherScreen)
+                        return
+
+                    elif action == "iptv":
+                        self.session.open(IPTVScreen)
+                        return
+
+                    elif action == "kingofsat":
+                        self.session.open(KingOfSatScreen)
+                        return
+
+                    elif action == "news":
+                        self.session.open(NewsScreen)
                         return
 
                     cmd = item.get("cmd", "")
