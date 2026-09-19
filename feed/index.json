@@ -166,12 +166,6 @@
                 "image": ""
             },
             {
-                "name": "IPAudio Pro v1.9 (Py3.13 - FF8.0)",
-                "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.13_ff8.0.ipk",
-                "image": ""
-            },
-            {
                 "name": "IPAudio Pro v1.9 (Py3.14)",
                 "description": "تشغيل الصوتيات والقنوات الصوتية لمطابقة التعليق العربي",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-ipaudiopro_1.9_armv7ahf-neon_py3.14_ff8.0.ipk",
