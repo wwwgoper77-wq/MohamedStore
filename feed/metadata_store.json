@@ -12498,5 +12498,25 @@
     "plugins/plugins/CinemaStore.zip": {
         "name": "CinemaStore",
         "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ReaderManager.sh": {
+        "name": "ReaderManager",
+        "description": "Plugin Extension"
+    },
+    "plugins/ReaderManager.sh": {
+        "name": "ReaderManager",
+        "description": "Plugin Extension"
+    },
+    "ReaderManager.sh": {
+        "name": "ReaderManager",
+        "description": "Plugin Extension"
+    },
+    "ReaderManager": {
+        "name": "ReaderManager",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/ReaderManager.sh": {
+        "name": "ReaderManager",
+        "description": "Plugin Extension"
     }
 }
