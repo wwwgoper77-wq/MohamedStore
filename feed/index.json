@@ -89,7 +89,7 @@
             },
             {
                 "name": "MultiBootSelector",
-                "description": "Plugin Extension",
+                "description": "أداة سريعة للتبديل بين صور وفتحات الإقلاع المتعدد (Slots) وإعادة تشغيل الجهاز مباشرة على الصورة المختارة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MultiBootSelector.zip",
                 "image": ""
             },
