@@ -12542,5 +12542,25 @@
     "plugins/plugins/NeoBoot.9.65 all.zip": {
         "name": "NeoBoot.9.65 all",
         "description": "تثبيت صور متعددة"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MultiBootSelector.zip": {
+        "name": "MultiBootSelector",
+        "description": "Plugin Extension"
+    },
+    "plugins/MultiBootSelector.zip": {
+        "name": "MultiBootSelector",
+        "description": "Plugin Extension"
+    },
+    "MultiBootSelector.zip": {
+        "name": "MultiBootSelector",
+        "description": "Plugin Extension"
+    },
+    "MultiBootSelector": {
+        "name": "MultiBootSelector",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/MultiBootSelector.zip": {
+        "name": "MultiBootSelector",
+        "description": "Plugin Extension"
     }
 }
