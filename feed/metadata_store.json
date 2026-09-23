@@ -12518,5 +12518,29 @@
     "plugins/plugins/ReaderManager.sh": {
         "name": "ReaderManager",
         "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.9.65%20all.zip": {
+        "name": "NeoBoot.9",
+        "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.9.65 all.zip": {
+        "name": "NeoBoot.9",
+        "description": "Plugin Extension"
+    },
+    "plugins/NeoBoot.9.65 all.zip": {
+        "name": "NeoBoot.9",
+        "description": "Plugin Extension"
+    },
+    "NeoBoot.9.65 all.zip": {
+        "name": "NeoBoot.9",
+        "description": "Plugin Extension"
+    },
+    "NeoBoot.9": {
+        "name": "NeoBoot.9",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/NeoBoot.9.65 all.zip": {
+        "name": "NeoBoot.9",
+        "description": "Plugin Extension"
     }
 }

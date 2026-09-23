@@ -88,6 +88,12 @@
                 "image": ""
             },
             {
+                "name": "NeoBoot.9",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.9.65%20all.zip",
+                "image": ""
+            },
+            {
                 "name": "NeoBoot 3.13.12",
                 "description": "تثبيت صور متعددة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.zip",
