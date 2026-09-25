@@ -41,7 +41,7 @@
             },
             {
                 "name": "CiefpVideoPlayer",
-                "description": "Plugin Extension",
+                "description": "مشغل الفديو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpVideoPlayer.sh",
                 "image": ""
             },
