@@ -12709,22 +12709,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpOscamEditor.sh": {
         "name": "CiefpOscamEditor",
-        "description": "Plugin Extension"
+        "description": "محرر برنامج Ciefp Oscam"
     },
     "plugins/CiefpOscamEditor.sh": {
         "name": "CiefpOscamEditor",
-        "description": "Plugin Extension"
+        "description": "محرر برنامج Ciefp Oscam"
     },
     "CiefpOscamEditor.sh": {
         "name": "CiefpOscamEditor",
-        "description": "Plugin Extension"
+        "description": "محرر برنامج Ciefp Oscam"
     },
     "CiefpOscamEditor": {
         "name": "CiefpOscamEditor",
-        "description": "Plugin Extension"
+        "description": "محرر برنامج Ciefp Oscam"
     },
     "plugins/plugins/CiefpOscamEditor.sh": {
         "name": "CiefpOscamEditor",
-        "description": "Plugin Extension"
+        "description": "محرر برنامج Ciefp Oscam"
     }
 }
