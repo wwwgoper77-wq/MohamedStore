@@ -12582,5 +12582,25 @@
     "plugins/plugins/CiefpSignalInfo.sh": {
         "name": "CiefpSignalInfo",
         "description": "لعرض معلومات الاشارة والقناة"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpE2editor.sh": {
+        "name": "CiefpE2editor",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpE2editor.sh": {
+        "name": "CiefpE2editor",
+        "description": "Plugin Extension"
+    },
+    "CiefpE2editor.sh": {
+        "name": "CiefpE2editor",
+        "description": "Plugin Extension"
+    },
+    "CiefpE2editor": {
+        "name": "CiefpE2editor",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpE2editor.sh": {
+        "name": "CiefpE2editor",
+        "description": "Plugin Extension"
     }
 }

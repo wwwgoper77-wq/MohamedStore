@@ -28,6 +28,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpE2editor",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpE2editor.sh",
+                "image": ""
+            },
+            {
                 "name": "CiefpSignalInfo",
                 "description": "لعرض معلومات الاشارة والقناة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSignalInfo.sh",
