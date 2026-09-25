@@ -12562,5 +12562,25 @@
     "plugins/plugins/MultiBootSelector.zip": {
         "name": "MultiBootSelector",
         "description": "أداة سريعة للتبديل بين صور وفتحات الإقلاع المتعدد (Slots) وإعادة تشغيل الجهاز مباشرة على الصورة المختارة"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSignalInfo.sh": {
+        "name": "CiefpSignalInfo",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpSignalInfo.sh": {
+        "name": "CiefpSignalInfo",
+        "description": "Plugin Extension"
+    },
+    "CiefpSignalInfo.sh": {
+        "name": "CiefpSignalInfo",
+        "description": "Plugin Extension"
+    },
+    "CiefpSignalInfo": {
+        "name": "CiefpSignalInfo",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpSignalInfo.sh": {
+        "name": "CiefpSignalInfo",
+        "description": "Plugin Extension"
     }
 }
