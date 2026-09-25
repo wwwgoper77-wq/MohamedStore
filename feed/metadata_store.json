@@ -12565,22 +12565,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSignalInfo.sh": {
         "name": "CiefpSignalInfo",
-        "description": "Plugin Extension"
+        "description": "لعرض معلومات الاشارة والقناة"
     },
     "plugins/CiefpSignalInfo.sh": {
         "name": "CiefpSignalInfo",
-        "description": "Plugin Extension"
+        "description": "لعرض معلومات الاشارة والقناة"
     },
     "CiefpSignalInfo.sh": {
         "name": "CiefpSignalInfo",
-        "description": "Plugin Extension"
+        "description": "لعرض معلومات الاشارة والقناة"
     },
     "CiefpSignalInfo": {
         "name": "CiefpSignalInfo",
-        "description": "Plugin Extension"
+        "description": "لعرض معلومات الاشارة والقناة"
     },
     "plugins/plugins/CiefpSignalInfo.sh": {
         "name": "CiefpSignalInfo",
-        "description": "Plugin Extension"
+        "description": "لعرض معلومات الاشارة والقناة"
     }
 }
