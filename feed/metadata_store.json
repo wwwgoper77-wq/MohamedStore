@@ -12646,5 +12646,25 @@
     "plugins/plugins/Pulse Softcam Updater.zip": {
         "name": "Pulse Softcam Updater",
         "description": "أداةً قويةً وسهلة الاستخدام مصممةً لأتمتة صيانة مفاتيح الأقمار الصناعية"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpParabolaCZ.sh": {
+        "name": "CiefpParabolaCZ",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpParabolaCZ.sh": {
+        "name": "CiefpParabolaCZ",
+        "description": "Plugin Extension"
+    },
+    "CiefpParabolaCZ.sh": {
+        "name": "CiefpParabolaCZ",
+        "description": "Plugin Extension"
+    },
+    "CiefpParabolaCZ": {
+        "name": "CiefpParabolaCZ",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpParabolaCZ.sh": {
+        "name": "CiefpParabolaCZ",
+        "description": "Plugin Extension"
     }
 }
