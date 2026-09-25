@@ -12605,22 +12605,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpVideoPlayer.sh": {
         "name": "CiefpVideoPlayer",
-        "description": "Plugin Extension"
+        "description": "مشغل الفديو"
     },
     "plugins/CiefpVideoPlayer.sh": {
         "name": "CiefpVideoPlayer",
-        "description": "Plugin Extension"
+        "description": "مشغل الفديو"
     },
     "CiefpVideoPlayer.sh": {
         "name": "CiefpVideoPlayer",
-        "description": "Plugin Extension"
+        "description": "مشغل الفديو"
     },
     "CiefpVideoPlayer": {
         "name": "CiefpVideoPlayer",
-        "description": "Plugin Extension"
+        "description": "مشغل الفديو"
     },
     "plugins/plugins/CiefpVideoPlayer.sh": {
         "name": "CiefpVideoPlayer",
-        "description": "Plugin Extension"
+        "description": "مشغل الفديو"
     }
 }
