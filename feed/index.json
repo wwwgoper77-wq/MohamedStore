@@ -29,7 +29,7 @@
             },
             {
                 "name": "CiefpSignalInfo",
-                "description": "Plugin Extension",
+                "description": "لعرض معلومات الاشارة والقناة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSignalInfo.sh",
                 "image": ""
             },
