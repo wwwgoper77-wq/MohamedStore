@@ -12686,5 +12686,25 @@
     "plugins/plugins/CiefpRottenTomatoes.sh": {
         "name": "CiefpRottenTomatoes",
         "description": "عرض معلومات الافلام والبرامج التلفزيونية من موقع Rotten Tomatoes"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSatelliteAnalyzer.sh": {
+        "name": "CiefpSatelliteAnalyzer",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpSatelliteAnalyzer.sh": {
+        "name": "CiefpSatelliteAnalyzer",
+        "description": "Plugin Extension"
+    },
+    "CiefpSatelliteAnalyzer.sh": {
+        "name": "CiefpSatelliteAnalyzer",
+        "description": "Plugin Extension"
+    },
+    "CiefpSatelliteAnalyzer": {
+        "name": "CiefpSatelliteAnalyzer",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpSatelliteAnalyzer.sh": {
+        "name": "CiefpSatelliteAnalyzer",
+        "description": "Plugin Extension"
     }
 }

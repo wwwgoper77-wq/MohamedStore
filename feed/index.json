@@ -46,6 +46,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpSatelliteAnalyzer",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSatelliteAnalyzer.sh",
+                "image": ""
+            },
+            {
                 "name": "CiefpSignalInfo",
                 "description": "لعرض معلومات الاشارة والقناة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSignalInfo.sh",
