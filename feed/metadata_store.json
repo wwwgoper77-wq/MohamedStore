@@ -12666,5 +12666,25 @@
     "plugins/plugins/CiefpParabolaCZ.sh": {
         "name": "CiefpParabolaCZ",
         "description": "موقع Parabola.cz لعرض الصور (الأقمار الصناعية، والحزم، والأخبار)"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpRottenTomatoes.sh": {
+        "name": "CiefpRottenTomatoes",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpRottenTomatoes.sh": {
+        "name": "CiefpRottenTomatoes",
+        "description": "Plugin Extension"
+    },
+    "CiefpRottenTomatoes.sh": {
+        "name": "CiefpRottenTomatoes",
+        "description": "Plugin Extension"
+    },
+    "CiefpRottenTomatoes": {
+        "name": "CiefpRottenTomatoes",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpRottenTomatoes.sh": {
+        "name": "CiefpRottenTomatoes",
+        "description": "Plugin Extension"
     }
 }
