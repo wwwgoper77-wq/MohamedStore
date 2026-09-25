@@ -47,7 +47,7 @@
             },
             {
                 "name": "CiefpSatelliteAnalyzer",
-                "description": "Plugin Extension",
+                "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSatelliteAnalyzer.sh",
                 "image": ""
             },
