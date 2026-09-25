@@ -12689,22 +12689,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpSatelliteAnalyzer.sh": {
         "name": "CiefpSatelliteAnalyzer",
-        "description": "Plugin Extension"
+        "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية"
     },
     "plugins/CiefpSatelliteAnalyzer.sh": {
         "name": "CiefpSatelliteAnalyzer",
-        "description": "Plugin Extension"
+        "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية"
     },
     "CiefpSatelliteAnalyzer.sh": {
         "name": "CiefpSatelliteAnalyzer",
-        "description": "Plugin Extension"
+        "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية"
     },
     "CiefpSatelliteAnalyzer": {
         "name": "CiefpSatelliteAnalyzer",
-        "description": "Plugin Extension"
+        "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية"
     },
     "plugins/plugins/CiefpSatelliteAnalyzer.sh": {
         "name": "CiefpSatelliteAnalyzer",
-        "description": "Plugin Extension"
+        "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية"
     }
 }
