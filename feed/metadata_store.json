@@ -12622,5 +12622,29 @@
     "plugins/plugins/CiefpVideoPlayer.sh": {
         "name": "CiefpVideoPlayer",
         "description": "مشغل الفديو"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Pulse%20Softcam%20Updater.zip": {
+        "name": "Pulse Softcam Updater",
+        "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Pulse Softcam Updater.zip": {
+        "name": "Pulse Softcam Updater",
+        "description": "Plugin Extension"
+    },
+    "plugins/Pulse Softcam Updater.zip": {
+        "name": "Pulse Softcam Updater",
+        "description": "Plugin Extension"
+    },
+    "Pulse Softcam Updater.zip": {
+        "name": "Pulse Softcam Updater",
+        "description": "Plugin Extension"
+    },
+    "Pulse Softcam Updater": {
+        "name": "Pulse Softcam Updater",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/Pulse Softcam Updater.zip": {
+        "name": "Pulse Softcam Updater",
+        "description": "Plugin Extension"
     }
 }

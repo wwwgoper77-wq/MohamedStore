@@ -124,6 +124,12 @@
                 "image": ""
             },
             {
+                "name": "Pulse Softcam Updater",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Pulse%20Softcam%20Updater.zip",
+                "image": ""
+            },
+            {
                 "name": "Raed Quick Signal",
                 "description": "إظهار إشارة القنوات ومستوى التردد والتشفير بشكل سريع",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/RaedQuickSignal.zip",
