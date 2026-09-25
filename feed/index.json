@@ -40,6 +40,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpVideoPlayer",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpVideoPlayer.sh",
+                "image": ""
+            },
+            {
                 "name": "E2 Biss Key Editor",
                 "description": "محرر شفرات البيس Biss وتعديلها بسهولة عبر الريموت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2BissKeyEditor.zip",
