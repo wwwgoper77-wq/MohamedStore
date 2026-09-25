@@ -12706,5 +12706,25 @@
     "plugins/plugins/CiefpSatelliteAnalyzer.sh": {
         "name": "CiefpSatelliteAnalyzer",
         "description": "عرض جميع المعلومات المتعلقة بالقناة الحالية"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpOscamEditor.sh": {
+        "name": "CiefpOscamEditor",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpOscamEditor.sh": {
+        "name": "CiefpOscamEditor",
+        "description": "Plugin Extension"
+    },
+    "CiefpOscamEditor.sh": {
+        "name": "CiefpOscamEditor",
+        "description": "Plugin Extension"
+    },
+    "CiefpOscamEditor": {
+        "name": "CiefpOscamEditor",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpOscamEditor.sh": {
+        "name": "CiefpOscamEditor",
+        "description": "Plugin Extension"
     }
 }

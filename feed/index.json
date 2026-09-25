@@ -34,6 +34,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpOscamEditor",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpOscamEditor.sh",
+                "image": ""
+            },
+            {
                 "name": "CiefpParabolaCZ",
                 "description": "موقع Parabola.cz لعرض الصور (الأقمار الصناعية، والحزم، والأخبار)",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpParabolaCZ.sh",
