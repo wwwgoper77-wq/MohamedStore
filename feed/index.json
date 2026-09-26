@@ -22,12 +22,6 @@
                 "image": ""
             },
             {
-                "name": "ArabSeed",
-                "description": "بلجن موقع عرب سيد خاص بالبنل",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabSeed.zip",
-                "image": ""
-            },
-            {
                 "name": "Arabic Savior",
                 "description": "إصلاح وعرض اللغة العربية بشكل سليم في القوائم والترجمات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ArabicSavior.zip",
