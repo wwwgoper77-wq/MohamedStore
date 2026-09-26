@@ -232,6 +232,12 @@
                 "image": ""
             },
             {
+                "name": "UltraStalker",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/UltraStalker.zip",
+                "image": ""
+            },
+            {
                 "name": "YouTube",
                 "description": "تطبيق تشغيل مقاطع وبثوث اليوتيوب بدقة عالية على الانيجما2",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/YouTube.zip",

@@ -12890,5 +12890,25 @@
     "plugins/plugins/Arabseed.zip": {
         "name": "Arabseed",
         "description": "بلجن عرب سيد خاص بالبنل"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/UltraStalker.zip": {
+        "name": "UltraStalker",
+        "description": "Plugin Extension"
+    },
+    "plugins/UltraStalker.zip": {
+        "name": "UltraStalker",
+        "description": "Plugin Extension"
+    },
+    "UltraStalker.zip": {
+        "name": "UltraStalker",
+        "description": "Plugin Extension"
+    },
+    "UltraStalker": {
+        "name": "UltraStalker",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/UltraStalker.zip": {
+        "name": "UltraStalker",
+        "description": "Plugin Extension"
     }
 }
