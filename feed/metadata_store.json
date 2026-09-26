@@ -12810,5 +12810,25 @@
     "plugins/plugins/CiefpChannelManager.sh": {
         "name": "CiefpChannelManager",
         "description": "مدير القنوات"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpsettingsPanel.sh": {
+        "name": "CiefpsettingsPanel",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpsettingsPanel.sh": {
+        "name": "CiefpsettingsPanel",
+        "description": "Plugin Extension"
+    },
+    "CiefpsettingsPanel.sh": {
+        "name": "CiefpsettingsPanel",
+        "description": "Plugin Extension"
+    },
+    "CiefpsettingsPanel": {
+        "name": "CiefpsettingsPanel",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpsettingsPanel.sh": {
+        "name": "CiefpsettingsPanel",
+        "description": "Plugin Extension"
     }
 }
