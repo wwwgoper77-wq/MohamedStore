@@ -12793,22 +12793,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpChannelManager.sh": {
         "name": "CiefpChannelManager",
-        "description": "Plugin Extension"
+        "description": "مدير القنوات"
     },
     "plugins/CiefpChannelManager.sh": {
         "name": "CiefpChannelManager",
-        "description": "Plugin Extension"
+        "description": "مدير القنوات"
     },
     "CiefpChannelManager.sh": {
         "name": "CiefpChannelManager",
-        "description": "Plugin Extension"
+        "description": "مدير القنوات"
     },
     "CiefpChannelManager": {
         "name": "CiefpChannelManager",
-        "description": "Plugin Extension"
+        "description": "مدير القنوات"
     },
     "plugins/plugins/CiefpChannelManager.sh": {
         "name": "CiefpChannelManager",
-        "description": "Plugin Extension"
+        "description": "مدير القنوات"
     }
 }
