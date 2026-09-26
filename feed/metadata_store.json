@@ -12770,5 +12770,25 @@
     "plugins/plugins/Ciefp Plugins.sh": {
         "name": "Ciefp Plugins",
         "description": "لوحة إضافات Ciefp"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpScreenGrab.sh": {
+        "name": "CiefpScreenGrab",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpScreenGrab.sh": {
+        "name": "CiefpScreenGrab",
+        "description": "Plugin Extension"
+    },
+    "CiefpScreenGrab.sh": {
+        "name": "CiefpScreenGrab",
+        "description": "Plugin Extension"
+    },
+    "CiefpScreenGrab": {
+        "name": "CiefpScreenGrab",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpScreenGrab.sh": {
+        "name": "CiefpScreenGrab",
+        "description": "Plugin Extension"
     }
 }
