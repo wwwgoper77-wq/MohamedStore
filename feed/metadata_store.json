@@ -12746,5 +12746,29 @@
     "plugins/plugins/CiefpTvProgramSBB.sh": {
         "name": "CiefpTvProgramSBB",
         "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Ciefp%20Plugins.sh": {
+        "name": "Ciefp Plugins",
+        "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Ciefp Plugins.sh": {
+        "name": "Ciefp Plugins",
+        "description": "Plugin Extension"
+    },
+    "plugins/Ciefp Plugins.sh": {
+        "name": "Ciefp Plugins",
+        "description": "Plugin Extension"
+    },
+    "Ciefp Plugins.sh": {
+        "name": "Ciefp Plugins",
+        "description": "Plugin Extension"
+    },
+    "Ciefp Plugins": {
+        "name": "Ciefp Plugins",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/Ciefp Plugins.sh": {
+        "name": "Ciefp Plugins",
+        "description": "Plugin Extension"
     }
 }
