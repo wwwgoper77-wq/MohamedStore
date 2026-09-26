@@ -34,6 +34,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpChannelManager",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpChannelManager.sh",
+                "image": ""
+            },
+            {
                 "name": "CiefpE2editor",
                 "description": "محرر قنوات دون الحاجة للكمبيوتر",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpE2editor.sh",

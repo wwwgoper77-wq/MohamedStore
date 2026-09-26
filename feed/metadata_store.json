@@ -12790,5 +12790,25 @@
     "plugins/plugins/CiefpScreenGrab.sh": {
         "name": "CiefpScreenGrab",
         "description": "بلجن اخذ لقطة شاشة"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpChannelManager.sh": {
+        "name": "CiefpChannelManager",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpChannelManager.sh": {
+        "name": "CiefpChannelManager",
+        "description": "Plugin Extension"
+    },
+    "CiefpChannelManager.sh": {
+        "name": "CiefpChannelManager",
+        "description": "Plugin Extension"
+    },
+    "CiefpChannelManager": {
+        "name": "CiefpChannelManager",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpChannelManager.sh": {
+        "name": "CiefpChannelManager",
+        "description": "Plugin Extension"
     }
 }
