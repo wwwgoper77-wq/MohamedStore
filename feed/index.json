@@ -65,7 +65,7 @@
             },
             {
                 "name": "CiefpTvProgramSBB",
-                "description": "Plugin Extension",
+                "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpTvProgramSBB.sh",
                 "image": ""
             },
