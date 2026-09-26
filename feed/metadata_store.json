@@ -12773,22 +12773,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpScreenGrab.sh": {
         "name": "CiefpScreenGrab",
-        "description": "Plugin Extension"
+        "description": "بلجن اخذ لقطة شاشة"
     },
     "plugins/CiefpScreenGrab.sh": {
         "name": "CiefpScreenGrab",
-        "description": "Plugin Extension"
+        "description": "بلجن اخذ لقطة شاشة"
     },
     "CiefpScreenGrab.sh": {
         "name": "CiefpScreenGrab",
-        "description": "Plugin Extension"
+        "description": "بلجن اخذ لقطة شاشة"
     },
     "CiefpScreenGrab": {
         "name": "CiefpScreenGrab",
-        "description": "Plugin Extension"
+        "description": "بلجن اخذ لقطة شاشة"
     },
     "plugins/plugins/CiefpScreenGrab.sh": {
         "name": "CiefpScreenGrab",
-        "description": "Plugin Extension"
+        "description": "بلجن اخذ لقطة شاشة"
     }
 }
