@@ -65,7 +65,7 @@
             },
             {
                 "name": "CiefpScreenGrab",
-                "description": "Plugin Extension",
+                "description": "بلجن اخذ لقطة شاشة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpScreenGrab.sh",
                 "image": ""
             },
