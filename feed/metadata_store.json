@@ -12726,5 +12726,25 @@
     "plugins/plugins/CiefpOscamEditor.sh": {
         "name": "CiefpOscamEditor",
         "description": "محرر برنامج Ciefp Oscam"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpTvProgramSBB.sh": {
+        "name": "CiefpTvProgramSBB",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpTvProgramSBB.sh": {
+        "name": "CiefpTvProgramSBB",
+        "description": "Plugin Extension"
+    },
+    "CiefpTvProgramSBB.sh": {
+        "name": "CiefpTvProgramSBB",
+        "description": "Plugin Extension"
+    },
+    "CiefpTvProgramSBB": {
+        "name": "CiefpTvProgramSBB",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpTvProgramSBB.sh": {
+        "name": "CiefpTvProgramSBB",
+        "description": "Plugin Extension"
     }
 }

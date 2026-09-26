@@ -64,6 +64,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpTvProgramSBB",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpTvProgramSBB.sh",
+                "image": ""
+            },
+            {
                 "name": "CiefpVideoPlayer",
                 "description": "مشغل الفديو",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpVideoPlayer.sh",
