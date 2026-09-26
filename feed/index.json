@@ -10,6 +10,12 @@
                 "image": ""
             },
             {
+                "name": "Akwam",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Akwam.zip",
+                "image": ""
+            },
+            {
                 "name": "Alkuds ipaudio MAC Xtreme",
                 "description": "تشغيل ملفات M3U وملفات اخرى",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Alkuds%20ipaudio%20MAC%20Xtreme.sh",

@@ -12850,5 +12850,25 @@
     "plugins/plugins/CiefpPiconManager.sh": {
         "name": "CiefpPiconManager",
         "description": "مدير البيكونات"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Akwam.zip": {
+        "name": "Akwam",
+        "description": "Plugin Extension"
+    },
+    "plugins/Akwam.zip": {
+        "name": "Akwam",
+        "description": "Plugin Extension"
+    },
+    "Akwam.zip": {
+        "name": "Akwam",
+        "description": "Plugin Extension"
+    },
+    "Akwam": {
+        "name": "Akwam",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/Akwam.zip": {
+        "name": "Akwam",
+        "description": "Plugin Extension"
     }
 }
