@@ -12870,5 +12870,25 @@
     "plugins/plugins/Akwam.zip": {
         "name": "Akwam",
         "description": "بلجن اكوام خاص بالبنل"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Arabseed.zip": {
+        "name": "Arabseed",
+        "description": "Plugin Extension"
+    },
+    "plugins/Arabseed.zip": {
+        "name": "Arabseed",
+        "description": "Plugin Extension"
+    },
+    "Arabseed.zip": {
+        "name": "Arabseed",
+        "description": "Plugin Extension"
+    },
+    "Arabseed": {
+        "name": "Arabseed",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/Arabseed.zip": {
+        "name": "Arabseed",
+        "description": "Plugin Extension"
     }
 }
