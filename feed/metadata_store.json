@@ -12833,22 +12833,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpPiconManager.sh": {
         "name": "CiefpPiconManager",
-        "description": "Plugin Extension"
+        "description": "مدير البيكونات"
     },
     "plugins/CiefpPiconManager.sh": {
         "name": "CiefpPiconManager",
-        "description": "Plugin Extension"
+        "description": "مدير البيكونات"
     },
     "CiefpPiconManager.sh": {
         "name": "CiefpPiconManager",
-        "description": "Plugin Extension"
+        "description": "مدير البيكونات"
     },
     "CiefpPiconManager": {
         "name": "CiefpPiconManager",
-        "description": "Plugin Extension"
+        "description": "مدير البيكونات"
     },
     "plugins/plugins/CiefpPiconManager.sh": {
         "name": "CiefpPiconManager",
-        "description": "Plugin Extension"
+        "description": "مدير البيكونات"
     }
 }
