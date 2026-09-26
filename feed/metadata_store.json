@@ -12830,5 +12830,25 @@
     "plugins/plugins/CiefpsettingsPanel.sh": {
         "name": "CiefpsettingsPanel",
         "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpPiconManager.sh": {
+        "name": "CiefpPiconManager",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpPiconManager.sh": {
+        "name": "CiefpPiconManager",
+        "description": "Plugin Extension"
+    },
+    "CiefpPiconManager.sh": {
+        "name": "CiefpPiconManager",
+        "description": "Plugin Extension"
+    },
+    "CiefpPiconManager": {
+        "name": "CiefpPiconManager",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpPiconManager.sh": {
+        "name": "CiefpPiconManager",
+        "description": "Plugin Extension"
     }
 }

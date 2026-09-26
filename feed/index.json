@@ -58,6 +58,12 @@
                 "image": ""
             },
             {
+                "name": "CiefpPiconManager",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpPiconManager.sh",
+                "image": ""
+            },
+            {
                 "name": "CiefpRottenTomatoes",
                 "description": "عرض معلومات الافلام والبرامج التلفزيونية من موقع Rotten Tomatoes",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpRottenTomatoes.sh",
