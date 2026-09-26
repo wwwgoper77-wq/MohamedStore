@@ -12729,22 +12729,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpTvProgramSBB.sh": {
         "name": "CiefpTvProgramSBB",
-        "description": "Plugin Extension"
+        "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML"
     },
     "plugins/CiefpTvProgramSBB.sh": {
         "name": "CiefpTvProgramSBB",
-        "description": "Plugin Extension"
+        "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML"
     },
     "CiefpTvProgramSBB.sh": {
         "name": "CiefpTvProgramSBB",
-        "description": "Plugin Extension"
+        "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML"
     },
     "CiefpTvProgramSBB": {
         "name": "CiefpTvProgramSBB",
-        "description": "Plugin Extension"
+        "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML"
     },
     "plugins/plugins/CiefpTvProgramSBB.sh": {
         "name": "CiefpTvProgramSBB",
-        "description": "Plugin Extension"
+        "description": "يقوم بتنزيل بيانات دليل البرامج الإلكتروني (EPG) من موقع epgshare01.online بصيغة XML"
     }
 }
