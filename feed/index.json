@@ -35,7 +35,7 @@
             },
             {
                 "name": "CiefpChannelManager",
-                "description": "Plugin Extension",
+                "description": "مدير القنوات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpChannelManager.sh",
                 "image": ""
             },
