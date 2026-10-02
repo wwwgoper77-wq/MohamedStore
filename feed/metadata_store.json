@@ -12910,5 +12910,25 @@
     "plugins/plugins/UltraStalker.zip": {
         "name": "UltraStalker",
         "description": "بلجن تشغيل اشتراكات وبورتالات"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MultiStalkerPro.zip": {
+        "name": "MultiStalkerPro",
+        "description": "Plugin Extension"
+    },
+    "plugins/MultiStalkerPro.zip": {
+        "name": "MultiStalkerPro",
+        "description": "Plugin Extension"
+    },
+    "MultiStalkerPro.zip": {
+        "name": "MultiStalkerPro",
+        "description": "Plugin Extension"
+    },
+    "MultiStalkerPro": {
+        "name": "MultiStalkerPro",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/MultiStalkerPro.zip": {
+        "name": "MultiStalkerPro",
+        "description": "Plugin Extension"
     }
 }

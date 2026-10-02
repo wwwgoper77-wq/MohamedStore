@@ -172,6 +172,12 @@
                 "image": ""
             },
             {
+                "name": "MultiStalkerPro",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MultiStalkerPro.zip",
+                "image": ""
+            },
+            {
                 "name": "NeoBoot.9.65 all",
                 "description": "تثبيت صور متعددة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot.9.65%20all.zip",
