@@ -12957,22 +12957,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpDishPointer.sh": {
         "name": "CiefpDishPointer",
-        "description": "Plugin Extension"
+        "description": "مؤشر الطبق"
     },
     "plugins/CiefpDishPointer.sh": {
         "name": "CiefpDishPointer",
-        "description": "Plugin Extension"
+        "description": "مؤشر الطبق"
     },
     "CiefpDishPointer.sh": {
         "name": "CiefpDishPointer",
-        "description": "Plugin Extension"
+        "description": "مؤشر الطبق"
     },
     "CiefpDishPointer": {
         "name": "CiefpDishPointer",
-        "description": "Plugin Extension"
+        "description": "مؤشر الطبق"
     },
     "plugins/plugins/CiefpDishPointer.sh": {
         "name": "CiefpDishPointer",
-        "description": "Plugin Extension"
+        "description": "مؤشر الطبق"
     }
 }
