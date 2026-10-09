@@ -12974,5 +12974,25 @@
     "plugins/plugins/CiefpDishPointer.sh": {
         "name": "CiefpDishPointer",
         "description": "مؤشر الطبق"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2OmniTranslator.zip": {
+        "name": "E2OmniTranslator",
+        "description": "Plugin Extension"
+    },
+    "plugins/E2OmniTranslator.zip": {
+        "name": "E2OmniTranslator",
+        "description": "Plugin Extension"
+    },
+    "E2OmniTranslator.zip": {
+        "name": "E2OmniTranslator",
+        "description": "Plugin Extension"
+    },
+    "E2OmniTranslator": {
+        "name": "E2OmniTranslator",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/E2OmniTranslator.zip": {
+        "name": "E2OmniTranslator",
+        "description": "Plugin Extension"
     }
 }

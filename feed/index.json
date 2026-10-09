@@ -118,6 +118,12 @@
                 "image": ""
             },
             {
+                "name": "E2OmniTranslator",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/E2OmniTranslator.zip",
+                "image": ""
+            },
+            {
                 "name": "EPG Grabber",
                 "description": "جلب وتحميل الدليل الإلكتروني للبرامج EPG للقنوات الفضائية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/EPGGrabber.zip",
