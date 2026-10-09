@@ -12954,5 +12954,25 @@
     "plugins/plugins/YouTube M.zip": {
         "name": "YouTube",
         "description": "بلجن اليوتيوب الجديد الخاص بالبنل"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/CiefpDishPointer.sh": {
+        "name": "CiefpDishPointer",
+        "description": "Plugin Extension"
+    },
+    "plugins/CiefpDishPointer.sh": {
+        "name": "CiefpDishPointer",
+        "description": "Plugin Extension"
+    },
+    "CiefpDishPointer.sh": {
+        "name": "CiefpDishPointer",
+        "description": "Plugin Extension"
+    },
+    "CiefpDishPointer": {
+        "name": "CiefpDishPointer",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/CiefpDishPointer.sh": {
+        "name": "CiefpDishPointer",
+        "description": "Plugin Extension"
     }
 }
