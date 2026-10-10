@@ -142,6 +142,12 @@
                 "image": ""
             },
             {
+                "name": "Plugin Uninstaller",
+                "description": "أداة حذف وإزالة البلجنات وحزم التثبيت وحذف مخلفاتها",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Enigma2%20Uninstaller.sh",
+                "image": ""
+            },
+            {
                 "name": "Fury Biss",
                 "description": "جلب وتحديث شفرات البيس للقنوات المشفرة تلقائياً عبر الإنترنت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/FuryBiss.zip",
