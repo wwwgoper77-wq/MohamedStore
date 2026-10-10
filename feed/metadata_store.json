@@ -12994,5 +12994,25 @@
     "plugins/plugins/E2OmniTranslator.zip": {
         "name": "E2OmniTranslator",
         "description": "بلجن يترجم الدليل تلقائيا خاص بالبنل"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ChannelColorizer.zip": {
+        "name": "ChannelColorizer",
+        "description": "Plugin Extension"
+    },
+    "plugins/ChannelColorizer.zip": {
+        "name": "ChannelColorizer",
+        "description": "Plugin Extension"
+    },
+    "ChannelColorizer.zip": {
+        "name": "ChannelColorizer",
+        "description": "Plugin Extension"
+    },
+    "ChannelColorizer": {
+        "name": "ChannelColorizer",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/ChannelColorizer.zip": {
+        "name": "ChannelColorizer",
+        "description": "Plugin Extension"
     }
 }

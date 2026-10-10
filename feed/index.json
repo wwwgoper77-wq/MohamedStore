@@ -34,6 +34,12 @@
                 "image": ""
             },
             {
+                "name": "ChannelColorizer",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ChannelColorizer.zip",
+                "image": ""
+            },
+            {
                 "name": "Ciefp Plugins",
                 "description": "لوحة إضافات Ciefp",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Ciefp%20Plugins.sh",
