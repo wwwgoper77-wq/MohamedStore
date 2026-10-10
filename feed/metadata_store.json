@@ -13038,5 +13038,33 @@
     "plugins/plugins/Enigma2 Uninstaller.sh": {
         "name": "Enigma2 Uninstaller",
         "description": "أداة حذف وإزالة البلجنات وحزم التثبيت وحذف مخلفاتها"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/MohammedSkin.sh": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/MohammedSkin.sh": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "MohammedSkin.sh": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "MohammedSkin": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "All/MohammedSkin.sh": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/skins/All/MohammedSkin.sh": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/MohammedSkin.sh": {
+        "name": "MohammedSkin",
+        "description": "سكين MohammedSkin عالي الدقة FHD بتصميم أنيق وخفيف"
     }
 }
