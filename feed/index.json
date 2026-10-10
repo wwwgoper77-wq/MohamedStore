@@ -142,7 +142,7 @@
                 "image": ""
             },
             {
-                "name": "Plugin Uninstaller",
+                "name": "Enigma2 Uninstaller",
                 "description": "أداة حذف وإزالة البلجنات وحزم التثبيت وحذف مخلفاتها",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Enigma2%20Uninstaller.sh",
                 "image": ""
