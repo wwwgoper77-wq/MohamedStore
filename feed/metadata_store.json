@@ -13206,5 +13206,29 @@
     "picons/v1.0/enigma2-plugin-picons-srp-full.220x132-190x102.dark.on.transparent_2026-10-09--22-58-20_all.ipk": {
         "name": "2026-10-09 بيكونات اغلب الاقمار بتاريخ",
         "description": "220x132 شعارات شفاف بحجم"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_MohamedStore_Arabic%20.tar.gz": {
+        "name": "channels_MohamedStore_Arabic",
+        "description": "Channels Settings"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_MohamedStore_Arabic .tar.gz": {
+        "name": "channels_MohamedStore_Arabic",
+        "description": "Channels Settings"
+    },
+    "channels/channels_MohamedStore_Arabic .tar.gz": {
+        "name": "channels_MohamedStore_Arabic",
+        "description": "Channels Settings"
+    },
+    "channels_MohamedStore_Arabic .tar.gz": {
+        "name": "channels_MohamedStore_Arabic",
+        "description": "Channels Settings"
+    },
+    "channels_MohamedStore_Arabic": {
+        "name": "channels_MohamedStore_Arabic",
+        "description": "Channels Settings"
+    },
+    "channels/channels/channels_MohamedStore_Arabic .tar.gz": {
+        "name": "channels_MohamedStore_Arabic",
+        "description": "Channels Settings"
     }
 }
