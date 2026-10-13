@@ -1947,7 +1947,7 @@
         "channels": [
             {
                 "name": "channels_MohamedStore_Arabic",
-                "description": "Channels Settings",
+                "description": "مفضلة وملف قنوات خاص بالبنل",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_MohamedStore_Arabic%20.tar.gz",
                 "image": ""
             },
