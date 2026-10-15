@@ -1977,7 +1977,7 @@
             },
             {
                 "name": "OpenATV Channels Backup",
-                "description": "نسخة احتياطية لقائمة القنوات والمفضلات الرياضية والعامة",
+                "description": "نسخة مفضلة وقنوات من الاخ Elsayed Elrefaey",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/channels/channels_backup_openATV_20261011_005305.tar.gz",
                 "image": ""
             },
