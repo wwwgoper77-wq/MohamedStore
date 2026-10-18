@@ -956,16 +956,20 @@ class FootballMatches(Screen):
         self.day_offset = 0
         self.week_mode = False
         self.is_loading = False
+        self.entry_meta = []
+        self._pending = None
+        self._to_delete = None
 
-        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"], {
             "cancel": self.close,
-            "ok": self.reload_matches,
+            "ok": self.set_reminder,
             "red": self.close,
             "green": self.reload_matches,
             "yellow": self.prev_day,
             "blue": self.next_day,
             "left": self.prev_day,
             "right": self.next_day,
+            "menu": self.show_reminders,
         }, -1)
 
         self.onLayoutFinish.append(self.reload_matches)
@@ -1015,6 +1019,7 @@ class FootballMatches(Screen):
         if self.is_loading:
             return
         self.is_loading = True
+        self.entry_meta = []
         self["daylabel"].setText(self._day_title())
         self["list"].setList([u"\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a... (Loading...)"])
         self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631... (Please wait)")
@@ -1027,6 +1032,7 @@ class FootballMatches(Screen):
             def _apply():
                 self.is_loading = False
                 if not ok:
+                    self.entry_meta = []
                     self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0627\u0644\u0645\u0648\u0642\u0639 (Connection failed)", str(payload)])
                     self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Network error)")
                     return
@@ -1040,8 +1046,11 @@ class FootballMatches(Screen):
 
     def _render(self, matches):
         entries = []
+        meta = []
         if not matches:
             entries.append(u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0644\u0647\u0630\u0627 \u0627\u0644\u064a\u0648\u0645 (No matches found)")
+            meta.append(None)
+            self.entry_meta = meta
             self["list"].setList(entries)
             self["status"].setText("0 \u0645\u0628\u0627\u0631\u0627\u0629")
             return
@@ -1051,10 +1060,13 @@ class FootballMatches(Screen):
             if self.week_mode and m.get("day") and m["day"] != last_day:
                 last_day = m["day"]
                 entries.append(u"==== %s ====" % m["day"])
+                meta.append(None)
             header = u"\u23f0 %s   %s" % (m["time"], m["team"])
             entries.append(header)
+            meta.append(m)
             if m.get("comp"):
                 entries.append(u"      \u2022 %s" % m["comp"])
+                meta.append(m)
             chans = m.get("channels") or []
             if chans:
                 per = []
@@ -1062,15 +1074,115 @@ class FootballMatches(Screen):
                     per.append(c)
                     if len(per) >= 3:
                         entries.append(u"      " + " , ".join(per))
+                        meta.append(m)
                         per = []
                 if per:
                     entries.append(u"      " + " , ".join(per))
+                    meta.append(m)
             else:
                 entries.append(u"      (\u0644\u0627 \u062a\u0648\u062c\u062f \u0642\u0646\u0627\u0629 / no channel listed)")
+                meta.append(m)
             entries.append(" ")
+            meta.append(None)
 
+        self.entry_meta = meta
         self["list"].setList(entries)
-        self["status"].setText(u"%d \u0645\u0628\u0627\u0631\u0627\u0629  |  \u0627\u0644\u0623\u0632\u0631\u0627\u0631: \u0623\u0635\u0641\u0631=\u0633\u0627\u0628\u0642  \u0623\u0632\u0631\u0642=\u062a\u0627\u0644\u064a  \u0623\u062e\u0636\u0631=\u062a\u062d\u062f\u064a\u062b" % len(matches))
+        self["status"].setText(u"%d \u0645\u0628\u0627\u0631\u0627\u0629  |  OK=\u062a\u0630\u0643\u064a\u0631 \u0628\u0627\u0644\u0645\u0628\u0627\u0631\u0627\u0629  MENU=\u062a\u0630\u0643\u064a\u0631\u0627\u062a\u064a  \u0623\u062e\u0636\u0631=\u062a\u062d\u062f\u064a\u062b" % len(matches))
+
+    def set_reminder(self):
+        if self.is_loading:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.entry_meta):
+            return
+        m = self.entry_meta[idx]
+        if not m:
+            self.session.open(MessageBox, u"\u0627\u062e\u062a\u0631 \u0645\u0628\u0627\u0631\u0627\u0629 \u0645\u0646 \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u0623\u0648\u0644\u0627\u064b (Select a match first)", MessageBox.TYPE_INFO)
+            return
+        if self.week_mode:
+            self.session.open(MessageBox, u"\u0627\u0644\u062a\u0630\u0643\u064a\u0631 \u0645\u062a\u0627\u062d \u0641\u064a \u0648\u0636\u0639 \u0627\u0644\u064a\u0648\u0645 \u0627\u0644\u0648\u0627\u062d\u062f \u0641\u0642\u0637\n(Reminders work in single-day view only.)", MessageBox.TYPE_INFO)
+            return
+        if not m.get("time") or ":" not in m.get("time", ""):
+            self.session.open(MessageBox, u"\u0648\u0642\u062a \u0627\u0644\u0645\u0628\u0627\u0631\u0627\u0629 \u063a\u064a\u0631 \u0645\u062d\u062f\u062f (No match time)", MessageBox.TYPE_INFO)
+            return
+        self._pending = m
+        self.session.openWithCallback(self._reminder_lead_cb, ChoiceBox,
+            title=u"\u0630\u0643\u0651\u0631\u0646\u064a \u0642\u0628\u0644 (remind me before):", list=[
+                (u"\u0639\u0646\u062f \u0628\u062f\u0627\u064a\u0629 \u0627\u0644\u0645\u0628\u0627\u0631\u0627\u0629 (at start)", 0),
+                (u"\u0642\u0628\u0644 5 \u062f\u0642\u0627\u0626\u0642 (5 min)", 5),
+                (u"\u0642\u0628\u0644 15 \u062f\u0642\u064a\u0642\u0629 (15 min)", 15),
+                (u"\u0642\u0628\u0644 30 \u062f\u0642\u064a\u0642\u0629 (30 min)", 30),
+                (u"\u0642\u0628\u0644 \u0633\u0627\u0639\u0629 (60 min)", 60),
+            ])
+
+    def _reminder_lead_cb(self, answer):
+        if not answer:
+            return
+        import datetime
+        lead = int(answer[1])
+        m = self._pending
+        if not m:
+            return
+        try:
+            hh, mm = m["time"].split(":")[:2]
+            d = datetime.date.today() + datetime.timedelta(days=self.day_offset)
+            match_dt = datetime.datetime(d.year, d.month, d.day, int(hh), int(mm))
+        except Exception:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0651\u0631 \u062a\u062d\u062f\u064a\u062f \u0648\u0642\u062a \u0627\u0644\u0645\u0628\u0627\u0631\u0627\u0629 (Cannot parse time)", MessageBox.TYPE_ERROR)
+            return
+        match_ts = time.mktime(match_dt.timetuple())
+        notify_ts = match_ts - lead * 60
+        rem = {
+            "team": m.get("team", ""),
+            "time": m.get("time", ""),
+            "comp": m.get("comp", ""),
+            "channels": m.get("channels", []),
+            "match_ts": match_ts,
+            "notify_ts": notify_ts,
+            "lead": lead,
+            "notified": False,
+        }
+        _add_reminder(rem)
+        when = datetime.datetime.fromtimestamp(notify_ts).strftime("%d/%m %H:%M")
+        self.session.open(MessageBox,
+            u"\u2705 \u062a\u0645 \u0636\u0628\u0637 \u062a\u0630\u0643\u064a\u0631:\n%s\n\u0627\u0644\u0633\u0627\u0639\u0629 %s\n\u0633\u064a\u064f\u0646\u0628\u0651\u0647\u0643 \u0641\u064a: %s" % (m.get("team", ""), m.get("time", ""), when),
+            MessageBox.TYPE_INFO)
+
+    def show_reminders(self):
+        import datetime
+        lst = _load_reminders()
+        now = time.time()
+        future = [r for r in lst if float(r.get("match_ts", 0)) > now - 600]
+        if not future:
+            self.session.open(MessageBox, u"\u0644\u0627 \u062a\u0648\u062c\u062f \u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0645\u0636\u0628\u0648\u0637\u0629 (No reminders set)", MessageBox.TYPE_INFO)
+            return
+        choices = []
+        for r in future:
+            try:
+                w = datetime.datetime.fromtimestamp(float(r["notify_ts"])).strftime("%d/%m %H:%M")
+            except Exception:
+                w = "?"
+            label = u"%s - %s (\u062a\u0646\u0628\u064a\u0647 %s)" % (r.get("team", ""), r.get("time", ""), w)
+            choices.append((label, r))
+        self.session.openWithCallback(self._reminder_manage_cb, ChoiceBox,
+            title=u"\u062a\u0630\u0643\u064a\u0631\u0627\u062a\u0643 (\u0627\u062e\u062a\u0631 \u0644\u0644\u062d\u0630\u0641):", list=choices)
+
+    def _reminder_manage_cb(self, answer):
+        if not answer:
+            return
+        self._to_delete = answer[1]
+        self.session.openWithCallback(self._reminder_del_confirm, MessageBox,
+            u"\u062d\u0630\u0641 \u0627\u0644\u062a\u0630\u0643\u064a\u0631:\n%s \u061f" % answer[1].get("team", ""),
+            MessageBox.TYPE_YESNO)
+
+    def _reminder_del_confirm(self, result):
+        if not result or not self._to_delete:
+            return
+        r = self._to_delete
+        lst = _load_reminders()
+        new = [x for x in lst if not (x.get("team") == r.get("team") and x.get("match_ts") == r.get("match_ts"))]
+        _save_reminders(new)
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u0627\u0644\u062d\u0630\u0641 (Deleted)", MessageBox.TYPE_INFO)
 
 # =========================================================================
 # Weather (open-meteo)
@@ -1487,6 +1599,172 @@ def _http_get(url, timeout=25):
         return True, data
     except Exception as e:
         return False, str(e)
+
+def fetch_iptv_index():
+    index = []
+    index.append((u"\u2605 \u0643\u0644 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0639\u0631\u0628\u064a\u0629 (All Arabic)", IPTV_BASE + "/languages/ara.m3u"))
+    okc, cdata = _http_get(IPTV_API + "/categories.json")
+    if okc:
+        try:
+            for c in json.loads(cdata):
+                cid = c.get("id")
+                nm = c.get("name", "")
+                if cid:
+                    index.append((u"[\u062a\u0635\u0646\u064a\u0641] %s" % nm, IPTV_BASE + "/categories/%s.m3u" % cid))
+        except Exception:
+            pass
+    oks, sdata = _http_get(IPTV_API + "/countries.json")
+    if oks:
+        try:
+            arr = json.loads(sdata)
+            arr = sorted(arr, key=lambda x: x.get("name", ""))
+            for c in arr:
+                code = c.get("code")
+                nm = c.get("name", "")
+                if code:
+                    ar = IPTV_AR_COUNTRY.get(code.lower())
+                    label = (u"%s (%s)" % (ar, nm)) if ar else nm
+                    index.append((label, IPTV_BASE + "/countries/%s.m3u" % code.lower()))
+        except Exception:
+            pass
+    return index
+
+class IPTVScreen(Screen):
+    skin = IPTV_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001F4FA \u0642\u0646\u0648\u0627\u062a IPTV (iptv-org)")
+        try:
+            self.setTitle(u"\u0642\u0646\u0648\u0627\u062a IPTV (IPTV)")
+        except Exception:
+            pass
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0631\u062c\u0648\u0639 (Back)")
+        self["key_green"] = Label(u"\u062a\u0634\u063a\u064a\u0644 (Play)")
+        self["key_yellow"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0639\u0644\u0649 (Page Up)")
+        self["key_blue"] = Label(u"\u0635\u0641\u062d\u0629 \u0644\u0623\u0633\u0641\u0644 (Page Down)")
+        self.mode = "menu"
+        self.index = []
+        self.is_loading = False
+        self.channels = []
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.go_back, "ok": self.ok_pressed,
+            "red": self.go_back, "green": self.ok_pressed,
+            "yellow": self.page_up, "blue": self.page_down,
+        }, -1)
+        self.onLayoutFinish.append(self.load_index)
+
+    def page_up(self):
+        try:
+            self["list"].pageUp()
+        except Exception:
+            pass
+
+    def page_down(self):
+        try:
+            self["list"].pageDown()
+        except Exception:
+            pass
+
+    def load_index(self):
+        self.is_loading = True
+        self.mode = "menu"
+        self["daylabel"].setText(u"\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062f\u0648\u0644 \u0648\u0627\u0644\u062a\u0635\u0646\u064a\u0641\u0627\u062a... (Loading...)")
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            index = fetch_iptv_index()
+
+            def _apply():
+                self.is_loading = False
+                if not index:
+                    self.index = [(c[0], (IPTV_BASE + "/languages/ara.m3u") if c[1] == "@ara" else (IPTV_BASE + "/countries/%s.m3u" % c[1])) for c in IPTV_COUNTRIES]
+                else:
+                    self.index = index
+                self.show_menu()
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def show_menu(self):
+        self.mode = "menu"
+        self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u062f\u0648\u0644\u0629 \u0623\u0648 \u062a\u0635\u0646\u064a\u0641 \u062b\u0645 OK (Select then OK)")
+        self["list"].setList([_strip_emoji(x[0]) for x in self.index])
+        self["status"].setText(u"%d \u0639\u0646\u0635\u0631  |  OK = \u0641\u062a\u062d \u0627\u0644\u0642\u0646\u0648\u0627\u062a  |  \u0623\u0635\u0641\u0631/\u0623\u0632\u0631\u0642 = \u062a\u0635\u0641\u062d" % len(self.index))
+
+    def go_back(self):
+        if self.is_loading:
+            return
+        if self.mode == "channels":
+            self.show_menu()
+        else:
+            self.close()
+
+    def ok_pressed(self):
+        if self.is_loading:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx < 0:
+            return
+        if self.mode == "menu":
+            if 0 <= idx < len(self.index):
+                self.load_channels(self.index[idx])
+        else:
+            if 0 <= idx < len(self.channels):
+                self.play_channel(self.channels[idx])
+
+    def load_channels(self, entry):
+        self.is_loading = True
+        name, url = entry
+        self["daylabel"].setText(_strip_emoji(name))
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, payload = _http_get(url, 25)
+            chans = parse_m3u(payload) if ok else []
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(payload)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self.mode = "channels"
+                self.channels = chans
+                if not chans:
+                    self["list"].setList([u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0642\u0646\u0648\u0627\u062a (No channels)"])
+                else:
+                    self["list"].setList([u"%d. %s" % (i + 1, _strip_emoji(c[0])) for i, c in enumerate(chans)])
+                self["status"].setText(u"%d \u0642\u0646\u0627\u0629  |  OK = \u062a\u0634\u063a\u064a\u0644  |  \u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639  |  \u0645\u0644\u0627\u062d\u0638\u0629: \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0634\u064a\u0631\u0646\u0651\u064c \u063a\u064a\u0631 \u0645\u062a\u0648\u0641\u0631\u0629 \u0647\u0646\u0627" % len(chans))
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def play_channel(self, ch):
+        name, url = ch
+        try:
+            from enigma import eServiceReference
+            safe = url.replace(":", "%3a")
+            ref = eServiceReference("4097:0:1:0:0:0:0:0:0:0:" + safe)
+            try:
+                ref.setName(name)
+            except Exception:
+                pass
+            self.session.nav.playService(ref)
+            self["status"].setText(u"\u062c\u0627\u0631\u064a \u062a\u0634\u063a\u064a\u0644: %s" % name)
+        except Exception as e:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0631 \u0627\u0644\u062a\u0634\u063a\u064a\u0644:\n%s" % str(e), MessageBox.TYPE_ERROR)
 
 # =========================================================================
 # OPENSUBTITLES (opensubtitles.org) SUBTITLES ENGINE WITH POSTERS & HDD DOWNLOAD
@@ -2093,19 +2371,30 @@ def download_file_to_hdd(url, dest_dir, filename_prefix="subtitle", sub_id=None,
         return False, str(e), []
 
 def parse_subscene_subtitles(html, movie_title="Movie"):
-    """Extracts ALL Arabic subtitle entries from an opensubtitles.org movie
-    page (/ar/search/sublanguageid-ara/imdbid-<imdb>). Each table row
-    (<tr ... servOC(SUBID,'LINK'...)>) is one real subtitle; we dedupe by the
-    full (id + release) key so every distinct listing is kept.
+    """Extracts ALL subtitle entries for a movie from opensubtitles.org.
+    Handles BOTH page layouts the site serves:
+      (A) listing/browse rows using the servOC(SUBID,'LINK') onclick handler, and
+      (B) the movie-detail / idmovie page, where each subtitle is a plain
+          anchor  <a itemprop="url" ... href="/ar/subtitles/<id>/<slug>">.
+          (This is what an imdbid search redirects to, and the old parser
+          missed it completely -> that was the 'no subtitles available' bug.)
+    We dedupe by subtitle id. The real download link is always
+    /ar/subtitleserve/sub/<id> (the downloader also derives it from the id).
     Returns [] when nothing real is found (we never fabricate fake entries).
     """
     subtitles = []
     seen = set()
+
+    def _dl_link(sub_id):
+        return "%s%s/subtitleserve/sub/%s" % (SUBSCENE_BASE, OS_UI, sub_id)
+
     try:
+        # ---- Format A: servOC(...) onclick rows (listing/browse pages) ----
         rows = re.findall(r"<tr[^>]*servOC\((\d+),'([^']+)'[^>]*>(.*?)</tr>",
                           html, re.S | re.I)
         for sub_id, sub_link, inner in rows:
-            # Release / file name: anchor to /ar/subtitles/<id>/...
+            if sub_id in seen:
+                continue
             name_m = re.search(r'title="[^"]*?-\s*([^"]+?)"\s*href="/ar/subtitles/', inner)
             if not name_m:
                 name_m = re.search(r'href="/ar/subtitles/\d+/[^"]*"[^>]*>([^<]+)', inner)
@@ -2122,18 +2411,72 @@ def parse_subscene_subtitles(html, movie_title="Movie"):
             if not release_title:
                 release_title = title or "Subtitle"
 
-            key = (sub_id, release_title)
-            if key in seen:
-                continue
-            seen.add(key)
-
+            seen.add(sub_id)
             subtitles.append({
                 "id": sub_id,
                 "language": "Arabic",
                 "release": release_title or "Standard",
-                "link": SUBSCENE_BASE + sub_link if sub_link.startswith('/') else sub_link,
+                "link": _dl_link(sub_id),
                 "author": "OpenSubtitles"
             })
+
+        # ---- Format B: movie-detail page plain anchors (idmovie pages) ----
+        if not subtitles:
+            for m in re.finditer(
+                    r'<a\b([^>]*?)href="/ar/subtitles/(\d+)/[^"]*"([^>]*)>(.*?)</a>',
+                    html, re.S | re.I):
+                attrs = (m.group(1) or "") + (m.group(3) or "")
+                sub_id = m.group(2)
+                inner = m.group(4) or ""
+                if sub_id in seen:
+                    continue
+                seen.add(sub_id)
+                tm = re.search(r'title="([^"]*)"', attrs)
+                name = tm.group(1) if tm else ""
+                if not name:
+                    sm = re.search(r'itemprop="name"[^>]*>(.*?)<', inner, re.S)
+                    name = sm.group(1) if sm else inner
+                release_title = _los_clean(name) or (movie_title or "Subtitle")
+                subtitles.append({
+                    "id": sub_id,
+                    "language": "Arabic",
+                    "release": release_title,
+                    "link": _dl_link(sub_id),
+                    "author": "OpenSubtitles"
+                })
+
+        # ---- Format C: single-subtitle DETAIL page ----
+        # Titles that have exactly ONE subtitle make the imdbid/idmovie search
+        # redirect STRAIGHT to the subtitle detail page /ar/subtitles/<id>/<slug>
+        # (no listing table, no servOC rows, no plain listing anchors). That was
+        # why ~1/4 of the movies returned 'no subtitles' even though a subtitle
+        # really exists. We detect that page and expose its single subtitle id,
+        # taken from the canonical/bookmark link or the download (subtitleserve)
+        # reference. This only runs as a fallback (A and B found nothing), so it
+        # never shadows a real listing.
+        if not subtitles:
+            det_id = None
+            dm = (re.search(r'rel="bookmark"\s+href="/ar/subtitles/(\d+)/', html, re.I)
+                  or re.search(r'subtitleserve/sub/(\d+)', html, re.I)
+                  or re.search(r'(?:canonical|og:url)[^>]*?/ar/subtitles/(\d+)/', html, re.I)
+                  or re.search(r'ret="/ar/subtitles/(\d+)/', html, re.I))
+            if dm:
+                det_id = dm.group(1)
+            if det_id and det_id not in seen:
+                seen.add(det_id)
+                rel_name = ""
+                tm = re.search(r'<title>(.*?)</title>', html, re.S | re.I)
+                if tm:
+                    rel_name = _los_clean(re.sub(r'\s*[-|].*$', '', tm.group(1)))
+                if not rel_name:
+                    rel_name = movie_title or "Subtitle"
+                subtitles.append({
+                    "id": det_id,
+                    "language": "Arabic",
+                    "release": rel_name,
+                    "link": _dl_link(det_id),
+                    "author": "OpenSubtitles"
+                })
     except Exception:
         pass
 
@@ -2355,6 +2698,58 @@ class SubsceneScreen(Screen):
         else:
             self["list"].moveToIndex(0)
         self.selection_changed()
+        # Pre-download EVERY poster of this page in parallel (into the cache)
+        # so moving the cursor shows them instantly instead of fetching
+        # one-by-one on each selection change.
+        self.prefetch_posters()
+
+    def prefetch_posters(self):
+        try:
+            movies = list(self.movies)
+        except Exception:
+            return
+        if not movies:
+            return
+        cache_dir = get_subscene_cache_dir()
+
+        def _one(mv):
+            try:
+                url = mv.get("poster", "")
+                if not url:
+                    return
+                cid = re.sub(r'[^a-zA-Z0-9]', '_', str(mv.get("id", mv.get("title", "poster")))) + ".jpg"
+                cp = os.path.join(cache_dir, cid)
+                if os.path.exists(cp) and os.path.getsize(cp) > 1000:
+                    return
+                ok_b, data = subscene_fetch_binary(url, timeout=12)
+                if ok_b and data and len(data) > 500:
+                    with open(cp, 'wb') as pf:
+                        pf.write(data)
+            except Exception:
+                pass
+
+        def _runner():
+            try:
+                sem = threading.Semaphore(6)   # up to 6 posters at once
+                for mv in movies:
+                    def _task(m=mv):
+                        sem.acquire()
+                        try:
+                            _one(m)
+                        finally:
+                            try:
+                                sem.release()
+                            except Exception:
+                                pass
+                    th = threading.Thread(target=_task)
+                    th.daemon = True
+                    th.start()
+            except Exception:
+                pass
+
+        t = threading.Thread(target=_runner)
+        t.daemon = True
+        t.start()
 
     def selection_changed(self):
         idx = self["list"].getSelectionIndex()
@@ -2600,7 +2995,4497 @@ class SubsceneScreen(Screen):
         t.daemon = True
         t.start()
 
+# =========================================================================
+# NEW TOOLS: Subscription Countdown + Mini File Manager + Match Reminders
+# =========================================================================
+SUBSCRIPTION_CONFIG = os.path.join(PLUGIN_DIR, "subscription.json")
+REMINDERS_CONFIG = os.path.join(PLUGIN_DIR, "match_reminders.json")
+KIDS_CONFIG = os.path.join(PLUGIN_DIR, "kids_mode.json")
+ORG_HIDDEN_CONFIG = os.path.join(PLUGIN_DIR, "org_hidden.json")
+ORG_BACKUP_DIR = os.path.join(PLUGIN_DIR, "org_backup")
+
+
+def _load_json_cfg(path, default):
+    try:
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                raw = f.read()
+            if raw and raw.strip():
+                return json.loads(raw)
+    except Exception:
+        pass
+    return default
+
+
+def _save_json_cfg(path, data):
+    try:
+        with open(path, "w") as f:
+            f.write(json.dumps(data))
+        return True
+    except Exception:
+        return False
+
+
+def _ms_safe_gui_text(s):
+    """Return a string that is ALWAYS safe to hand to the enigma2 GUI
+    (eLabel / MenuList / listbox). File/record names on HDD/USB often carry
+    non-UTF-8 bytes (FAT/NTFS) or, on Python 3, surrogate-escaped code points
+    from os.listdir(). Passing such a string to the native text renderer makes
+    enigma2 abort() in C++ (a crash WITHOUT any Python traceback) - exactly the
+    "crash on entry" seen in the File Manager and Boot Logo screens. Round-trip
+    through UTF-8 with 'replace' to neutralise surrogates/invalid bytes, and
+    drop control characters that can confuse the renderer."""
+    try:
+        if s is None:
+            return u""
+        if isinstance(s, bytes):
+            s = s.decode("utf-8", "replace")
+        else:
+            try:
+                s = u"" + s
+            except Exception:
+                s = u"%s" % (s,)
+        # Neutralise surrogates / undecodable code points -> guaranteed clean UTF-8
+        s = s.encode("utf-8", "replace").decode("utf-8", "replace")
+        # Strip control characters except TAB / NEWLINE
+        out = []
+        for ch in s:
+            if ch == u"\n" or ch == u"\t" or ch >= u" ":
+                out.append(ch)
+        return u"".join(out)
+    except Exception:
+        try:
+            return repr(s)
+        except Exception:
+            return u"?"
+
+
+def _ms_safe_list(items):
+    try:
+        return [_ms_safe_gui_text(x) for x in items]
+    except Exception:
+        return items
+
+
+# ---- Subscription skin ----
+SUBSCRIPTION_RAW_SKIN = """<screen name="MS_SubscriptionScreen" position="center,center" size="1100,720" title="Subscription">
+    <widget name="title" position="20,15" size="1060,55" font="Regular;34" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="bigdays" position="20,110" size="1060,170" font="Regular;120" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="status" position="20,300" size="1060,50" font="Regular;34" halign="center" transparent="1" foregroundColor="#00ffffff"/>
+    <widget name="info" position="50,375" size="1000,240" font="Regular;28" halign="center" transparent="1" foregroundColor="#00cccccc"/>
+    <widget name="key_red" position="30,660" size="250,40" font="Regular;24" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="300,660" size="250,40" font="Regular;24" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="560,660" size="250,40" font="Regular;24" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="820,660" size="250,40" font="Regular;24" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+SUBSCRIPTION_SKIN = scale_skin_layout(SUBSCRIPTION_RAW_SKIN)
+
+# ---- File manager skin ----
+FM_RAW_SKIN = """<screen name="MS_FileManagerScreen" position="center,center" size="1300,860" title="File Manager">
+    <widget name="path" position="20,12" size="1260,48" font="Regular;28" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="list" position="20,70" size="1260,690" font="Regular;26" itemHeight="40" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,768" size="1260,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,812" size="300,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="345,812" size="300,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="660,812" size="300,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="975,812" size="300,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+FM_SKIN = scale_skin_layout(FM_RAW_SKIN)
+
+# ---- Automatic subscription expiry detection (OSCam / NCam) ----
+def _ms_read_file(path):
+    try:
+        with open(path, "rb") as f:
+            data = f.read()
+        if isinstance(data, bytes):
+            data = data.decode("utf-8", "ignore")
+        return data
+    except Exception:
+        return ""
+
+
+def _ms_parse_date(s):
+    import datetime
+    s = s.strip()
+    for fmt in ("%Y/%m/%d", "%Y-%m-%d", "%Y.%m.%d", "%d.%m.%Y", "%d/%m/%Y", "%d-%m-%Y"):
+        try:
+            return datetime.datetime.strptime(s, fmt).date()
+        except Exception:
+            pass
+    return None
+
+
+_MS_DATE_RE = re.compile(r'(\d{4}[/.\-]\d{1,2}[/.\-]\d{1,2}|\d{1,2}[/.\-]\d{1,2}[/.\-]\d{4})')
+_MS_EXP_KEYS = ["expire", "expir", "expdate", "exp:", "exp ", "valid", "until", "enddate", "end date", "ends", "subscription"]
+
+
+def _ms_scan_configs_expiry():
+    import datetime
+    files = [
+        "/etc/tuxbox/config/oscam.server", "/etc/tuxbox/config/oscam.user",
+        "/etc/tuxbox/config/oscam-emu/oscam.server", "/etc/tuxbox/config/oscam-emu/oscam.user",
+        "/etc/tuxbox/config/oscam/oscam.server", "/etc/tuxbox/config/oscam/oscam.user",
+        "/etc/tuxbox/config/ncam.server", "/etc/tuxbox/config/ncam.user",
+        "/etc/tuxbox/config/ncam/ncam.server", "/etc/tuxbox/config/ncam/ncam.user",
+    ]
+    today = datetime.date.today()
+    found = []
+    for p in files:
+        if not os.path.exists(p):
+            continue
+        txt = _ms_read_file(p)
+        for line in txt.split("\n"):
+            low = line.lower()
+            if any(k in low for k in _MS_EXP_KEYS):
+                for mm in _MS_DATE_RE.findall(line):
+                    d = _ms_parse_date(mm)
+                    if d and d >= today:
+                        found.append(d)
+    if found:
+        return max(found)
+    return None
+
+
+def _ms_find_webif():
+    confs = [
+        "/etc/tuxbox/config/oscam.conf", "/etc/tuxbox/config/oscam-emu/oscam.conf",
+        "/etc/tuxbox/config/oscam/oscam.conf", "/etc/tuxbox/config/ncam.conf",
+        "/etc/tuxbox/config/ncam/ncam.conf",
+    ]
+    for p in confs:
+        if not os.path.exists(p):
+            continue
+        txt = _ms_read_file(p)
+        port = user = pwd = ""
+        inweb = False
+        for line in txt.split("\n"):
+            s = line.strip()
+            sl = s.lower()
+            if sl.startswith("[webif]"):
+                inweb = True
+                continue
+            if s.startswith("[") and inweb:
+                break
+            if inweb and "=" in s:
+                k, v = s.split("=", 1)
+                k = k.strip().lower()
+                v = v.strip()
+                if k == "httpport":
+                    port = v.replace("+", "").strip()
+                elif k == "httpuser":
+                    user = v
+                elif k == "httppwd":
+                    pwd = v
+        if port:
+            return (port, user, pwd)
+    return None
+
+
+def _ms_webif_expiry(port, user, pwd):
+    import datetime
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+        else:
+            import urllib2
+        base = "http://127.0.0.1:%s" % port
+        urls = [base + "/oscamapi.html?part=entitlement",
+                base + "/oscamapi.html?part=status",
+                base + "/status.html"]
+        opener = None
+        try:
+            if user:
+                pm = urllib2.HTTPPasswordMgrWithDefaultRealm()
+                pm.add_password(None, base, user, pwd)
+                opener = urllib2.build_opener(urllib2.HTTPBasicAuthHandler(pm),
+                                              urllib2.HTTPDigestAuthHandler(pm))
+        except Exception:
+            opener = None
+        today = datetime.date.today()
+        found = []
+        for u in urls:
+            try:
+                req = urllib2.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+                if opener:
+                    resp = opener.open(req, timeout=5)
+                else:
+                    resp = urllib2.urlopen(req, timeout=5)
+                data = resp.read()
+                if isinstance(data, bytes):
+                    data = data.decode("utf-8", "ignore")
+            except Exception:
+                continue
+            for mm in _MS_DATE_RE.findall(data):
+                d = _ms_parse_date(mm)
+                if d and d >= today and d < (today + datetime.timedelta(days=3650)):
+                    found.append(d)
+            if found:
+                break
+        if found:
+            return max(found)
+    except Exception:
+        pass
+    return None
+
+
+def detect_subscription_expiry():
+    """Best-effort auto-detect of OSCam/NCam subscription expiry.
+    Returns (date_obj, source) or (None, 'notfound')."""
+    try:
+        d = _ms_scan_configs_expiry()
+        if d:
+            return d, "config"
+    except Exception:
+        pass
+    try:
+        wi = _ms_find_webif()
+        if wi:
+            d2 = _ms_webif_expiry(*wi)
+            if d2:
+                return d2, "webif"
+    except Exception:
+        pass
+    return None, "notfound"
+
+
+# ---- Live server (OSCam / NCam) status monitor ----
+def _ms_proc_running():
+    """Return a short string of running emu process names (oscam/ncam/cccam)."""
+    names = []
+    try:
+        for pid in os.listdir("/proc"):
+            if not pid.isdigit():
+                continue
+            try:
+                with open("/proc/%s/comm" % pid, "r") as f:
+                    comm = f.read().strip().lower()
+            except Exception:
+                comm = ""
+            if not comm:
+                try:
+                    with open("/proc/%s/cmdline" % pid, "rb") as f:
+                        cl = f.read().replace(b"\x00", b" ").decode("utf-8", "ignore").lower()
+                    comm = cl
+                except Exception:
+                    comm = ""
+            for key in ("oscam", "ncam", "cccam", "gcam"):
+                if key in comm and key not in names:
+                    names.append(key)
+    except Exception:
+        pass
+    return names
+
+
+def _ms_webif_fetch(port, user, pwd, path):
+    try:
+        if sys.version_info >= (3, 0):
+            import urllib.request as urllib2
+        else:
+            import urllib2
+        base = "http://127.0.0.1:%s" % port
+        opener = None
+        try:
+            if user:
+                pm = urllib2.HTTPPasswordMgrWithDefaultRealm()
+                pm.add_password(None, base, user, pwd)
+                opener = urllib2.build_opener(urllib2.HTTPBasicAuthHandler(pm),
+                                              urllib2.HTTPDigestAuthHandler(pm))
+        except Exception:
+            opener = None
+        req = urllib2.Request(base + path, headers={"User-Agent": "Mozilla/5.0"})
+        if opener:
+            resp = opener.open(req, timeout=5)
+        else:
+            resp = urllib2.urlopen(req, timeout=5)
+        data = resp.read()
+        if isinstance(data, bytes):
+            data = data.decode("utf-8", "ignore")
+        return data
+    except Exception:
+        return ""
+
+
+def _ms_attr(block, name):
+    m = re.search(name + r'\s*=\s*"([^"]*)"', block)
+    if m:
+        return m.group(1)
+    return ""
+
+
+def _ms_parse_oscam_status(xml):
+    """Parse oscamapi status XML into a list of client/reader dicts."""
+    out = []
+    if not xml:
+        return out
+    for block in re.findall(r'<client\b.*?</client>', xml, re.DOTALL):
+        ctype = _ms_attr(block, "type")
+        name = _ms_attr(block, "name")
+        proto = _ms_attr(block, "protocol")
+        au = _ms_attr(block, "au")
+        conn_m = re.search(r'<connection[^>]*>(.*?)</connection>', block, re.DOTALL)
+        conn = conn_m.group(1).strip() if conn_m else ""
+        conn_status = _ms_attr(block, "status")
+        req_m = re.search(r'<request\b([^>]*)>(.*?)</request>', block, re.DOTALL)
+        channel = ""
+        answer = ""
+        ecmtime = ""
+        if req_m:
+            reqattrs = req_m.group(1)
+            answer_in = re.search(r'answer\s*=\s*"([^"]*)"', reqattrs)
+            answer = answer_in.group(1) if answer_in else ""
+            ecm_in = re.search(r'ecmtime\s*=\s*"([^"]*)"', reqattrs)
+            ecmtime = ecm_in.group(1) if ecm_in else ""
+            channel = (req_m.group(2) or "").strip()
+            if not channel:
+                channel = re.search(r'caname\s*=\s*"([^"]*)"', reqattrs)
+                channel = channel.group(1) if channel else ""
+        out.append({
+            "type": ctype, "name": name, "proto": proto, "au": au,
+            "conn": conn or conn_status, "channel": channel,
+            "answer": answer, "ecmtime": ecmtime,
+        })
+    return out
+
+
+def get_server_status():
+    """Best-effort snapshot of OSCam/NCam status.
+    Returns dict: running(list), webif(bool), readers(list), clients(list), error(str)."""
+    info = {"running": [], "webif": False, "readers": [], "clients": [], "error": ""}
+    try:
+        info["running"] = _ms_proc_running()
+    except Exception:
+        pass
+    wi = None
+    try:
+        wi = _ms_find_webif()
+    except Exception:
+        wi = None
+    if not wi:
+        info["error"] = "nowebif"
+        return info
+    port, user, pwd = wi
+    xml = _ms_webif_fetch(port, user, pwd, "/oscamapi.html?part=status")
+    if not xml:
+        info["error"] = "unreachable"
+        return info
+    info["webif"] = True
+    entries = _ms_parse_oscam_status(xml)
+    for e in entries:
+        t = (e.get("type") or "").lower()
+        if t in ("r", "p"):
+            info["readers"].append(e)
+        elif t == "c":
+            info["clients"].append(e)
+    return info
+
+
+# ---- Server monitor skin ----
+SERVER_MON_RAW_SKIN = """<screen name="MS_ServerMonitorScreen" position="center,center" size="1200,800" title="Server Monitor">
+    <widget name="title" position="20,15" size="1160,48" font="Regular;30" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="summary" position="30,72" size="1140,96" font="Regular;26" transparent="1" foregroundColor="#00ffffff"/>
+    <widget name="list" position="30,180" size="1140,500" font="Regular;25" itemHeight="52" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,690" size="1160,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,738" size="360,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="420,738" size="360,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_blue" position="810,738" size="360,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+SERVER_MON_SKIN = scale_skin_layout(SERVER_MON_RAW_SKIN)
+
+
+class ServerMonitorScreen(Screen):
+    skin = SERVER_MON_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001f4e1 \u0645\u0631\u0627\u0642\u0628 \u062d\u0627\u0644\u0629 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 (Server Monitor)")
+        self["summary"] = Label(u"")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u062a\u062d\u062f\u064a\u062b \u062a\u0644\u0642\u0627\u0626\u064a: \u062a\u0634\u063a\u064a\u0644 (Auto:ON)")
+        self["key_blue"] = Label(u"\u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0622\u0646 (Refresh)")
+        self.ms_busy = False
+        self.ms_auto = True
+        self.ms_result = None
+        self.poll_timer = eTimer()
+        try:
+            self.poll_timer.callback.append(self.do_refresh)
+        except Exception:
+            self.poll_timer_conn = self.poll_timer.timeout.connect(self.do_refresh)
+        self.ui_timer = eTimer()
+        try:
+            self.ui_timer.callback.append(self._render)
+        except Exception:
+            self.ui_timer_conn = self.ui_timer.timeout.connect(self._render)
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.do_refresh,
+            "red": self.close,
+            "green": self.toggle_auto,
+            "blue": self.do_refresh,
+        }, -1)
+        self.onClose.append(self._stop_timers)
+        self.onLayoutFinish.append(self.do_refresh)
+
+    def _stop_timers(self):
+        try:
+            self.poll_timer.stop()
+        except Exception:
+            pass
+        try:
+            self.ui_timer.stop()
+        except Exception:
+            pass
+
+    def toggle_auto(self):
+        self.ms_auto = not self.ms_auto
+        if self.ms_auto:
+            self["key_green"].setText(u"\u062a\u062d\u062f\u064a\u062b \u062a\u0644\u0642\u0627\u0626\u064a: \u062a\u0634\u063a\u064a\u0644 (Auto:ON)")
+            self.do_refresh()
+        else:
+            self["key_green"].setText(u"\u062a\u062d\u062f\u064a\u062b \u062a\u0644\u0642\u0627\u0626\u064a: \u0625\u064a\u0642\u0627\u0641 (Auto:OFF)")
+            try:
+                self.poll_timer.stop()
+            except Exception:
+                pass
+
+    def do_refresh(self):
+        if self.ms_busy:
+            return
+        self.ms_busy = True
+        self["status"].setText(u"\u062c\u0627\u0631\u064a \u0642\u0631\u0627\u0621\u0629 \u062d\u0627\u0644\u0629 \u0627\u0644\u0633\u064a\u0631\u0641\u0631... (reading)")
+
+        def worker():
+            try:
+                self.ms_result = get_server_status()
+            except Exception:
+                self.ms_result = {"running": [], "webif": False, "readers": [], "clients": [], "error": "exc"}
+            try:
+                self.ui_timer.start(50, True)
+            except Exception:
+                pass
+        try:
+            import threading
+            t = threading.Thread(target=worker)
+            t.setDaemon(True)
+            t.start()
+        except Exception:
+            worker()
+
+    def _render(self):
+        self.ms_busy = False
+        info = self.ms_result or {}
+        running = info.get("running", [])
+        readers = info.get("readers", [])
+        clients = info.get("clients", [])
+        err = info.get("error", "")
+        if running:
+            run_txt = u"\u2705 \u0634\u063a\u0651\u0627\u0644: %s" % ", ".join(running)
+        else:
+            run_txt = u"\u274c \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0645\u0648 \u0634\u063a\u0651\u0627\u0644 (not running)"
+        online_readers = [r for r in readers if "connect" in (r.get("conn", "").lower())]
+        sm = [run_txt]
+        if info.get("webif"):
+            sm.append(u"\U0001f4e1 \u0627\u0644\u0631\u064a\u062f\u0631\u0632 (Readers): %d \u2014 \u0645\u062a\u0635\u0644: %d  |  \u0627\u0644\u0632\u0628\u0627\u0626\u0646 (Clients): %d" % (
+                len(readers), len(online_readers), len(clients)))
+        else:
+            if err == "nowebif":
+                sm.append(u"\u26a0 \u0645\u0627 \u0644\u06af\u064a\u062a \u0648\u0627\u062c\u0647\u0629 \u0648\u064a\u0628 (webif) \u0645\u0641\u0639\u0651\u0644\u0629 \u2014 \u0641\u0639\u0651\u0644 [webif] \u0628\u0645\u0644\u0641 oscam.conf")
+            elif err == "unreachable":
+                sm.append(u"\u26a0 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0648\u064a\u0628 \u0645\u0648 \u0645\u0633\u062a\u062c\u064a\u0628\u0629 (webif unreachable)")
+            else:
+                sm.append(u"\u26a0 \u062a\u0639\u0630\u0651\u0631\u062a \u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062a\u0641\u0627\u0635\u064a\u0644")
+        self["summary"].setText(u"\n".join(sm))
+        lines = []
+        for r in readers:
+            conn = r.get("conn", "")
+            low = conn.lower()
+            if "connect" in low:
+                dot = u"\U0001f7e2"
+            elif conn:
+                dot = u"\U0001f534"
+            else:
+                dot = u"\u26aa"
+            au = u" \U0001f511AU" if (r.get("au", "") not in ("", "0", "OFF", "off")) else u""
+            lines.append(u"%s \U0001f5c2 %s  [%s]  %s%s" % (dot, r.get("name", "") or "?", r.get("proto", "") or "-", conn or u"\u2014", au))
+        for c in clients:
+            ch = c.get("channel", "")
+            ecm = c.get("ecmtime", "")
+            extra = u""
+            if ch:
+                extra = u" \u25b6 %s" % ch
+                if ecm:
+                    extra += u" (%s ms)" % ecm
+            lines.append(u"\U0001f464 %s  [%s]%s" % (c.get("name", "") or "?", c.get("proto", "") or "-", extra))
+        if not lines:
+            if running and not info.get("webif"):
+                lines = [u"\u2139 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u0634\u063a\u0651\u0627\u0644 \u0628\u0633 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0648\u064a\u0628 \u0645\u0637\u0641\u0651\u064a\u0629 \u2014 \u0641\u0639\u0651\u0644\u0647\u0627 \u0644\u062a\u0634\u0648\u0641 \u0627\u0644\u062a\u0641\u0627\u0635\u064a\u0644."]
+            else:
+                lines = [u"\u2014 \u0644\u0627 \u062a\u0648\u062c\u062f \u062a\u0641\u0627\u0635\u064a\u0644 \u0644\u0644\u0639\u0631\u0636"]
+        self["list"].setList(lines)
+        import datetime
+        now = datetime.datetime.now().strftime("%H:%M:%S")
+        self["status"].setText(u"\u0622\u062e\u0631 \u062a\u062d\u062f\u064a\u062b: %s  |  \u0623\u062e\u0636\u0631=\u062a\u0628\u062f\u064a\u0644 \u0627\u0644\u062a\u062d\u062f\u064a\u062b \u0627\u0644\u062a\u0644\u0642\u0627\u0626\u064a  |  \u0623\u0632\u0631\u0642=\u062a\u062d\u062f\u064a\u062b" % now)
+        if self.ms_auto:
+            try:
+                self.poll_timer.start(6000, True)
+            except Exception:
+                pass
+
+
+# ---- Settings backup / restore ----
+BACKUP_SOURCES = ["/etc/enigma2", "/etc/tuxbox/config", "/etc/CCcam.cfg", "/usr/keys"]
+
+
+def _ms_backup_base():
+    for p in ["/media/hdd", "/media/usb", "/media/mmc", "/data"]:
+        if os.path.exists(p):
+            d = os.path.join(p, "MohamedStore_Backups")
+            try:
+                if not os.path.exists(d):
+                    os.makedirs(d)
+            except Exception:
+                pass
+            return d
+    return "/tmp/MohamedStore_Backups"
+
+
+BACKUP_RAW_SKIN = """<screen name="MS_BackupScreen" position="center,center" size="1200,800" title="Settings Backup">
+    <widget name="title" position="20,15" size="1160,48" font="Regular;30" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="info" position="30,72" size="1140,70" font="Regular;24" transparent="1" foregroundColor="#00cccccc"/>
+    <widget name="list" position="30,155" size="1140,520" font="Regular;26" itemHeight="50" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,685" size="1160,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,738" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="320,738" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="610,738" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="900,738" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+BACKUP_SKIN = scale_skin_layout(BACKUP_RAW_SKIN)
+
+
+class SettingsBackupScreen(Screen):
+    skin = BACKUP_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001f4be \u0646\u0633\u062e \u0627\u062d\u062a\u064a\u0627\u0637\u064a / \u0627\u0633\u062a\u0639\u0627\u062f\u0629 (Backup & Restore)")
+        self["info"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u0646\u0633\u062e\u0629 \u062c\u062f\u064a\u062f\u0629 (Backup)")
+        self["key_yellow"] = Label(u"\u062d\u0630\u0641 (Delete)")
+        self["key_blue"] = Label(u"\u062a\u062d\u062f\u064a\u062b (Refresh)")
+        self.base = _ms_backup_base()
+        self.files = []
+        self.busy = False
+        self.console = Console()
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.restore_selected,
+            "red": self.close,
+            "green": self.create_backup,
+            "yellow": self.delete_selected,
+            "blue": self.refresh,
+        }, -1)
+        self.onLayoutFinish.append(self.refresh)
+
+    def _fmt_size(self, n):
+        try:
+            n = float(n)
+        except Exception:
+            return ""
+        for unit in ["B", "KB", "MB", "GB"]:
+            if n < 1024.0:
+                return "%.1f %s" % (n, unit)
+            n /= 1024.0
+        return "%.1f TB" % n
+
+    def refresh(self):
+        self["info"].setText(u"\U0001f4c1 \u0645\u0643\u0627\u0646 \u0627\u0644\u062d\u0641\u0638: %s\n\u062a\u0634\u0645\u0644: \u0642\u0646\u0648\u0627\u062a\u060c \u0625\u0639\u062f\u0627\u062f\u0627\u062a\u060c \u0633\u064a\u0631\u0641\u0631 (enigma2 + softcam configs)" % self.base)
+        items = []
+        self.files = []
+        try:
+            names = sorted(os.listdir(self.base), reverse=True)
+        except Exception:
+            names = []
+        for n in names:
+            if not (n.endswith(".tar.gz") and n.startswith("backup_")):
+                continue
+            full = os.path.join(self.base, n)
+            sz = ""
+            try:
+                sz = self._fmt_size(os.path.getsize(full))
+            except Exception:
+                pass
+            items.append(u"\U0001f4e6 %s   (%s)" % (n, sz))
+            self.files.append(full)
+        self["list"].setList(items)
+        if items:
+            self["status"].setText(u"%d \u0646\u0633\u062e\u0629   |   OK=\u0627\u0633\u062a\u0639\u0627\u062f\u0629  \u0623\u062e\u0636\u0631=\u0646\u0633\u062e\u0629 \u062c\u062f\u064a\u062f\u0629  \u0623\u0635\u0641\u0631=\u062d\u0630\u0641" % len(items))
+        else:
+            self["status"].setText(u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u0633\u062e \u2014 \u0627\u0636\u063a\u0637 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u0639\u0645\u0644 \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629")
+
+    def create_backup(self):
+        if self.busy:
+            return
+        srcs = [p for p in BACKUP_SOURCES if os.path.exists(p)]
+        if not srcs:
+            self.session.open(MessageBox, u"\u274c \u0645\u0627 \u0644\u06af\u064a\u062a \u0645\u0644\u0641\u0627\u062a \u0644\u0644\u0646\u0633\u062e.", MessageBox.TYPE_ERROR)
+            return
+        import datetime
+        stamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+        dest = os.path.join(self.base, "backup_%s.tar.gz" % stamp)
+        self.busy = True
+        self["status"].setText(u"\u062c\u0627\u0631\u064a \u0639\u0645\u0644 \u0627\u0644\u0646\u0633\u062e\u0629... \u0627\u0646\u062a\u0638\u0631 (backing up)")
+        cmd = "tar czf '%s' %s 2>&1" % (dest, " ".join(["'" + s + "'" for s in srcs]))
+        try:
+            self.console.ePopen(cmd, self._backup_done)
+        except Exception as e:
+            self.busy = False
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644:\n" + str(e), MessageBox.TYPE_ERROR)
+
+    def _backup_done(self, result, retval, extra_args=None):
+        self.busy = False
+        self.refresh()
+        if retval == 0:
+            self.session.open(MessageBox, u"\u2705 \u062a\u0645\u062a \u0627\u0644\u0646\u0633\u062e\u0629 \u0627\u0644\u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629 \u0628\u0646\u062c\u0627\u062d.\n\u062a\u0645 \u0627\u0644\u062d\u0641\u0638 \u0639\u0644\u0649 \u0627\u0644\u0647\u0627\u0631\u062f/\u0627\u0644\u0641\u0644\u0627\u0634.", MessageBox.TYPE_INFO, timeout=5)
+        else:
+            self.session.open(MessageBox, u"\u26a0 \u0627\u0646\u062a\u0647\u062a \u0627\u0644\u0646\u0633\u062e\u0629 \u0645\u0639 \u062a\u0646\u0628\u064a\u0647\u0627\u062a:\n" + (result or "")[-400:], MessageBox.TYPE_INFO)
+
+    def _selected_file(self):
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.files):
+            return None
+        return self.files[idx]
+
+    def delete_selected(self):
+        f = self._selected_file()
+        if not f:
+            self.session.open(MessageBox, u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u0633\u062e\u0629 \u0645\u062d\u062f\u062f\u0629.", MessageBox.TYPE_INFO)
+            return
+        self._to_del = f
+        self.session.openWithCallback(self._del_cb, MessageBox,
+            u"\u062d\u0630\u0641 \u0627\u0644\u0646\u0633\u062e\u0629:\n%s \u061f" % os.path.basename(f),
+            MessageBox.TYPE_YESNO)
+
+    def _del_cb(self, result):
+        if not result:
+            return
+        try:
+            os.remove(self._to_del)
+        except Exception:
+            pass
+        self.refresh()
+
+    def restore_selected(self):
+        if self.busy:
+            return
+        f = self._selected_file()
+        if not f:
+            self.session.open(MessageBox, u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u0633\u062e\u0629 \u0645\u062d\u062f\u062f\u0629 \u0644\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629.", MessageBox.TYPE_INFO)
+            return
+        self._to_restore = f
+        self.session.openWithCallback(self._restore_cb, MessageBox,
+            u"\u26a0 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0646\u0633\u062e\u0629:\n%s\n\n\u0631\u0627\u062d \u062a\u0633\u062a\u0628\u062f\u0644 \u0627\u0644\u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0627\u0644\u062d\u0627\u0644\u064a\u0629 \u0648\u062a\u062d\u062a\u0627\u062c \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629.\n\u0647\u0644 \u0623\u0646\u062a \u0645\u062a\u0623\u0643\u062f\u061f (Restore & restart GUI?)" % os.path.basename(f),
+            MessageBox.TYPE_YESNO)
+
+    def _restore_cb(self, result):
+        if not result:
+            return
+        self.busy = True
+        self["status"].setText(u"\u062c\u0627\u0631\u064a \u0627\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629... (restoring)")
+        cmd = "tar xzf '%s' -C / 2>&1" % self._to_restore
+        try:
+            self.console.ePopen(cmd, self._restore_done)
+        except Exception as e:
+            self.busy = False
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644:\n" + str(e), MessageBox.TYPE_ERROR)
+
+    def _restore_done(self, result, retval, extra_args=None):
+        self.busy = False
+        if retval == 0:
+            self.session.openWithCallback(self._after_restore, MessageBox,
+                u"\u2705 \u062a\u0645\u062a \u0627\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629.\n\u0633\u062a\u064f\u0639\u0627\u062f \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0622\u0646.",
+                MessageBox.TYPE_INFO, timeout=5)
+        else:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644\u062a \u0627\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629:\n" + (result or "")[-400:], MessageBox.TYPE_ERROR)
+
+    def _after_restore(self, *args):
+        try:
+            if TryQuitMainloop:
+                self.session.open(TryQuitMainloop, 3)
+            elif enigma:
+                enigma.quitMainloop(3)
+            else:
+                os.system("killall -9 enigma2")
+        except Exception:
+            try:
+                os.system("killall -9 enigma2")
+            except Exception:
+                pass
+
+
+# ---- Kids Mode (parental) helpers ----
+ENIGMA2_DIR = "/etc/enigma2"
+KIDS_BQ_FILE = os.path.join(ENIGMA2_DIR, "userbouquet.mskids.tv")
+KIDS_BQ_LINE = "#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET \"userbouquet.mskids.tv\" ORDER BY bouquet"
+BOUQUETS_TV = os.path.join(ENIGMA2_DIR, "bouquets.tv")
+BOUQUETS_BAK = os.path.join(ENIGMA2_DIR, "bouquets.tv.msori")
+
+
+def _kids_parse_all_channels():
+    """Return list of (service_line, name) for all TV channels in user bouquets."""
+    out = []
+    seen = set()
+    try:
+        with open(BOUQUETS_TV, "r") as f:
+            btxt = f.read()
+    except Exception:
+        return out
+    bqfiles = re.findall(r'FROM BOUQUET "([^"]+)"', btxt)
+    for bq in bqfiles:
+        if bq == "userbouquet.mskids.tv":
+            continue
+        path = os.path.join(ENIGMA2_DIR, bq)
+        try:
+            with open(path, "r") as f:
+                lines = f.read().split("\n")
+        except Exception:
+            continue
+        i = 0
+        while i < len(lines):
+            ln = lines[i].strip()
+            if ln.startswith("#SERVICE"):
+                sref = ln
+                parts = ln.split(":")
+                # skip markers / separators (type 64 etc.)
+                is_marker = False
+                try:
+                    if len(parts) > 1:
+                        tcode = parts[1].replace("#SERVICE", "").strip()
+                        if "64" in parts[1]:
+                            is_marker = True
+                except Exception:
+                    pass
+                name = ""
+                if i + 1 < len(lines) and lines[i + 1].strip().startswith("#DESCRIPTION"):
+                    name = lines[i + 1].strip()[12:].strip()
+                if not is_marker and sref not in seen and (":" in sref):
+                    seen.add(sref)
+                    if not name:
+                        name = sref.split(":")[-1] or u"\u0642\u0646\u0627\u0629"
+                    out.append((sref, name))
+            i += 1
+    return out
+
+
+def _kids_write_bouquet(allowed):
+    """allowed: list of (service_line, name). Writes the kids userbouquet."""
+    try:
+        buf = ["#NAME " + u"\u0627\u0637\u0641\u0627\u0644 (Kids)"]
+        for sref, name in allowed:
+            buf.append(sref)
+            buf.append("#DESCRIPTION " + name)
+        with open(KIDS_BQ_FILE, "w") as f:
+            f.write("\n".join(buf) + "\n")
+        return True
+    except Exception:
+        return False
+
+
+def _kids_reload_services():
+    try:
+        from enigma import eDVBDB
+        eDVBDB.getInstance().reloadBouquets()
+        return True
+    except Exception:
+        pass
+    try:
+        os.system("wget -q -O /dev/null 'http://127.0.0.1/web/servicelistreload?mode=2' 2>/dev/null")
+        return True
+    except Exception:
+        return False
+
+
+def _kids_enable(allowed):
+    if not _kids_write_bouquet(allowed):
+        return False
+    try:
+        # backup original bouquets.tv once
+        if not os.path.exists(BOUQUETS_BAK) and os.path.exists(BOUQUETS_TV):
+            import shutil
+            shutil.copy2(BOUQUETS_TV, BOUQUETS_BAK)
+        with open(BOUQUETS_TV, "w") as f:
+            f.write("#NAME Bouquets (TV)\n" + KIDS_BQ_LINE + "\n")
+        _kids_reload_services()
+        return True
+    except Exception:
+        return False
+
+
+def _kids_disable():
+    try:
+        if os.path.exists(BOUQUETS_BAK):
+            import shutil
+            shutil.copy2(BOUQUETS_BAK, BOUQUETS_TV)
+            try:
+                os.remove(BOUQUETS_BAK)
+            except Exception:
+                pass
+        _kids_reload_services()
+        return True
+    except Exception:
+        return False
+
+
+KIDS_RAW_SKIN = """<screen name="MS_KidsModeScreen" position="center,center" size="1100,700" title="Kids Mode">
+    <widget name="title" position="20,15" size="1060,50" font="Regular;32" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="state" position="20,100" size="1060,70" font="Regular;40" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="info" position="50,200" size="1000,360" font="Regular;27" halign="center" transparent="1" foregroundColor="#00cccccc"/>
+    <widget name="key_red" position="30,640" size="250,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="290,640" size="250,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="550,640" size="250,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="810,640" size="260,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+KIDS_SKIN = scale_skin_layout(KIDS_RAW_SKIN)
+
+KIDS_PICKER_RAW_SKIN = """<screen name="MS_KidsPickerScreen" position="center,center" size="1200,820" title="Kids Channels">
+    <widget name="title" position="20,12" size="1160,46" font="Regular;28" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="list" position="30,66" size="1140,660" font="Regular;26" itemHeight="44" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,736" size="1160,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,778" size="360,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="420,778" size="360,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="810,778" size="360,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+</screen>"""
+KIDS_PICKER_SKIN = scale_skin_layout(KIDS_PICKER_RAW_SKIN)
+
+
+class KidsModeScreen(Screen):
+    skin = KIDS_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001f9f8 \u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644 (Kids Mode)")
+        self["state"] = Label("")
+        self["info"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u062a\u0634\u063a\u064a\u0644/\u0625\u064a\u0642\u0627\u0641 (Toggle)")
+        self["key_yellow"] = Label(u"\u0627\u062e\u062a\u064a\u0627\u0631 \u0627\u0644\u0642\u0646\u0648\u0627\u062a (Channels)")
+        self["key_blue"] = Label(u"\u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u0633\u0631\u064a (PIN)")
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.toggle,
+            "red": self.close,
+            "green": self.toggle,
+            "yellow": self.manage_channels,
+            "blue": self.set_pin,
+        }, -1)
+        self.onLayoutFinish.append(self.refresh)
+
+    def _cfg(self):
+        return _load_json_cfg(KIDS_CONFIG, {})
+
+    def refresh(self):
+        c = self._cfg()
+        enabled = bool(c.get("enabled"))
+        allowed = c.get("allowed", [])
+        haspin = bool(c.get("pin"))
+        if enabled:
+            self["state"].setText(u"\U0001f7e2 \u0645\u064f\u0641\u0639\u0651\u0644 (ON)")
+        else:
+            self["state"].setText(u"\u26aa \u0645\u062a\u0648\u0642\u0651\u0641 (OFF)")
+        lines = []
+        lines.append(u"\u0639\u062f\u062f \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0645\u0633\u0645\u0648\u062d\u0629 \u0644\u0644\u0623\u0637\u0641\u0627\u0644: %d" % len(allowed))
+        lines.append(u"\u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u0633\u0631\u064a: %s" % (u"\u2705 \u0645\u0636\u0628\u0648\u0637" if haspin else u"\u274c \u063a\u064a\u0631 \u0645\u0636\u0628\u0648\u0637"))
+        lines.append(u"")
+        if enabled:
+            lines.append(u"\u2139 \u0627\u0644\u062c\u0647\u0627\u0632 \u064a\u0639\u0631\u0636 \u0627\u0644\u0622\u0646 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0623\u0637\u0641\u0627\u0644 \u0641\u0642\u0637.")
+            lines.append(u"\u0644\u0644\u0625\u064a\u0642\u0627\u0641 \u0648\u0625\u0631\u062c\u0627\u0639 \u0643\u0644 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u064a\u0644\u0632\u0645 \u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u0633\u0631\u064a.")
+        else:
+            lines.append(u"\u062e\u0637\u0648\u0627\u062a: 1) \u0627\u0636\u0628\u0637 \u0631\u0645\u0632 \u0633\u0631\u064a (\u0623\u0632\u0631\u0642)  2) \u0627\u062e\u062a\u0631 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0623\u0637\u0641\u0627\u0644 (\u0623\u0635\u0641\u0631)  3) \u0634\u063a\u0651\u0644 (\u0623\u062e\u0636\u0631)")
+        self["info"].setText(u"\n".join(lines))
+
+    # ---- PIN ----
+    def _ask_pin(self, cb, title):
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(cb, VirtualKeyBoard, title=title, text=u"")
+        except Exception:
+            try:
+                from Screens.InputBox import InputBox
+                self.session.openWithCallback(cb, InputBox, title=title, text=u"")
+            except Exception:
+                self.session.open(MessageBox, u"\u274c \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d \u063a\u064a\u0631 \u0645\u062a\u0648\u0641\u0631\u0629.", MessageBox.TYPE_ERROR)
+
+    def set_pin(self):
+        self._ask_pin(self._set_pin_cb, u"\u0627\u0643\u062a\u0628 \u0631\u0645\u0632 \u0633\u0631\u064a \u062c\u062f\u064a\u062f (4 \u0623\u0631\u0642\u0627\u0645):")
+
+    def _set_pin_cb(self, val):
+        if val is None:
+            return
+        val = (val or "").strip()
+        if not val.isdigit() or len(val) < 3:
+            self.session.open(MessageBox, u"\u274c \u0627\u0644\u0631\u0645\u0632 \u0644\u0627\u0632\u0645 \u064a\u0643\u0648\u0646 \u0623\u0631\u0642\u0627\u0645 (3+ \u062e\u0627\u0646\u0627\u062a).", MessageBox.TYPE_ERROR)
+            return
+        c = self._cfg()
+        c["pin"] = val
+        _save_json_cfg(KIDS_CONFIG, c)
+        self.refresh()
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u0636\u0628\u0637 \u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u0633\u0631\u064a.", MessageBox.TYPE_INFO, timeout=3)
+
+    def _verify_then(self, action):
+        c = self._cfg()
+        pin = c.get("pin", "")
+        if not pin:
+            action()
+            return
+        self._pending_action = action
+        self._ask_pin(self._verify_cb, u"\u0627\u062f\u062e\u0644 \u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u0633\u0631\u064a:")
+
+    def _verify_cb(self, val):
+        if val is None:
+            return
+        c = self._cfg()
+        if (val or "").strip() == c.get("pin", ""):
+            act = getattr(self, "_pending_action", None)
+            if act:
+                act()
+        else:
+            self.session.open(MessageBox, u"\u274c \u0627\u0644\u0631\u0645\u0632 \u063a\u0644\u0637.", MessageBox.TYPE_ERROR)
+
+    # ---- channels ----
+    def manage_channels(self):
+        self.session.openWithCallback(self._after_pick, KidsChannelPicker)
+
+    def _after_pick(self, *args):
+        self.refresh()
+
+    # ---- toggle ----
+    def toggle(self):
+        c = self._cfg()
+        if c.get("enabled"):
+            self._verify_then(self._do_disable)
+        else:
+            allowed = c.get("allowed", [])
+            if not allowed:
+                self.session.open(MessageBox, u"\u26a0 \u0627\u062e\u062a\u0631 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0623\u0637\u0641\u0627\u0644 \u0623\u0648\u0644\u0627\u064b (\u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u0635\u0641\u0631).", MessageBox.TYPE_WARNING)
+                return
+            self._verify_then(self._do_enable)
+
+    def _do_enable(self):
+        c = self._cfg()
+        allowed = [(x[0], x[1]) for x in c.get("allowed", [])]
+        if _kids_enable(allowed):
+            c["enabled"] = True
+            _save_json_cfg(KIDS_CONFIG, c)
+            self.refresh()
+            self.session.openWithCallback(self._apply_restart, MessageBox,
+                u"\u2705 \u062a\u0645 \u062a\u062c\u0647\u064a\u0632 \u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644.\n\u0644\u062a\u0637\u0628\u064a\u0642 \u0627\u0644\u062a\u063a\u064a\u064a\u0631 \u0644\u0627\u0632\u0645 \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0622\u0646.\n\u0623\u0639\u064a\u062f \u0627\u0644\u062a\u0634\u063a\u064a\u0644\u061f (Restart GUI now?)",
+                MessageBox.TYPE_YESNO)
+        else:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u062a\u0634\u063a\u064a\u0644.", MessageBox.TYPE_ERROR)
+
+    def _do_disable(self):
+        c = self._cfg()
+        if _kids_disable():
+            c["enabled"] = False
+            _save_json_cfg(KIDS_CONFIG, c)
+            self.refresh()
+            self.session.openWithCallback(self._apply_restart, MessageBox,
+                u"\u2705 \u062a\u0645 \u0625\u064a\u0642\u0627\u0641 \u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644.\n\u0644\u0625\u0631\u062c\u0627\u0639 \u0643\u0644 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0644\u0627\u0632\u0645 \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0622\u0646.\n\u0623\u0639\u064a\u062f \u0627\u0644\u062a\u0634\u063a\u064a\u0644\u061f (Restart GUI now?)",
+                MessageBox.TYPE_YESNO)
+        else:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u0625\u064a\u0642\u0627\u0641.", MessageBox.TYPE_ERROR)
+
+    def _apply_restart(self, result):
+        if not result:
+            return
+        try:
+            if TryQuitMainloop:
+                self.session.open(TryQuitMainloop, 3)
+            elif enigma:
+                enigma.quitMainloop(3)
+            else:
+                os.system("killall -9 enigma2")
+        except Exception:
+            try:
+                os.system("killall -9 enigma2")
+            except Exception:
+                pass
+
+
+class KidsChannelPicker(Screen):
+    skin = KIDS_PICKER_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\u2714 \u0627\u062e\u062a\u0631 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0623\u0637\u0641\u0627\u0644 (OK=\u062a\u062d\u062f\u064a\u062f)")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0625\u0644\u063a\u0627\u0621 (Cancel)")
+        self["key_green"] = Label(u"\u062d\u0641\u0638 (Save)")
+        self["key_yellow"] = Label(u"\u0645\u0633\u062d \u0627\u0644\u0643\u0644 (Clear)")
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.toggle_item,
+            "red": self.close,
+            "green": self.save,
+            "yellow": self.clear_all,
+        }, -1)
+        self.all_chs = []
+        self.sel = set()
+        self.onLayoutFinish.append(self.load)
+
+    def load(self):
+        self["status"].setText(u"\u062c\u0627\u0631\u064a \u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u0642\u0646\u0648\u0627\u062a...")
+        self.all_chs = _kids_parse_all_channels()
+        c = _load_json_cfg(KIDS_CONFIG, {})
+        saved = set()
+        for item in c.get("allowed", []):
+            try:
+                saved.add(item[0])
+            except Exception:
+                pass
+        self.sel = set()
+        for i, (sref, name) in enumerate(self.all_chs):
+            if sref in saved:
+                self.sel.add(i)
+        self._render()
+
+    def _render(self):
+        items = []
+        for i, (sref, name) in enumerate(self.all_chs):
+            mark = u"\u2611" if i in self.sel else u"\u2610"
+            items.append(u"%s  %s" % (mark, name))
+        if not items:
+            items = [u"\u2014 \u0644\u0627 \u062a\u0648\u062c\u062f \u0642\u0646\u0648\u0627\u062a (\u062a\u0623\u0643\u062f \u0645\u0646 \u0648\u062c\u0648\u062f \u0628\u0627\u0642\u0627\u062a)"]
+        idx = self["list"].getSelectionIndex() or 0
+        self["list"].setList(items)
+        try:
+            self["list"].moveToIndex(min(idx, max(0, len(items) - 1)))
+        except Exception:
+            pass
+        self["status"].setText(u"\u0627\u0644\u0645\u062d\u062f\u062f: %d / %d   |   OK=\u062a\u062d\u062f\u064a\u062f  \u0623\u062e\u0636\u0631=\u062d\u0641\u0638" % (len(self.sel), len(self.all_chs)))
+
+    def toggle_item(self):
+        if not self.all_chs:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.all_chs):
+            return
+        if idx in self.sel:
+            self.sel.discard(idx)
+        else:
+            self.sel.add(idx)
+        self._render()
+
+    def clear_all(self):
+        self.sel = set()
+        self._render()
+
+    def save(self):
+        allowed = [[self.all_chs[i][0], self.all_chs[i][1]] for i in sorted(self.sel)]
+        c = _load_json_cfg(KIDS_CONFIG, {})
+        c["allowed"] = allowed
+        _save_json_cfg(KIDS_CONFIG, c)
+        # if kids mode currently ON, rebuild bouquet live
+        if c.get("enabled"):
+            try:
+                _kids_enable([(a[0], a[1]) for a in allowed])
+            except Exception:
+                pass
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u062d\u0641\u0638 %d \u0642\u0646\u0627\u0629 \u0644\u0644\u0623\u0637\u0641\u0627\u0644." % len(allowed), MessageBox.TYPE_INFO, timeout=3)
+        self.close()
+
+
+# ---- Channel Organizer (bouquet editor) helpers ----
+
+def _org_bouquet_name(bqfile):
+    path = os.path.join(ENIGMA2_DIR, bqfile)
+    try:
+        with open(path, "r") as f:
+            first = f.readline().strip()
+        if first.startswith("#NAME"):
+            nm = first[5:].strip()
+            if nm:
+                return nm
+    except Exception:
+        pass
+    return bqfile
+
+
+def _org_read_bouquets():
+    """Return ordered list of dicts: {line, file, name}."""
+    out = []
+    try:
+        with open(BOUQUETS_TV, "r") as f:
+            txt = f.read()
+    except Exception:
+        return out
+    for ln in txt.split("\n"):
+        s = ln.strip()
+        if s.startswith("#SERVICE") and "FROM BOUQUET" in s:
+            m = re.search(r'FROM BOUQUET "([^"]+)"', s)
+            if not m:
+                continue
+            bqfile = m.group(1)
+            out.append({"line": s, "file": bqfile, "name": _org_bouquet_name(bqfile)})
+    return out
+
+
+def _org_write_bouquets_order(bouquets):
+    """bouquets: ordered list of dicts with 'line'. Rewrites bouquets.tv."""
+    try:
+        if not os.path.exists(BOUQUETS_BAK) and os.path.exists(BOUQUETS_TV):
+            import shutil
+            shutil.copy2(BOUQUETS_TV, BOUQUETS_TV + ".orgbak")
+        buf = ["#NAME Bouquets (TV)"]
+        for b in bouquets:
+            buf.append(b["line"])
+        with open(BOUQUETS_TV, "w") as f:
+            f.write("\n".join(buf) + "\n")
+        return True
+    except Exception:
+        return False
+
+
+def _org_service_name(srefline):
+    """Resolve the real display name of a service from enigma's channel DB
+    (lamedb). Used when the bouquet line has no #DESCRIPTION."""
+    ref = srefline
+    if ref.startswith("#SERVICE"):
+        ref = ref[len("#SERVICE"):].strip()
+    try:
+        from Components.ServiceReference import ServiceReference
+        nm = ServiceReference(ref).getServiceName()
+        if nm:
+            nm = nm.replace("\xc2\x86", "").replace("\xc2\x87", "").strip()
+            if nm:
+                return nm
+    except Exception:
+        pass
+    try:
+        from enigma import eServiceCenter, eServiceReference
+        r = eServiceReference(str(ref))
+        info = eServiceCenter.getInstance().info(r)
+        if info:
+            nm = info.getName(r)
+            if nm:
+                nm = nm.strip()
+                if nm:
+                    return nm
+    except Exception:
+        pass
+    return ""
+
+
+def _org_read_channels(bqfile):
+    """Return list of dicts: {raw, name, is_marker, sref}.
+    Each channel keeps its EXACT original line block (service line plus any
+    following #DESCRIPTION / extra lines) verbatim so writing back can never
+    corrupt the service references."""
+    out = []
+    path = os.path.join(ENIGMA2_DIR, bqfile)
+    try:
+        with open(path, "r") as f:
+            raw = f.read()
+    except Exception:
+        return out
+    lines = raw.split("\n")
+    blocks = []
+    cur = None
+    for ln in lines:
+        s = ln.rstrip("\r")
+        st = s.strip()
+        if st.startswith("#NAME"):
+            continue
+        if st.startswith("#SERVICE"):
+            if cur is not None:
+                blocks.append(cur)
+            cur = [s]
+        else:
+            if cur is not None and st != "":
+                cur.append(s)
+    if cur is not None:
+        blocks.append(cur)
+    for blk in blocks:
+        srefline = blk[0].strip()
+        parts = srefline.split(":")
+        is_marker = len(parts) > 1 and "64" in parts[1]
+        name = ""
+        for extra in blk[1:]:
+            es = extra.strip()
+            if es.startswith("#DESCRIPTION"):
+                name = es[12:].strip()
+                break
+        if not name and is_marker and "::" in srefline:
+            name = srefline.split("::", 1)[1].strip()
+        if not name and not is_marker:
+            name = _org_service_name(srefline)
+        if not name:
+            tail = srefline.split(":")[-1].strip()
+            if tail and not tail.replace(".", "").isdigit():
+                name = tail
+        if not name:
+            name = u"\u2015" if is_marker else u"\u0642\u0646\u0627\u0629"
+        out.append({"raw": "\n".join(blk), "name": name, "is_marker": is_marker, "sref": srefline})
+    return out
+
+
+def _org_write_channels(bqfile, channels, bqname):
+    """Rewrite bouquet keeping each channel's original raw block verbatim."""
+    try:
+        path = os.path.join(ENIGMA2_DIR, bqfile)
+        if os.path.exists(path):
+            import shutil
+            shutil.copy2(path, path + ".orgbak")
+        buf = ["#NAME " + bqname]
+        for ch in channels:
+            buf.append(ch["raw"])
+        with open(path, "w") as f:
+            f.write("\n".join(buf) + "\n")
+        return True
+    except Exception:
+        return False
+
+
+def _org_delete_bouquet(bqfile):
+    try:
+        path = os.path.join(ENIGMA2_DIR, bqfile)
+        if os.path.exists(path):
+            os.remove(path)
+        return True
+    except Exception:
+        return False
+
+
+ORG_RAW_SKIN = """<screen name="MS_ChannelOrganizer" position="center,center" size="1200,820" title="Channel Organizer">
+    <widget name="title" position="20,12" size="1160,46" font="Regular;28" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="list" position="30,66" size="1140,620" font="Regular;26" itemHeight="44" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,696" size="1160,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="20,740" size="285,36" font="Regular;21" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="315,740" size="285,36" font="Regular;21" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="610,740" size="285,36" font="Regular;21" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="905,740" size="275,36" font="Regular;21" halign="center" transparent="1" foregroundColor="#004080ff"/>
+    <widget name="hint" position="20,780" size="1160,32" font="Regular;20" halign="center" transparent="1" foregroundColor="#00888888"/>
+</screen>"""
+ORG_SKIN = scale_skin_layout(ORG_RAW_SKIN)
+
+
+def _org_create_bouquet(name):
+    """Create a new empty user bouquet and register it in bouquets.tv."""
+    try:
+        import time
+        slug = re.sub(r'[^a-zA-Z0-9]+', '', name).lower()
+        if not slug:
+            slug = "ms" + str(int(time.time()))
+        base = slug
+        fname = "userbouquet." + slug + ".tv"
+        path = os.path.join(ENIGMA2_DIR, fname)
+        i = 1
+        while os.path.exists(path):
+            slug = base + str(i)
+            fname = "userbouquet." + slug + ".tv"
+            path = os.path.join(ENIGMA2_DIR, fname)
+            i += 1
+        with open(path, "w") as f:
+            f.write("#NAME " + name + "\n")
+        line = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "%s" ORDER BY bouquet' % fname
+        bqs = _org_read_bouquets()
+        bqs.append({"line": line, "file": fname, "name": name})
+        _org_write_bouquets_order(bqs)
+        return True, fname
+    except Exception:
+        return False, ""
+
+
+def _org_backup_all():
+    """Copy bouquets.tv + all userbouquet*.tv to the plugin backup folder."""
+    try:
+        import glob
+        import shutil
+        if not os.path.isdir(ORG_BACKUP_DIR):
+            os.makedirs(ORG_BACKUP_DIR)
+        for f in glob.glob(os.path.join(ORG_BACKUP_DIR, "*")):
+            try:
+                os.remove(f)
+            except Exception:
+                pass
+        files = [BOUQUETS_TV]
+        files += glob.glob(os.path.join(ENIGMA2_DIR, "userbouquet.*.tv"))
+        files += glob.glob(os.path.join(ENIGMA2_DIR, "bouquets.*"))
+        n = 0
+        for f in files:
+            if os.path.isfile(f):
+                shutil.copy2(f, os.path.join(ORG_BACKUP_DIR, os.path.basename(f)))
+                n += 1
+        return True, n
+    except Exception:
+        return False, 0
+
+
+def _org_restore_all():
+    """Restore the files saved by _org_backup_all back to /etc/enigma2."""
+    try:
+        import glob
+        import shutil
+        if not os.path.isdir(ORG_BACKUP_DIR):
+            return False, 0
+        files = glob.glob(os.path.join(ORG_BACKUP_DIR, "*"))
+        if not files:
+            return False, 0
+        n = 0
+        for f in files:
+            if os.path.isfile(f):
+                shutil.copy2(f, os.path.join(ENIGMA2_DIR, os.path.basename(f)))
+                n += 1
+        return True, n
+    except Exception:
+        return False, 0
+
+
+def _org_ch_set_name(ch, newname):
+    """Rename a single channel by setting/replacing its #DESCRIPTION line only.
+    The service reference (first line) is never touched."""
+    lines = ch["raw"].split("\n")
+    out = [lines[0]]
+    had = False
+    for ln in lines[1:]:
+        if ln.strip().startswith("#DESCRIPTION"):
+            out.append("#DESCRIPTION " + newname)
+            had = True
+        else:
+            out.append(ln)
+    if not had:
+        out.insert(1, "#DESCRIPTION " + newname)
+    ch["raw"] = "\n".join(out)
+    ch["name"] = newname
+
+
+class ChannelOrganizerScreen(Screen):
+    skin = ORG_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001f5c3 \u0645\u0646\u0638\u0645 \u0627\u0644\u0642\u0646\u0648\u0627\u062a - \u0627\u0644\u0628\u0627\u0642\u0627\u062a (Bouquets)")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0633\u0645\u064a\u0629 (Rename)")
+        self["key_yellow"] = Label(u"\u0641\u0648\u0642 (Up)")
+        self["key_blue"] = Label(u"\u062a\u062d\u062a (Down)")
+        self["hint"] = Label(u"OK = \u0627\u0641\u062a\u062d \u0627\u0644\u0642\u0646\u0648\u0627\u062a   |   MENU = \u0639\u0645\u0644\u064a\u0627\u062a (\u0625\u0646\u0634\u0627\u0621/\u062d\u0630\u0641/\u0646\u0633\u062e/\u0627\u0633\u062a\u0639\u0627\u062f\u0629)")
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"], {
+            "cancel": self.exit,
+            "ok": self.open_bouquet,
+            "red": self.exit,
+            "green": self.rename_bouquet,
+            "yellow": self.move_up,
+            "blue": self.move_down,
+            "menu": self.open_ops,
+        }, -1)
+        self.bouquets = []
+        self.dirty = False
+        self.onLayoutFinish.append(self.load)
+
+    def load(self):
+        self.bouquets = _org_read_bouquets()
+        self._render()
+
+    def _render(self):
+        items = []
+        for i, b in enumerate(self.bouquets):
+            items.append(u"%2d.  %s" % (i + 1, b["name"]))
+        if not items:
+            items = [u"\u2014 \u0644\u0627 \u062a\u0648\u062c\u062f \u0628\u0627\u0642\u0627\u062a"]
+        idx = self["list"].getSelectionIndex() or 0
+        self["list"].setList(items)
+        try:
+            self["list"].moveToIndex(min(idx, max(0, len(items) - 1)))
+        except Exception:
+            pass
+        self["status"].setText(u"\u0639\u062f\u062f \u0627\u0644\u0628\u0627\u0642\u0627\u062a: %d   |   \u0627\u0644\u062a\u0631\u062a\u064a\u0628 \u0648\u0627\u0644\u062a\u0633\u0645\u064a\u0629 \u0648\u0627\u0644\u062d\u0630\u0641 \u064a\u064f\u062d\u0641\u0638 \u0641\u0648\u0631\u0627\u064b \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b" % len(self.bouquets))
+
+    def _cur(self):
+        if not self.bouquets:
+            return -1
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.bouquets):
+            return -1
+        return idx
+
+    def open_bouquet(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        b = self.bouquets[idx]
+        self.session.openWithCallback(self.load, BouquetChannelEditor, b["file"], b["name"])
+
+    def move_up(self):
+        idx = self._cur()
+        if idx <= 0:
+            return
+        self.bouquets[idx - 1], self.bouquets[idx] = self.bouquets[idx], self.bouquets[idx - 1]
+        self.dirty = True
+        if _org_write_bouquets_order(self.bouquets):
+            self._render()
+            try:
+                self["list"].moveToIndex(idx - 1)
+            except Exception:
+                pass
+
+    def move_down(self):
+        idx = self._cur()
+        if idx < 0 or idx >= len(self.bouquets) - 1:
+            return
+        self.bouquets[idx + 1], self.bouquets[idx] = self.bouquets[idx], self.bouquets[idx + 1]
+        self.dirty = True
+        if _org_write_bouquets_order(self.bouquets):
+            self._render()
+            try:
+                self["list"].moveToIndex(idx + 1)
+            except Exception:
+                pass
+
+    def rename_bouquet(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        self._ren_idx = idx
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(self._do_rename, VirtualKeyBoard, title=u"\u0627\u0633\u0645 \u0627\u0644\u0628\u0627\u0642\u0629 \u0627\u0644\u062c\u062f\u064a\u062f", text=self.bouquets[idx]["name"])
+        except Exception:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0631 \u0641\u062a\u062d \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d.", MessageBox.TYPE_ERROR)
+
+    def _do_rename(self, newname):
+        if not newname:
+            return
+        idx = getattr(self, "_ren_idx", -1)
+        if idx < 0 or idx >= len(self.bouquets):
+            return
+        b = self.bouquets[idx]
+        chans = _org_read_channels(b["file"])
+        if _org_write_channels(b["file"], chans, newname):
+            b["name"] = newname
+            try:
+                _kids_reload_services()
+            except Exception:
+                pass
+            self._render()
+            self.session.open(MessageBox, u"\u2705 \u062a\u0645\u062a \u0625\u0639\u0627\u062f\u0629 \u0627\u0644\u062a\u0633\u0645\u064a\u0629.", MessageBox.TYPE_INFO, timeout=3)
+        else:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u062d\u0641\u0638.", MessageBox.TYPE_ERROR)
+
+    def delete_bouquet(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        self._del_idx = idx
+        b = self.bouquets[idx]
+        self.session.openWithCallback(self._do_delete, MessageBox,
+            u"\u2757 \u062d\u0630\u0641 \u0627\u0644\u0628\u0627\u0642\u0629 \u0628\u0627\u0644\u0643\u0627\u0645\u0644\u061f\n%s\n(\u0644\u0627 \u064a\u0645\u0643\u0646 \u0627\u0644\u062a\u0631\u0627\u062c\u0639)" % b["name"],
+            MessageBox.TYPE_YESNO, default=False)
+
+    def _do_delete(self, confirmed):
+        if not confirmed:
+            return
+        idx = getattr(self, "_del_idx", -1)
+        if idx < 0 or idx >= len(self.bouquets):
+            return
+        b = self.bouquets[idx]
+        _org_delete_bouquet(b["file"])
+        del self.bouquets[idx]
+        _org_write_bouquets_order(self.bouquets)
+        self.dirty = True
+        try:
+            _kids_reload_services()
+        except Exception:
+            pass
+        self._render()
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u062d\u0630\u0641 \u0627\u0644\u0628\u0627\u0642\u0629.", MessageBox.TYPE_INFO, timeout=3)
+
+    def open_ops(self):
+        opts = [
+            (u"\u2795 \u0625\u0646\u0634\u0627\u0621 \u0628\u0627\u0642\u0629 \u062c\u062f\u064a\u062f\u0629 \u0641\u0627\u0636\u064a\u0629", "new"),
+            (u"\U0001f5d1 \u062d\u0630\u0641 \u0627\u0644\u0628\u0627\u0642\u0629 \u0627\u0644\u0645\u062d\u062f\u062f\u0629", "del"),
+            (u"\U0001f4be \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629 \u0633\u0631\u064a\u0639\u0629 (\u0643\u0644 \u0627\u0644\u0628\u0627\u0642\u0627\u062a)", "backup"),
+            (u"\u21a9 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0622\u062e\u0631 \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629", "restore"),
+        ]
+        self.session.openWithCallback(self._ops_cb, ChoiceBox, title=u"\u0639\u0645\u0644\u064a\u0627\u062a \u0627\u0644\u0628\u0627\u0642\u0627\u062a", list=opts)
+
+    def _ops_cb(self, choice):
+        if not choice:
+            return
+        key = choice[1]
+        if key == "new":
+            self.create_bouquet()
+        elif key == "del":
+            self.delete_bouquet()
+        elif key == "backup":
+            ok, n = _org_backup_all()
+            if ok:
+                self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u062d\u0641\u0638 \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629 \u0644\u0640 %d \u0645\u0644\u0641. \u062a\u0642\u062f\u0631 \u062a\u0631\u062c\u0639\u0644\u0647\u0627 \u0623\u064a \u0648\u0642\u062a." % n, MessageBox.TYPE_INFO, timeout=4)
+            else:
+                self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u0646\u0633\u062e \u0627\u0644\u0627\u062d\u062a\u064a\u0627\u0637\u064a.", MessageBox.TYPE_ERROR)
+        elif key == "restore":
+            self.session.openWithCallback(self._restore_cb, MessageBox,
+                u"\u21a9 \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0622\u062e\u0631 \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629\u061f\n\u0631\u0627\u062d \u062a\u0631\u062c\u0639 \u0643\u0644 \u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0645\u062b\u0644 \u0622\u062e\u0631 \u0646\u0633\u062e\u0629.",
+                MessageBox.TYPE_YESNO, default=False)
+
+    def _restore_cb(self, confirmed):
+        if not confirmed:
+            return
+        ok, n = _org_restore_all()
+        if ok:
+            try:
+                _kids_reload_services()
+            except Exception:
+                pass
+            self.load()
+            self.session.open(MessageBox, u"\u2705 \u062a\u0645\u062a \u0627\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629 (%d \u0645\u0644\u0641). \u0625\u0630\u0627 \u0645\u0627 \u0628\u0627\u0646\u062a\u060c \u0623\u0639\u062f \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629." % n, MessageBox.TYPE_INFO, timeout=4)
+        else:
+            self.session.open(MessageBox, u"\u26a0 \u0645\u0627\u0643\u0648 \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629 \u0645\u062d\u0641\u0648\u0638\u0629 \u0628\u0639\u062f.", MessageBox.TYPE_WARNING)
+
+    def create_bouquet(self):
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(self._create_cb, VirtualKeyBoard, title=u"\u0627\u0633\u0645 \u0627\u0644\u0628\u0627\u0642\u0629 \u0627\u0644\u062c\u062f\u064a\u062f\u0629", text=u"")
+        except Exception:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0631 \u0641\u062a\u062d \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d.", MessageBox.TYPE_ERROR)
+
+    def _create_cb(self, name):
+        if not name:
+            return
+        ok, fname = _org_create_bouquet(name)
+        if ok:
+            try:
+                _kids_reload_services()
+            except Exception:
+                pass
+            self.load()
+            self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u0625\u0646\u0634\u0627\u0621 \u0627\u0644\u0628\u0627\u0642\u0629 \u0627\u0644\u0641\u0627\u0636\u064a\u0629. \u0627\u0641\u062a\u062d\u0647\u0627 \u0648\u0627\u0636\u064a\u0641\u0644\u0647\u0627 \u0642\u0646\u0648\u0627\u062a.", MessageBox.TYPE_INFO, timeout=4)
+        else:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0625\u0646\u0634\u0627\u0621 \u0627\u0644\u0628\u0627\u0642\u0629.", MessageBox.TYPE_ERROR)
+
+    def exit(self):
+        try:
+            _kids_reload_services()
+        except Exception:
+            pass
+        self.close()
+
+
+class BouquetChannelEditor(Screen):
+    skin = ORG_SKIN
+
+    def __init__(self, session, bqfile, bqname):
+        Screen.__init__(self, session)
+        self.bqfile = bqfile
+        self.bqname = bqname
+        self["title"] = Label(u"\U0001f4fa %s" % bqname)
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u062d\u0641\u0638 (Save)")
+        self["key_yellow"] = Label(u"\u0641\u0648\u0642 (Up)")
+        self["key_blue"] = Label(u"\u062a\u062d\u062a (Down)")
+        self["hint"] = Label(u"OK = \u0639\u0645\u0644\u064a\u0627\u062a \u0627\u0644\u0642\u0646\u0627\u0629 (\u062a\u0633\u0645\u064a\u0629/\u0646\u0642\u0644/\u0625\u062e\u0641\u0627\u0621/\u062d\u0630\u0641)   |   MENU = \u0625\u0636\u0627\u0641\u0629 \u0642\u0646\u0627\u0629")
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"], {
+            "cancel": self.exit,
+            "ok": self.open_ch_ops,
+            "red": self.exit,
+            "green": self.save,
+            "yellow": self.move_up,
+            "blue": self.move_down,
+            "menu": self.add_channel,
+        }, -1)
+        self.channels = []
+        self.dirty = False
+        self.onLayoutFinish.append(self.load)
+
+    def noop(self):
+        pass
+
+    def load(self):
+        self.channels = _org_read_channels(self.bqfile)
+        self._render()
+
+    def _render(self):
+        items = []
+        for i, ch in enumerate(self.channels):
+            if ch.get("is_marker"):
+                items.append(u"   \u2015 %s \u2015" % ch["name"])
+            else:
+                items.append(u"%3d.  %s" % (i + 1, ch["name"]))
+        if not items:
+            items = [u"\u2014 \u0644\u0627 \u062a\u0648\u062c\u062f \u0642\u0646\u0648\u0627\u062a"]
+        idx = self["list"].getSelectionIndex() or 0
+        self["list"].setList(items)
+        try:
+            self["list"].moveToIndex(min(idx, max(0, len(items) - 1)))
+        except Exception:
+            pass
+        d = u" *" if self.dirty else u""
+        self["status"].setText(u"\u0639\u062f\u062f \u0627\u0644\u0642\u0646\u0648\u0627\u062a: %d%s   |   \u0623\u0635\u0641\u0631=\u0641\u0648\u0642  \u0623\u0632\u0631\u0642=\u062a\u062d\u062a  \u0623\u062e\u0636\u0631=\u062d\u0641\u0638" % (len(self.channels), d))
+
+    def _cur(self):
+        if not self.channels:
+            return -1
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.channels):
+            return -1
+        return idx
+
+    def move_up(self):
+        idx = self._cur()
+        if idx <= 0:
+            return
+        self.channels[idx - 1], self.channels[idx] = self.channels[idx], self.channels[idx - 1]
+        self.dirty = True
+        self._render()
+        try:
+            self["list"].moveToIndex(idx - 1)
+        except Exception:
+            pass
+
+    def move_down(self):
+        idx = self._cur()
+        if idx < 0 or idx >= len(self.channels) - 1:
+            return
+        self.channels[idx + 1], self.channels[idx] = self.channels[idx], self.channels[idx + 1]
+        self.dirty = True
+        self._render()
+        try:
+            self["list"].moveToIndex(idx + 1)
+        except Exception:
+            pass
+
+    def delete_channel(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        self._del_idx = idx
+        ch = self.channels[idx]
+        self.session.openWithCallback(self._do_delete, MessageBox,
+            u"\u062d\u0630\u0641 \u0645\u0646 \u0627\u0644\u0628\u0627\u0642\u0629\u061f\n%s" % ch["name"],
+            MessageBox.TYPE_YESNO, default=False)
+
+    def _do_delete(self, confirmed):
+        if not confirmed:
+            return
+        idx = getattr(self, "_del_idx", -1)
+        if idx < 0 or idx >= len(self.channels):
+            return
+        del self.channels[idx]
+        self.dirty = True
+        self._render()
+
+    def open_ch_ops(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        ch = self.channels[idx]
+        if ch.get("is_marker"):
+            opts = [
+                (u"\U0001f5d1 \u062d\u0630\u0641 \u0627\u0644\u0641\u0627\u0635\u0644", "del"),
+                (u"\u270f \u0625\u0639\u0627\u062f\u0629 \u062a\u0633\u0645\u064a\u0629", "rename"),
+            ]
+        else:
+            opts = [
+                (u"\u270f \u0625\u0639\u0627\u062f\u0629 \u062a\u0633\u0645\u064a\u0629 \u0627\u0644\u0642\u0646\u0627\u0629", "rename"),
+                (u"\u27a1 \u0646\u0642\u0644 \u0627\u0644\u0642\u0646\u0627\u0629 \u0625\u0644\u0649 \u0628\u0627\u0642\u0629 \u0623\u062e\u0631\u0649", "move"),
+                (u"\U0001f441 \u0625\u062e\u0641\u0627\u0621 \u0627\u0644\u0642\u0646\u0627\u0629 (\u0628\u062f\u0648\u0646 \u062d\u0630\u0641)", "hide"),
+                (u"\U0001f5d1 \u062d\u0630\u0641 \u0627\u0644\u0642\u0646\u0627\u0629", "del"),
+                (u"\u267b \u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0645\u062e\u0641\u064a\u0629", "unhide"),
+            ]
+        self.session.openWithCallback(self._ch_ops_cb, ChoiceBox, title=ch["name"], list=opts)
+
+    def _ch_ops_cb(self, choice):
+        if not choice:
+            return
+        key = choice[1]
+        if key == "del":
+            self.delete_channel()
+        elif key == "rename":
+            self.rename_channel()
+        elif key == "move":
+            self.move_to_bouquet()
+        elif key == "hide":
+            self.hide_channel()
+        elif key == "unhide":
+            self.show_hidden()
+
+    def rename_channel(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        self._ren_idx = idx
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(self._rename_ch_cb, VirtualKeyBoard, title=u"\u0627\u0633\u0645 \u0627\u0644\u0642\u0646\u0627\u0629 \u0627\u0644\u062c\u062f\u064a\u062f", text=self.channels[idx]["name"])
+        except Exception:
+            self.session.open(MessageBox, u"\u062a\u0639\u0630\u0631 \u0641\u062a\u062d \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d.", MessageBox.TYPE_ERROR)
+
+    def _rename_ch_cb(self, newname):
+        if not newname:
+            return
+        idx = getattr(self, "_ren_idx", -1)
+        if idx < 0 or idx >= len(self.channels):
+            return
+        _org_ch_set_name(self.channels[idx], newname)
+        self.dirty = True
+        self._render()
+
+    def move_to_bouquet(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        self._mv_idx = idx
+        others = [b for b in _org_read_bouquets() if b["file"] != self.bqfile]
+        if not others:
+            self.session.open(MessageBox, u"\u0645\u0627\u0643\u0648 \u0628\u0627\u0642\u0627\u062a \u0623\u062e\u0631\u0649 \u0644\u0644\u0646\u0642\u0644 \u0625\u0644\u064a\u0647\u0627.", MessageBox.TYPE_INFO)
+            return
+        self._mv_targets = others
+        opts = [(b["name"], str(i)) for i, b in enumerate(others)]
+        self.session.openWithCallback(self._move_cb, ChoiceBox, title=u"\u0627\u0646\u0642\u0644 \u0625\u0644\u0649 \u0623\u064a \u0628\u0627\u0642\u0629\u061f", list=opts)
+
+    def _move_cb(self, choice):
+        if not choice:
+            return
+        idx = getattr(self, "_mv_idx", -1)
+        if idx < 0 or idx >= len(self.channels):
+            return
+        try:
+            tgt = self._mv_targets[int(choice[1])]
+        except Exception:
+            return
+        ch = self.channels[idx]
+        tch = _org_read_channels(tgt["file"])
+        tch.append(ch)
+        if not _org_write_channels(tgt["file"], tch, tgt["name"]):
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u0646\u0642\u0644.", MessageBox.TYPE_ERROR)
+            return
+        del self.channels[idx]
+        _org_write_channels(self.bqfile, self.channels, self.bqname)
+        self.dirty = False
+        try:
+            _kids_reload_services()
+        except Exception:
+            pass
+        self._render()
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u0646\u0642\u0644 \u0627\u0644\u0642\u0646\u0627\u0629 \u0625\u0644\u0649: %s" % tgt["name"], MessageBox.TYPE_INFO, timeout=3)
+
+    def add_channel(self):
+        others = _org_read_bouquets()
+        if not others:
+            self.session.open(MessageBox, u"\u0645\u0627\u0643\u0648 \u0628\u0627\u0642\u0627\u062a \u0644\u0644\u0627\u062e\u062a\u064a\u0627\u0631 \u0645\u0646\u0647\u0627.", MessageBox.TYPE_INFO)
+            return
+        self._add_srcs = others
+        opts = [(b["name"], str(i)) for i, b in enumerate(others)]
+        self.session.openWithCallback(self._add_src_cb, ChoiceBox, title=u"\u0623\u0636\u0641 \u0642\u0646\u0627\u0629 \u0645\u0646 \u0623\u064a \u0628\u0627\u0642\u0629\u061f", list=opts)
+
+    def _add_src_cb(self, choice):
+        if not choice:
+            return
+        try:
+            src = self._add_srcs[int(choice[1])]
+        except Exception:
+            return
+        srcchans = [c for c in _org_read_channels(src["file"]) if not c.get("is_marker")]
+        if not srcchans:
+            self.session.open(MessageBox, u"\u0627\u0644\u0628\u0627\u0642\u0629 \u0641\u0627\u0636\u064a\u0629.", MessageBox.TYPE_INFO)
+            return
+        self._add_pool = srcchans
+        opts = [(c["name"], str(i)) for i, c in enumerate(srcchans)]
+        self.session.openWithCallback(self._add_ch_cb, ChoiceBox, title=u"\u0627\u062e\u062a\u0631 \u0627\u0644\u0642\u0646\u0627\u0629 \u0644\u0644\u0625\u0636\u0627\u0641\u0629", list=opts)
+
+    def _add_ch_cb(self, choice):
+        if not choice:
+            return
+        try:
+            ch = self._add_pool[int(choice[1])]
+        except Exception:
+            return
+        self.channels.append(dict(ch))
+        self.dirty = True
+        self._render()
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645\u062a \u0627\u0644\u0625\u0636\u0627\u0641\u0629. \u0627\u0636\u063a\u0637 \u0623\u062e\u0636\u0631=\u062d\u0641\u0638 \u0644\u0644\u062a\u062b\u0628\u064a\u062a.", MessageBox.TYPE_INFO, timeout=3)
+
+    def hide_channel(self):
+        idx = self._cur()
+        if idx < 0:
+            return
+        ch = self.channels[idx]
+        cfg = _load_json_cfg(ORG_HIDDEN_CONFIG, {})
+        lst = cfg.get(self.bqfile, [])
+        lst.append({"raw": ch["raw"], "name": ch["name"]})
+        cfg[self.bqfile] = lst
+        _save_json_cfg(ORG_HIDDEN_CONFIG, cfg)
+        del self.channels[idx]
+        self.dirty = True
+        self._render()
+        self.session.open(MessageBox, u"\U0001f441 \u062a\u0645 \u0625\u062e\u0641\u0627\u0621 \u0627\u0644\u0642\u0646\u0627\u0629 (\u062a\u0642\u062f\u0631 \u062a\u0631\u062c\u0639\u0647\u0627 \u0645\u0646 \u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0645\u062e\u0641\u064a\u0629). \u0627\u062d\u0641\u0638 \u0628\u0627\u0644\u0623\u062e\u0636\u0631.", MessageBox.TYPE_INFO, timeout=4)
+
+    def show_hidden(self):
+        cfg = _load_json_cfg(ORG_HIDDEN_CONFIG, {})
+        lst = cfg.get(self.bqfile, [])
+        if not lst:
+            self.session.open(MessageBox, u"\u0645\u0627\u0643\u0648 \u0642\u0646\u0648\u0627\u062a \u0645\u062e\u0641\u064a\u0629 \u0628\u0647\u0627\u064a \u0627\u0644\u0628\u0627\u0642\u0629.", MessageBox.TYPE_INFO)
+            return
+        self._hidden_list = lst
+        opts = [(c.get("name", u"\u0642\u0646\u0627\u0629"), str(i)) for i, c in enumerate(lst)]
+        self.session.openWithCallback(self._unhide_cb, ChoiceBox, title=u"\u0627\u062e\u062a\u0631 \u0642\u0646\u0627\u0629 \u0644\u0625\u0638\u0647\u0627\u0631\u0647\u0627", list=opts)
+
+    def _unhide_cb(self, choice):
+        if not choice:
+            return
+        try:
+            i = int(choice[1])
+            item = self._hidden_list[i]
+        except Exception:
+            return
+        self.channels.append({"raw": item["raw"], "name": item.get("name", u"\u0642\u0646\u0627\u0629"), "is_marker": False, "sref": item["raw"].split("\n")[0].strip()})
+        cfg = _load_json_cfg(ORG_HIDDEN_CONFIG, {})
+        lst = cfg.get(self.bqfile, [])
+        try:
+            del lst[i]
+        except Exception:
+            pass
+        cfg[self.bqfile] = lst
+        _save_json_cfg(ORG_HIDDEN_CONFIG, cfg)
+        self.dirty = True
+        self._render()
+        self.session.open(MessageBox, u"\u267b \u062a\u0645 \u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0642\u0646\u0627\u0629. \u0627\u062d\u0641\u0638 \u0628\u0627\u0644\u0623\u062e\u0636\u0631.", MessageBox.TYPE_INFO, timeout=3)
+
+    def save(self):
+        if _org_write_channels(self.bqfile, self.channels, self.bqname):
+            self.dirty = False
+            try:
+                _kids_reload_services()
+            except Exception:
+                pass
+            self._render()
+            self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u062d\u0641\u0638 \u0627\u0644\u062a\u0631\u062a\u064a\u0628.", MessageBox.TYPE_INFO, timeout=3)
+        else:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u062d\u0641\u0638.", MessageBox.TYPE_ERROR)
+
+    def exit(self):
+        if self.dirty:
+            self.session.openWithCallback(self._exit_cb, MessageBox,
+                u"\u062a\u0648\u062c\u062f \u062a\u063a\u064a\u064a\u0631\u0627\u062a \u063a\u064a\u0631 \u0645\u062d\u0641\u0648\u0638\u0629. \u062d\u0641\u0638 \u0642\u0628\u0644 \u0627\u0644\u062e\u0631\u0648\u062c\u061f",
+                MessageBox.TYPE_YESNO, default=True)
+        else:
+            self.close()
+
+    def _exit_cb(self, yes):
+        if yes:
+            self.save()
+        self.close()
+
+
+class SubscriptionScreen(Screen):
+    skin = SUBSCRIPTION_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\u23f3 \u0639\u062f\u0627\u062f \u0627\u0646\u062a\u0647\u0627\u0621 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 (Subscription Countdown)")
+        self["bigdays"] = Label("--")
+        self["status"] = Label("")
+        self["info"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u0625\u062f\u062e\u0627\u0644 \u064a\u062f\u0648\u064a (Manual)")
+        self["key_yellow"] = Label(u"\u062d\u0630\u0641 (Clear)")
+        self["key_blue"] = Label(u"\u0642\u0631\u0627\u0621\u0629 \u062a\u0644\u0642\u0627\u0626\u064a\u0629 (Auto)")
+        self.ms_detecting = False
+        self.ms_detect_timer = eTimer()
+        try:
+            self.ms_detect_timer.callback.append(self._auto_detect_done)
+        except Exception:
+            self.ms_detect_timer_conn = self.ms_detect_timer.timeout.connect(self._auto_detect_done)
+        self.ms_detect_result = None
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.auto_detect,
+            "red": self.close,
+            "green": self.set_sub,
+            "yellow": self.clear_sub,
+            "blue": self.auto_detect,
+        }, -1)
+        self.onLayoutFinish.append(self.on_open)
+
+    def on_open(self):
+        data = _load_json_cfg(SUBSCRIPTION_CONFIG, {})
+        if not data or not data.get("expiry"):
+            self.auto_detect()
+        else:
+            self.refresh()
+
+    def auto_detect(self):
+        if self.ms_detecting:
+            return
+        self.ms_detecting = True
+        self.ms_detect_result = None
+        self["status"].setText(u"\u062c\u0627\u0631\u064a \u0642\u0631\u0627\u0621\u0629 \u062a\u0627\u0631\u064a\u062e \u0627\u0646\u062a\u0647\u0627\u0621 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 \u0645\u0646 OSCam/NCam... \u0627\u0646\u062a\u0638\u0631 \u0644\u062d\u0638\u0629 (reading...)")
+        self["info"].setText(u"")
+
+        def worker():
+            try:
+                self.ms_detect_result = detect_subscription_expiry()
+            except Exception:
+                self.ms_detect_result = (None, "notfound")
+            try:
+                self.ms_detect_timer.start(50, True)
+            except Exception:
+                pass
+        try:
+            import threading
+            t = threading.Thread(target=worker)
+            t.setDaemon(True)
+            t.start()
+        except Exception:
+            worker()
+
+    def _auto_detect_done(self):
+        self.ms_detecting = False
+        res = self.ms_detect_result or (None, "notfound")
+        d, source = res
+        if d:
+            data = _load_json_cfg(SUBSCRIPTION_CONFIG, {})
+            data["expiry"] = d.strftime("%Y-%m-%d")
+            data["source"] = source
+            if not data.get("start"):
+                import datetime
+                data["start"] = datetime.date.today().strftime("%Y-%m-%d")
+            _save_json_cfg(SUBSCRIPTION_CONFIG, data)
+            self.refresh()
+        else:
+            data = _load_json_cfg(SUBSCRIPTION_CONFIG, {})
+            if data and data.get("expiry"):
+                self.refresh()
+                self["info"].setText(self["info"].getText() + u"\n\n\u26a0 \u062a\u0639\u0630\u0651\u0631\u062a \u0627\u0644\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062a\u0644\u0642\u0627\u0626\u064a\u0629 \u0627\u0644\u0622\u0646 \u2014 \u0639\u0631\u0636\u062a \u0627\u0644\u0642\u064a\u0645\u0629 \u0627\u0644\u0645\u062d\u0641\u0648\u0638\u0629.")
+            else:
+                self["bigdays"].setText("--")
+                self["status"].setText(u"\u0644\u0645 \u0623\u0639\u062b\u0631 \u0639\u0644\u0649 \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0627\u0646\u062a\u0647\u0627\u0621 \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b (Not found)")
+                self["info"].setText(u"\u062a\u0639\u0630\u0651\u0631 \u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062a\u0627\u0631\u064a\u062e \u0645\u0646 \u0627\u0644\u0633\u064a\u0631\u0641\u0631.\n\u0627\u0636\u063a\u0637 \u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u0625\u062f\u062e\u0627\u0644 \u0627\u0644\u0645\u062f\u0629 \u064a\u062f\u0648\u064a\u0627\u064b.\n(Auto-read failed. Press GREEN to set it manually.)")
+
+    def refresh(self):
+        import datetime
+        data = _load_json_cfg(SUBSCRIPTION_CONFIG, {})
+        if not data or not data.get("expiry"):
+            self["bigdays"].setText("--")
+            self["status"].setText(u"\u0644\u0627 \u064a\u0648\u062c\u062f \u0627\u0634\u062a\u0631\u0627\u0643 \u0645\u064f\u0633\u062c\u0651\u0644 (No subscription set)")
+            self["info"].setText(u"\u0627\u0636\u063a\u0637 \u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u0632\u0631\u0642 \u0644\u0644\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062a\u0644\u0642\u0627\u0626\u064a\u0629 \u0645\u0646 OSCam/NCam\u060c \u0623\u0648 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u0644\u0625\u062f\u062e\u0627\u0644 \u0627\u0644\u064a\u062f\u0648\u064a.\n(BLUE = auto-read, GREEN = manual.)")
+            return
+        try:
+            exp = datetime.datetime.strptime(data["expiry"], "%Y-%m-%d").date()
+        except Exception:
+            self["status"].setText(u"\u062a\u0627\u0631\u064a\u062e \u063a\u064a\u0631 \u0635\u0627\u0644\u062d (Invalid date)")
+            return
+        today = datetime.date.today()
+        days = (exp - today).days
+        name = data.get("name", "")
+        if days > 0:
+            self["bigdays"].setText(str(days))
+            self["status"].setText(u"\u064a\u0648\u0645 \u0645\u062a\u0628\u0642\u064d \u0639\u0644\u0649 \u0627\u0646\u062a\u0647\u0627\u0621 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 (days left)")
+        elif days == 0:
+            self["bigdays"].setText("0")
+            self["status"].setText(u"\u26a0 \u064a\u0646\u062a\u0647\u064a \u0627\u0644\u064a\u0648\u0645! (Expires today!)")
+        else:
+            self["bigdays"].setText("-" + str(abs(days)))
+            self["status"].setText(u"\u274c \u0627\u0646\u062a\u0647\u0649 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 (Subscription expired)")
+        lines = []
+        if name:
+            lines.append(u"\U0001f464 %s" % name)
+        lines.append(u"\U0001f4c5 \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0627\u0646\u062a\u0647\u0627\u0621: %s" % data.get("expiry", ""))
+        if data.get("start"):
+            lines.append(u"\u25b6 \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0628\u062f\u0621: %s" % data.get("start"))
+        src = data.get("source", "")
+        if src == "config":
+            lines.append(u"\U0001f501 \u0627\u0644\u0645\u0635\u062f\u0631: \u0642\u0631\u0627\u0621\u0629 \u062a\u0644\u0642\u0627\u0626\u064a\u0629 \u0645\u0646 \u0645\u0644\u0641\u0627\u062a OSCam/NCam")
+        elif src == "webif":
+            lines.append(u"\U0001f501 \u0627\u0644\u0645\u0635\u062f\u0631: \u0642\u0631\u0627\u0621\u0629 \u062a\u0644\u0642\u0627\u0626\u064a\u0629 \u0645\u0646 \u0648\u0627\u062c\u0647\u0629 OSCam \u0627\u0644\u0648\u064a\u0628")
+        elif src == "manual":
+            lines.append(u"\u270b \u0627\u0644\u0645\u0635\u062f\u0631: \u0625\u062f\u062e\u0627\u0644 \u064a\u062f\u0648\u064a")
+        if days > 0 and days <= 7:
+            lines.append(u"\n\u26a0 \u062a\u0646\u0628\u064a\u0647: \u0627\u0642\u062a\u0631\u0628 \u0645\u0648\u0639\u062f \u0627\u0644\u062a\u062c\u062f\u064a\u062f!")
+        self["info"].setText(u"\n".join(lines))
+
+    def set_sub(self):
+        choices = [
+            (u"\u0623\u0633\u0628\u0648\u0639 (7 days)", 7),
+            (u"\u0623\u0633\u0628\u0648\u0639\u0627\u0646 (14 days)", 14),
+            (u"\u0634\u0647\u0631 (30 days)", 30),
+            (u"\u0634\u0647\u0631\u0627\u0646 (60 days)", 60),
+            (u"3 \u0623\u0634\u0647\u0631 (90 days)", 90),
+            (u"6 \u0623\u0634\u0647\u0631 (180 days)", 180),
+            (u"\u0633\u0646\u0629 (365 days)", 365),
+        ]
+        self.session.openWithCallback(self._set_sub_cb, ChoiceBox,
+            title=u"\u0627\u062e\u062a\u0631 \u0645\u062f\u0629 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 (choose duration):", list=choices)
+
+    def _set_sub_cb(self, answer):
+        if not answer:
+            return
+        import datetime
+        days = int(answer[1])
+        today = datetime.date.today()
+        exp = today + datetime.timedelta(days=days)
+        data = _load_json_cfg(SUBSCRIPTION_CONFIG, {})
+        data["start"] = today.strftime("%Y-%m-%d")
+        data["expiry"] = exp.strftime("%Y-%m-%d")
+        data["days"] = days
+        data["source"] = "manual"
+        _save_json_cfg(SUBSCRIPTION_CONFIG, data)
+        self.refresh()
+        self.session.open(MessageBox,
+            u"\u2705 \u062a\u0645 \u0636\u0628\u0637 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 \u062d\u062a\u0649:\n%s" % data["expiry"],
+            MessageBox.TYPE_INFO)
+
+    def clear_sub(self):
+        if not os.path.exists(SUBSCRIPTION_CONFIG):
+            self.session.open(MessageBox, u"\u0644\u0627 \u064a\u0648\u062c\u062f \u0627\u0634\u062a\u0631\u0627\u0643 \u0644\u0644\u062d\u0630\u0641.", MessageBox.TYPE_INFO)
+            return
+        self.session.openWithCallback(self._clear_cb, MessageBox,
+            u"\u062d\u0630\u0641 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 \u0627\u0644\u0645\u064f\u0633\u062c\u0651\u0644\u061f (Clear saved subscription?)",
+            MessageBox.TYPE_YESNO)
+
+    def _clear_cb(self, result):
+        if not result:
+            return
+        try:
+            if os.path.exists(SUBSCRIPTION_CONFIG):
+                os.remove(SUBSCRIPTION_CONFIG)
+        except Exception:
+            pass
+        self.refresh()
+
+
+# ---- Match reminders management skin ----
+MATCH_REMINDERS_RAW_SKIN = """<screen name="MS_MatchRemindersScreen" position="center,center" size="1200,780" title="Match Reminders">
+    <widget name="title" position="20,15" size="1160,50" font="Regular;32" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="list" position="30,80" size="1140,560" font="Regular;27" itemHeight="56" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,650" size="1160,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,715" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="320,715" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="610,715" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="900,715" size="270,40" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+MATCH_REMINDERS_SKIN = scale_skin_layout(MATCH_REMINDERS_RAW_SKIN)
+
+
+class MatchRemindersScreen(Screen):
+    skin = MATCH_REMINDERS_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\u23f0 \u0625\u062f\u0627\u0631\u0629 \u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a (Match Reminders)")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u0625\u0636\u0627\u0641\u0629 \u062a\u0630\u0643\u064a\u0631 (Add)")
+        self["key_yellow"] = Label(u"\u062d\u0630\u0641 (Delete)")
+        self["key_blue"] = Label(u"\u062d\u0630\u0641 \u0627\u0644\u0643\u0644 (Clear all)")
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.delete_selected,
+            "red": self.close,
+            "green": self.open_matches,
+            "yellow": self.delete_selected,
+            "blue": self.clear_all,
+        }, -1)
+        self.rem_items = []
+        self.onLayoutFinish.append(self.refresh)
+
+    def refresh(self):
+        import datetime
+        lst = _load_reminders()
+        now = time.time()
+        # keep upcoming (and recently started) reminders, sorted by time
+        items = [r for r in lst if float(r.get("match_ts", 0)) > now - 600]
+        items.sort(key=lambda r: float(r.get("notify_ts", 0)))
+        self.rem_items = items
+        display = []
+        for r in items:
+            try:
+                w = datetime.datetime.fromtimestamp(float(r["notify_ts"])).strftime("%d/%m %H:%M")
+            except Exception:
+                w = "?"
+            lead = int(r.get("lead", 0))
+            if lead == 0:
+                leadtxt = u"\u0639\u0646\u062f \u0627\u0644\u0628\u062f\u0627\u064a\u0629"
+            else:
+                leadtxt = u"\u0642\u0628\u0644 %d \u062f\u0642\u064a\u0642\u0629" % lead
+            comp = r.get("comp", "")
+            comptxt = (u" \u2022 %s" % comp) if comp else u""
+            label = u"\u26bd %s  (%s)%s\n   \U0001f514 \u062a\u0646\u0628\u064a\u0647: %s  \u2014  %s" % (
+                r.get("team", ""), r.get("time", ""), comptxt, w, leadtxt)
+            display.append(label)
+        self["list"].setList(display)
+        if items:
+            self["status"].setText(u"\u0639\u062f\u062f \u0627\u0644\u062a\u0630\u0643\u064a\u0631\u0627\u062a: %d  \u2014  OK/\u0623\u0635\u0641\u0631 = \u062d\u0630\u0641\u060c \u0623\u062e\u0636\u0631 = \u0625\u0636\u0627\u0641\u0629 \u0645\u0646 \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a" % len(items))
+        else:
+            self["status"].setText(u"\u0644\u0627 \u062a\u0648\u062c\u062f \u062a\u0630\u0643\u064a\u0631\u0627\u062a \u2014 \u0627\u0636\u063a\u0637 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u0625\u0636\u0627\u0641\u0629 \u062a\u0630\u0643\u064a\u0631 \u0645\u0646 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a")
+
+    def delete_selected(self):
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.rem_items):
+            self.session.open(MessageBox, u"\u0644\u0627 \u064a\u0648\u062c\u062f \u062a\u0630\u0643\u064a\u0631 \u0645\u062d\u062f\u062f (Nothing selected)", MessageBox.TYPE_INFO)
+            return
+        self._to_delete = self.rem_items[idx]
+        self.session.openWithCallback(self._del_cb, MessageBox,
+            u"\u062d\u0630\u0641 \u0627\u0644\u062a\u0630\u0643\u064a\u0631:\n\u26bd %s (%s) \u061f" % (
+                self._to_delete.get("team", ""), self._to_delete.get("time", "")),
+            MessageBox.TYPE_YESNO)
+
+    def _del_cb(self, result):
+        if not result or not getattr(self, "_to_delete", None):
+            return
+        r = self._to_delete
+        lst = _load_reminders()
+        new = [x for x in lst if not (x.get("team") == r.get("team") and x.get("match_ts") == r.get("match_ts"))]
+        _save_reminders(new)
+        self._to_delete = None
+        self.refresh()
+
+    def clear_all(self):
+        if not self.rem_items:
+            self.session.open(MessageBox, u"\u0644\u0627 \u064a\u0648\u062c\u062f \u0634\u064a\u0621 \u0644\u0644\u062d\u0630\u0641 (Nothing to clear)", MessageBox.TYPE_INFO)
+            return
+        self.session.openWithCallback(self._clear_all_cb, MessageBox,
+            u"\u062d\u0630\u0641 \u062c\u0645\u064a\u0639 \u0627\u0644\u062a\u0630\u0643\u064a\u0631\u0627\u062a\u061f (Clear ALL reminders?)",
+            MessageBox.TYPE_YESNO)
+
+    def _clear_all_cb(self, result):
+        if not result:
+            return
+        _save_reminders([])
+        self.refresh()
+
+    def open_matches(self):
+        self.session.openWithCallback(self._after_matches, FootballMatches)
+
+    def _after_matches(self, *args):
+        self.refresh()
+
+
+FM_PROTECTED_PATHS = ["/", "/bin", "/sbin", "/lib", "/lib64", "/usr", "/etc", "/var", "/proc", "/sys", "/dev", "/boot", "/run", "/home"]
+
+
+class FileManagerScreen(Screen):
+    skin = FM_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["path"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u0641\u062a\u062d / \u062f\u062e\u0648\u0644 (Open)")
+        self["key_yellow"] = Label(u"\u062d\u0630\u0641 (Delete)")
+        self["key_blue"] = Label(u"\u0646\u0642\u0644 / \u0646\u0633\u062e (Move/Copy)")
+        self.cur = self._start_path()
+        self.entries = []
+        self.clipboard = None
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"], {
+            "ok": self.enter,
+            "cancel": self.go_up_or_close,
+            "red": self.close,
+            "green": self.enter,
+            "yellow": self.delete_selected,
+            "blue": self.open_ops_menu,
+            "menu": self.open_ops_menu,
+        }, -1)
+        self.onLayoutFinish.append(self.refresh)
+
+    def _start_path(self):
+        for p in ["/media/hdd", "/media/usb", "/media", "/tmp", "/"]:
+            if os.path.exists(p):
+                return p
+        return "/"
+
+    def _fmt_size(self, n):
+        try:
+            n = float(n)
+        except Exception:
+            return ""
+        for unit in ["B", "KB", "MB", "GB", "TB"]:
+            if n < 1024.0:
+                return "%.1f %s" % (n, unit)
+            n /= 1024.0
+        return "%.1f PB" % n
+
+    def refresh(self):
+        self["path"].setText(_ms_safe_gui_text(u"\U0001f4c2 " + _ms_safe_gui_text(self.cur)))
+        items = []
+        self.entries = []
+        try:
+            names = sorted(os.listdir(self.cur), key=lambda x: x.lower())
+        except Exception as e:
+            self["list"].setList([_ms_safe_gui_text(u"\u274c \u062a\u0639\u0630\u0631 \u0641\u062a\u062d \u0627\u0644\u0645\u062c\u0644\u062f: " + str(e))])
+            self["status"].setText(u"\u062e\u0637\u0623 (Error)")
+            return
+        dirs = []
+        files = []
+        for n in names:
+            full = os.path.join(self.cur, n)
+            try:
+                isd = os.path.isdir(full)
+            except Exception:
+                isd = False
+            if isd:
+                dirs.append((n, full))
+            else:
+                files.append((n, full))
+        if os.path.abspath(self.cur) != "/":
+            items.append(u"\U0001f519 .. (\u0631\u062c\u0648\u0639 / Up)")
+            self.entries.append(("..", os.path.dirname(os.path.abspath(self.cur)), True))
+        for n, full in dirs:
+            items.append(u"\U0001f4c1 " + n)
+            self.entries.append((n, full, True))
+        for n, full in files:
+            sz = ""
+            try:
+                sz = self._fmt_size(os.path.getsize(full))
+            except Exception:
+                pass
+            items.append(u"\U0001f4c4 %s   (%s)" % (n, sz))
+            self.entries.append((n, full, False))
+        self["list"].setList(_ms_safe_list(items))
+        base = u"%d \u0645\u062c\u0644\u062f / %d \u0645\u0644\u0641   |   OK=\u0641\u062a\u062d  \u0623\u0635\u0641\u0631=\u062d\u0630\u0641  \u0623\u0632\u0631\u0642/MENU=\u0646\u0642\u0644-\u0646\u0633\u062e  BACK=\u0631\u062c\u0648\u0639" % (len(dirs), len(files))
+        if self.clipboard:
+            cpath, cmode = self.clipboard
+            modetxt = u"\u0642\u0635 (\u0646\u0642\u0644)" if cmode == "cut" else u"\u0646\u0633\u062e"
+            base = u"\U0001f4cb \u0628\u0627\u0644\u062d\u0627\u0641\u0638\u0629 [%s]: %s   \u2014   \u0627\u0636\u063a\u0637 \u0623\u0632\u0631\u0642/MENU \u062b\u0645 (\u0644\u0635\u0642 \u0647\u0646\u0627)\n" % (modetxt, os.path.basename(cpath)) + base
+        self["status"].setText(_ms_safe_gui_text(base))
+
+    def _selected(self):
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.entries):
+            return None
+        return self.entries[idx]
+
+    def enter(self):
+        sel = self._selected()
+        if not sel:
+            return
+        name, full, isd = sel
+        if isd:
+            self.cur = full
+            self.refresh()
+        else:
+            sz = ""
+            try:
+                sz = self._fmt_size(os.path.getsize(full))
+            except Exception:
+                pass
+            msg = u"\U0001f4c4 %s\n\n\u0627\u0644\u062d\u062c\u0645: %s\n\u0627\u0644\u0645\u0633\u0627\u0631: %s" % (name, sz, full)
+            self.session.open(MessageBox, _ms_safe_gui_text(msg), MessageBox.TYPE_INFO)
+
+    def go_up_or_close(self):
+        if os.path.abspath(self.cur) != "/":
+            self.cur = os.path.dirname(os.path.abspath(self.cur))
+            self.refresh()
+        else:
+            self.close()
+
+    def delete_selected(self):
+        sel = self._selected()
+        if not sel:
+            return
+        name, full, isd = sel
+        if name == "..":
+            return
+        if os.path.abspath(full) in FM_PROTECTED_PATHS:
+            self.session.open(MessageBox,
+                u"\u26d4 \u0644\u0627 \u064a\u0645\u0643\u0646 \u062d\u0630\u0641 \u0645\u062c\u0644\u062f \u0646\u0638\u0627\u0645 \u0645\u062d\u0645\u064a!\n(Protected system path - delete blocked.)",
+                MessageBox.TYPE_WARNING)
+            return
+        self._to_delete = full
+        kind = u"\u0645\u062c\u0644\u062f (folder)" if isd else u"\u0645\u0644\u0641 (file)"
+        self.session.openWithCallback(self._delete_cb, MessageBox,
+            u"\u062d\u0630\u0641 %s:\n%s\n\n\u0647\u0644 \u0623\u0646\u062a \u0645\u062a\u0623\u0643\u062f\u061f (Are you sure?)" % (kind, name),
+            MessageBox.TYPE_YESNO)
+
+    def _delete_cb(self, result):
+        if not result:
+            return
+        full = getattr(self, "_to_delete", "")
+        if not full:
+            return
+        try:
+            if os.path.isdir(full):
+                import shutil
+                shutil.rmtree(full)
+            else:
+                os.remove(full)
+            self.refresh()
+        except Exception as e:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u062d\u0630\u0641:\n" + str(e), MessageBox.TYPE_ERROR)
+
+    # ---- Move / Copy / Paste ----
+    def open_ops_menu(self):
+        sel = self._selected()
+        choices = []
+        if sel and sel[0] != "..":
+            choices.append((u"\u2702 \u0646\u0642\u0644 (\u0642\u0635) - %s" % sel[0], "cut"))
+            choices.append((u"\U0001f4cb \u0646\u0633\u062e - %s" % sel[0], "copy"))
+            choices.append((u"\u270f \u0625\u0639\u0627\u062f\u0629 \u062a\u0633\u0645\u064a\u0629 - %s" % sel[0], "rename"))
+        if self.clipboard:
+            choices.append((u"\U0001f4e5 \u0644\u0635\u0642 \u0647\u0646\u0627 (%s)" % os.path.basename(self.clipboard[0]), "paste"))
+            choices.append((u"\u274e \u0625\u0644\u063a\u0627\u0621 \u0627\u0644\u062d\u0627\u0641\u0638\u0629 (Cancel clipboard)", "clearclip"))
+        choices.append((u"\U0001f4c1 \u0645\u062c\u0644\u062f \u062c\u062f\u064a\u062f (New folder)", "mkdir"))
+        choices.append((u"\U0001f504 \u062a\u062d\u062f\u064a\u062b (Refresh)", "refresh"))
+        if not choices:
+            return
+        self.session.openWithCallback(self._ops_cb, ChoiceBox,
+            title=u"\u0639\u0645\u0644\u064a\u0627\u062a \u0627\u0644\u0645\u0644\u0641\u0627\u062a (File operations):", list=choices)
+
+    def _ops_cb(self, answer):
+        if not answer:
+            return
+        op = answer[1]
+        if op == "cut":
+            self._set_clip("cut")
+        elif op == "copy":
+            self._set_clip("copy")
+        elif op == "paste":
+            self._do_paste()
+        elif op == "clearclip":
+            self.clipboard = None
+            self.refresh()
+        elif op == "rename":
+            self._do_rename()
+        elif op == "mkdir":
+            self._do_mkdir()
+        elif op == "refresh":
+            self.refresh()
+
+    def _set_clip(self, mode):
+        sel = self._selected()
+        if not sel or sel[0] == "..":
+            return
+        name, full, isd = sel
+        if os.path.abspath(full) in FM_PROTECTED_PATHS:
+            self.session.open(MessageBox,
+                u"\u26d4 \u0645\u0633\u0627\u0631 \u0646\u0638\u0627\u0645 \u0645\u062d\u0645\u064a \u2014 \u0644\u0627 \u064a\u0645\u0643\u0646 \u0646\u0642\u0644\u0647.\n(Protected system path.)",
+                MessageBox.TYPE_WARNING)
+            return
+        self.clipboard = (full, mode)
+        self.refresh()
+
+    def _do_paste(self):
+        if not self.clipboard:
+            return
+        import shutil
+        src, mode = self.clipboard
+        if not os.path.exists(src):
+            self.session.open(MessageBox, u"\u274c \u0627\u0644\u0645\u0635\u062f\u0631 \u0644\u0645 \u064a\u0639\u062f \u0645\u0648\u062c\u0648\u062f\u0627\u064b (Source gone)", MessageBox.TYPE_ERROR)
+            self.clipboard = None
+            return
+        name = os.path.basename(src.rstrip("/"))
+        dest = os.path.join(self.cur, name)
+        # prevent moving a folder into itself / its subtree
+        try:
+            if os.path.isdir(src):
+                srcabs = os.path.abspath(src)
+                destabs = os.path.abspath(self.cur)
+                if destabs == srcabs or destabs.startswith(srcabs + os.sep):
+                    self.session.open(MessageBox,
+                        u"\u26d4 \u0644\u0627 \u064a\u0645\u0643\u0646 \u0646\u0642\u0644 \u0645\u062c\u0644\u062f \u062f\u0627\u062e\u0644 \u0646\u0641\u0633\u0647.\n(Cannot paste a folder into itself.)",
+                        MessageBox.TYPE_WARNING)
+                    return
+        except Exception:
+            pass
+        if os.path.abspath(dest) == os.path.abspath(src):
+            self.session.open(MessageBox, u"\u2139 \u0627\u0644\u0645\u0635\u062f\u0631 \u0648\u0627\u0644\u0648\u062c\u0647\u0629 \u0646\u0641\u0633 \u0627\u0644\u0645\u0643\u0627\u0646.", MessageBox.TYPE_INFO)
+            return
+        self._paste_src = src
+        self._paste_dest = dest
+        self._paste_mode = mode
+        if os.path.exists(dest):
+            self.session.openWithCallback(self._paste_confirm, MessageBox,
+                u"\u26a0 \u064a\u0648\u062c\u062f \u0639\u0646\u0635\u0631 \u0628\u0646\u0641\u0633 \u0627\u0644\u0627\u0633\u0645 \u0647\u0646\u0627:\n%s\n\u0627\u0644\u0627\u0633\u062a\u0628\u062f\u0627\u0644\u061f (Overwrite?)" % name,
+                MessageBox.TYPE_YESNO)
+        else:
+            self._paste_confirm(True)
+
+    def _paste_confirm(self, result):
+        if not result:
+            return
+        import shutil
+        src = self._paste_src
+        dest = self._paste_dest
+        mode = self._paste_mode
+        try:
+            if os.path.exists(dest):
+                if os.path.isdir(dest) and not os.path.islink(dest):
+                    shutil.rmtree(dest)
+                else:
+                    os.remove(dest)
+            if mode == "cut":
+                shutil.move(src, dest)
+            else:
+                if os.path.isdir(src):
+                    shutil.copytree(src, dest)
+                else:
+                    shutil.copy2(src, dest)
+            self.clipboard = None
+            self.refresh()
+            doneword = u"\u0627\u0644\u0646\u0642\u0644" if mode == "cut" else u"\u0627\u0644\u0646\u0633\u062e"
+            self.session.open(MessageBox, u"\u2705 \u062a\u0645 %s \u0628\u0646\u062c\u0627\u062d." % doneword, MessageBox.TYPE_INFO, timeout=3)
+        except Exception as e:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644\u062a \u0627\u0644\u0639\u0645\u0644\u064a\u0629:\n" + str(e), MessageBox.TYPE_ERROR)
+
+    def _do_rename(self):
+        sel = self._selected()
+        if not sel or sel[0] == "..":
+            return
+        name, full, isd = sel
+        if os.path.abspath(full) in FM_PROTECTED_PATHS:
+            self.session.open(MessageBox, u"\u26d4 \u0645\u0633\u0627\u0631 \u0646\u0638\u0627\u0645 \u0645\u062d\u0645\u064a.", MessageBox.TYPE_WARNING)
+            return
+        self._rename_full = full
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(self._rename_cb, VirtualKeyBoard,
+                title=u"\u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u062c\u062f\u064a\u062f (New name):", text=name)
+        except Exception:
+            try:
+                from Screens.InputBox import InputBox
+                self.session.openWithCallback(self._rename_cb, InputBox,
+                    title=u"\u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u062c\u062f\u064a\u062f (New name):", text=name)
+            except Exception:
+                self.session.open(MessageBox, u"\u274c \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d \u063a\u064a\u0631 \u0645\u062a\u0648\u0641\u0631\u0629.", MessageBox.TYPE_ERROR)
+
+    def _rename_cb(self, newname):
+        if not newname:
+            return
+        newname = newname.strip()
+        if not newname or "/" in newname:
+            self.session.open(MessageBox, u"\u274c \u0627\u0633\u0645 \u063a\u064a\u0631 \u0635\u0627\u0644\u062d.", MessageBox.TYPE_ERROR)
+            return
+        src = self._rename_full
+        dest = os.path.join(os.path.dirname(src), newname)
+        if os.path.exists(dest):
+            self.session.open(MessageBox, u"\u26a0 \u064a\u0648\u062c\u062f \u0639\u0646\u0635\u0631 \u0628\u0646\u0641\u0633 \u0627\u0644\u0627\u0633\u0645.", MessageBox.TYPE_WARNING)
+            return
+        try:
+            os.rename(src, dest)
+            self.refresh()
+        except Exception as e:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644\u062a \u0625\u0639\u0627\u062f\u0629 \u0627\u0644\u062a\u0633\u0645\u064a\u0629:\n" + str(e), MessageBox.TYPE_ERROR)
+
+    def _do_mkdir(self):
+        try:
+            from Screens.VirtualKeyBoard import VirtualKeyBoard
+            self.session.openWithCallback(self._mkdir_cb, VirtualKeyBoard,
+                title=u"\u0627\u0633\u0645 \u0627\u0644\u0645\u062c\u0644\u062f \u0627\u0644\u062c\u062f\u064a\u062f (New folder name):", text=u"")
+        except Exception:
+            try:
+                from Screens.InputBox import InputBox
+                self.session.openWithCallback(self._mkdir_cb, InputBox,
+                    title=u"\u0627\u0633\u0645 \u0627\u0644\u0645\u062c\u0644\u062f \u0627\u0644\u062c\u062f\u064a\u062f (New folder name):", text=u"")
+            except Exception:
+                self.session.open(MessageBox, u"\u274c \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d \u063a\u064a\u0631 \u0645\u062a\u0648\u0641\u0631\u0629.", MessageBox.TYPE_ERROR)
+
+    def _mkdir_cb(self, newname):
+        if not newname:
+            return
+        newname = newname.strip()
+        if not newname or "/" in newname:
+            self.session.open(MessageBox, u"\u274c \u0627\u0633\u0645 \u063a\u064a\u0631 \u0635\u0627\u0644\u062d.", MessageBox.TYPE_ERROR)
+            return
+        dest = os.path.join(self.cur, newname)
+        if os.path.exists(dest):
+            self.session.open(MessageBox, u"\u26a0 \u0627\u0644\u0645\u062c\u0644\u062f \u0645\u0648\u062c\u0648\u062f \u0645\u0633\u0628\u0642\u0627\u064b.", MessageBox.TYPE_WARNING)
+            return
+        try:
+            os.mkdir(dest)
+            self.refresh()
+        except Exception as e:
+            self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0625\u0646\u0634\u0627\u0621 \u0627\u0644\u0645\u062c\u0644\u062f:\n" + str(e), MessageBox.TYPE_ERROR)
+
+
+# ---- Match reminders storage + background poller ----
+def _load_reminders():
+    data = _load_json_cfg(REMINDERS_CONFIG, [])
+    if not isinstance(data, list):
+        return []
+    return data
+
+
+def _save_reminders(lst):
+    return _save_json_cfg(REMINDERS_CONFIG, lst)
+
+
+def _add_reminder(rem):
+    lst = _load_reminders()
+    lst.append(rem)
+    return _save_reminders(lst)
+
+
+class MatchReminderPoller:
+    def __init__(self, session):
+        self.session = session
+        self.timer = None
+        if eTimer:
+            try:
+                self.timer = eTimer()
+                try:
+                    self.timer_conn = self.timer.timeout.connect(self.check)
+                except AttributeError:
+                    self.timer.callback.append(self.check)
+                self.timer.start(60000, False)
+            except Exception:
+                self.timer = None
+
+    def check(self):
+        try:
+            lst = _load_reminders()
+            if not lst:
+                return
+            now = time.time()
+            changed = False
+            keep = []
+            for r in lst:
+                try:
+                    match_ts = float(r.get("match_ts", 0))
+                    notify_ts = float(r.get("notify_ts", 0))
+                except Exception:
+                    continue
+                if match_ts < now - 7200:
+                    changed = True
+                    continue
+                if (not r.get("notified")) and now >= notify_ts and now <= match_ts + 600:
+                    r["notified"] = True
+                    changed = True
+                    self._notify(r)
+                keep.append(r)
+            if changed:
+                _save_reminders(keep)
+        except Exception:
+            pass
+
+    def _notify(self, r):
+        chans = r.get("channels") or []
+        chtxt = u" , ".join(chans[:3]) if chans else u"-"
+        msg = u"\u26bd \u062a\u0630\u0643\u064a\u0631 \u0645\u0628\u0627\u0631\u0627\u0629 (Match Reminder)\n\n%s\n\u0627\u0644\u0633\u0627\u0639\u0629 %s\n\u0627\u0644\u0642\u0646\u0648\u0627\u062a: %s" % (r.get("team", ""), r.get("time", ""), chtxt)
+        try:
+            from Tools.Notifications import AddPopup
+            AddPopup(msg, MessageBox.TYPE_INFO, 20, "MohamedStoreMatchReminder")
+            return
+        except Exception:
+            pass
+        try:
+            self.session.open(MessageBox, msg, MessageBox.TYPE_INFO, timeout=20)
+        except Exception:
+            pass
+
+
+_ms_reminder_poller = None
+
+
+def ms_sessionstart(reason, **kwargs):
+    global _ms_reminder_poller
+    try:
+        if reason == 0 and "session" in kwargs and _ms_reminder_poller is None:
+            _ms_reminder_poller = MatchReminderPoller(kwargs["session"])
+    except Exception:
+        pass
+
+
+# =========================================================================
+# Boot Logo Changer (bootlogo / backdrop / wait) - Mohamed Store
+# =========================================================================
+BOOTLOGO_CFG = os.path.join(PLUGIN_DIR, "bootlogo.json")
+
+BOOTLOGO_TARGETS = [
+    "/usr/share/bootlogo.mvi",
+    "/usr/share/enigma2/bootlogo.mvi",
+    "/boot/bootlogo.mvi",
+]
+BACKDROP_TARGETS = [
+    "/usr/share/backdrop.mvi",
+    "/usr/share/enigma2/backdrop.mvi",
+    "/boot/backdrop.mvi",
+]
+WAIT_TARGETS = [
+    "/usr/share/bootlogo_wait.mvi",
+    "/usr/share/enigma2/bootlogo_wait.mvi",
+]
+
+def _bl_backup_dir():
+    for d in ["/media/hdd", "/media/usb", "/media/mmc", "/data"]:
+        if os.path.exists(d):
+            return os.path.join(d, "MohamedStore_bootlogo_backup")
+    return os.path.join(PLUGIN_DIR, "bootlogo_backup")
+
+def _bl_find_existing(cands):
+    found = []
+    for p in cands:
+        try:
+            if os.path.exists(p):
+                found.append(p)
+        except Exception:
+            pass
+    return found
+
+def _bl_all_targets():
+    boot = _bl_find_existing(BOOTLOGO_TARGETS) or [BOOTLOGO_TARGETS[0]]
+    back = _bl_find_existing(BACKDROP_TARGETS) or [BACKDROP_TARGETS[0]]
+    wait = _bl_find_existing(WAIT_TARGETS)
+    return boot, back, wait
+
+def _bl_which(name):
+    try:
+        paths = os.environ.get("PATH", "/usr/bin:/bin:/usr/sbin:/sbin")
+        for d in paths.split(":"):
+            fp = os.path.join(d, name)
+            if os.path.exists(fp) and os.access(fp, os.X_OK):
+                return fp
+    except Exception:
+        pass
+    return None
+
+def _bl_has_pil():
+    try:
+        from PIL import Image  # noqa
+        return True
+    except Exception:
+        return False
+
+def _bl_detect_fmt(path):
+    try:
+        with open(path, "rb") as f:
+            head = f.read(8)
+        if head[:4] == b"\x89PNG":
+            return "png"
+        if head[:3] == b"\x00\x00\x01":
+            return "m2v"
+    except Exception:
+        pass
+    return None
+
+def _bl_remount_rw(path):
+    try:
+        d = os.path.dirname(path)
+        if os.access(d, os.W_OK):
+            return True
+    except Exception:
+        pass
+    try:
+        os.system("mount -o remount,rw / 2>/dev/null")
+        os.system("mount -o remount,rw /usr 2>/dev/null")
+        os.system("mount -o remount,rw /boot 2>/dev/null")
+    except Exception:
+        pass
+    return True
+
+def _bl_run(cmd):
+    """Run a command list, return (rc, combined_output_text)."""
+    import subprocess
+    try:
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        out, _ = p.communicate()
+        if out is None:
+            out = b""
+        try:
+            txt = out.decode("utf-8", "replace")
+        except Exception:
+            txt = str(out)
+        return (p.returncode, txt)
+    except Exception as e:
+        return (-1, str(e))
+
+
+def _bl_even(n):
+    n = int(n)
+    return n if n % 2 == 0 else n - 1
+
+
+def _bl_u(s):
+    try:
+        if isinstance(s, bytes):
+            return s.decode("utf-8", "replace")
+        return u"" + s
+    except Exception:
+        try:
+            return u"" + repr(s)
+        except Exception:
+            return u"?"
+
+
+def _bl_probe_res(path):
+    """Return (w,h) of an existing media file, else None."""
+    import re
+    try:
+        if not path or not os.path.exists(path):
+            return None
+    except Exception:
+        return None
+    ffprobe = _bl_which("ffprobe")
+    if ffprobe:
+        for pre in ([], ["-f", "mpegvideo"]):
+            rc, out = _bl_run([ffprobe, "-v", "error", "-select_streams", "v:0",
+                               "-show_entries", "stream=width,height",
+                               "-of", "csv=p=0"] + pre + [path])
+            m = re.search(r"(\d{2,5})\s*[,xX]\s*(\d{2,5})", out or "")
+            if m:
+                return (int(m.group(1)), int(m.group(2)))
+    ffmpeg = _bl_which("ffmpeg")
+    if ffmpeg:
+        for pre in ([], ["-f", "mpegvideo"]):
+            rc, out = _bl_run([ffmpeg] + pre + ["-i", path])
+            m = re.search(r"\b(\d{3,4})x(\d{3,4})\b", out or "")
+            if m:
+                return (int(m.group(1)), int(m.group(2)))
+    return None
+
+
+def _bl_tgt_res(path, dw, dh):
+    """Resolution to encode for a given target: match the ORIGINAL file if
+    we can read it (safest, since the box already displays it fine), else
+    fall back to the screen resolution."""
+    pr = _bl_probe_res(path)
+    if pr and pr[0] >= 160 and pr[1] >= 120:
+        return (pr[0], pr[1])
+    return (dw, dh)
+
+
+_M2V_ZIGZAG = [
+    0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5,
+    12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28,
+    35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51,
+    58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63,
+]
+_M2V_INTRA_Q = [
+    8, 16, 19, 22, 26, 27, 29, 34, 16, 16, 22, 24, 27, 29, 34, 37,
+    19, 22, 26, 27, 29, 34, 34, 38, 22, 22, 26, 27, 29, 34, 37, 40,
+    22, 26, 27, 29, 32, 35, 40, 48, 26, 27, 29, 32, 35, 40, 48, 58,
+    26, 27, 29, 34, 38, 46, 56, 69, 27, 29, 35, 38, 46, 56, 69, 83,
+]
+_M2V_DC_LUM = {
+    0: (0x4, 3), 1: (0x0, 2), 2: (0x1, 2), 3: (0x5, 3), 4: (0x6, 3),
+    5: (0xE, 4), 6: (0x1E, 5), 7: (0x3E, 6), 8: (0x7E, 7), 9: (0xFE, 8),
+    10: (0x1FE, 9), 11: (0x1FF, 9),
+}
+_M2V_DC_CHR = {
+    0: (0x0, 2), 1: (0x1, 2), 2: (0x2, 2), 3: (0x6, 3), 4: (0xE, 4),
+    5: (0x1E, 5), 6: (0x3E, 6), 7: (0x7E, 7), 8: (0xFE, 8), 9: (0x1FE, 9),
+    10: (0x3FE, 10), 11: (0x3FF, 10),
+}
+
+
+class _M2VBitWriter(object):
+    def __init__(self):
+        self.bytes = bytearray()
+        self.cur = 0
+        self.nbits = 0
+
+    def put(self, value, bits):
+        c = self.cur
+        n = self.nbits
+        ba = self.bytes
+        i = bits - 1
+        while i >= 0:
+            c = (c << 1) | ((value >> i) & 1)
+            n += 1
+            if n == 8:
+                ba.append(c & 0xFF)
+                c = 0
+                n = 0
+            i -= 1
+        self.cur = c
+        self.nbits = n
+
+    def align(self):
+        while self.nbits != 0:
+            self.put(0, 1)
+
+    def put_startcode(self, code):
+        self.align()
+        self.put(code, 32)
+
+
+def _m2v_build_dct():
+    import math
+    m = []
+    for u in range(8):
+        row = []
+        cu = (1.0 / math.sqrt(2.0)) if u == 0 else 1.0
+        for x in range(8):
+            row.append(cu * math.cos((2 * x + 1) * u * math.pi / 16.0))
+        m.append(row)
+    return m
+
+_M2V_DCTM = _m2v_build_dct()
+
+
+def _m2v_fdct8x8(block):
+    dm = _M2V_DCTM
+    tmp = [0.0] * 64
+    for y in range(8):
+        base = y * 8
+        for u in range(8):
+            cu = dm[u]
+            s = 0.0
+            for x in range(8):
+                s += block[base + x] * cu[x]
+            tmp[base + u] = s
+    out = [0.0] * 64
+    for u in range(8):
+        for v in range(8):
+            cv = dm[v]
+            s = 0.0
+            for y in range(8):
+                s += tmp[y * 8 + u] * cv[y]
+            out[v * 8 + u] = 0.25 * s
+    return out
+
+
+def _m2v_enc_block(bw, pix, is_luma, qscale, pred_dc):
+    import math
+    # MPEG-2 intra DCT uses unshifted samples; DC predictor (128) offsets it.
+    blk = [float(p) for p in pix]
+    F = _m2v_fdct8x8(blk)
+    qdc = int(math.floor(F[0] / 8.0 + 0.5))
+    zz = _M2V_ZIGZAG
+    iq = _M2V_INTRA_Q
+    # DC size/VLC
+    diff = qdc - pred_dc
+    size = 0
+    a = abs(diff)
+    while a:
+        size += 1
+        a >>= 1
+    code, bits = (_M2V_DC_LUM if is_luma else _M2V_DC_CHR)[size]
+    bw.put(code, bits)
+    if size > 0:
+        if diff > 0:
+            bw.put(diff, size)
+        else:
+            bw.put((diff - 1) & ((1 << size) - 1), size)
+    # AC coefficients: ESCAPE-code every nonzero coeff, then EOB '10'
+    run = 0
+    for n in range(1, 64):
+        pos = zz[n]
+        w = iq[pos]
+        val = F[pos] * 16.0 / (float(w) * float(qscale))
+        if val >= 0:
+            level = int(math.floor(val + 0.5))
+        else:
+            level = int(math.ceil(val - 0.5))
+        if level == 0:
+            run += 1
+            continue
+        if level > 2047:
+            level = 2047
+        elif level < -2047:
+            level = -2047
+        bw.put(0x01, 6)
+        bw.put(run & 0x3F, 6)
+        bw.put(level & 0xFFF, 12)
+        run = 0
+    bw.put(0x2, 2)
+    return qdc
+
+# __M2V_PART2__
+
+
+def _m2v_rgb2ycc(r, g, b):
+    y = 16.0 + (65.481 * r + 128.553 * g + 24.966 * b) / 255.0
+    cb = 128.0 + (-37.797 * r - 74.203 * g + 112.0 * b) / 255.0
+    cr = 128.0 + (112.0 * r - 93.786 * g - 18.214 * b) / 255.0
+    return y, cb, cr
+
+
+def _m2v_clampi(v):
+    v = int(v + 0.5)
+    if v < 0:
+        return 0
+    if v > 255:
+        return 255
+    return v
+
+
+def _m2v_encode_still(rgb, width, height, qscale_code):
+    from array import array
+    mbw = (width + 15) // 16
+    mbh = (height + 15) // 16
+    pw = mbw * 16
+    ph = mbh * 16
+    Y = array('f', [0.0]) * (pw * ph)
+    Cb = array('f', [0.0]) * (pw * ph)
+    Cr = array('f', [0.0]) * (pw * ph)
+    for yy in range(ph):
+        sy = yy if yy < height else height - 1
+        rowb = sy * width
+        rowp = yy * pw
+        for xx in range(pw):
+            sx = xx if xx < width else width - 1
+            idx = (rowb + sx) * 3
+            yv, cbv, crv = _m2v_rgb2ycc(rgb[idx], rgb[idx + 1], rgb[idx + 2])
+            p = rowp + xx
+            Y[p] = yv
+            Cb[p] = cbv
+            Cr[p] = crv
+    qscale = 2 * qscale_code
+    bw = _M2VBitWriter()
+    bw.put_startcode(0x000001B3)
+    bw.put(width & 0xFFF, 12)
+    bw.put(height & 0xFFF, 12)
+    bw.put(3, 4)
+    bw.put(3, 4)
+    bw.put(0x3FFFF, 18)
+    bw.put(1, 1)
+    bw.put(112, 10)
+    bw.put(0, 1)
+    bw.put(0, 1)
+    bw.put(0, 1)
+    bw.put_startcode(0x000001B5)
+    bw.put(1, 4)
+    bw.put(0x48, 8)
+    bw.put(1, 1)
+    bw.put(1, 2)
+    bw.put(0, 2)
+    bw.put(0, 2)
+    bw.put(0, 12)
+    bw.put(1, 1)
+    bw.put(0, 8)
+    bw.put(0, 1)
+    bw.put(0, 2)
+    bw.put(0, 5)
+    bw.put_startcode(0x00000100)
+    bw.put(0, 10)
+    bw.put(1, 3)
+    bw.put(0xFFFF, 16)
+    bw.put(0, 1)
+    bw.put_startcode(0x000001B5)
+    bw.put(8, 4)
+    bw.put(0xF, 4)
+    bw.put(0xF, 4)
+    bw.put(0xF, 4)
+    bw.put(0xF, 4)
+    bw.put(0, 2)
+    bw.put(3, 2)
+    bw.put(0, 1)
+    bw.put(1, 1)
+    bw.put(0, 1)
+    bw.put(0, 1)
+    bw.put(0, 1)
+    bw.put(0, 1)
+    bw.put(0, 1)
+    bw.put(1, 1)
+    bw.put(1, 1)
+    bw.put(0, 1)
+
+    def gather(plane, px, py):
+        out = [0] * 64
+        k = 0
+        for j in range(8):
+            base = (py + j) * pw + px
+            for i in range(8):
+                out[k] = _m2v_clampi(plane[base + i])
+                k += 1
+        return out
+
+    def gather_chroma(plane, cx, cy):
+        out = [0] * 64
+        k = 0
+        for j in range(8):
+            fy = (cy + j) * 2
+            for i in range(8):
+                fx = (cx + i) * 2
+                s = (plane[fy * pw + fx] + plane[fy * pw + fx + 1] +
+                     plane[(fy + 1) * pw + fx] + plane[(fy + 1) * pw + fx + 1])
+                out[k] = _m2v_clampi(s / 4.0)
+                k += 1
+        return out
+
+    enc = _m2v_enc_block
+    for row in range(mbh):
+        bw.put_startcode(0x00000101 + row)
+        bw.put(qscale_code & 0x1F, 5)
+        bw.put(0, 1)
+        py = 128
+        pcb = 128
+        pcr = 128
+        for col in range(mbw):
+            bw.put(1, 1)
+            bw.put(1, 1)
+            mx = col * 16
+            my = row * 16
+            py = enc(bw, gather(Y, mx, my), True, qscale, py)
+            py = enc(bw, gather(Y, mx + 8, my), True, qscale, py)
+            py = enc(bw, gather(Y, mx, my + 8), True, qscale, py)
+            py = enc(bw, gather(Y, mx + 8, my + 8), True, qscale, py)
+            pcb = enc(bw, gather_chroma(Cb, col * 8, row * 8), False, qscale, pcb)
+            pcr = enc(bw, gather_chroma(Cr, col * 8, row * 8), False, qscale, pcr)
+    bw.put_startcode(0x000001B7)
+    bw.align()
+    return bytes(bw.bytes)
+
+
+def _bl_py_mpeg2(srcpng, dst, width, height, ffmpeg):
+    """Built-in pure-Python MPEG-2 encoder fallback (no mpeg2 ffmpeg needed).
+    Returns (ok, msg)."""
+    w = _bl_even(width)
+    h = _bl_even(height)
+    rgb = None
+    # 1) try PIL to read pixels
+    if _bl_has_pil():
+        try:
+            from PIL import Image
+            im = Image.open(srcpng).convert("RGB").resize((w, h))
+            raw = im.tobytes()
+            if sys.version_info < (3, 0):
+                rgb = bytearray(raw)
+            else:
+                rgb = raw
+        except Exception:
+            rgb = None
+    # 2) else use ffmpeg to produce raw rgb24
+    if rgb is None and ffmpeg:
+        rawp = "/tmp/ms_bl_raw.rgb"
+        try:
+            if os.path.exists(rawp):
+                os.remove(rawp)
+        except Exception:
+            pass
+        _bl_run([ffmpeg, "-y", "-loglevel", "error", "-i", srcpng,
+                 "-vf", "scale=%d:%d" % (w, h), "-pix_fmt", "rgb24",
+                 "-frames:v", "1", "-f", "rawvideo", rawp])
+        try:
+            f = open(rawp, "rb")
+            try:
+                rgb = f.read()
+            finally:
+                f.close()
+        except Exception:
+            rgb = None
+    if not rgb or len(rgb) < w * h * 3:
+        return (False, u"\u062a\u0639\u0630\u0631 \u0642\u0631\u0627\u0621\u0629 \u0628\u0643\u0633\u0644\u0627\u062a \u0627\u0644\u0635\u0648\u0631\u0629")
+    if not isinstance(rgb, bytearray):
+        rgb = bytearray(rgb)
+    try:
+        es = _m2v_encode_still(rgb, w, h, 3)
+    except Exception as e:
+        return (False, u"py-mpeg2: " + _bl_u(str(e)))
+    try:
+        if os.path.exists(dst):
+            os.remove(dst)
+    except Exception:
+        pass
+    try:
+        f = open(dst, "wb")
+        try:
+            f.write(es)
+        finally:
+            f.close()
+    except Exception as e:
+        return (False, u"py-mpeg2 write: " + _bl_u(str(e)))
+    try:
+        ok = os.path.exists(dst) and os.path.getsize(dst) > 0
+    except Exception:
+        ok = os.path.exists(dst)
+    return (ok, u"" if ok else u"py-mpeg2 empty")
+
+
+def _bl_src_is_video(src):
+    """True if src is ALREADY a ready-made boot-logo video (MPEG-1/2 .mvi),
+    so it can be installed directly without any image conversion."""
+    try:
+        ext = os.path.splitext(src or "")[1].lower()
+        if ext in (".mvi", ".m2v", ".mpg", ".mpeg", ".m1v"):
+            return True
+    except Exception:
+        pass
+    try:
+        if _bl_detect_fmt(src) == "m2v":
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _bl_convert(src, dst, fmt, width, height):
+    """Convert src image to dst keeping bootlogo format.
+    fmt = 'm2v' (needs ffmpeg) or 'png'. Returns (ok, msg).
+
+    If src is ALREADY a device boot-logo video (.mvi / .m2v) we install it
+    AS-IS (direct copy, no ffmpeg / no conversion) whenever the target also
+    wants the video format - this lets the user drop in a ready .mvi logo."""
+    import shutil
+    # ---- Ready-made .mvi / .m2v source: install directly, no conversion ----
+    if _bl_src_is_video(src):
+        if fmt == "m2v":
+            try:
+                if os.path.exists(dst):
+                    os.remove(dst)
+            except Exception:
+                pass
+            try:
+                shutil.copy2(src, dst)
+                good = os.path.exists(dst) and os.path.getsize(dst) > 0
+                return (True, "mvi") if good else (False, u"\u0641\u0634\u0644 \u0646\u0633\u062e \u0645\u0644\u0641 .mvi")
+            except Exception as e:
+                return (False, u"mvi copy: " + _bl_u(str(e)))
+        # Target wants a PNG splash but the source is a video: grab one frame.
+        ffmpeg = _bl_which("ffmpeg")
+        if ffmpeg:
+            try:
+                if os.path.exists(dst):
+                    os.remove(dst)
+            except Exception:
+                pass
+            _bl_run([ffmpeg, "-y", "-loglevel", "error", "-i", src,
+                     "-frames:v", "1", dst])
+            try:
+                if os.path.exists(dst) and os.path.getsize(dst) > 0:
+                    return (True, "mvi")
+            except Exception:
+                pass
+        try:
+            shutil.copy2(src, dst)
+            return (True, "mvi")
+        except Exception as e:
+            return (False, u"mvi copy: " + _bl_u(str(e)))
+    w = _bl_even(width)
+    h = _bl_even(height)
+    tmp = "/tmp/ms_bl_tmp.png"
+    try:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+    except Exception:
+        pass
+    made_png = False
+    if _bl_has_pil():
+        try:
+            from PIL import Image
+            im = Image.open(src).convert("RGB")
+            im = im.resize((w, h))
+            im.save(tmp, "PNG")
+            made_png = os.path.exists(tmp)
+        except Exception:
+            made_png = False
+    ffmpeg = _bl_which("ffmpeg")
+    convert_bin = _bl_which("convert")
+    if not made_png and ffmpeg:
+        _bl_run([ffmpeg, "-y", "-loglevel", "error", "-i", src,
+                 "-vf", "scale=%d:%d" % (w, h), "-frames:v", "1", tmp])
+        made_png = os.path.exists(tmp)
+    if not made_png and convert_bin:
+        _bl_run([convert_bin, src, "-resize", "%dx%d!" % (w, h), tmp])
+        made_png = os.path.exists(tmp)
+    srcpng = tmp if made_png else src
+    if fmt == "m2v":
+        if not ffmpeg:
+            return (False, u"ffmpeg \u063a\u064a\u0631 \u0645\u062b\u0628\u0651\u062a (\u0645\u0637\u0644\u0648\u0628 \u0644\u0635\u064a\u063a\u0629 .mvi) \u2014 \u062b\u0628\u0651\u062a\u0647 \u0628\u0640: opkg install ffmpeg")
+        # The box's splash wants MPEG-2. Try MPEG-2 first; only if it fully
+        # fails do we fall back to MPEG-1 (which is BLACK on MPEG-2-only
+        # boxes) and flag it so the caller can warn the user.
+        size = "%dx%d" % (w, h)
+        mpeg2_variants = [
+            [ffmpeg, "-y", "-loglevel", "error", "-loop", "1", "-i", srcpng,
+             "-t", "5", "-r", "25", "-s", size, "-pix_fmt", "yuv420p",
+             "-c:v", "mpeg2video", "-b:v", "8000k", "-g", "15", "-an",
+             "-f", "mpeg2video", dst],
+            [ffmpeg, "-y", "-loglevel", "error", "-loop", "1", "-i", srcpng,
+             "-t", "5", "-r", "25", "-s", size, "-pix_fmt", "yuv420p",
+             "-vcodec", "mpeg2video", "-qscale:v", "2", "-g", "15", "-an",
+             "-f", "mpeg2video", dst],
+            [ffmpeg, "-y", "-loglevel", "error", "-i", srcpng,
+             "-pix_fmt", "yuv420p", "-vframes", "1", "-an",
+             "-f", "mpeg2video", dst],
+        ]
+        mpeg1_variants = [
+            [ffmpeg, "-y", "-loglevel", "error", "-loop", "1", "-i", srcpng,
+             "-t", "5", "-r", "25", "-s", size, "-pix_fmt", "yuv420p",
+             "-vcodec", "mpeg1video", "-b:v", "6000k", "-g", "15", "-an",
+             "-f", "mpeg1video", dst],
+        ]
+
+        def _try(cmds):
+            last = u""
+            for cmd in cmds:
+                try:
+                    if os.path.exists(dst):
+                        os.remove(dst)
+                except Exception:
+                    pass
+                rc, out = _bl_run(cmd)
+                try:
+                    good = os.path.exists(dst) and os.path.getsize(dst) > 0
+                except Exception:
+                    good = os.path.exists(dst)
+                if rc == 0 and good:
+                    return (True, u"")
+                last = (out or u"").strip()
+                if len(last) > 300:
+                    last = last[-300:]
+                if not last:
+                    last = u"rc=%s" % str(rc)
+            return (False, last)
+
+        ok2, err2 = _try(mpeg2_variants)
+        if ok2:
+            return (True, "mpeg2")
+        # ffmpeg has no MPEG-2 encoder -> use the built-in pure-Python
+        # MPEG-2 encoder so the logo works on ALL boxes, offline.
+        okpy, errpy = _bl_py_mpeg2(srcpng, dst, w, h, ffmpeg)
+        if okpy:
+            return (True, "mpeg2")
+        ok1, err1 = _try(mpeg1_variants)
+        if ok1:
+            # worked but likely shows black on MPEG-2-only hardware
+            return (True, "mpeg1")
+        return (False, u"mpeg2 \u0641\u0634\u0644:\n" + err2 + u"\n\npy-mpeg2 \u0641\u0634\u0644:\n" + errpy + u"\n\nmpeg1 \u0641\u0634\u0644:\n" + err1)
+    else:
+        try:
+            import shutil
+            shutil.copy2(srcpng, dst)
+            return (True, "ok")
+        except Exception as e:
+            return (False, str(e))
+
+# ---- COMPREHENSIVE snapshot: EVERY known boot/standby/wait logo file ----
+# Includes VU+ 4K / ARM /boot files (splash.bin / bootlogo.bin) so a restore
+# brings the WHOLE logo state back and never leaves a half-matched (cropped /
+# black) frame behind.
+BL_SNAPSHOT_PATHS = [
+    "/usr/share/bootlogo.mvi",
+    "/usr/share/bootlogo_wait.mvi",
+    "/usr/share/backdrop.mvi",
+    "/usr/share/radio.mvi",
+    "/usr/share/enigma2/bootlogo.mvi",
+    "/usr/share/enigma2/bootlogo_wait.mvi",
+    "/usr/share/enigma2/backdrop.mvi",
+    "/usr/share/enigma2/radio.mvi",
+    "/boot/bootlogo.mvi",
+    "/boot/bootlogo_wait.mvi",
+    "/boot/backdrop.mvi",
+    "/boot/bootlogo.bin",
+    "/boot/bootlogo_wait.bin",
+    "/boot/splash.bin",
+]
+
+
+def _bl_snapshot_dirs():
+    """Candidate backup folders, STABLE order. First one is the save target;
+    restore scans ALL of them so a USB mount appearing/disappearing can never
+    make us lose (or restore a stale) snapshot. PLUGIN_DIR is always included
+    as a reboot-safe fallback."""
+    dirs = []
+    for d in ["/media/hdd", "/media/usb", "/media/mmc", "/data"]:
+        try:
+            if os.path.isdir(d):
+                dirs.append(os.path.join(d, "MohamedStore_bootlogo_backup"))
+        except Exception:
+            pass
+    dirs.append(os.path.join(PLUGIN_DIR, "bootlogo_backup"))
+    return dirs
+
+
+def _bl_writable_snapshot_dir():
+    """Return the FIRST backup folder we can actually create AND write to.
+    This is the real root-cause fix: if the first candidate (e.g. /media/hdd)
+    exists but is read-only / not truly mounted, os.makedirs or the copy would
+    fail and NOTHING ever got saved -- while restore scanned all dirs and found
+    nothing. So we probe each candidate with a real write test and fall back
+    all the way to PLUGIN_DIR, which is always writable after reboot."""
+    last = None
+    for d in _bl_snapshot_dirs():
+        try:
+            if not os.path.isdir(d):
+                os.makedirs(d)
+            tst = os.path.join(d, ".ms_wtest")
+            f = open(tst, "w")
+            f.write("ok")
+            f.close()
+            os.remove(tst)
+            return d
+        except Exception:
+            last = d
+            continue
+    return last or os.path.join(PLUGIN_DIR, "bootlogo_backup")
+
+
+def _bl_save_current(force=True):
+    """Byte-exact snapshot of EVERY existing logo file + a manifest.
+    force=True  -> overwrite (manual 'save current logos' button).
+    force=False -> keep the first saved file (auto-backup before an apply,
+                   so the true original is never clobbered)."""
+    import shutil
+    bdir = _bl_writable_snapshot_dir()
+    try:
+        if not os.path.isdir(bdir):
+            os.makedirs(bdir)
+    except Exception as e:
+        return (False, _bl_u(str(e)))
+    manifest = _load_json_cfg(os.path.join(bdir, "manifest.json"), {})
+    n = 0
+    for p in BL_SNAPSHOT_PATHS:
+        try:
+            if not os.path.exists(p) or os.path.getsize(p) <= 0:
+                continue
+            safe = p.replace("/", "_").lstrip("_")
+            dstb = os.path.join(bdir, safe)
+            if (not force) and os.path.exists(dstb):
+                manifest[safe] = p
+                n += 1
+                continue
+            tmp = dstb + ".tmp"
+            shutil.copy2(p, tmp)
+            # verify a byte-exact copy before committing
+            if os.path.getsize(tmp) == os.path.getsize(p):
+                try:
+                    if os.path.exists(dstb):
+                        os.remove(dstb)
+                except Exception:
+                    pass
+                os.rename(tmp, dstb)
+                manifest[safe] = p
+                n += 1
+            else:
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+    try:
+        _save_json_cfg(os.path.join(bdir, "manifest.json"), manifest)
+    except Exception:
+        pass
+    if n > 0:
+        return (True, bdir + u"  (%d \u0645\u0644\u0641)" % n)
+    return (False, u"\u0644\u0645 \u064a\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u0645\u0644\u0641\u0627\u062a \u0634\u0639\u0627\u0631 \u062d\u0627\u0644\u064a\u0629")
+
+
+def _bl_restore_current():
+    """Restore the byte-exact snapshot to the EXACT same paths it came from
+    (no re-encode, no resize) so the logos come back exactly as saved."""
+    import shutil
+    chosen = None
+    manifest = {}
+    for d in _bl_snapshot_dirs():
+        try:
+            if not os.path.isdir(d):
+                continue
+            m = _load_json_cfg(os.path.join(d, "manifest.json"), {})
+            has_files = False
+            for x in os.listdir(d):
+                if x != "manifest.json":
+                    has_files = True
+                    break
+            if m or has_files:
+                chosen = d
+                manifest = m
+                break
+        except Exception:
+            pass
+    if not chosen:
+        return (False, u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u0633\u062e\u0629 \u0645\u062d\u0641\u0648\u0638\u0629")
+    pairs = []
+    if manifest:
+        for safe, orig in manifest.items():
+            pairs.append((os.path.join(chosen, safe), orig))
+    else:
+        for p in BL_SNAPSHOT_PATHS:
+            safe = p.replace("/", "_").lstrip("_")
+            pairs.append((os.path.join(chosen, safe), p))
+    n = 0
+    errs = []
+    for srcb, dst in pairs:
+        try:
+            if not os.path.exists(srcb):
+                continue
+            d = os.path.dirname(dst)
+            if not os.path.isdir(d):
+                continue
+            _bl_remount_rw(dst)
+            tmp = dst + ".tmp"
+            shutil.copy2(srcb, tmp)
+            if os.path.getsize(tmp) == os.path.getsize(srcb):
+                os.rename(tmp, dst)
+                n += 1
+            else:
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
+                errs.append(os.path.basename(dst))
+        except Exception as e:
+            errs.append(os.path.basename(dst) + ":" + _bl_u(str(e)))
+    try:
+        os.system("sync")
+    except Exception:
+        pass
+    if n > 0:
+        return (True, u"\u062a\u0645\u062a \u0627\u0633\u062a\u0639\u0627\u062f\u0629 %d \u0645\u0644\u0641 (\u0645\u0637\u0627\u0628\u0642 \u062a\u0645\u0627\u0645\u0627\u064b)" % n)
+    return (False, u"\u0641\u0634\u0644 \u0627\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629: " + (u", ".join(errs[:3]) if errs else u"\u0644\u0627 \u0645\u0644\u0641\u0627\u062a"))
+
+
+def _bl_backup_originals():
+    # Auto-backup before an apply: protect the FIRST (true original) set,
+    # never overwrite it on later applies.
+    return _bl_save_current(force=False)
+
+
+def _bl_restore_originals():
+    return _bl_restore_current()
+
+
+# =========================================================================
+# Boot-logo VERSION HISTORY: every logo you install is saved as a byte-exact
+# version, so you can switch BACK to any previously installed logo (or the
+# true original) with no re-encode (no crop / no black).
+# =========================================================================
+def _bl_restore_pairs(srcdir, manifest):
+    """Byte-exact restore of a saved folder (dir + manifest) to its exact
+    original paths. Returns (n_restored, errors_list)."""
+    import shutil
+    pairs = []
+    if manifest:
+        for safe, orig in manifest.items():
+            pairs.append((os.path.join(srcdir, safe), orig))
+    else:
+        for p in BL_SNAPSHOT_PATHS:
+            safe = p.replace("/", "_").lstrip("_")
+            pairs.append((os.path.join(srcdir, safe), p))
+    n = 0
+    errs = []
+    for srcb, dst in pairs:
+        try:
+            if not os.path.exists(srcb):
+                continue
+            d = os.path.dirname(dst)
+            if not os.path.isdir(d):
+                continue
+            _bl_remount_rw(dst)
+            tmp = dst + ".tmp"
+            shutil.copy2(srcb, tmp)
+            if os.path.getsize(tmp) == os.path.getsize(srcb):
+                os.rename(tmp, dst)
+                n += 1
+            else:
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
+                errs.append(os.path.basename(dst))
+        except Exception as e:
+            errs.append(os.path.basename(dst) + ":" + _bl_u(str(e)))
+    try:
+        os.system("sync")
+    except Exception:
+        pass
+    return (n, errs)
+
+
+def _bl_version_dirs_sorted():
+    """All saved version folders across every backup root, oldest -> newest."""
+    ids = []
+    seen = set()
+    for root in _bl_snapshot_dirs():
+        vroot = os.path.join(root, "versions")
+        try:
+            if not os.path.isdir(vroot):
+                continue
+            for vid in os.listdir(vroot):
+                if vid in seen:
+                    continue
+                if os.path.isdir(os.path.join(vroot, vid)):
+                    seen.add(vid)
+                    ids.append(vid)
+        except Exception:
+            pass
+    ids.sort()
+    result = []
+    for vid in ids:
+        for root in _bl_snapshot_dirs():
+            vdir = os.path.join(root, "versions", vid)
+            if os.path.isdir(vdir):
+                result.append(vdir)
+                break
+    return result
+
+
+def _bl_current_size_map():
+    m = {}
+    for p in BL_SNAPSHOT_PATHS:
+        try:
+            if os.path.exists(p) and os.path.getsize(p) > 0:
+                m[p.replace("/", "_").lstrip("_")] = os.path.getsize(p)
+        except Exception:
+            pass
+    return m
+
+
+def _bl_dir_size_map(vdir):
+    m = {}
+    try:
+        for x in os.listdir(vdir):
+            if x in ("meta.json", "manifest.json"):
+                continue
+            fp = os.path.join(vdir, x)
+            try:
+                if os.path.isfile(fp):
+                    m[x] = os.path.getsize(fp)
+            except Exception:
+                pass
+    except Exception:
+        pass
+    return m
+
+
+def _bl_save_version(label=None, skip_if_same=True):
+    """Snapshot the CURRENT logo files byte-exact into a new version folder.
+    Returns (ok, meta_dict_or_msg)."""
+    import shutil, time
+    cur = _bl_current_size_map()
+    if not cur:
+        return (False, u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0645\u0644\u0641\u0627\u062a \u0634\u0639\u0627\u0631 \u062d\u0627\u0644\u064a\u0629")
+    if skip_if_same:
+        vdirs = _bl_version_dirs_sorted()
+        if vdirs and _bl_dir_size_map(vdirs[-1]) == cur:
+            meta = _load_json_cfg(os.path.join(vdirs[-1], "meta.json"), {})
+            return (True, meta)  # identical to latest -> no duplicate
+    root = _bl_writable_snapshot_dir()
+    vid = time.strftime("v%Y%m%d_%H%M%S")
+    vdir = os.path.join(root, "versions", vid)
+    try:
+        if not os.path.isdir(vdir):
+            os.makedirs(vdir)
+    except Exception as e:
+        return (False, _bl_u(str(e)))
+    manifest = {}
+    n = 0
+    for p in BL_SNAPSHOT_PATHS:
+        try:
+            if not os.path.exists(p) or os.path.getsize(p) <= 0:
+                continue
+            safe = p.replace("/", "_").lstrip("_")
+            dstb = os.path.join(vdir, safe)
+            tmp = dstb + ".tmp"
+            shutil.copy2(p, tmp)
+            if os.path.getsize(tmp) == os.path.getsize(p):
+                os.rename(tmp, dstb)
+                manifest[safe] = p
+                n += 1
+            else:
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+    if n <= 0:
+        try:
+            os.rmdir(vdir)
+        except Exception:
+            pass
+        return (False, u"\u0641\u0634\u0644 \u062d\u0641\u0638 \u0627\u0644\u0646\u0633\u062e\u0629")
+    meta = {"id": vid, "label": label or vid,
+            "time": time.strftime("%Y-%m-%d %H:%M"), "files": n}
+    try:
+        _save_json_cfg(os.path.join(vdir, "meta.json"), meta)
+        _save_json_cfg(os.path.join(vdir, "manifest.json"), manifest)
+    except Exception:
+        pass
+    return (True, meta)
+
+
+def _bl_list_restore_points():
+    """Return a list of (label, kind, path) restore points, newest version
+    first, with the true original last. kind='orig' or 'ver'."""
+    pts = []
+    for vdir in reversed(_bl_version_dirs_sorted()):
+        meta = _load_json_cfg(os.path.join(vdir, "meta.json"),
+                              {"label": os.path.basename(vdir), "time": ""})
+        lbl = u"\U0001f553 %s" % (meta.get("time") or meta.get("id") or os.path.basename(vdir))
+        extra = meta.get("label") or u""
+        if extra and extra != meta.get("id"):
+            lbl = lbl + u"  \u2014 " + extra
+        pts.append((lbl, "ver", vdir))
+    for root in _bl_snapshot_dirs():
+        man = os.path.join(root, "manifest.json")
+        if os.path.exists(man):
+            pts.append((u"\u2b50 \u0627\u0644\u0623\u0635\u0644\u064a\u0629 (\u0642\u0628\u0644 \u0623\u064a \u062a\u0639\u062f\u064a\u0644)", "orig", root))
+            break
+    return pts
+
+
+BOOTLOGO_RAW_SKIN = """<screen name="MS_BootLogoScreen" position="center,center" size="1200,820" title="Boot Logo Changer">
+    <widget name="title" position="20,12" size="1160,50" font="Regular;32" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="list" position="30,80" size="1140,330" font="Regular;27" itemHeight="52" scrollbarMode="showOnDemand"/>
+    <widget name="info" position="30,425" size="1140,290" font="Regular;25" transparent="1" foregroundColor="#00cccccc"/>
+    <widget name="key_red" position="30,765" size="270,38" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="310,765" size="270,38" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="590,765" size="290,38" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="890,765" size="280,38" font="Regular;23" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+BOOTLOGO_SKIN = scale_skin_layout(BOOTLOGO_RAW_SKIN)
+
+BL_PICK_RAW_SKIN = """<screen name="MS_BootLogoPicker" position="center,center" size="1200,820" title="Pick Image">
+    <widget name="path" position="20,12" size="1160,46" font="Regular;27" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="list" position="20,68" size="1160,660" font="Regular;26" itemHeight="40" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,735" size="1160,32" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,778" size="360,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="420,778" size="360,36" font="Regular;23" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+</screen>"""
+BL_PICK_SKIN = scale_skin_layout(BL_PICK_RAW_SKIN)
+
+BL_IMG_EXTS = (".png", ".jpg", ".jpeg", ".bmp", ".gif")
+# Ready-made device boot-logo videos that can be installed directly (no convert)
+BL_MVI_EXTS = (".mvi", ".m2v", ".mpg", ".mpeg", ".m1v")
+# Everything the picker is allowed to show / select
+BL_PICK_EXTS = BL_IMG_EXTS + BL_MVI_EXTS
+
+
+class BootLogoImagePicker(Screen):
+    skin = BL_PICK_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["path"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0625\u0644\u063a\u0627\u0621 (Cancel)")
+        self["key_green"] = Label(u"\u0627\u062e\u062a\u064a\u0627\u0631 (Select)")
+        self.cur = self._start_path()
+        self.entries = []
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "ok": self.enter,
+            "cancel": self.go_up_or_close,
+            "red": self.close,
+            "green": self.enter,
+        }, -1)
+        self.onLayoutFinish.append(self.refresh)
+
+    def _start_path(self):
+        for p in ["/media/hdd", "/media/usb", "/media", "/tmp", "/"]:
+            if os.path.exists(p):
+                return p
+        return "/"
+
+    def refresh(self):
+        self["path"].setText(_ms_safe_gui_text(u"\U0001f5bc " + _ms_safe_gui_text(self.cur)))
+        items = []
+        self.entries = []
+        try:
+            names = sorted(os.listdir(self.cur), key=lambda x: x.lower())
+        except Exception as e:
+            self["list"].setList([_ms_safe_gui_text(u"\u274c " + str(e))])
+            return
+        dirs = []
+        imgs = []
+        for n in names:
+            full = os.path.join(self.cur, n)
+            try:
+                isd = os.path.isdir(full)
+            except Exception:
+                isd = False
+            if isd:
+                dirs.append((n, full))
+            elif n.lower().endswith(BL_PICK_EXTS):
+                imgs.append((n, full))
+        if os.path.abspath(self.cur) != "/":
+            items.append(u"\U0001f519 .. (\u0631\u062c\u0648\u0639 / Up)")
+            self.entries.append(("..", os.path.dirname(os.path.abspath(self.cur)), True))
+        for n, full in dirs:
+            items.append(u"\U0001f4c1 " + n)
+            self.entries.append((n, full, True))
+        for n, full in imgs:
+            if n.lower().endswith(BL_MVI_EXTS):
+                items.append(u"\U0001f39e " + n + u"  (.mvi)")
+            else:
+                items.append(u"\U0001f5bc " + n)
+            self.entries.append((n, full, False))
+        self["list"].setList(_ms_safe_list(items))
+        self["status"].setText(_ms_safe_gui_text(u"%d \u0645\u062c\u0644\u062f / %d \u0635\u0648\u0631\u0629   |   OK=\u062f\u062e\u0648\u0644/\u0627\u062e\u062a\u064a\u0627\u0631   BACK=\u0631\u062c\u0648\u0639" % (len(dirs), len(imgs))))
+
+    def _selected(self):
+        idx = self["list"].getSelectionIndex()
+        if idx is None or idx < 0 or idx >= len(self.entries):
+            return None
+        return self.entries[idx]
+
+    def enter(self):
+        sel = self._selected()
+        if not sel:
+            return
+        name, full, isd = sel
+        if isd:
+            self.cur = full
+            self.refresh()
+        else:
+            self.close(full)
+
+    def go_up_or_close(self):
+        if os.path.abspath(self.cur) != "/":
+            self.cur = os.path.dirname(os.path.abspath(self.cur))
+            self.refresh()
+        else:
+            self.close(None)
+
+
+class BootLogoScreen(Screen):
+    skin = BOOTLOGO_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001f5bc \u062a\u063a\u064a\u064a\u0631 \u0634\u0639\u0627\u0631 \u0627\u0644\u0625\u0642\u0644\u0627\u0639 (Boot Logo)")
+        self["list"] = MenuList([])
+        self["info"] = Label("")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c (Exit)")
+        self["key_green"] = Label(u"\u2699 \u062a\u063a\u064a\u064a\u0631 \u0627\u0644\u0635\u0648\u0631\u0629")
+        self["key_yellow"] = Label(u"\U0001f4be \u0646\u0633\u062e/\u0627\u0633\u062a\u0639\u0627\u062f\u0629")
+        self["key_blue"] = Label(u"\u2705 \u062a\u0637\u0628\u064a\u0642 + \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644")
+        cfg = _load_json_cfg(BOOTLOGO_CFG, {})
+        self.boot_img = cfg.get("boot_img", "")
+        self.shut_img = cfg.get("shut_img", "")
+        if self.boot_img and not os.path.exists(self.boot_img):
+            self.boot_img = ""
+        if self.shut_img and not os.path.exists(self.shut_img):
+            self.shut_img = ""
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"], {
+            "ok": self.change_selected,
+            "cancel": self.close,
+            "red": self.close,
+            "green": self.change_selected,
+            "yellow": self.backup_menu,
+            "blue": self.apply_now,
+            "menu": self.backup_menu,
+        }, -1)
+        self.onLayoutFinish.append(self.refresh)
+
+    def refresh(self):
+        def shortp(p):
+            if not p:
+                return u"\u2014 (\u0644\u0645 \u062a\u062e\u062a\u0631 \u0628\u0639\u062f)"
+            return _ms_safe_gui_text(os.path.basename(p))
+        items = [
+            u"\u25b6 \u0635\u0648\u0631\u0629 \u0627\u0644\u062a\u0634\u063a\u064a\u0644 (Boot):   " + shortp(self.boot_img),
+            u"\u23fb \u0635\u0648\u0631\u0629 \u0627\u0644\u0625\u0637\u0641\u0627\u0621/\u0627\u0644\u0627\u0633\u062a\u0639\u062f\u0627\u062f (Standby): " + shortp(self.shut_img),
+        ]
+        self["list"].setList(_ms_safe_list(items))
+        boot, back, wait = _bl_all_targets()
+        fmt = _bl_detect_fmt(boot[0]) or ("m2v" if boot[0].endswith(".mvi") else "png")
+        tools = []
+        if _bl_has_pil():
+            tools.append("PIL")
+        if _bl_which("ffmpeg"):
+            tools.append("ffmpeg")
+        if _bl_which("convert"):
+            tools.append("convert")
+        tooltxt = ", ".join(tools) if tools else u"\u26a0 \u0644\u0627 \u064a\u0648\u062c\u062f"
+        warn = u""
+        if fmt == "m2v" and not _bl_which("ffmpeg"):
+            warn = u"\n\u26a0 \u062c\u0647\u0627\u0632\u0643 \u064a\u0633\u062a\u062e\u062f\u0645 \u0635\u064a\u063a\u0629 .mvi \u0648\u064a\u062d\u062a\u0627\u062c ffmpeg: opkg install ffmpeg"
+        info = (
+            u"\U0001f4cf \u062f\u0642\u0629 \u0627\u0644\u0634\u0627\u0634\u0629: %dx%d   |   \u0627\u0644\u0635\u064a\u063a\u0629: %s\n"
+            u"\U0001f4c1 \u0627\u0644\u0645\u0633\u0627\u0631: %s\n"
+            u"\U0001f6e0 \u0623\u062f\u0648\u0627\u062a \u0627\u0644\u062a\u062d\u0648\u064a\u0644: %s\n\n"
+            u"\u2699 \u0648\u0642\u0651\u0641 \u0639\u0644\u0649 \u0633\u0637\u0631 \u0648\u0627\u0636\u063a\u0637 OK/\u0623\u062e\u0636\u0631 \u0644\u0627\u062e\u062a\u064a\u0627\u0631 \u0635\u0648\u0631\u0629.\n"
+            u"\U0001f4be \u0623\u0635\u0641\u0631 = \u0646\u0633\u062e/\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0623\u0635\u0644\u064a\u0629   |   \u2705 \u0623\u0632\u0631\u0642 = \u062a\u0637\u0628\u064a\u0642 \u062b\u0645 \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644"
+            % (SCREEN_WIDTH, SCREEN_HEIGHT, fmt, boot[0], tooltxt)
+        ) + warn
+        self["info"].setText(_ms_safe_gui_text(info))
+
+    def _save_cfg(self):
+        _save_json_cfg(BOOTLOGO_CFG, {"boot_img": self.boot_img, "shut_img": self.shut_img})
+
+    def change_selected(self):
+        idx = self["list"].getSelectionIndex()
+        self._pick_target = 0 if (idx is None or idx == 0) else 1
+        self.session.openWithCallback(self._pick_cb, BootLogoImagePicker)
+
+    def _pick_cb(self, path):
+        if not path:
+            return
+        if getattr(self, "_pick_target", 0) == 0:
+            self.boot_img = path
+        else:
+            self.shut_img = path
+        self._save_cfg()
+        self.refresh()
+
+    def backup_menu(self):
+        nver = len(_bl_version_dirs_sorted())
+        choices = [
+            (u"\u267b \u0627\u0644\u0631\u062c\u0648\u0639 \u0644\u0634\u0639\u0627\u0631 \u0633\u0627\u0628\u0642 (\u0633\u062c\u0644 \u0627\u0644\u0646\u0633\u062e: %d)" % nver, "versions"),
+            (u"\U0001f4be \u062d\u0641\u0638 \u0627\u0644\u0634\u0639\u0627\u0631 \u0627\u0644\u062d\u0627\u0644\u064a \u0643\u0646\u0633\u062e\u0629", "savever"),
+            (u"\u2b50 \u062d\u0641\u0638 \u0627\u0644\u0623\u0635\u0644\u064a\u0629 (\u0642\u0628\u0644 \u0623\u064a \u062a\u0639\u062f\u064a\u0644)", "backup"),
+            (u"\U0001f50d \u062a\u0634\u062e\u064a\u0635 (Diagnostics)", "diag"),
+        ]
+        self.session.openWithCallback(self._backup_cb, ChoiceBox,
+            title=u"\u0646\u0633\u062e / \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0634\u0639\u0627\u0631 \u0627\u0644\u0625\u0642\u0644\u0627\u0639:", list=choices)
+
+    def _backup_cb(self, answer):
+        if not answer:
+            return
+        if answer[1] == "versions":
+            self._versions_menu()
+        elif answer[1] == "savever":
+            ok, meta = _bl_save_version(skip_if_same=True)
+            if ok:
+                self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u062d\u0641\u0638 \u0627\u0644\u0634\u0639\u0627\u0631 \u0627\u0644\u062d\u0627\u0644\u064a \u0643\u0646\u0633\u062e\u0629 \u064a\u0645\u0643\u0646 \u0627\u0644\u0631\u062c\u0648\u0639 \u0625\u0644\u064a\u0647\u0627 \u0644\u0627\u062d\u0642\u0627\u064b.", MessageBox.TYPE_INFO)
+            else:
+                self.session.open(MessageBox, u"\u274c " + _bl_u(meta), MessageBox.TYPE_ERROR)
+        elif answer[1] == "backup":
+            ok, msg = _bl_save_current(force=True)
+            if ok:
+                self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u062d\u0641\u0638 \u0627\u0644\u0634\u0639\u0627\u0631\u0627\u062a \u0627\u0644\u0623\u0635\u0644\u064a\u0629 \u0628\u0640:\n" + msg + u"\n\n\u0627\u0636\u063a\u0637 (\u0627\u0644\u0631\u062c\u0648\u0639 \u0644\u0634\u0639\u0627\u0631 \u0633\u0627\u0628\u0642) \u0644\u0627\u062d\u0642\u0627\u064b \u0644\u0625\u0631\u062c\u0627\u0639\u0647\u0627 \u0643\u0645\u0627 \u0647\u064a \u062a\u0645\u0627\u0645\u0627\u064b.", MessageBox.TYPE_INFO)
+            else:
+                self.session.open(MessageBox, u"\u274c \u0641\u0634\u0644 \u0627\u0644\u0646\u0633\u062e:\n" + msg, MessageBox.TYPE_ERROR)
+        elif answer[1] == "diag":
+            self._diag()
+
+    def _versions_menu(self):
+        pts = _bl_list_restore_points()
+        if not pts:
+            self.session.open(MessageBox,
+                u"\u2139 \u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u0633\u062e \u0645\u062d\u0641\u0648\u0638\u0629 \u0628\u0639\u062f. \u0633\u064a\u062a\u0645 \u062d\u0641\u0638 \u0643\u0644 \u0634\u0639\u0627\u0631 \u062a\u0631\u0643\u0651\u0628\u0647 \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b \u0643\u0646\u0642\u0637\u0629 \u0631\u062c\u0648\u0639.",
+                MessageBox.TYPE_INFO)
+            return
+        choices = []
+        for lbl, kind, path in pts:
+            choices.append((lbl, ("restore", kind, path)))
+        for lbl, kind, path in pts:
+            if kind == "ver":
+                choices.append((u"\U0001f5d1 \u062d\u0630\u0641: " + lbl, ("delete", kind, path)))
+        self.session.openWithCallback(self._pick_version_cb, ChoiceBox,
+            title=u"\u0627\u062e\u062a\u0631 \u0646\u0642\u0637\u0629 \u0627\u0644\u0631\u062c\u0648\u0639:", list=choices)
+
+    def _pick_version_cb(self, answer):
+        if not answer:
+            return
+        act, kind, path = answer[1]
+        if act == "delete":
+            import shutil
+            try:
+                shutil.rmtree(path)
+                self.session.open(MessageBox, u"\U0001f5d1 \u062a\u0645 \u062d\u0630\u0641 \u0627\u0644\u0646\u0633\u062e\u0629.", MessageBox.TYPE_INFO)
+            except Exception as e:
+                self.session.open(MessageBox, u"\u274c \u062a\u0639\u0630\u0631 \u0627\u0644\u062d\u0630\u0641:\n" + _bl_u(str(e)), MessageBox.TYPE_ERROR)
+            return
+        self._pending_restore = (kind, path)
+        self.session.openWithCallback(self._restore_version_do, MessageBox,
+            u"\u0633\u064a\u062a\u0645 \u0625\u0631\u062c\u0627\u0639 \u0647\u0630\u0627 \u0627\u0644\u0634\u0639\u0627\u0631 \u062a\u0645\u0627\u0645\u0627\u064b \u0643\u0645\u0627 \u0643\u0627\u0646 (\u0628\u062f\u0648\u0646 \u0623\u064a \u062a\u062d\u0648\u064a\u0644) \u062b\u0645 \u0625\u0639\u0627\u062f\u0629 \u0627\u0644\u062a\u0634\u063a\u064a\u0644.\n\u0645\u062a\u0627\u0628\u0639\u0629\u061f",
+            MessageBox.TYPE_YESNO)
+
+    def _restore_version_do(self, result):
+        if not result:
+            return
+        pr = getattr(self, "_pending_restore", None)
+        if not pr:
+            return
+        kind, path = pr
+        if kind == "orig":
+            ok, msg = _bl_restore_originals()
+            if ok:
+                self.session.openWithCallback(self._reboot_cb, MessageBox,
+                    u"\u2705 " + msg + u"\n\n\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0622\u0646\u061f", MessageBox.TYPE_YESNO)
+            else:
+                self.session.open(MessageBox, u"\u274c " + msg, MessageBox.TYPE_ERROR)
+            return
+        manifest = _load_json_cfg(os.path.join(path, "manifest.json"), {})
+        n, errs = _bl_restore_pairs(path, manifest)
+        if n > 0:
+            extra = (u"\n\u26a0 \u062a\u0639\u0630\u0631 \u0628\u0639\u0636\u0647\u0627: " + u", ".join(errs[:2])) if errs else u""
+            self.session.openWithCallback(self._reboot_cb, MessageBox,
+                u"\u2705 \u062a\u0645 \u0625\u0631\u062c\u0627\u0639 \u0627\u0644\u0634\u0639\u0627\u0631 (%d \u0645\u0644\u0641) \u0643\u0645\u0627 \u0643\u0627\u0646 \u062a\u0645\u0627\u0645\u0627\u064b." % n + extra + u"\n\n\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0622\u0646\u061f",
+                MessageBox.TYPE_YESNO)
+        else:
+            self.session.open(MessageBox,
+                u"\u274c \u0641\u0634\u0644 \u0627\u0644\u0625\u0631\u062c\u0627\u0639:\n" + (u"\n".join(errs[:3]) if errs else u"\u063a\u064a\u0631 \u0645\u0639\u0631\u0648\u0641"),
+                MessageBox.TYPE_ERROR)
+
+    def _diag(self):
+        boot, back, wait = _bl_all_targets()
+        lines = []
+        lines.append(u"\U0001f3f7 BootLogo build: MSV4-HIST")
+        lines.append(u"\U0001f553 \u0646\u0633\u062e \u0645\u062d\u0641\u0648\u0638\u0629: %d" % len(_bl_version_dirs_sorted()))
+        try:
+            _wd = _bl_writable_snapshot_dir()
+        except Exception as _e:
+            _wd = u"ERR:" + _bl_u(str(_e))
+        lines.append(u"\U0001f4c2 \u0645\u062c\u0644\u062f \u0627\u0644\u062d\u0641\u0638 \u0627\u0644\u0642\u0627\u0628\u0644 \u0644\u0644\u0643\u062a\u0627\u0628\u0629: %s" % _wd)
+        lines.append(u"\U0001f5a5 \u062f\u0642\u0629 \u0627\u0644\u0634\u0627\u0634\u0629 (GUI): %dx%d" % (SCREEN_WIDTH, SCREEN_HEIGHT))
+        lines.append(u"ffmpeg: %s" % (_bl_which("ffmpeg") or u"\u2014"))
+        lines.append(u"ffprobe: %s" % (_bl_which("ffprobe") or u"\u2014"))
+        for label, lst in ((u"BOOT", boot), (u"STANDBY", back), (u"WAIT", wait)):
+            for p in lst:
+                if os.path.exists(p):
+                    try:
+                        sz = os.path.getsize(p)
+                    except Exception:
+                        sz = 0
+                    fmt = _bl_detect_fmt(p) or u"?"
+                    pr = _bl_probe_res(p)
+                    rs = (u"%dx%d" % pr) if pr else u"?"
+                    lines.append(u"%s: %s\n   fmt=%s res=%s size=%d" % (label, p, fmt, rs, sz))
+        # --- every known logo file ON DEVICE (incl. /boot .bin for VU+ 4K) ---
+        lines.append(u"--- ALL LOGO FILES ---")
+        for p in BL_SNAPSHOT_PATHS:
+            try:
+                if os.path.exists(p):
+                    sz = os.path.getsize(p)
+                    fmt = _bl_detect_fmt(p) or u"?"
+                    pr = _bl_probe_res(p)
+                    rs = (u"%dx%d" % pr) if pr else u"?"
+                    lines.append(u"%s  fmt=%s res=%s size=%d" % (p, fmt, rs, sz))
+            except Exception:
+                pass
+        # --- saved snapshot folder contents ---
+        lines.append(u"--- SAVED SNAPSHOT ---")
+        snap_found = False
+        for d in _bl_snapshot_dirs():
+            try:
+                if not os.path.isdir(d):
+                    continue
+                names = [x for x in os.listdir(d)]
+                if not names:
+                    continue
+                snap_found = True
+                lines.append(u"DIR: %s" % d)
+                for x in sorted(names):
+                    fp2 = os.path.join(d, x)
+                    try:
+                        sz = os.path.getsize(fp2)
+                    except Exception:
+                        sz = 0
+                    fmt = _bl_detect_fmt(fp2) or u"?"
+                    lines.append(u"   %s  fmt=%s size=%d" % (x, fmt, sz))
+                break
+            except Exception:
+                pass
+        if not snap_found:
+            lines.append(u"(\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u0633\u062e\u0629 \u0645\u062d\u0641\u0648\u0638\u0629)")
+        ff = _bl_which("ffmpeg")
+        if ff:
+            rc, out = _bl_run([ff, "-hide_banner", "-encoders"])
+            has2 = "mpeg2video" in (out or "")
+            has1 = "mpeg1video" in (out or "")
+            enc = u"\u0645\u064f\u0631\u0645\u0650\u0651\u0632\u0627\u062a: mpeg2video=%s  mpeg1video=%s" % (
+                (u"\u2714" if has2 else u"\u2718"), (u"\u2714" if has1 else u"\u2718"))
+            lines.append(enc)
+            # Live MPEG-2 self-test: make a tiny test PNG and try to encode a
+            # real .mvi so we capture the EXACT ffmpeg error (if any).
+            tpng = "/tmp/ms_bl_selftest.png"
+            tmvi = "/tmp/ms_bl_selftest.mvi"
+            made = False
+            if _bl_has_pil():
+                try:
+                    from PIL import Image
+                    Image.new("RGB", (1280, 720), (0, 80, 160)).save(tpng, "PNG")
+                    made = os.path.exists(tpng)
+                except Exception:
+                    made = False
+            if not made:
+                _bl_run([ff, "-y", "-f", "lavfi", "-i",
+                         "color=c=blue:s=1280x720:d=1", "-frames:v", "1", tpng])
+                made = os.path.exists(tpng)
+            src2 = tpng if made else None
+            if src2:
+                try:
+                    if os.path.exists(tmvi):
+                        os.remove(tmvi)
+                except Exception:
+                    pass
+                rc2, out2 = _bl_run([ff, "-y", "-i", src2, "-pix_fmt", "yuv420p",
+                                     "-vframes", "1", "-an", "-f", "mpeg2video", tmvi])
+                good2 = False
+                try:
+                    good2 = os.path.exists(tmvi) and os.path.getsize(tmvi) > 0
+                except Exception:
+                    good2 = os.path.exists(tmvi)
+                if rc2 == 0 and good2:
+                    lines.append(u"\U0001f9ea \u0627\u062e\u062a\u0628\u0627\u0631 MPEG-2: \u2714 \u0646\u062c\u062d")
+                else:
+                    e2 = (out2 or u"").strip()
+                    if len(e2) > 400:
+                        e2 = e2[-400:]
+                    lines.append(u"\U0001f9ea \u0627\u062e\u062a\u0628\u0627\u0631 MPEG-2: \u2718 rc=%s\n%s" % (str(rc2), e2))
+        txt = u"\n".join(lines)
+        try:
+            root = get_direct_hdd_root_path()
+            fp = os.path.join(root, "MohamedStore_bootlogo_diag.txt")
+            f = open(fp, "w")
+            try:
+                f.write(txt.encode("utf-8") if sys.version_info < (3, 0) else txt)
+            finally:
+                f.close()
+            txt = txt + u"\n\n\U0001f4be \u062d\u064f\u0641\u0650\u0638 \u0623\u064a\u0636\u0627\u064b \u0628\u0640:\n" + fp
+        except Exception:
+            pass
+        self.session.open(MessageBox, txt, MessageBox.TYPE_INFO)
+
+
+    def _restore_confirm(self):
+        self.session.openWithCallback(self._restore_do, MessageBox,
+            u"\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0634\u0639\u0627\u0631\u0627\u062a \u0627\u0644\u0623\u0635\u0644\u064a\u0629 \u0648\u0625\u0639\u0627\u062f\u0629 \u0627\u0644\u062a\u0634\u063a\u064a\u0644\u061f",
+            MessageBox.TYPE_YESNO)
+
+    def _restore_do(self, result):
+        if not result:
+            return
+        ok, msg = _bl_restore_originals()
+        if ok:
+            self.session.openWithCallback(self._reboot_cb, MessageBox,
+                u"\u2705 " + msg + u"\n\n\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0622\u0646\u061f", MessageBox.TYPE_YESNO)
+        else:
+            self.session.open(MessageBox, u"\u274c " + msg, MessageBox.TYPE_ERROR)
+
+    def apply_now(self):
+        if not self.boot_img and not self.shut_img:
+            self.session.open(MessageBox,
+                u"\u26a0 \u0627\u062e\u062a\u0631 \u0635\u0648\u0631\u0629 \u0648\u0627\u062d\u062f\u0629 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644 (\u062a\u0634\u063a\u064a\u0644 \u0623\u0648 \u0625\u0637\u0641\u0627\u0621) \u0642\u0628\u0644 \u0627\u0644\u062a\u0637\u0628\u064a\u0642.",
+                MessageBox.TYPE_WARNING)
+            return
+        self.session.openWithCallback(self._apply_confirm, MessageBox,
+            u"\u0633\u064a\u062a\u0645:\n1) \u062d\u0641\u0638 \u0646\u0633\u062e\u0629 \u0623\u0635\u0644\u064a\u0629 \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b\n2) \u0645\u0644\u0641 .mvi \u064a\u064f\u0631\u0643\u0651\u0628 \u0645\u0628\u0627\u0634\u0631\u0629\u060c \u0648\u0627\u0644\u0635\u0648\u0631 (png/jpg) \u062a\u064f\u062d\u0648\u0651\u0644 \u062b\u0645 \u062a\u064f\u0631\u0643\u0651\u0628\n3) \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u062c\u0647\u0627\u0632\n\n\u0647\u0644 \u062a\u0631\u064a\u062f \u0627\u0644\u0645\u062a\u0627\u0628\u0639\u0629\u061f",
+            MessageBox.TYPE_YESNO)
+
+    def _apply_confirm(self, result):
+        if not result:
+            return
+        self["info"].setText(u"\u2699 \u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0648\u064a\u0644 \u0648\u0627\u0644\u062a\u0631\u0643\u064a\u0628... \u0627\u0646\u062a\u0638\u0631 \u0644\u062d\u0638\u0629.")
+        def _work():
+            _bl_backup_originals()
+            boot, back, wait = _bl_all_targets()
+            w, h = SCREEN_WIDTH, SCREEN_HEIGHT
+            errs = []
+            done = 0
+            used = {"mpeg1": False}
+            if self.boot_img:
+                for t in boot:
+                    fmt = _bl_detect_fmt(t) or ("m2v" if t.endswith(".mvi") else "png")
+                    rw, rh = _bl_tgt_res(t, w, h)
+                    _bl_remount_rw(t)
+                    ok, msg = _bl_convert(self.boot_img, t, fmt, rw, rh)
+                    if ok:
+                        done += 1
+                        if msg == "mpeg1":
+                            used["mpeg1"] = True
+                    else:
+                        errs.append(msg)
+                for t in wait:
+                    fmt = _bl_detect_fmt(t) or "m2v"
+                    rw, rh = _bl_tgt_res(t, w, h)
+                    _bl_remount_rw(t)
+                    _bl_convert(self.boot_img, t, fmt, rw, rh)
+            if self.shut_img:
+                for t in back:
+                    fmt = _bl_detect_fmt(t) or ("m2v" if t.endswith(".mvi") else "png")
+                    rw, rh = _bl_tgt_res(t, w, h)
+                    _bl_remount_rw(t)
+                    ok, msg = _bl_convert(self.shut_img, t, fmt, rw, rh)
+                    if ok:
+                        done += 1
+                        if msg == "mpeg1":
+                            used["mpeg1"] = True
+                    else:
+                        errs.append(msg)
+            try:
+                os.system("sync")
+            except Exception:
+                pass
+            # Auto-save the just-installed logo as a byte-exact restore point
+            # so it joins the version history and can be re-applied later with
+            # no re-encode (no crop / no black).
+            if done > 0:
+                try:
+                    _bl_save_version(skip_if_same=True)
+                except Exception:
+                    pass
+            def _res():
+                warn1 = u""
+                if used["mpeg1"]:
+                    warn1 = (u"\n\n\u26a0 \u062c\u0647\u0627\u0632\u0643 \u0644\u0627 \u064a\u062f\u0639\u0645 \u0645\u064f\u0631\u0645\u0650\u0651\u0632 MPEG-2 \u0628\u0640 ffmpeg\u060c "
+                             u"\u0641\u0627\u0633\u062a\u062e\u062f\u0645\u0646\u0627 MPEG-1 \u0648\u0642\u062f \u062a\u0638\u0647\u0631 \u0627\u0644\u0635\u0648\u0631\u0629 \u0633\u0648\u062f\u0627\u0621. "
+                             u"\u0627\u0644\u062d\u0644: opkg install ffmpeg (\u0646\u0633\u062e\u0629 \u0643\u0627\u0645\u0644\u0629) \u062b\u0645 \u0623\u0639\u062f \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629.")
+                if done > 0 and not errs:
+                    self.session.openWithCallback(self._reboot_cb, MessageBox,
+                        u"\u2705 \u062a\u0645 \u062a\u0631\u0643\u064a\u0628 \u0627\u0644\u0634\u0639\u0627\u0631 \u0628\u0646\u062c\u0627\u062d." + warn1 + u"\n\n\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0622\u0646 \u0644\u062a\u0638\u0647\u0631 \u0627\u0644\u0635\u0648\u0631\u061f",
+                        MessageBox.TYPE_YESNO)
+                elif done > 0 and errs:
+                    self.session.openWithCallback(self._reboot_cb, MessageBox,
+                        u"\u26a0 \u062a\u0645 \u0628\u0639\u0636 \u0627\u0644\u062a\u0631\u0643\u064a\u0628 \u0645\u0639 \u0623\u062e\u0637\u0627\u0621:\n" + u"\n".join(errs[:2]) + warn1 + u"\n\n\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0622\u0646\u061f",
+                        MessageBox.TYPE_YESNO)
+                else:
+                    self.session.open(MessageBox,
+                        u"\u274c \u0641\u0634\u0644 \u0627\u0644\u062a\u0631\u0643\u064a\u0628:\n" + (u"\n".join(errs[:2]) if errs else u"\u063a\u064a\u0631 \u0645\u0639\u0631\u0648\u0641"),
+                        MessageBox.TYPE_ERROR)
+                    self.refresh()
+            _call_ui(_res)
+        t = threading.Thread(target=_work)
+        t.daemon = True
+        t.start()
+
+    def _reboot_cb(self, result):
+        if not result:
+            self.refresh()
+            return
+        if TryQuitMainloop:
+            self.session.open(TryQuitMainloop, 2)
+        elif enigma:
+            enigma.quitMainloop(2)
+
+
+# -*- coding: utf-8 -*-
+# =========================================================================
+# VPN Tool (VPN Gate free public OpenVPN) - MohamedStore
+# =========================================================================
+VPNGATE_API = "http://www.vpngate.net/api/iphone/"
+VPN_TMP_OVPN = "/tmp/mohamedstore_vpn.ovpn"
+VPN_LOG = "/tmp/mohamedstore_vpn.log"
+VPN_SKIN = _make_ms_skin("MS_VpnScreen", "VPN")
+
+
+def _vpn_find_openvpn():
+    try:
+        p = os.popen("which openvpn 2>/dev/null").read().strip()
+        if p and os.path.exists(p):
+            return p
+    except Exception:
+        pass
+    for c in ["/usr/sbin/openvpn", "/usr/bin/openvpn", "/sbin/openvpn", "/bin/openvpn"]:
+        if os.path.exists(c):
+            return c
+    return ""
+
+
+def _vpn_tun_ready():
+    try:
+        if os.path.exists("/dev/net/tun"):
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _vpn_ensure_tun():
+    try:
+        os.system("modprobe tun 2>/dev/null")
+        os.system("mkdir -p /dev/net 2>/dev/null")
+        if not os.path.exists("/dev/net/tun"):
+            os.system("mknod /dev/net/tun c 10 200 2>/dev/null")
+            os.system("chmod 600 /dev/net/tun 2>/dev/null")
+    except Exception:
+        pass
+    return _vpn_tun_ready()
+
+
+def _vpn_is_running():
+    try:
+        p = os.popen("pgrep -x openvpn 2>/dev/null").read().strip()
+        return bool(p)
+    except Exception:
+        return False
+
+
+def _vpn_public_ip():
+    """Return (ip, country). Tries several services with retries so the
+    confirmation keeps working even if one lookup server is slow/blocked."""
+    services = [
+        ("http://ip-api.com/json/", "query", "country"),
+        ("https://ipapi.co/json/", "ip", "country_name"),
+        ("https://ipwho.is/", "ip", "country"),
+        ("https://ipinfo.io/json", "ip", "country"),
+        ("https://api.ipify.org?format=json", "ip", None),
+        ("http://ifconfig.me/all.json", "ip_addr", None),
+    ]
+    for _attempt in range(2):
+        for url, ip_key, country_key in services:
+            ok, data = _http_get(url, 12)
+            if not ok:
+                continue
+            try:
+                j = json.loads(data)
+            except Exception:
+                continue
+            ip = j.get(ip_key, "") or j.get("ip", "") or j.get("query", "")
+            country = ""
+            if country_key:
+                country = j.get(country_key, "") or ""
+            if not country:
+                country = j.get("country", "") or j.get("country_name", "") or ""
+            if ip:
+                return (ip, country)
+        time.sleep(2)
+    return ("", "")
+
+
+def fetch_vpngate_servers():
+    """Fetch VPN Gate CSV and return ALL servers in original order (no reordering/filtering)."""
+    servers = []
+    ok, data = _http_get(VPNGATE_API, 30)
+    if not ok:
+        return (False, str(data), servers)
+    try:
+        for line in data.splitlines():
+            line = line.strip()
+            if not line or line.startswith("*") or line.startswith("#"):
+                continue
+            parts = line.split(",")
+            if len(parts) < 15:
+                continue
+            host = parts[0]
+            ip = parts[1]
+            ping = parts[3]
+            try:
+                speed = float(parts[4])
+            except Exception:
+                speed = 0.0
+            country_long = parts[5]
+            country_short = parts[6]
+            ovpn_b64 = parts[14]
+            if not ovpn_b64:
+                continue
+            servers.append({
+                "host": host, "ip": ip, "ping": ping, "speed": speed,
+                "country": country_long, "cc": country_short, "ovpn": ovpn_b64,
+            })
+    except Exception as e:
+        return (False, str(e), servers)
+    return (True, "", servers)
+
+
+class VpnScreen(Screen):
+    skin = VPN_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\U0001F510 VPN \u0645\u062c\u0627\u0646\u064a (VPN Gate) - MohamedStore")
+        try:
+            self.setTitle(u"VPN \u0645\u062c\u0627\u0646\u064a (VPN Gate)")
+        except Exception:
+            pass
+        self["daylabel"] = Label("")
+        self["list"] = MenuList([])
+        self["status"] = Label("")
+        self["key_red"] = Label(u"\u0631\u062c\u0648\u0639 (Back)")
+        self["key_green"] = Label(u"\u0627\u062a\u0635\u0627\u0644 (Connect)")
+        self["key_yellow"] = Label(u"\u0642\u0637\u0639 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Disconnect)")
+        self["key_blue"] = Label(u"\u0627\u0644\u062d\u0627\u0644\u0629/\u062a\u062b\u0628\u064a\u062a (Status)")
+        self.is_loading = False
+        self.servers = []
+        self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
+            "cancel": self.go_back, "ok": self.connect_selected,
+            "red": self.go_back, "green": self.connect_selected,
+            "yellow": self.disconnect_vpn, "blue": self.show_status,
+        }, -1)
+        self.onLayoutFinish.append(self.load_servers)
+
+    def go_back(self):
+        if self.is_loading:
+            return
+        self.close()
+
+    def load_servers(self):
+        self.is_loading = True
+        self["daylabel"].setText(u"\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0633\u064a\u0631\u0641\u0631\u0627\u062a VPN Gate... (Loading...)")
+        self["list"].setList([u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644... (Loading...)"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631...")
+
+        def _worker():
+            ok, err, servers = fetch_vpngate_servers()
+
+            def _apply():
+                self.is_loading = False
+                if not ok:
+                    self["list"].setList([u"\u062a\u0639\u0630\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 (Connection failed)", str(err)])
+                    self["status"].setText(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644")
+                    return
+                self.servers = servers
+                self.show_menu()
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def show_menu(self):
+        self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u062f\u0648\u0644\u0629 \u062b\u0645 \u0627\u0636\u063a\u0637 \u0627\u062a\u0635\u0627\u0644 (Select a country then Connect)")
+        rows = []
+        for s in self.servers:
+            mbps = s["speed"] / 1000000.0
+            rows.append(u"%s  [%s]  |  Ping: %s ms  |  %.1f Mbps  |  %s" % (
+                s["country"], s["cc"], s["ping"], mbps, s["ip"]))
+        if not rows:
+            rows = [u"\u0644\u0627 \u062a\u0648\u062c\u062f \u0633\u064a\u0631\u0641\u0631\u0627\u062a (No servers)"]
+        self["list"].setList(rows)
+        self["status"].setText(u"%d \u0633\u064a\u0631\u0641\u0631 \u0645\u0646 \u0643\u0644 \u0627\u0644\u062f\u0648\u0644  |  \u0623\u062e\u0636\u0631 = \u0627\u062a\u0635\u0627\u0644  |  \u0623\u0635\u0641\u0631 = \u0642\u0637\u0639  |  \u0623\u0632\u0631\u0642 = \u0627\u0644\u062d\u0627\u0644\u0629 \u0648\u0627\u0644\u062a\u062b\u0628\u064a\u062a" % len(self.servers))
+
+    def connect_selected(self):
+        if self.is_loading:
+            return
+        idx = self["list"].getSelectionIndex()
+        if idx < 0 or idx >= len(self.servers):
+            return
+        server = self.servers[idx]
+        ovpn_path = _vpn_find_openvpn()
+        if not ovpn_path:
+            self.session.openWithCallback(
+                self._ask_install_cb, MessageBox,
+                u"\u0628\u0631\u0646\u0627\u0645\u062c OpenVPN \u063a\u064a\u0631 \u0645\u062b\u0628\u0651\u062a \u0639\u0644\u0649 \u0627\u0644\u062c\u0647\u0627\u0632.\n\u0647\u0644 \u062a\u0631\u064a\u062f \u062a\u062b\u0628\u064a\u062a\u0647 \u0627\u0644\u0622\u0646 (opkg)\u061f",
+                type=MessageBox.TYPE_YESNO)
+            return
+        self._do_connect(server)
+
+    def _ask_install_cb(self, answer):
+        if answer:
+            self._run_install()
+
+    def _run_install(self):
+        cmd = (
+            "echo '==== MohamedStore VPN: installing OpenVPN ===='; "
+            "opkg update; "
+            "opkg install openvpn-openssl || opkg install openvpn; "
+            "opkg install kmod-tun 2>/dev/null; "
+            "modprobe tun 2>/dev/null; "
+            "mkdir -p /dev/net; [ -c /dev/net/tun ] || mknod /dev/net/tun c 10 200; "
+            "echo; echo '==== Done. Press EXIT to return ===='"
+        )
+        try:
+            self.session.open(ConsoleScreen, title="MohamedStore VPN - Install OpenVPN", cmdlist=[cmd])
+        except Exception:
+            os.system(cmd)
+            self.session.open(MessageBox, u"\u062a\u0645\u062a \u0645\u062d\u0627\u0648\u0644\u0629 \u0627\u0644\u062a\u062b\u0628\u064a\u062a. \u0623\u0639\u062f \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629.", type=MessageBox.TYPE_INFO, timeout=6)
+
+    def _do_connect(self, server):
+        self.is_loading = True
+        self["daylabel"].setText(u"\u062c\u0627\u0631\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0640 %s ... (Connecting...)" % server["country"])
+        self["status"].setText(u"\u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631 (\u0642\u062f \u064a\u0633\u062a\u063a\u0631\u0642 15-30 \u062b\u0627\u0646\u064a\u0629)...")
+
+        def _worker():
+            import base64
+            err = ""
+            try:
+                raw = base64.b64decode(server["ovpn"])
+                if isinstance(raw, bytes):
+                    raw = raw.decode("utf-8", "ignore")
+                f = open(VPN_TMP_OVPN, "w")
+                f.write(raw)
+                f.close()
+            except Exception as e:
+                err = u"\u062a\u0639\u0630\u0631 \u062a\u062c\u0647\u064a\u0632 \u0645\u0644\u0641 VPN: " + str(e)
+
+            if not err:
+                _vpn_ensure_tun()
+                ovpn_path = _vpn_find_openvpn()
+                os.system("killall -9 openvpn 2>/dev/null")
+                time.sleep(1)
+                cmd = ("%s --config %s --daemon --log %s "
+                       "--connect-retry-max 3 --connect-timeout 15 "
+                       "--redirect-gateway def1 --script-security 2 2>/dev/null &") % (
+                           ovpn_path, VPN_TMP_OVPN, VPN_LOG)
+                os.system(cmd)
+                time.sleep(12)
+
+            running = _vpn_is_running()
+            ip, country = ("", "")
+            if running:
+                ip, country = _vpn_public_ip()
+
+            def _apply():
+                self.is_loading = False
+                self.show_menu()
+                if err:
+                    self.session.open(MessageBox, err, type=MessageBox.TYPE_ERROR, timeout=8)
+                    return
+                if running:
+                    msg = u"\u2705 \u062a\u0645 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0640 VPN \u0628\u0646\u062c\u0627\u062d!\n\n"
+                    msg += u"\u0627\u0644\u062f\u0648\u0644\u0629 \u0627\u0644\u0645\u062e\u062a\u0627\u0631\u0629: %s [%s]\n" % (server["country"], server["cc"])
+                    if ip:
+                        msg += u"\u0639\u0646\u0648\u0627\u0646 IP \u0627\u0644\u062d\u0627\u0644\u064a: %s\n" % ip
+                    if country:
+                        msg += u"\u0627\u0644\u0638\u0627\u0647\u0631 \u0627\u0644\u0622\u0646 \u0645\u0646: %s\n" % country
+                    msg += u"\n(MohamedStore)"
+                    self.session.open(MessageBox, msg, type=MessageBox.TYPE_INFO, timeout=12)
+                else:
+                    tip = u"\u274c \u0641\u0634\u0644 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0647\u0630\u0627 \u0627\u0644\u0633\u064a\u0631\u0641\u0631.\n\n"
+                    tip += u"\u062c\u0631\u0651\u0628 \u0633\u064a\u0631\u0641\u0631 \u0622\u062e\u0631 (\u0623\u0642\u0644 Ping / \u0623\u0639\u0644\u0649 \u0633\u0631\u0639\u0629).\n"
+                    tip += u"\u062a\u0623\u0643\u062f \u0645\u0646 \u062a\u062b\u0628\u064a\u062a OpenVPN \u0648\u062a\u0648\u0641\u0631 /dev/net/tun (\u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u0632\u0631\u0642).\n"
+                    tip += u"\u0633\u062c\u0644 \u0627\u0644\u0623\u062e\u0637\u0627\u0621: %s" % VPN_LOG
+                    self.session.open(MessageBox, tip, type=MessageBox.TYPE_ERROR, timeout=12)
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def disconnect_vpn(self):
+        if self.is_loading:
+            return
+        os.system("killall -9 openvpn 2>/dev/null")
+        self.session.open(MessageBox, u"\u2705 \u062a\u0645 \u0642\u0637\u0639 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0640 VPN \u0648\u0627\u0644\u0639\u0648\u062f\u0629 \u0644\u0644\u0627\u062a\u0635\u0627\u0644 \u0627\u0644\u0645\u0628\u0627\u0634\u0631.", type=MessageBox.TYPE_INFO, timeout=6)
+
+    def show_status(self):
+        if self.is_loading:
+            return
+        self["status"].setText(u"\u062c\u0627\u0631\u064a \u0641\u062d\u0635 \u0627\u0644\u062d\u0627\u0644\u0629... (Checking...)")
+
+        def _worker():
+            ovpn_path = _vpn_find_openvpn()
+            tun_ok = _vpn_tun_ready()
+            running = _vpn_is_running()
+            ip, country = _vpn_public_ip()
+
+            def _apply():
+                self.show_menu()
+                lines = []
+                lines.append(u"\U0001F510 \u062d\u0627\u0644\u0629 VPN (MohamedStore)")
+                lines.append(u"========================================")
+                if ovpn_path:
+                    lines.append(u"[\u2714] OpenVPN \u0645\u062b\u0628\u0651\u062a: %s" % ovpn_path)
+                else:
+                    lines.append(u"[\u2716] OpenVPN \u063a\u064a\u0631 \u0645\u062b\u0628\u0651\u062a (\u0627\u0636\u063a\u0637 OK \u0644\u0644\u062a\u062b\u0628\u064a\u062a)")
+                if tun_ok:
+                    lines.append(u"[\u2714] /dev/net/tun \u0645\u062a\u0648\u0641\u0631")
+                else:
+                    lines.append(u"[\u2716] /dev/net/tun \u063a\u064a\u0631 \u0645\u062a\u0648\u0641\u0631 (\u0633\u064a\u062a\u0645 \u0625\u0646\u0634\u0627\u0624\u0647 \u0639\u0646\u062f \u0627\u0644\u0627\u062a\u0635\u0627\u0644)")
+                if running:
+                    lines.append(u"[\u2714] \u0627\u0644\u062d\u0627\u0644\u0629: VPN \u0645\u062a\u0635\u0644 \u0627\u0644\u0622\u0646")
+                else:
+                    lines.append(u"[\u2716] \u0627\u0644\u062d\u0627\u0644\u0629: \u063a\u064a\u0631 \u0645\u062a\u0635\u0644 (\u0627\u062a\u0635\u0627\u0644 \u0645\u0628\u0627\u0634\u0631)")
+                lines.append(u"----------------------------------------")
+                if ip:
+                    lines.append(u"\u0639\u0646\u0648\u0627\u0646 IP \u0627\u0644\u062d\u0627\u0644\u064a: %s" % ip)
+                if country:
+                    lines.append(u"\u0627\u0644\u062f\u0648\u0644\u0629 \u0627\u0644\u0638\u0627\u0647\u0631\u0629: %s" % country)
+                if not ip:
+                    lines.append(u"\u062a\u0639\u0630\u0631 \u062c\u0644\u0628 \u0639\u0646\u0648\u0627\u0646 IP (\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0627\u0646\u062a\u0631\u0646\u062a)")
+                report = u"\n".join(lines)
+                if not ovpn_path:
+                    self.session.openWithCallback(
+                        self._ask_install_cb, MessageBox,
+                        report + u"\n\n\u0647\u0644 \u062a\u0631\u064a\u062f \u062a\u062b\u0628\u064a\u062a OpenVPN \u0627\u0644\u0622\u0646\u061f",
+                        type=MessageBox.TYPE_YESNO)
+                else:
+                    self.session.open(MessageBox, report, type=MessageBox.TYPE_INFO, timeout=15)
+
+            _call_ui(_apply)
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+
+
 BUILTIN_SYSTEM_TOOLS = [
+    {
+        "name": u"\U0001f510 \u0641\u064a\u0628\u064a \u0627\u0646 \u0645\u062c\u0627\u0646\u064a (VPN Free)",
+        "type": "tool",
+        "action": "vpn",
+        "description": u"\u0627\u062a\u0635\u0627\u0644 VPN \u0645\u062c\u0627\u0646\u064a \u0639\u0628\u0631 VPN Gate \u0644\u062a\u062c\u0627\u0648\u0632 \u0627\u0644\u062d\u0638\u0631 \u0627\u0644\u062c\u063a\u0631\u0627\u0641\u064a: \u0627\u062e\u062a\u0631 \u0623\u064a \u062f\u0648\u0644\u0629 \u0645\u0646 \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u062b\u0645 \u0627\u062a\u0635\u0627\u0644 (\u064a\u062b\u0628\u0651\u062a OpenVPN \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b)."
+    },
     {
         "name": u"\U0001f3ac \u062a\u0631\u062c\u0645\u0627\u062a OpenSubtitles (Subtitles)",
         "type": "tool",
@@ -2672,6 +7557,54 @@ BUILTIN_SYSTEM_TOOLS = [
         "type": "tool",
         "cmd": "restart_gui",
         "description": u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0648\u0627\u062c\u0647\u0629 \u0627\u0644\u0633\u064a\u0633\u062a\u0645."
+    },
+    {
+        "name": u"\u23f3 \u0639\u062f\u0627\u062f \u0627\u0646\u062a\u0647\u0627\u0621 \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 (Subscription Countdown)",
+        "type": "tool",
+        "action": "subscription",
+        "description": u"\u062a\u062a\u0628\u0651\u0639 \u0627\u0644\u0623\u064a\u0627\u0645 \u0627\u0644\u0645\u062a\u0628\u0642\u064a\u0629 \u0639\u0644\u0649 \u0627\u0646\u062a\u0647\u0627\u0621 \u0627\u0634\u062a\u0631\u0627\u0643\u0643 \u0645\u0639 \u062a\u0646\u0628\u064a\u0647 \u0642\u0628\u0644 \u0627\u0644\u0627\u0646\u062a\u0647\u0627\u0621 (\u0639\u062f\u0627\u062f \u062a\u0646\u0627\u0632\u0644\u064a)."
+    },
+    {
+        "name": u"\U0001f4c2 \u0645\u062f\u064a\u0631 \u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0645\u0635\u063a\u0651\u0631 (File Manager)",
+        "type": "tool",
+        "action": "file_manager",
+        "description": u"\u062a\u0635\u0641\u0651\u062d \u0648\u062d\u0630\u0641 \u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0648\u0627\u0644\u0645\u062c\u0644\u062f\u0627\u062a \u0645\u0646 \u062f\u0627\u062e\u0644 \u0627\u0644\u0628\u0644\u062c\u0646 \u0645\u0639 \u062d\u0645\u0627\u064a\u0629 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0646\u0638\u0627\u0645."
+    },
+    {
+        "name": u"\u23f0 \u0625\u062f\u0627\u0631\u0629 \u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a (Match Reminders)",
+        "type": "tool",
+        "action": "match_reminders",
+        "description": u"\u0639\u0631\u0636 \u0648\u0625\u062f\u0627\u0631\u0629 \u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a \u0627\u0644\u0645\u0636\u0628\u0648\u0637\u0629 \u0645\u0639 \u0627\u0644\u062d\u0630\u0641 \u0648\u0627\u0644\u0625\u0636\u0627\u0641\u0629 \u0645\u0646 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0645\u0628\u0627\u0631\u064a\u0627\u062a."
+    },
+    {
+        "name": u"\U0001f4e1 \u0645\u0631\u0627\u0642\u0628 \u062d\u0627\u0644\u0629 \u0627\u0644\u0633\u064a\u0631\u0641\u0631 (Server Monitor)",
+        "type": "tool",
+        "action": "server_monitor",
+        "description": u"\u0645\u0631\u0627\u0642\u0628\u0629 \u062d\u0627\u0644\u0629 OSCam/NCam \u0644\u062d\u0638\u064a\u0627\u064b: \u0647\u0644 \u0634\u063a\u0651\u0627\u0644\u060c \u0627\u0644\u0631\u064a\u062f\u0631\u0632 \u0627\u0644\u0645\u062a\u0635\u0644\u0629\u060c \u0627\u0644\u0632\u0628\u0627\u0626\u0646\u060c \u0648\u0622\u062e\u0631 \u0642\u0646\u0627\u0629 \u0627\u0646\u0641\u0643\u0651\u062a (\u062a\u062d\u062f\u064a\u062b \u062a\u0644\u0642\u0627\u0626\u064a)."
+    },
+    {
+        "name": u"\U0001f4be \u0646\u0633\u062e \u0627\u062d\u062a\u064a\u0627\u0637\u064a / \u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0627\u0644\u0625\u0639\u062f\u0627\u062f\u0627\u062a (Backup & Restore)",
+        "type": "tool",
+        "action": "settings_backup",
+        "description": u"\u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629 \u0644\u0644\u0642\u0646\u0648\u0627\u062a \u0648\u0627\u0644\u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0648\u0627\u0644\u0633\u064a\u0631\u0641\u0631 \u062a\u064f\u062d\u0641\u0638 \u0639\u0644\u0649 \u0627\u0644\u0647\u0627\u0631\u062f/\u0627\u0644\u0641\u0644\u0627\u0634 \u0645\u0639 \u0625\u0645\u0643\u0627\u0646\u064a\u0629 \u0627\u0644\u0627\u0633\u062a\u0639\u0627\u062f\u0629 \u0648\u0642\u062a \u0627\u0644\u062d\u0627\u062c\u0629."
+    },
+    {
+        "name": u"\U0001f9f8 \u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644 (Kids Mode)",
+        "type": "tool",
+        "action": "kids_mode",
+        "description": u"\u064a\u062d\u0635\u0631 \u0627\u0644\u062c\u0647\u0627\u0632 \u0639\u0644\u0649 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0623\u0637\u0641\u0627\u0644 \u0627\u0644\u0645\u0633\u0645\u0648\u062d\u0629 \u0641\u0642\u0637 \u0645\u0639 \u0631\u0645\u0632 \u0633\u0631\u064a \u0644\u0644\u0625\u064a\u0642\u0627\u0641 (\u062d\u0645\u0627\u064a\u0629 \u0623\u0628\u0648\u064a\u0629)."
+    },
+    {
+        "name": u"\U0001f5c3 \u0645\u0646\u0638\u0645 \u0627\u0644\u0642\u0646\u0648\u0627\u062a (Channel Organizer)",
+        "type": "tool",
+        "action": "channel_organizer",
+        "description": u"\u062a\u0631\u062a\u064a\u0628 \u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0648\u0627\u0644\u0642\u0646\u0648\u0627\u062a (\u062a\u062d\u0631\u064a\u0643 \u0641\u0648\u0642/\u062a\u062d\u062a)\u060c \u0625\u0639\u0627\u062f\u0629 \u062a\u0633\u0645\u064a\u0629 \u0627\u0644\u0628\u0627\u0642\u0629\u060c \u062d\u0630\u0641 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0623\u0648 \u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0645\u0646 \u062f\u0627\u062e\u0644 \u0627\u0644\u0628\u0644\u062c\u0646."
+    },
+    {
+        "name": u"\U0001f5bc \u062a\u063a\u064a\u064a\u0631 \u0634\u0639\u0627\u0631 \u0627\u0644\u0625\u0642\u0644\u0627\u0639 (Boot Logo Changer)",
+        "type": "tool",
+        "action": "boot_logo",
+        "description": u"\u062a\u063a\u064a\u064a\u0631 \u0635\u0648\u0631\u0629 \u0627\u0644\u062a\u0634\u063a\u064a\u0644 \u0648\u0635\u0648\u0631\u0629 \u0627\u0644\u0625\u0637\u0641\u0627\u0621/\u0627\u0644\u0627\u0633\u062a\u0639\u062f\u0627\u062f: \u0627\u062e\u062a\u0631 \u0635\u0648\u0631\u062a\u064a\u0646 PNG/JPG \u0645\u0646 \u0627\u0644\u0647\u0627\u0631\u062f\u060c \u0648\u0627\u0644\u0623\u062f\u0627\u0629 \u062a\u062d\u0648\u0651\u0644\u0647\u0627 \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b \u0648\u062a\u0631\u0643\u0651\u0628\u0647\u0627 \u0645\u0639 \u0646\u0633\u062e\u0629 \u0623\u0635\u0644\u064a\u0629 \u0648\u0627\u0633\u062a\u0639\u0627\u062f\u0629."
     }
 ]
 
@@ -3806,6 +8739,42 @@ class MohamedStore(Screen):
                         self.session.open(IPTVScreen)
                         return
 
+                    elif action == "subscription":
+                        self.session.open(SubscriptionScreen)
+                        return
+
+                    elif action == "file_manager":
+                        self.session.open(FileManagerScreen)
+                        return
+
+                    elif action == "match_reminders":
+                        self.session.open(MatchRemindersScreen)
+                        return
+
+                    elif action == "server_monitor":
+                        self.session.open(ServerMonitorScreen)
+                        return
+
+                    elif action == "settings_backup":
+                        self.session.open(SettingsBackupScreen)
+                        return
+
+                    elif action == "kids_mode":
+                        self.session.open(KidsModeScreen)
+                        return
+
+                    elif action == "channel_organizer":
+                        self.session.open(ChannelOrganizerScreen)
+                        return
+
+                    elif action == "vpn":
+                        self.session.open(VpnScreen)
+                        return
+
+                    elif action == "boot_logo":
+                        self.session.open(BootLogoScreen)
+                        return
+
                     cmd = item.get("cmd", "")
                     if cmd == "restart_gui":
                         if TryQuitMainloop:
@@ -4226,5 +9195,11 @@ def Plugins(**kwargs):
             where=PluginDescriptor.WHERE_PLUGINMENU,
             icon="plugin.png",
             fnc=main
+        ),
+        PluginDescriptor(
+            name="Mohamed Store Match Reminders",
+            description="Background match reminder notifier",
+            where=PluginDescriptor.WHERE_SESSIONSTART,
+            fnc=ms_sessionstart
         )
     ]
