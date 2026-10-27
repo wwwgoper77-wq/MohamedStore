@@ -13414,5 +13414,33 @@
     "plugins/plugins/SimplyScores.sh": {
         "name": "SimplyScores",
         "description": "ملخصات مباريات كرة القدم، والأهداف، وأبرز اللقطات من قنوات TikTok"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/All/Obsidian-FHD.sh": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/All/Obsidian-FHD.sh": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "Obsidian-FHD.sh": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "Obsidian-FHD": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "All/Obsidian-FHD.sh": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/skins/All/Obsidian-FHD.sh": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/Obsidian-FHD.sh": {
+        "name": "Obsidian FHD",
+        "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
     }
 }
