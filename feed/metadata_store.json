@@ -13394,5 +13394,25 @@
     "plugins/plugins/enigma2-plugin-extensions-alternativesoftcammanager_5.3_all.ipk": {
         "name": "Alternative Softcam Manager",
         "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyScores.sh": {
+        "name": "SimplyScores",
+        "description": "Plugin Extension"
+    },
+    "plugins/SimplyScores.sh": {
+        "name": "SimplyScores",
+        "description": "Plugin Extension"
+    },
+    "SimplyScores.sh": {
+        "name": "SimplyScores",
+        "description": "Plugin Extension"
+    },
+    "SimplyScores": {
+        "name": "SimplyScores",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/SimplyScores.sh": {
+        "name": "SimplyScores",
+        "description": "Plugin Extension"
     }
 }

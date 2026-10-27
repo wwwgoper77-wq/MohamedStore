@@ -238,6 +238,12 @@
                 "image": ""
             },
             {
+                "name": "SimplyScores",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyScores.sh",
+                "image": ""
+            },
+            {
                 "name": "SimplySports",
                 "description": "جدول مباريات",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplySports.zip",
