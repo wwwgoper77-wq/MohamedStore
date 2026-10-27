@@ -28,12 +28,6 @@
                 "image": ""
             },
             {
-                "name": "Arabseed",
-                "description": "بلجن عرب سيد خاص بالبنل",
-                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/Arabseed.zip",
-                "image": ""
-            },
-            {
                 "name": "ChannelColorizer",
                 "description": "ملون القنوات الخاص بالبنل",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/ChannelColorizer.zip",
