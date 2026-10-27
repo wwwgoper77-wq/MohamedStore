@@ -13374,5 +13374,25 @@
     "plugins/plugins/MOH Boot.sh": {
         "name": "MOH Boot",
         "description": "إضافة متعددة الإقلاع"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-alternativesoftcammanager_5.3_all.ipk": {
+        "name": "Alternative Softcam Manager",
+        "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"
+    },
+    "plugins/enigma2-plugin-extensions-alternativesoftcammanager_5.3_all.ipk": {
+        "name": "Alternative Softcam Manager",
+        "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"
+    },
+    "enigma2-plugin-extensions-alternativesoftcammanager_5.3_all.ipk": {
+        "name": "Alternative Softcam Manager",
+        "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"
+    },
+    "enigma2-plugin-extensions-alternativesoftcammanager_5": {
+        "name": "Alternative Softcam Manager",
+        "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"
+    },
+    "plugins/plugins/enigma2-plugin-extensions-alternativesoftcammanager_5.3_all.ipk": {
+        "name": "Alternative Softcam Manager",
+        "description": "مدير محاكيات الكامات والسيرفرات لتشغيل الشفرات"
     }
 }
