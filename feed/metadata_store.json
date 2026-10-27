@@ -13350,5 +13350,29 @@
     "picons/v1.0/enigma2-plugin-picons-srp-full.220x132-190x102.dark.on.reflection_2026-10-25--00-12-17_all.ipk": {
         "name": "2026-10-25 بيكونات اغلب الاقمار بتاريخ",
         "description": "220x132 شعارات شفاف بحجم"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MOH%20Boot.sh": {
+        "name": "MOH Boot",
+        "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MOH Boot.sh": {
+        "name": "MOH Boot",
+        "description": "Plugin Extension"
+    },
+    "plugins/MOH Boot.sh": {
+        "name": "MOH Boot",
+        "description": "Plugin Extension"
+    },
+    "MOH Boot.sh": {
+        "name": "MOH Boot",
+        "description": "Plugin Extension"
+    },
+    "MOH Boot": {
+        "name": "MOH Boot",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/MOH Boot.sh": {
+        "name": "MOH Boot",
+        "description": "Plugin Extension"
     }
 }

@@ -178,6 +178,12 @@
                 "image": ""
             },
             {
+                "name": "MOH Boot",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MOH%20Boot.sh",
+                "image": ""
+            },
+            {
                 "name": "Mix Audio",
                 "description": "خلط ومزامنة القنوات الصوتية مع البث المباشر للتايم شفت",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/MixAudio.sh",
