@@ -13442,5 +13442,25 @@
     "skins/Obsidian-FHD.sh": {
         "name": "Obsidian FHD",
         "description": "سكين Obsidian FHD عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/tools/enigma2-plugin-softcams-oscam-emu-pcsc-levi45_11968-803_all.ipk": {
+        "name": "Oscam Emu Levi45 v11965",
+        "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
+    },
+    "tools/enigma2-plugin-softcams-oscam-emu-pcsc-levi45_11968-803_all.ipk": {
+        "name": "Oscam Emu Levi45 v11965",
+        "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
+    },
+    "enigma2-plugin-softcams-oscam-emu-pcsc-levi45_11968-803_all.ipk": {
+        "name": "Oscam Emu Levi45 v11965",
+        "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
+    },
+    "enigma2-plugin-softcams-oscam-emu-pcsc-levi45_11968-803_all": {
+        "name": "Oscam Emu Levi45 v11965",
+        "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
+    },
+    "tools/tools/enigma2-plugin-softcams-oscam-emu-pcsc-levi45_11968-803_all.ipk": {
+        "name": "Oscam Emu Levi45 v11965",
+        "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
     }
 }
