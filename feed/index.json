@@ -1107,10 +1107,6 @@
         ],
         "system_images": [
             {
-                "name": "Dreambox",
-                "items": []
-            },
-            {
                 "name": "Egami",
                 "items": [
                     {
