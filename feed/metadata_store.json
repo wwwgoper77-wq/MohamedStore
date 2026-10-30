@@ -13522,5 +13522,13 @@
     "system_images/v1.0/OpenPLi-wrynose-novaler4kpro-20260812_usb.zip": {
         "name": "OpenPLi - Novaler 4K Pro",
         "description": "صورة نظام OpenPLi الرسمية لجهاز Novaler 4K Pro (USB)"
+    },
+    "OpenPLi/OpenPLi-wrynose-novaler4kpro-20260812_usb.zip": {
+        "name": "OpenPLi - Novaler 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Novaler 4K Pro (USB)"
+    },
+    "system_images/OpenPLi/OpenPLi-wrynose-novaler4kpro-20260812_usb.zip": {
+        "name": "OpenPLi - Novaler 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Novaler 4K Pro (USB)"
     }
 }
