@@ -1108,7 +1108,14 @@
         "system_images": [
             {
                 "name": "Backup",
-                "items": []
+                "items": [
+                    {
+                        "name": "Egami 11.0 - VU+ Uno 4K SE",
+                        "description": "صورة نظام Egami 11.0 الرسمية لجهاز VU+ Uno 4K SE (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/egami-11.0.r21-vuuno4kse-backup-20260725_2351_usb-by-enigma2.net.zip",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "Egami",
