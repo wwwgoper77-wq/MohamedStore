@@ -1108,14 +1108,7 @@
         "system_images": [
             {
                 "name": "Backup",
-                "items": [
-                    {
-                        "name": "صورة OPENPLI لجهاز NOVALER4KPRO",
-                        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز NOVALER4KPRO",
-                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip",
-                        "image": ""
-                    }
-                ]
+                "items": []
             },
             {
                 "name": "Egami",
@@ -1437,6 +1430,12 @@
                         "name": "صورة OpenPLi 9.2 لجهاز VU+ Zero 4K",
                         "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Zero 4K (USB)",
                         "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/openpli-9.2-release-vuzero4k-20260816_usb.zip",
+                        "image": ""
+                    },
+                    {
+                        "name": "OpenPLi - Novaler 4K Pro",
+                        "description": "صورة نظام OpenPLi الرسمية لجهاز Novaler 4K Pro (USB)",
+                        "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/OpenPLi-wrynose-novaler4kpro-20260812_usb.zip",
                         "image": ""
                     }
                 ]
