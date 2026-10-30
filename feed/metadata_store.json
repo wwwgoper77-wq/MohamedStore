@@ -13582,5 +13582,13 @@
     "system_images/v1.0/egami-11.0.r21-vuuno4kse-backup-20260725_2351_usb-by-enigma2.net.zip": {
         "name": "Egami 11.0 - VU+ Uno 4K SE",
         "description": "صورة نظام Egami 11.0 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "Backup/egami-11.0.r21-vuuno4kse-backup-20260725_2351_usb-by-enigma2.net.zip": {
+        "name": "Egami 11.0 - VU+ Uno 4K SE",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/Backup/egami-11.0.r21-vuuno4kse-backup-20260725_2351_usb-by-enigma2.net.zip": {
+        "name": "Egami 11.0 - VU+ Uno 4K SE",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز VU+ Uno 4K SE (USB)"
     }
 }
