@@ -13462,5 +13462,13 @@
     "tools/tools/enigma2-plugin-softcams-oscam-emu-pcsc-levi45_11968-803_all.ipk": {
         "name": "Oscam Emu Levi45 v11968",
         "description": "محاكي أوسكام إيمو محدث بآخر الشفرات وكسر التشفير"
+    },
+    "Backup/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip": {
+        "name": "صورة OPENPLI لجهاز NOVALER4KPRO",
+        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز NOVALER4KPRO"
+    },
+    "system_images/Backup/OpenPLi-wrynose-novaler4kpro-backup-20260812_usb.zip": {
+        "name": "صورة OPENPLI لجهاز NOVALER4KPRO",
+        "description": "صورة نظام OPENPLI الرسمية المحدثة لجهاز NOVALER4KPRO"
     }
 }
