@@ -159,7 +159,7 @@ def scale_skin_layout(xml_layout):
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
-PLUGIN_VERSION = "1.3.2"
+PLUGIN_VERSION = "1.3.3"
 
 try:
     PLUGIN_DIR = os.path.dirname(__file__)
@@ -1325,6 +1325,37 @@ def fetch_geocode(query):
     except Exception as e:
         return False, str(e)
 
+# =========================================================================
+# Animated weather icon frames (pure text, no image assets needed,
+# works on all Enigma2 images + Python 2/3). Driven by an eTimer.
+# =========================================================================
+# category -> (arabic condition name, symbol that bounces across the track)
+WX_ANIM_INFO = {
+    "clear": (u"\u0645\u0634\u0645\u0633", "*"),
+    "cloud": (u"\u063a\u0627\u0626\u0645", "~"),
+    "rain":  (u"\u0645\u0645\u0637\u0631", ","),
+    "snow":  (u"\u062b\u0644\u0648\u062c", "*"),
+    "fog":   (u"\u0636\u0628\u0627\u0628", "="),
+    "storm": (u"\u0639\u0648\u0627\u0635\u0641", "#"),
+}
+
+def _wx_category(code):
+    try:
+        code = int(code)
+    except Exception:
+        return "clear"
+    if code == 0:
+        return "clear"
+    if code in (1, 2, 3):
+        return "cloud"
+    if code in (45, 48):
+        return "fog"
+    if code in (71, 72, 73, 74, 75, 77, 85, 86):
+        return "snow"
+    if code in (95, 96, 99):
+        return "storm"
+    return "rain"
+
 class WeatherScreen(Screen):
     skin = WEATHER_SKIN
 
@@ -1346,14 +1377,68 @@ class WeatherScreen(Screen):
         self.is_loading = False
         self.search_results = []
         self.cur_city = None
+        # --- animated weather icon state ---
+        self.wx_anim_frame = 0
+        self.wx_anim_cat = None
+        self.wx_anim_base = ""
+        self.wx_anim_timer = eTimer() if eTimer else None
+        if self.wx_anim_timer:
+            try:
+                self.wx_anim_conn = self.wx_anim_timer.timeout.connect(self._wx_anim_tick)
+            except AttributeError:
+                try:
+                    self.wx_anim_timer.callback.append(self._wx_anim_tick)
+                except Exception:
+                    pass
         self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
             "cancel": self.go_back, "ok": self.ok_pressed,
             "red": self.go_back, "green": self.ok_pressed,
             "yellow": self.do_search, "blue": self.refresh_current,
         }, -1)
+        try:
+            self.onClose.append(self._wx_anim_stop)
+        except Exception:
+            pass
         self.onLayoutFinish.append(self.show_menu)
 
+    def _wx_anim_start(self):
+        if not self.wx_anim_timer or not self.wx_anim_cat:
+            return
+        self.wx_anim_frame = 0
+        try:
+            self.wx_anim_timer.start(350, False)
+        except Exception:
+            pass
+
+    def _wx_anim_stop(self):
+        self.wx_anim_cat = None
+        if self.wx_anim_timer:
+            try:
+                self.wx_anim_timer.stop()
+            except Exception:
+                pass
+
+    def _wx_anim_tick(self):
+        if not self.wx_anim_cat:
+            return
+        label, ch = WX_ANIM_INFO.get(self.wx_anim_cat, WX_ANIM_INFO["clear"])
+        width = 10
+        period = (width - 1) * 2
+        p = self.wx_anim_frame % period
+        pos = p if p < width else period - p
+        track = "".join(ch if i == pos else " " for i in range(width))
+        self.wx_anim_frame += 1
+        try:
+            self["title"].setText(u"\u062d\u0627\u0644\u0629 \u0627\u0644\u0637\u0642\u0633: %s   [%s]" % (label, track))
+        except Exception:
+            pass
+
     def show_menu(self):
+        self._wx_anim_stop()
+        try:
+            self["title"].setText(u"\u062d\u0627\u0644\u0629 \u0627\u0644\u0637\u0642\u0633 (Weather)")
+        except Exception:
+            pass
         self.mode = "menu"
         self["daylabel"].setText(u"\u0627\u062e\u062a\u0631 \u0645\u062f\u064a\u0646\u0629 \u0623\u0648 \u0627\u0636\u063a\u0637 \u0623\u0635\u0641\u0631 \u0644\u0644\u0628\u062d\u062b (Select or Search)")
         items = [u"\U0001f50d \u0628\u062d\u062b \u0639\u0646 \u0645\u062f\u064a\u0646\u0629 \u0641\u064a \u0627\u0644\u0639\u0627\u0644\u0645 (Search city)"]
@@ -1484,6 +1569,14 @@ class WeatherScreen(Screen):
             entries.append(u"\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a: %s" % str(e))
         self["list"].setList(entries)
         self["status"].setText(u"\u0623\u062d\u0645\u0631 = \u0631\u062c\u0648\u0639  |  \u0623\u0632\u0631\u0642 = \u062a\u062d\u062f\u064a\u062b")
+        # --- start the animated weather icon for the current condition ---
+        try:
+            cur_code = data.get("current", {}).get("weather_code", -1)
+            self.wx_anim_cat = _wx_category(cur_code)
+            self.wx_anim_base = self.cur_city[0] if self.cur_city else ""
+            self._wx_anim_start()
+        except Exception:
+            pass
 
 # =========================================================================
 # IPTV (iptv-org)
@@ -7476,7 +7569,554 @@ class VpnScreen(Screen):
 
 
 
+
+
+# =========================================================================
+# KEYS UPDATER & CRASH ANALYZER SCREENS (ARABIC TOOLS)
+# =========================================================================
+
+KEYS_UPDATER_RAW_SKIN = """<screen name="MS_SoftcamKeysUpdaterScreen" position="center,center" size="1240,820" title="">
+    <widget name="title" position="20,15" size="1200,48" font="Regular;30" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="summary" position="30,72" size="1180,120" font="Regular;24" transparent="1" foregroundColor="#00ffffff"/>
+    <widget name="list" position="30,200" size="1180,475" font="Regular;22" itemHeight="36" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,685" size="1200,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,735" size="275,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="325,735" size="275,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="620,735" size="275,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="915,735" size="275,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+KEYS_UPDATER_SKIN = scale_skin_layout(KEYS_UPDATER_RAW_SKIN)
+
+
+class SoftcamKeysUpdaterScreen(Screen):
+    skin = KEYS_UPDATER_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\u0645\u062d\u062f\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a")
+        self["summary"] = Label(u"\u062c\u0627\u0631\u064d \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632...")
+        self["list"] = MenuList([])
+        self["status"] = Label(u"\u0627\u0636\u063a\u0637 \u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u062a\u0646\u0632\u064a\u0644 \u0648\u062a\u062d\u062f\u064a\u062b \u0623\u062d\u062f\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c")
+        self["key_green"] = Label(u"\u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a")
+        self["key_yellow"] = Label(u"\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0625\u064a\u0645\u0648")
+        self["key_blue"] = Label(u"\u0641\u062d\u0635 \u0627\u0644\u0645\u0644\u0641\u0627\u062a")
+
+        self.busy = False
+        self.ui_timer = eTimer()
+        try:
+            self.ui_timer.callback.append(self._render_result)
+        except Exception:
+            self.ui_timer_conn = self.ui_timer.timeout.connect(self._render_result)
+
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.start_update,
+            "red": self.close,
+            "green": self.start_update,
+            "yellow": self.restart_cam,
+            "blue": self.check_local_keys,
+        }, -1)
+
+        self.onClose.append(self._stop_timer)
+        self.onLayoutFinish.append(self.check_local_keys)
+
+    def _stop_timer(self):
+        try:
+            self.ui_timer.stop()
+        except Exception:
+            pass
+
+    def check_local_keys(self):
+        if self.busy:
+            return
+        self["status"].setText(u"\u062c\u0627\u0631\u064d \u0641\u062d\u0635 \u0645\u0633\u0627\u0631\u0627\u062a \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632...")
+        candidate_paths = [
+            "/etc/tuxbox/config/SoftCam.Key",
+            "/etc/tuxbox/config/oscam/SoftCam.Key",
+            "/etc/tuxbox/config/ncam/SoftCam.Key",
+            "/usr/keys/SoftCam.Key",
+            "/var/keys/SoftCam.Key",
+            "/etc/enigma2/SoftCam.Key"
+        ]
+        found_files = []
+        details = []
+        for path in candidate_paths:
+            if os.path.exists(path):
+                found_files.append(path)
+                try:
+                    st = os.stat(path)
+                    sz_kb = round(st.st_size / 1024.0, 1)
+                    mtime_str = time.strftime("%Y-%m-%d %H:%M", time.localtime(st.st_mtime))
+                    with open(path, "r") as f:
+                        lines = f.readlines()
+                    biss = sum(1 for l in lines if l.strip().startswith("F "))
+                    pvu = sum(1 for l in lines if l.strip().startswith("P "))
+                    tb = sum(1 for l in lines if l.strip().startswith("T "))
+                    details.append(u"\u1f4c1 %s (%s KB - %s)" % (path, sz_kb, mtime_str))
+                    details.append(u"   \u2514\u2500 \u0628\u064a\u0633: %d | \u0628\u0627\u0648\u0631 \u0641\u064a\u0648: %d | \u062a\u0627\u0646\u062f\u0628\u064a\u0631\u063a: %d | \u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0623\u0633\u0637\u0631: %d" % (biss, pvu, tb, len(lines)))
+                except Exception as e:
+                    details.append(u"\u1f4c1 %s (\u062e\u0637\u0623 \u0642\u0631\u0627\u0621\u0629: %s)" % (path, str(e)))
+
+        if found_files:
+            summary_msg = u"\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0641\u064a %d \u0645\u0633\u0627\u0631/\u0645\u0633\u0627\u0631\u0627\u062a.\n\u0627\u0636\u063a\u0637 \u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u062a\u0646\u0632\u064a\u0644 \u0648\u062a\u062d\u062f\u064a\u062b \u0623\u062d\u062f\u062b \u0645\u0644\u0641 SoftCam.Key \u0645\u0646 \u0627\u0644\u0633\u064a\u0631\u0641\u0631." % len(found_files)
+            self["summary"].setText(summary_msg)
+            self["list"].setList(details)
+            self["status"].setText(u"\u062c\u0627\u0647\u0632 \u0644\u0644\u062a\u062d\u062f\u064a\u062b | \u0623\u062e\u0636\u0631=\u062a\u062d\u062f\u064a\u062b | \u0623\u0635\u0641\u0631=\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0625\u064a\u0645\u0648")
+        else:
+            summary_msg = u"\u0644\u0645 \u064a\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u0645\u0644\u0641 SoftCam.Key \u0645\u0633\u0628\u0642\u0627\u064b \u0641\u064a \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u0645\u0639\u062a\u0627\u062f\u0629.\n\u0627\u0636\u063a\u0637 \u0627\u0644\u0632\u0631 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u0625\u0646\u0634\u0627\u0621 \u0648\u062a\u062d\u0645\u064a\u0644 \u0623\u062d\u062f\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b."
+            self["summary"].setText(summary_msg)
+            self["list"].setList([u"\u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u0645\u0639\u062a\u0645\u062f\u0629: /etc/tuxbox/config/SoftCam.Key \u0648 /usr/keys/SoftCam.Key"])
+            self["status"].setText(u"\u0627\u0636\u063a\u0637 \u0627\u0644\u0623\u062e\u0636\u0631 \u0644\u062a\u0646\u0632\u064a\u0644 \u0648\u062a\u062b\u0628\u064a\u062a \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0627\u0644\u062c\u062f\u064a\u062f\u0629")
+
+    def start_update(self):
+        if self.busy:
+            return
+        self.busy = True
+        self["status"].setText(u"\u062c\u0627\u0631\u064d \u062a\u0646\u0632\u064a\u0644 \u0623\u062d\u062f\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0645\u0646 \u0627\u0644\u0633\u064a\u0631\u0641\u0631... \u064a\u0631\u062c\u0649 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631")
+        self["summary"].setText(u"\u062c\u0627\u0631\u064d \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0648\u062a\u062d\u0645\u064a\u0644 \u0645\u0644\u0641 SoftCam.Key...")
+
+        def _worker():
+            mirrors = [
+                "https://raw.githubusercontent.com/popking159/softcam/master/SoftCam.Key",
+                "https://raw.githubusercontent.com/PAKO34/softcam.key/master/SoftCam.Key",
+                "https://raw.githubusercontent.com/myflash83/SoftCam.Key/main/SoftCam.Key",
+                "https://raw.githubusercontent.com/CrazySat/Net-Keys/main/SoftCam.Key"
+            ]
+            downloaded_data = None
+            for url in mirrors:
+                ok, data = _http_get(url, timeout=12)
+                if ok and data and len(data) > 5000:
+                    downloaded_data = data
+                    break
+
+            if not downloaded_data:
+                self._update_result = (False, u"\u0641\u0634\u0644 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0633\u064a\u0631\u0641\u0631 \u0627\u0644\u0634\u0641\u0631\u0627\u062a. \u064a\u0631\u062c\u0649 \u0627\u0644\u062a\u0623\u0643\u062f \u0645\u0646 \u0627\u062a\u0635\u0627\u0644 \u0627\u0644\u0625\u0646\u062a\u0631\u0646\u062a.")
+                try:
+                    self.ui_timer.start(50, True)
+                except Exception:
+                    pass
+                return
+
+            lines = downloaded_data.splitlines()
+            biss_cnt = sum(1 for l in lines if l.strip().startswith("F "))
+            pvu_cnt = sum(1 for l in lines if l.strip().startswith("P "))
+            tb_cnt = sum(1 for l in lines if l.strip().startswith("T "))
+            total_lines = len(lines)
+            data_bytes = downloaded_data.encode("utf-8") if isinstance(downloaded_data, str) else downloaded_data
+
+            target_dirs = [
+                "/etc/tuxbox/config",
+                "/etc/tuxbox/config/oscam",
+                "/etc/tuxbox/config/ncam",
+                "/usr/keys",
+                "/var/keys",
+                "/etc/enigma2"
+            ]
+            saved_paths = []
+            for d in target_dirs:
+                if os.path.isdir(d):
+                    filepath = os.path.join(d, "SoftCam.Key")
+                    if os.path.exists(filepath):
+                        try:
+                            bakpath = filepath + ".bak"
+                            if os.path.exists(bakpath):
+                                os.remove(bakpath)
+                            os.rename(filepath, bakpath)
+                        except Exception:
+                            pass
+                    try:
+                        with open(filepath, "wb") as f:
+                            f.write(data_bytes)
+                        try:
+                            os.chmod(filepath, 0o644)
+                        except Exception:
+                            pass
+                        saved_paths.append(filepath)
+                    except Exception:
+                        pass
+
+            if not saved_paths:
+                for default_dir in ["/etc/tuxbox/config", "/usr/keys"]:
+                    try:
+                        if not os.path.exists(default_dir):
+                            os.makedirs(default_dir)
+                        filepath = os.path.join(default_dir, "SoftCam.Key")
+                        with open(filepath, "wb") as f:
+                            f.write(data_bytes)
+                        try:
+                            os.chmod(filepath, 0o644)
+                        except Exception:
+                            pass
+                        saved_paths.append(filepath)
+                    except Exception:
+                        pass
+
+            cam_msg = ""
+            try:
+                c_ok, c_msg = restart_oscam_service()
+                if c_ok:
+                    cam_msg = u"\u062a\u0645\u062a \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0625\u064a\u0645\u0648 \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b \u0644\u062a\u0641\u0639\u064a\u0644 \u0627\u0644\u0634\u0641\u0631\u0627\u062a."
+            except Exception:
+                pass
+
+            self._update_result = (True, {
+                "saved_paths": saved_paths,
+                "biss": biss_cnt,
+                "powervu": pvu_cnt,
+                "tandberg": tb_cnt,
+                "total_lines": total_lines,
+                "size_kb": round(len(data_bytes) / 1024.0, 1),
+                "cam_msg": cam_msg
+            })
+            try:
+                self.ui_timer.start(50, True)
+            except Exception:
+                pass
+
+        t = threading.Thread(target=_worker)
+        t.daemon = True
+        t.start()
+
+    def _render_result(self):
+        self.busy = False
+        res = getattr(self, "_update_result", None)
+        if not res:
+            return
+        success = res[0]
+        data = res[1]
+        if not success:
+            self["summary"].setText(u"\u274c %s" % data)
+            self["status"].setText(u"\u0641\u0634\u0644 \u0627\u0644\u062a\u062d\u062f\u064a\u062b | \u0623\u062d\u0645\u0631=\u062e\u0631\u0648\u062c | \u0623\u062e\u0636\u0631=\u0625\u0639\u0627\u062f\u0629 \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629")
+            return
+
+        summary_text = (
+            u"\u2705 \u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0628\u0646\u062c\u0627\u062d \u0641\u0627\u0626\u0642!\n"
+            u"\u0627\u0644\u062d\u062c\u0645: %s KB | \u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0623\u0633\u0637\u0631: %d | \u0628\u064a\u0633: %d | \u0628\u0627\u0648\u0631 \u0641\u064a\u0648: %d | \u062a\u0627\u0646\u062f\u0628\u064a\u0631\u063a: %d\n"
+            u"%s" % (
+                data["size_kb"], data["total_lines"], data["biss"],
+                data["powervu"], data["tandberg"], data["cam_msg"]
+            )
+        )
+        self["summary"].setText(summary_text)
+
+        report_lines = [
+            u"\u2714 \u062a\u0645 \u062d\u0641\u0638 \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0648\u0636\u0628\u0637 \u0627\u0644\u0635\u0644\u0627\u062d\u064a\u0627\u062a (644) \u0641\u064a \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u062a\u0627\u0644\u064a\u0629:"
+        ]
+        for p in data["saved_paths"]:
+            report_lines.append(u"  \u251c\u2500 %s" % p)
+        report_lines.append(u"\u2714 \u062a\u0645 \u0625\u0646\u0634\u0627\u0621 \u0646\u0633\u062e\u0629 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629 \u0645\u0646 \u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0633\u0627\u0628\u0642\u0629 (.bak).")
+        report_lines.append(u"\u2714 \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0645\u0634\u0641\u0631\u0629 \u0628\u0640 Biss \u0648 PowerVU \u0633\u062a\u0639\u0645\u0644 \u0645\u0628\u0627\u0634\u0631\u0629 \u0627\u0644\u0622\u0646.")
+
+        self["list"].setList(report_lines)
+        self["status"].setText(u"\u0627\u0643\u062a\u0645\u0644 \u0627\u0644\u062a\u062d\u062f\u064a\u062b \u0628\u0646\u062c\u0627\u062d! | \u0623\u0635\u0641\u0631=\u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0625\u064a\u0645\u0648 | \u0623\u062d\u0645\u0631=\u062e\u0631\u0648\u062c")
+
+    def restart_cam(self):
+        if self.busy:
+            return
+        self["status"].setText(u"\u062c\u0627\u0631\u064d \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0625\u064a\u0645\u0648 OSCam / NCam...")
+        try:
+            ok, msg = restart_oscam_service()
+            if ok:
+                self["status"].setText(u"\u062a\u0645\u062a \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0625\u064a\u0645\u0648 \u0628\u0646\u062c\u0627\u062d!")
+                self.session.open(MessageBox, u"\u062a\u0645\u062a \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0625\u064a\u0645\u0648 OSCam / NCam \u0628\u0646\u062c\u0627\u062d \u0648\u062a\u0641\u0639\u064a\u0644 \u0627\u0644\u0634\u0641\u0631\u0627\u062a \u0641\u0648\u0631\u0627\u064b.", MessageBox.TYPE_INFO, timeout=5)
+            else:
+                self["status"].setText(u"\u062a\u0646\u0628\u064a\u0647: " + msg)
+                self.session.open(MessageBox, msg, MessageBox.TYPE_WARNING, timeout=6)
+        except Exception as e:
+            self["status"].setText(u"\u062e\u0637\u0623: " + str(e))
+
+
+CRASH_ANALYZER_RAW_SKIN = """<screen name="MS_CrashLogAnalyzerScreen" position="center,center" size="1260,820" title="">
+    <widget name="title" position="20,15" size="1220,48" font="Regular;30" halign="center" transparent="1" foregroundColor="#00ffcc00"/>
+    <widget name="summary" position="30,72" size="1200,125" font="Regular;23" transparent="1" foregroundColor="#00ffffff"/>
+    <widget name="list" position="30,205" size="1200,470" font="Regular;21" itemHeight="32" scrollbarMode="showOnDemand"/>
+    <widget name="status" position="20,685" size="1220,34" font="Regular;22" halign="center" transparent="1" foregroundColor="#00aaaaaa"/>
+    <widget name="key_red" position="30,735" size="280,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#00ff4040"/>
+    <widget name="key_green" position="330,735" size="280,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#0040ff40"/>
+    <widget name="key_yellow" position="630,735" size="280,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#00ffff40"/>
+    <widget name="key_blue" position="930,735" size="280,42" font="Regular;22" halign="center" transparent="1" foregroundColor="#004080ff"/>
+</screen>"""
+CRASH_ANALYZER_SKIN = scale_skin_layout(CRASH_ANALYZER_RAW_SKIN)
+
+
+class CrashLogAnalyzerScreen(Screen):
+    skin = CRASH_ANALYZER_SKIN
+
+    def __init__(self, session):
+        Screen.__init__(self, session)
+        self["title"] = Label(u"\u0645\u062d\u0644\u0644 \u0627\u0644\u0643\u0631\u0627\u0634")
+        self["summary"] = Label(u"\u062c\u0627\u0631\u064d \u0641\u062d\u0635 \u0633\u062c\u0644\u0627\u062a \u0627\u0644\u0623\u062e\u0637\u0627\u0621 \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632...")
+        self["list"] = MenuList([])
+        self["status"] = Label(u"\u062c\u0627\u0631\u064d \u0627\u0644\u0628\u062d\u062b...")
+        self["key_red"] = Label(u"\u062e\u0631\u0648\u062c")
+        self["key_green"] = Label(u"\u0623\u062d\u062f\u062b \u0643\u0631\u0627\u0634")
+        self["key_yellow"] = Label(u"\u0627\u0644\u0633\u0627\u0628\u0642")
+        self["key_blue"] = Label(u"\u062d\u0630\u0641 \u0627\u0644\u0633\u062c\u0644\u0627\u062a")
+
+        self.crash_files = []
+        self.current_idx = 0
+        self.busy = False
+
+        self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], {
+            "cancel": self.close,
+            "ok": self.reload_crashes,
+            "red": self.close,
+            "green": self.reload_crashes,
+            "yellow": self.prev_crash,
+            "blue": self.ask_delete_all,
+        }, -1)
+
+        self.onLayoutFinish.append(self.reload_crashes)
+
+    def find_all_crash_files(self):
+        found = []
+        search_dirs = ["/home/root", "/home/root/logs", "/media/hdd", "/media/usb", "/tmp"]
+        import glob
+        for d in search_dirs:
+            if os.path.exists(d):
+                for pat in ["*crash*.log", "enigma2_crash*.log", "dvbapp2_crash*.log"]:
+                    for p in glob.glob(os.path.join(d, pat)):
+                        if os.path.isfile(p):
+                            found.append(p)
+        found = list(set(found))
+        found.sort(key=lambda p: os.path.getmtime(p), reverse=True)
+        return found
+
+    def reload_crashes(self):
+        self.crash_files = self.find_all_crash_files()
+        self.current_idx = 0
+        if not self.crash_files:
+            self["summary"].setText(u"\u1f389 \u062a\u0647\u0627\u0646\u064a\u0646\u0627! \u0644\u0627 \u062a\u0648\u062c\u062f \u0623\u064a\u0629 \u0645\u0644\u0641\u0627\u062a \u0627\u0646\u0647\u064a\u0627\u0631 (CrashLog) \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632.\n\u062c\u0647\u0627\u0632\u0643 \u0645\u0633\u062a\u0642\u0631 \u062a\u0645\u0627\u0645\u0627\u064b \u0648\u062e\u0627\u0644\u064d \u0645\u0646 \u0623\u062e\u0637\u0627\u0621 \u0627\u0644\u0627\u0646\u0647\u064a\u0627\u0631.")
+            self["list"].setList([
+                u"\u2714 \u062a\u0645 \u0641\u062d\u0635 \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a: /home/root \u0648 /home/root/logs \u0648 /media/hdd \u0648 /media/usb \u0648 /tmp",
+                u"\u2714 \u0627\u0644\u0646\u0638\u0627\u0645 \u064a\u0639\u0645\u0644 \u0628\u0643\u0641\u0627\u0621\u0629 \u0648\u0628\u062f\u0648\u0646 \u0623\u062e\u0637\u0627\u0621 \u0643\u0631\u0627\u0634 \u0645\u0633\u062c\u0644\u0629."
+            ])
+            self["status"].setText(u"\u0627\u0644\u0646\u0638\u0627\u0645 \u0633\u0644\u064a\u0645 \u0648\u0645\u0633\u062a\u0642\u0631 100% | \u0623\u062d\u0645\u0631=\u062e\u0631\u0648\u062c")
+            return
+        self.display_crash(0)
+
+    def prev_crash(self):
+        if not self.crash_files:
+            return
+        if self.current_idx + 1 < len(self.crash_files):
+            self.current_idx += 1
+        else:
+            self.current_idx = 0
+        self.display_crash(self.current_idx)
+
+    def display_crash(self, idx):
+        if idx >= len(self.crash_files):
+            return
+        filepath = self.crash_files[idx]
+        try:
+            st = os.stat(filepath)
+            sz_kb = round(st.st_size / 1024.0, 1)
+            mtime_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(st.st_mtime))
+            filename = os.path.basename(filepath)
+        except Exception:
+            sz_kb = 0
+            mtime_str = "-"
+            filename = filepath
+
+        try:
+            with open(filepath, "rb") as f:
+                raw = f.read()
+            if isinstance(raw, bytes):
+                try:
+                    content = raw.decode("utf-8")
+                except Exception:
+                    content = raw.decode("latin-1", "ignore")
+            else:
+                content = str(raw)
+        except Exception as e:
+            self["summary"].setText(u"\u062a\u0639\u0630\u0631 \u0642\u0631\u0627\u0621\u0629 \u0645\u0644\u0641 \u0627\u0644\u0643\u0631\u0627\u0634: %s" % str(e))
+            self["list"].setList([])
+            return
+
+        lines = content.splitlines()
+
+        # ====== \u062a\u062d\u0644\u064a\u0644 \u0645\u062a\u0642\u062f\u0651\u0645: \u0627\u0633\u062a\u062e\u0631\u0627\u062c \u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a \u0644\u0623\u064a \u0646\u0648\u0639 \u0643\u0631\u0627\u0634 ======
+
+        # (1) \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u062c\u0647\u0627\u0632 \u0648\u0627\u0644\u0635\u0648\u0631\u0629 \u0645\u0646 \u0631\u0623\u0633 \u0645\u0644\u0641 \u0627\u0644\u0643\u0631\u0627\u0634
+        box_info = ""
+        image_info = ""
+        for l in lines[:80]:
+            if "=" not in l:
+                continue
+            k = l.split("=", 1)[0].strip().lower()
+            v = l.split("=", 1)[-1].strip()
+            if not box_info and k in ("stbmodel", "boxtype", "box type", "model", "machinebuild"):
+                box_info = v
+            if not image_info and k in ("imageversion", "image version", "oe version", "distro", "version", "imagedistro"):
+                image_info = v
+
+        # (2) \u0627\u0633\u062a\u062e\u0631\u0627\u062c \u0622\u062e\u0631 Traceback \u0628\u0627\u064a\u062b\u0648\u0646 \u0643\u0627\u0645\u0644
+        tb_lines = []
+        in_tb = False
+        for l in lines:
+            if "Traceback (most recent call last):" in l:
+                in_tb = True
+                tb_lines = [l]
+            elif in_tb:
+                s = l.strip()
+                if len(tb_lines) > 2 and (s.startswith("[") or s.startswith("----") or s.startswith("<<")):
+                    in_tb = False
+                else:
+                    tb_lines.append(l)
+
+        # (3) \u0633\u0637\u0631 \u0627\u0644\u062e\u0637\u0623 \u0627\u0644\u0623\u062e\u064a\u0631 (\u0623\u064a \u0646\u0648\u0639 \u0627\u0633\u062a\u062b\u0646\u0627\u0621) + \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0645\u062a\u0633\u0628\u0628 + \u0627\u0644\u0628\u0644\u062c\u0646
+        last_error = ""
+        culprit_plugin = ""
+        culprit_file = ""
+
+        exc_re = re.compile(r'^[A-Za-z_][A-Za-z0-9_.]*(Error|Exception|Warning|Interrupt|Fault|Timeout|Refused|Overflow|Failed|NotFound)\b')
+        colon_re = re.compile(r'^[A-Za-z_][A-Za-z0-9_.]*\s*:\s*\S')
+
+        check_pool = tb_lines if tb_lines else lines
+        for l in reversed(check_pool):
+            sl = l.strip()
+            if not last_error and sl and not l.startswith(" ") and not l.startswith("\t") \
+               and not sl.startswith("File ") and "Traceback (most recent call last)" not in sl:
+                if exc_re.match(sl) or (colon_re.match(sl) and len(sl) < 400):
+                    last_error = sl
+            if not culprit_plugin and "/Plugins/Extensions/" in l:
+                m = re.search(r'/Plugins/Extensions/([^/"]+)', l)
+                if m:
+                    culprit_plugin = m.group(1)
+            elif not culprit_plugin and "/Plugins/SystemPlugins/" in l:
+                m = re.search(r'/Plugins/SystemPlugins/([^/"]+)', l)
+                if m:
+                    culprit_plugin = m.group(1)
+            if not culprit_file and 'File "' in l:
+                m = re.search(r'File "([^"]+)", line (\d+)', l)
+                if m:
+                    culprit_file = m.group(1) + ":" + m.group(2)
+
+        # (4) \u0643\u0634\u0641 \u0627\u0646\u0647\u064a\u0627\u0631\u0627\u062a C++ / \u0625\u0634\u0627\u0631\u0627\u062a \u0627\u0644\u0646\u0638\u0627\u0645 (\u0643\u0631\u0627\u0634 \u0628\u062f\u0648\u0646 \u062a\u062a\u0628\u0651\u0639 \u0628\u0627\u064a\u062b\u0648\u0646)
+        signal_cause = ""
+        low_content = content.lower()
+        for key, desc in [
+            ("sigsegv", u"\u0627\u0646\u0647\u064a\u0627\u0631 \u0641\u064a \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u2014 Segmentation Fault (SIGSEGV)"),
+            ("segmentation fault", u"\u0627\u0646\u0647\u064a\u0627\u0631 \u0641\u064a \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u2014 Segmentation Fault"),
+            ("sigabrt", u"\u0625\u0644\u063a\u0627\u0621 \u0642\u0633\u0631\u064a \u0644\u0644\u0639\u0645\u0644\u064a\u0629 \u2014 abort (SIGABRT)"),
+            ("sigbus", u"\u062e\u0637\u0623 \u0639\u0646\u0648\u0646\u0629 \u0641\u064a \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u2014 Bus Error (SIGBUS)"),
+            ("sigill", u"\u062a\u0639\u0644\u064a\u0645\u0629 \u0645\u0639\u0627\u0644\u062c \u063a\u064a\u0631 \u0635\u0627\u0644\u062d\u0629 (SIGILL)"),
+            ("sigfpe", u"\u062e\u0637\u0623 \u062d\u0633\u0627\u0628\u064a / \u0642\u0633\u0645\u0629 \u0639\u0644\u0649 \u0635\u0641\u0631 (SIGFPE)"),
+            ("signal 11", u"\u0627\u0646\u0647\u064a\u0627\u0631 \u0641\u064a \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u2014 signal 11 (SIGSEGV)"),
+            ("signal 6", u"\u0625\u0644\u063a\u0627\u0621 \u0642\u0633\u0631\u064a \u2014 signal 6 (SIGABRT)"),
+            ("oops", u"\u0627\u0646\u0647\u064a\u0627\u0631 \u0639\u0644\u0649 \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0646\u0648\u0627\u0629 (Kernel Oops)"),
+        ]:
+            if key in low_content:
+                signal_cause = desc
+                break
+
+        # (5) \u062a\u062d\u062f\u064a\u062f \u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a \u0648\u0627\u0644\u062d\u0644 \u0627\u0644\u0645\u0642\u062a\u0631\u062d
+        err_msg = last_error.split(":", 1)[-1].strip() if (last_error and ":" in last_error) else ""
+
+        advice = u"\u0627\u0641\u062d\u0635 \u062a\u062a\u0628\u0651\u0639 \u0627\u0644\u062e\u0637\u0623 \u0628\u0627\u0644\u0623\u0633\u0641\u0644 \u0644\u0645\u0639\u0631\u0641\u0629 \u0627\u0644\u0633\u0637\u0631 \u0627\u0644\u0645\u062a\u0633\u0628\u0628 \u0628\u0627\u0644\u0636\u0628\u0637."
+
+        if last_error and culprit_plugin:
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: \u0628\u0644\u062c\u0646 [%s] \u0623\u0637\u0644\u0642 \u0627\u0644\u062e\u0637\u0623 \u2190 %s" % (culprit_plugin, last_error[:70])
+            advice = u"\u0627\u0644\u062d\u0644: \u0627\u062d\u0630\u0641 \u0623\u0648 \u0623\u0639\u062f \u062a\u062b\u0628\u064a\u062a \u0628\u0644\u062c\u0646 [%s] \u0628\u0646\u0633\u062e\u0629 \u0645\u062a\u0648\u0627\u0641\u0642\u0629 \u0645\u0639 \u0635\u0648\u0631\u062a\u0643 \u0648\u0627\u0644\u0628\u0627\u064a\u062b\u0648\u0646." % culprit_plugin
+        elif culprit_plugin:
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: \u0627\u0646\u0647\u064a\u0627\u0631 \u062f\u0627\u062e\u0644 \u0628\u0644\u062c\u0646 [%s]" % culprit_plugin
+            advice = u"\u0627\u0644\u062d\u0644: \u0627\u062d\u0630\u0641 \u0623\u0648 \u0623\u0639\u062f \u062a\u062b\u0628\u064a\u062a \u0628\u0644\u062c\u0646 [%s] \u0628\u0646\u0633\u062e\u0629 \u0645\u062a\u0648\u0627\u0641\u0642\u0629 \u0645\u0639 \u0635\u0648\u0631\u062a\u0643." % culprit_plugin
+        elif "SkinError" in last_error or "skin.xml" in content or ("skin" in low_content and "not found" in low_content):
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: \u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0633\u0643\u0650\u0646 (Skin Error)%s" % ((u" \u2190 %s" % last_error[:55]) if last_error else u"")
+            advice = u"\u0627\u0644\u062d\u0644: \u0647\u0646\u0627\u0643 \u0639\u0646\u0635\u0631 \u0623\u0648 \u062e\u0637 \u0623\u0648 \u0635\u0648\u0631\u0629 \u0645\u0641\u0642\u0648\u062f\u0629 \u0641\u064a \u0627\u0644\u0633\u0643\u0650\u0646\u060c \u0628\u062f\u0651\u0644 \u0644\u0644\u0633\u0643\u0650\u0646 \u0627\u0644\u0627\u0641\u062a\u0631\u0627\u0636\u064a \u0645\u0624\u0642\u062a\u0627\u064b."
+        elif "MemoryError" in last_error or "out of memory" in low_content or "cannot allocate memory" in low_content:
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: \u0646\u0641\u0627\u062f \u0630\u0627\u0643\u0631\u0629 \u0627\u0644\u0631\u0627\u0645 (Out of Memory)"
+            advice = u"\u0627\u0644\u062d\u0644: \u0641\u0639\u0651\u0644 \u0645\u0633\u0627\u062d\u0629 Swap\u060c \u0646\u0638\u0651\u0641 \u0627\u0644\u0631\u0627\u0645\u060c \u0648\u0642\u0644\u0651\u0644 \u0627\u0644\u0628\u0644\u062c\u0646\u0627\u062a \u0627\u0644\u0639\u0627\u0645\u0644\u0629 \u0641\u064a \u0627\u0644\u062e\u0644\u0641\u064a\u0629."
+        elif "ImportError" in last_error or "ModuleNotFoundError" in last_error or "No module named" in content:
+            mod = ""
+            mm = re.search(r"No module named ['\"]?([\w\.]+)", content)
+            if mm:
+                mod = mm.group(1)
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: \u0645\u0643\u062a\u0628\u0629 \u0628\u0627\u064a\u062b\u0648\u0646 \u0645\u0641\u0642\u0648\u062f\u0629%s" % ((u" [%s]" % mod) if mod else u"")
+            advice = u"\u0627\u0644\u062d\u0644: \u062b\u0628\u0651\u062a \u0627\u0644\u0645\u0643\u062a\u0628\u0629 \u0627\u0644\u0646\u0627\u0642\u0635\u0629 \u0639\u0628\u0631 Telnet (opkg install) \u0623\u0648 \u062d\u062f\u0651\u062b \u0627\u0644\u0635\u0648\u0631\u0629."
+        elif signal_cause:
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: %s" % signal_cause
+            advice = u"\u0627\u0644\u062d\u0644: \u0627\u0646\u0647\u064a\u0627\u0631 \u0639\u0644\u0649 \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0646\u0638\u0627\u0645 (\u0644\u064a\u0633 \u0628\u0627\u064a\u062b\u0648\u0646) \u2014 \u063a\u0627\u0644\u0628\u0627\u064b \u062a\u0639\u0631\u064a\u0641/\u062f\u0631\u0627\u064a\u0641\u0631 \u0623\u0648 \u0622\u062e\u0631 \u0628\u0644\u062c\u0646 \u0645\u064f\u062b\u0628\u0651\u062a. \u062d\u062f\u0651\u062b \u0627\u0644\u0635\u0648\u0631\u0629 \u0623\u0648 \u0639\u0637\u0651\u0644 \u0622\u062e\u0631 \u0625\u0636\u0627\u0641\u0629 \u062b\u0628\u0651\u062a\u062a\u0647\u0627."
+        elif last_error:
+            cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a: %s" % last_error[:85]
+            if err_msg:
+                advice = u"\u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u062e\u0637\u0623: %s" % err_msg[:95]
+        else:
+            fallback = ""
+            for l in lines:
+                ll = l.strip().lower()
+                if ll.startswith("error") or ll.startswith("fatal") or "fatal:" in ll or "assertion" in ll or "abort" in ll:
+                    fallback = l.strip()
+                    break
+            if fallback:
+                cause_text = u"\u0627\u0644\u0633\u0628\u0628 \u0627\u0644\u0645\u062d\u062a\u0645\u0644: %s" % fallback[:85]
+                advice = u"\u0627\u0644\u062d\u0644: \u0631\u0627\u062c\u0639 \u0627\u0644\u062a\u062a\u0628\u0651\u0639 \u0628\u0627\u0644\u0623\u0633\u0641\u0644\u060c \u0648\u0627\u0644\u0633\u0628\u0628 \u063a\u0627\u0644\u0628\u0627\u064b \u0622\u062e\u0631 \u0625\u0636\u0627\u0641\u0629/\u062a\u0639\u0631\u064a\u0641 \u0645\u064f\u062b\u0628\u0651\u062a."
+            else:
+                cause_text = u"\u062a\u0645 \u062a\u0633\u062c\u064a\u0644 \u0627\u0646\u0647\u064a\u0627\u0631 \u063a\u064a\u0631 \u0645\u062d\u062f\u062f (Enigma2 crash) \u2014 \u0631\u0627\u062c\u0639 \u0627\u0644\u062a\u062a\u0628\u0651\u0639 \u0628\u0627\u0644\u0623\u0633\u0641\u0644"
+
+        summary_text = (
+            u"\u1f4c4 \u0645\u0644\u0641 \u0627\u0644\u0643\u0631\u0627\u0634 (%d \u0645\u0646 %d): %s (%s KB)\n"
+            u"\u23f0 \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u062d\u062f\u0648\u062b: %s\n"
+            u"\u1f50d %s\n"
+            u"\u1f4a1 %s" % (
+                idx + 1, len(self.crash_files), filename, sz_kb,
+                mtime_str, cause_text, advice
+            )
+        )
+        self["summary"].setText(summary_text)
+
+        items = []
+        if box_info or image_info:
+            items.append(u"\U0001f9e9 \u0627\u0644\u062c\u0647\u0627\u0632: %s%s" % (box_info or u"\u063a\u064a\u0631 \u0645\u0639\u0631\u0648\u0641", (u"  |  \u0627\u0644\u0635\u0648\u0631\u0629: %s" % image_info) if image_info else u""))
+        if culprit_file:
+            items.append(u"\u1f4cd \u0645\u0633\u0627\u0631 \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0645\u0639\u0637\u0648\u0628: %s" % culprit_file)
+        if last_error:
+            items.append(u"\u26a1 \u0627\u0644\u062e\u0637\u0623 \u0627\u0644\u0623\u062e\u064a\u0631: %s" % last_error)
+        items.append(u"\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+        items.append(u"\u1f4dc \u062a\u0641\u0627\u0635\u064a\u0644 \u062a\u062a\u0628\u0639 \u0627\u0644\u062e\u0637\u0623 \u0645\u0646 \u0633\u062c\u0644 \u0627\u0644\u0643\u0631\u0627\u0634 (Traceback):")
+
+        disp_tb = tb_lines if tb_lines else lines[-25:]
+        for tbl in disp_tb[-25:]:
+            items.append(u"  " + tbl)
+
+        self["list"].setList(items)
+        self["status"].setText(u"\u0623\u062e\u0636\u0631=\u0623\u062d\u062f\u062b \u0643\u0631\u0627\u0634 | \u0623\u0635\u0641\u0631=\u0627\u0644\u0643\u0631\u0627\u0634 \u0627\u0644\u0633\u0627\u0628\u0642 (%d/%d) | \u0623\u0632\u0631\u0642=\u062d\u0630\u0641 \u0627\u0644\u0643\u0644 | \u0623\u062d\u0645\u0631=\u062e\u0631\u0648\u062c" % (idx + 1, len(self.crash_files)))
+
+    def ask_delete_all(self):
+        if not self.crash_files:
+            return
+        msg = u"\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 %d \u0645\u0644\u0641 \u0643\u0631\u0627\u0634 \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632.\n\u0647\u0644 \u062a\u0631\u064a\u062f \u062d\u0630\u0641 \u062c\u0645\u064a\u0639 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0643\u0631\u0627\u0634 \u0644\u062a\u0648\u0641\u064a\u0631 \u0645\u0633\u0627\u062d\u0629 \u0627\u0644\u0630\u0627\u0643\u0631\u0629\u061f" % len(self.crash_files)
+        self.session.openWithCallback(self._confirm_delete_all, MessageBox, msg, MessageBox.TYPE_YESNO)
+
+    def _confirm_delete_all(self, confirmed):
+        if not confirmed:
+            return
+        deleted = 0
+        for f in self.crash_files:
+            try:
+                if os.path.exists(f):
+                    os.remove(f)
+                    deleted += 1
+            except Exception:
+                pass
+        self.session.open(MessageBox, u"\u062a\u0645 \u062d\u0630\u0641 %d \u0645\u0646 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0643\u0631\u0627\u0634 \u0628\u0646\u062c\u0627\u062d \u0648\u062a\u0648\u0641\u064a\u0631 \u0645\u0633\u0627\u062d\u0629 \u0627\u0644\u062a\u062e\u0632\u064a\u0646." % deleted, MessageBox.TYPE_INFO, timeout=5)
+        self.reload_crashes()
+
+
 BUILTIN_SYSTEM_TOOLS = [
+    {
+        "name": u"\u0645\u062d\u062f\u062b \u0627\u0644\u0634\u0641\u0631\u0627\u062a",
+        "type": "tool",
+        "action": "softcam_keys_updater",
+        "description": u"\u062a\u062d\u062f\u064a\u062b \u0634\u0641\u0631\u0627\u062a \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b (\u0628\u064a\u0633\u060c \u0628\u0627\u0648\u0631 \u0641\u064a\u0648\u060c \u062a\u0627\u0646\u062f\u0628\u064a\u0631\u063a) \u0644\u062c\u0645\u064a\u0639 \u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u0625\u064a\u0645\u0648 \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632 \u0645\u0639 \u062e\u064a\u0627\u0631 \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0633\u064a\u0631\u0641\u0631."
+    },
+    {
+        "name": u"\u0645\u062d\u0644\u0644 \u0627\u0644\u0643\u0631\u0627\u0634",
+        "type": "tool",
+        "action": "crash_analyzer",
+        "description": u"\u0641\u062d\u0635 \u0648\u062a\u062d\u0644\u064a\u0644 \u0645\u0644\u0641\u0627\u062a \u0627\u0644\u0627\u0646\u0647\u064a\u0627\u0631 \u0648\u0627\u0644\u0623\u062e\u0637\u0627\u0621 \u0641\u064a \u0627\u0644\u062c\u0647\u0627\u0632 \u062a\u0644\u0642\u0627\u0626\u064a\u0627\u064b\u060c \u0648\u0627\u0643\u062a\u0634\u0627\u0641 \u0627\u0644\u0628\u0644\u062c\u0646 \u0623\u0648 \u0627\u0644\u0633\u0643\u064a\u0646 \u0627\u0644\u0645\u0633\u0628\u0628 \u0644\u0644\u0645\u0634\u0643\u0644\u0629 \u0645\u0639 \u062e\u064a\u0627\u0631 \u0645\u0633\u062d \u0627\u0644\u0633\u062c\u0644\u0627\u062a \u0627\u0644\u0642\u062f\u064a\u0645\u0629."
+    },
     {
         "name": u"\U0001f510 \u0641\u064a\u0628\u064a \u0627\u0646 \u0645\u062c\u0627\u0646\u064a (VPN Free)",
         "type": "tool",
@@ -7763,18 +8403,18 @@ RAW_SKIN_LAYOUT = """
 
     <!-- HEADER PANEL -->
     <eLabel position="20,15" size="1684,84" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="20,15" size="1684,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,15" size="4,84" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="20,99" size="1684,2" backgroundColor="#e11d48" />
+    <eLabel position="20,15" size="1684,2" backgroundColor="#ffffff" zPosition="0" />
+    <eLabel position="20,15" size="4,84" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="1700,15" size="4,84" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="20,99" size="1684,2" backgroundColor="#ffffff" />
     
     <ePixmap position="32,24" size="190,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/logo.png" zPosition="2" scale="1" transparent="1" alphatest="blend" />
     <eLabel position="230,22" size="120,30" text="MOHAMED" font="Regular;24" foregroundColor="#f59e0b" backgroundColor="#0f111a" transparent="1" />
     <eLabel position="350,22" size="90,30" text="STORE" font="Regular;24" foregroundColor="#38bdf8" backgroundColor="#0f111a" transparent="1" />
-    <eLabel position="230,50" size="70,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="230,50" size="70,2" backgroundColor="#a07a38" zPosition="2" />
     <eLabel position="300,50" size="70,2" backgroundColor="#38bdf8" zPosition="2" />
     <eLabel position="370,50" size="70,2" backgroundColor="#ec4899" zPosition="2" />
-    <eLabel position="230,56" size="75,22" text=" v1.3.2 " font="Regular;17" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
+    <eLabel position="230,56" size="75,22" text=" v1.3.3 " font="Regular;17" foregroundColor="#ffffff" backgroundColor="#be185d" transparent="0" halign="center" />
 
     <!-- HARDWARE CHIPS -->
     <eLabel position="445,19" size="305,74" backgroundColor="#070913" zPosition="1" />
@@ -7786,7 +8426,7 @@ RAW_SKIN_LAYOUT = """
 
     <eLabel position="760,19" size="300,74" backgroundColor="#070913" zPosition="1" />
     <eLabel position="760,19" size="300,2" backgroundColor="#be185d" zPosition="2" />
-    <eLabel position="760,19" size="3,74" backgroundColor="#f43f5e" zPosition="2" />
+    <eLabel position="760,19" size="3,74" backgroundColor="#9c4656" zPosition="2" />
     <eLabel position="760,91" size="300,2" backgroundColor="#be185d" zPosition="2" />
     <widget name="sys_cpu" position="770,23" size="285,32" font="Regular;24" foregroundColor="#f43f5e" backgroundColor="#070913" transparent="1" zPosition="3" />
     <widget name="sys_temp" position="770,56" size="285,30" font="Regular;22" foregroundColor="#fb923c" backgroundColor="#070913" transparent="1" zPosition="3" />
@@ -7807,43 +8447,43 @@ RAW_SKIN_LAYOUT = """
 
     <!-- LEFT PANEL: CATEGORIES -->
     <eLabel position="20,112" size="380,688" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="20,112" size="380,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="396,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="20,112" size="380,2" backgroundColor="#ffffff" zPosition="0" />
+    <eLabel position="20,112" size="4,688" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="396,112" size="4,688" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="32,126" size="356,35" text="CATEGORIES" font="Regular;30" foregroundColor="#e7c9d2" backgroundColor="#5a2f3d" transparent="0" halign="center" valign="center" />
     <eLabel position="32,166" size="356,2" backgroundColor="#be185d" />
     <widget name="categories_list" position="25,176" size="370,616" itemHeight="80" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
 
     <!-- CENTER PANEL: PACKAGES -->
     <eLabel position="412,112" size="780,688" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="412,112" size="780,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="412,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1188,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="428,126" size="748,35" text="AVAILABLE PACKAGES" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="412,112" size="780,2" backgroundColor="#ffffff" zPosition="0" />
+    <eLabel position="412,112" size="4,688" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="1188,112" size="4,688" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="428,126" size="748,35" text="AVAILABLE PACKAGES" font="Regular;30" foregroundColor="#e7c9d2" backgroundColor="#5a2f3d" transparent="0" halign="center" valign="center" />
     <eLabel position="428,166" size="748,2" backgroundColor="#be185d" />
     <widget name="items_list" position="417,176" size="768,616" itemHeight="76" scrollbarMode="showOnDemand" foregroundColor="#f3f4f6" backgroundColor="#0f111a" transparent="1" />
 
     <!-- RIGHT PANEL: DETAILS & FACEBOOK & PROGRESS -->
     <eLabel position="1204,112" size="500,688" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="1204,112" size="500,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="1204,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,112" size="4,688" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;30" foregroundColor="#f43f5e" backgroundColor="#0f111a" transparent="1" />
+    <eLabel position="1204,112" size="500,2" backgroundColor="#ffffff" zPosition="0" />
+    <eLabel position="1204,112" size="4,688" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="1700,112" size="4,688" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="1222,126" size="464,35" text="INFORMATION" font="Regular;30" foregroundColor="#e7c9d2" backgroundColor="#5a2f3d" transparent="0" halign="center" valign="center" />
     <eLabel position="1222,166" size="464,2" backgroundColor="#be185d" />
     
     <widget name="description" position="1222,174" size="464,376" font="Regular;24" foregroundColor="#e2e8f0" backgroundColor="#0f111a" transparent="1" valign="top" />
 
     <!-- FACEBOOK & BARCODE BOX -->
     <eLabel position="1220,558" size="468,110" backgroundColor="#120e1a" zPosition="1" />
-    <eLabel position="1220,558" size="468,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1220,558" size="468,2" backgroundColor="#a07a38" zPosition="2" />
     <eLabel position="1220,558" size="2,110" backgroundColor="#0284c7" zPosition="2" />
     <eLabel position="1686,558" size="2,110" backgroundColor="#ec4899" zPosition="2" />
-    <eLabel position="1220,666" size="468,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1220,666" size="468,2" backgroundColor="#a07a38" zPosition="2" />
     
     <ePixmap position="1230,571" size="78,82" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/avatar.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
     <ePixmap position="1316,571" size="82,82" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/qrcode.png" zPosition="3" scale="1" transparent="1" alphatest="blend" />
     
-    <eLabel position="1408,568" size="90,34" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1408,568" size="90,34" backgroundColor="#a07a38" zPosition="2" />
     <eLabel position="1498,568" size="90,34" backgroundColor="#0284c7" zPosition="2" />
     <eLabel position="1588,568" size="90,34" backgroundColor="#be185d" zPosition="2" />
     <eLabel position="1410,570" size="266,30" backgroundColor="#1a1426" zPosition="3" />
@@ -7852,13 +8492,13 @@ RAW_SKIN_LAYOUT = """
 
     <!-- PROGRESS BOX WITH MULTI-COLOR ACCENTS -->
     <eLabel position="1220,676" size="468,114" backgroundColor="#0c0714" zPosition="1" />
-    <eLabel position="1220,676" size="117,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1220,676" size="117,2" backgroundColor="#a07a38" zPosition="2" />
     <eLabel position="1337,676" size="117,2" backgroundColor="#0284c7" zPosition="2" />
     <eLabel position="1454,676" size="117,2" backgroundColor="#a855f7" zPosition="2" />
     <eLabel position="1571,676" size="117,2" backgroundColor="#ec4899" zPosition="2" />
-    <eLabel position="1220,676" size="2,114" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1220,676" size="2,114" backgroundColor="#a07a38" zPosition="2" />
     <eLabel position="1686,676" size="2,114" backgroundColor="#ec4899" zPosition="2" />
-    <eLabel position="1220,788" size="117,2" backgroundColor="#f59e0b" zPosition="2" />
+    <eLabel position="1220,788" size="117,2" backgroundColor="#a07a38" zPosition="2" />
     <eLabel position="1337,788" size="117,2" backgroundColor="#0284c7" zPosition="2" />
     <eLabel position="1454,788" size="117,2" backgroundColor="#a855f7" zPosition="2" />
     <eLabel position="1571,788" size="117,2" backgroundColor="#ec4899" zPosition="2" />
@@ -7871,42 +8511,78 @@ RAW_SKIN_LAYOUT = """
 
     <!-- FOOTER BUTTONS -->
     <eLabel position="20,812" size="1684,93" backgroundColor="#0f111a" zPosition="-1" />
-    <eLabel position="20,812" size="1684,2" backgroundColor="#be185d" zPosition="0" />
-    <eLabel position="20,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="1700,812" size="4,93" backgroundColor="#e11d48" zPosition="1" />
-    <eLabel position="20,903" size="1684,2" backgroundColor="#be185d" zPosition="1" />
+    <eLabel position="20,812" size="1684,2" backgroundColor="#ffffff" zPosition="0" />
+    <eLabel position="20,812" size="4,93" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="1700,812" size="4,93" backgroundColor="#ffffff" zPosition="1" />
+    <eLabel position="20,903" size="1684,2" backgroundColor="#ffffff" zPosition="1" />
 
-    <eLabel position="40,824" size="395,68" backgroundColor="#1e111d" zPosition="1" />
-    <eLabel position="40,824" size="395,2" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="40,824" size="3,68" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="432,824" size="3,68" backgroundColor="#e11d48" zPosition="2" />
-    <eLabel position="40,890" size="395,2" backgroundColor="#e11d48" zPosition="2" />
+    <eLabel position="40,824" size="41,68" backgroundColor="#96384a" zPosition="1" />
+    <eLabel position="80,824" size="41,68" backgroundColor="#8e3446" zPosition="1" />
+    <eLabel position="119,824" size="41,68" backgroundColor="#863142" zPosition="1" />
+    <eLabel position="158,824" size="41,68" backgroundColor="#7e2e3e" zPosition="1" />
+    <eLabel position="198,824" size="41,68" backgroundColor="#762b3a" zPosition="1" />
+    <eLabel position="238,824" size="41,68" backgroundColor="#6e2836" zPosition="1" />
+    <eLabel position="277,824" size="41,68" backgroundColor="#662532" zPosition="1" />
+    <eLabel position="316,824" size="41,68" backgroundColor="#5e222e" zPosition="1" />
+    <eLabel position="356,824" size="41,68" backgroundColor="#561f2a" zPosition="1" />
+    <eLabel position="396,824" size="41,68" backgroundColor="#4e1c26" zPosition="1" />
+    <eLabel position="40,824" size="395,3" backgroundColor="#9c4656" zPosition="2" />
+    <eLabel position="40,889" size="395,3" backgroundColor="#9c4656" zPosition="2" />
+    <eLabel position="40,824" size="3,68" backgroundColor="#9c4656" zPosition="2" />
+    <eLabel position="432,824" size="3,68" backgroundColor="#9c4656" zPosition="2" />
     <ePixmap position="56,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_red.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
-    <widget name="key_red" position="114,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#1e111d" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_red" position="114,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#000000" transparent="1" zPosition="3" halign="left" valign="center" />
 
-    <eLabel position="451,824" size="395,68" backgroundColor="#0d1f19" zPosition="1" />
-    <eLabel position="451,824" size="395,2" backgroundColor="#059669" zPosition="2" />
-    <eLabel position="451,824" size="3,68" backgroundColor="#059669" zPosition="2" />
-    <eLabel position="843,824" size="3,68" backgroundColor="#059669" zPosition="2" />
-    <eLabel position="451,890" size="395,2" backgroundColor="#059669" zPosition="2" />
+    <eLabel position="451,824" size="41,68" backgroundColor="#226e52" zPosition="1" />
+    <eLabel position="490,824" size="41,68" backgroundColor="#1f684d" zPosition="1" />
+    <eLabel position="530,824" size="41,68" backgroundColor="#1d6249" zPosition="1" />
+    <eLabel position="570,824" size="41,68" backgroundColor="#1b5c44" zPosition="1" />
+    <eLabel position="609,824" size="41,68" backgroundColor="#195640" zPosition="1" />
+    <eLabel position="648,824" size="41,68" backgroundColor="#16513b" zPosition="1" />
+    <eLabel position="688,824" size="41,68" backgroundColor="#144b37" zPosition="1" />
+    <eLabel position="728,824" size="41,68" backgroundColor="#124532" zPosition="1" />
+    <eLabel position="767,824" size="41,68" backgroundColor="#103f2e" zPosition="1" />
+    <eLabel position="806,824" size="41,68" backgroundColor="#0e3a2a" zPosition="1" />
+    <eLabel position="451,824" size="395,3" backgroundColor="#2b8a66" zPosition="2" />
+    <eLabel position="451,889" size="395,3" backgroundColor="#2b8a66" zPosition="2" />
+    <eLabel position="451,824" size="3,68" backgroundColor="#2b8a66" zPosition="2" />
+    <eLabel position="843,824" size="3,68" backgroundColor="#2b8a66" zPosition="2" />
     <ePixmap position="467,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_green.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
-    <widget name="key_green" position="525,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#0d1f19" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_green" position="525,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#000000" transparent="1" zPosition="3" halign="left" valign="center" />
 
-    <eLabel position="862,824" size="395,68" backgroundColor="#1f180c" zPosition="1" />
-    <eLabel position="862,824" size="395,2" backgroundColor="#d97706" zPosition="2" />
-    <eLabel position="862,824" size="3,68" backgroundColor="#d97706" zPosition="2" />
-    <eLabel position="1254,824" size="3,68" backgroundColor="#d97706" zPosition="2" />
-    <eLabel position="862,890" size="395,2" backgroundColor="#d97706" zPosition="2" />
+    <eLabel position="862,824" size="41,68" backgroundColor="#967638" zPosition="1" />
+    <eLabel position="902,824" size="41,68" backgroundColor="#8d6f34" zPosition="1" />
+    <eLabel position="941,824" size="41,68" backgroundColor="#856830" zPosition="1" />
+    <eLabel position="980,824" size="41,68" backgroundColor="#7c612d" zPosition="1" />
+    <eLabel position="1020,824" size="41,68" backgroundColor="#745a29" zPosition="1" />
+    <eLabel position="1060,824" size="41,68" backgroundColor="#6b5326" zPosition="1" />
+    <eLabel position="1099,824" size="41,68" backgroundColor="#634c22" zPosition="1" />
+    <eLabel position="1138,824" size="41,68" backgroundColor="#5a451f" zPosition="1" />
+    <eLabel position="1178,824" size="41,68" backgroundColor="#523e1b" zPosition="1" />
+    <eLabel position="1218,824" size="41,68" backgroundColor="#4a3818" zPosition="1" />
+    <eLabel position="862,824" size="395,3" backgroundColor="#a07a38" zPosition="2" />
+    <eLabel position="862,889" size="395,3" backgroundColor="#a07a38" zPosition="2" />
+    <eLabel position="862,824" size="3,68" backgroundColor="#a07a38" zPosition="2" />
+    <eLabel position="1254,824" size="3,68" backgroundColor="#a07a38" zPosition="2" />
     <ePixmap position="878,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_yellow.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
-    <widget name="key_yellow" position="936,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#1f180c" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_yellow" position="936,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#000000" transparent="1" zPosition="3" halign="left" valign="center" />
 
-    <eLabel position="1273,824" size="395,68" backgroundColor="#0f152b" zPosition="1" />
-    <eLabel position="1273,824" size="395,2" backgroundColor="#4f46e5" zPosition="2" />
-    <eLabel position="1273,824" size="3,68" backgroundColor="#4f46e5" zPosition="2" />
-    <eLabel position="1665,824" size="3,68" backgroundColor="#4f46e5" zPosition="2" />
-    <eLabel position="1273,890" size="395,2" backgroundColor="#4f46e5" zPosition="2" />
+    <eLabel position="1273,824" size="41,68" backgroundColor="#4e488a" zPosition="1" />
+    <eLabel position="1312,824" size="41,68" backgroundColor="#494382" zPosition="1" />
+    <eLabel position="1352,824" size="41,68" backgroundColor="#443e7a" zPosition="1" />
+    <eLabel position="1392,824" size="41,68" backgroundColor="#3f3a73" zPosition="1" />
+    <eLabel position="1431,824" size="41,68" backgroundColor="#3a356b" zPosition="1" />
+    <eLabel position="1470,824" size="41,68" backgroundColor="#353064" zPosition="1" />
+    <eLabel position="1510,824" size="41,68" backgroundColor="#302c5c" zPosition="1" />
+    <eLabel position="1550,824" size="41,68" backgroundColor="#2b2755" zPosition="1" />
+    <eLabel position="1589,824" size="41,68" backgroundColor="#26224d" zPosition="1" />
+    <eLabel position="1628,824" size="41,68" backgroundColor="#221e46" zPosition="1" />
+    <eLabel position="1273,824" size="395,3" backgroundColor="#5852a0" zPosition="2" />
+    <eLabel position="1273,889" size="395,3" backgroundColor="#5852a0" zPosition="2" />
+    <eLabel position="1273,824" size="3,68" backgroundColor="#5852a0" zPosition="2" />
+    <eLabel position="1665,824" size="3,68" backgroundColor="#5852a0" zPosition="2" />
     <ePixmap position="1289,836" size="44,44" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/key_blue.png" scale="1" transparent="1" alphatest="blend" zPosition="3" />
-    <widget name="key_blue" position="1347,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#0f152b" transparent="1" zPosition="3" halign="left" valign="center" />
+    <widget name="key_blue" position="1347,824" size="311,68" font="Regular;28" foregroundColor="#ffffff" backgroundColor="#000000" transparent="1" zPosition="3" halign="left" valign="center" />
 </screen>
 """
 
@@ -7922,6 +8598,9 @@ class MohamedStore(Screen):
         Screen.__init__(self, session)
         
         self.categories_list_has_multicontent = False
+        self._fit_fonts_ready = False
+        self._items_list_w = scale_x(768)
+        self._cat_list_w = scale_x(370)
         if HAS_MULTICONTENT and eListboxPythonMultiContent:
             try:
                 try:
@@ -8066,7 +8745,26 @@ class MohamedStore(Screen):
                 self.bg_sync_timer.callback.append(self.start_background_sync)
             except Exception:
                 pass
+
+        # --- navigation (browsing) animation: a bouncing marker on the
+        # currently selected row of the focused list. Pure text, all images. ---
+        self._nav_frame = 0
+        self._sel_cat_id = None
+        self._sel_item = None
+        self._nav_last_key = None
+        self._nav_anim_timer = eTimer() if eTimer else None
+        if self._nav_anim_timer:
+            try:
+                self._nav_anim_conn = self._nav_anim_timer.timeout.connect(self._nav_anim_tick)
+            except AttributeError:
+                try:
+                    self._nav_anim_timer.callback.append(self._nav_anim_tick)
+                except Exception:
+                    pass
+
         self.onLayoutFinish.append(self.schedule_bg_sync)
+        self.onLayoutFinish.append(self._autofit_lists)
+
 
     def load_local_cache(self):
         try:
@@ -8112,7 +8810,7 @@ class MohamedStore(Screen):
 
     def apply_store_data(self, data):
         try:
-            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.2"))
+            store_title = "%s v%s" % (data.get("store_name", "M Store"), data.get("version", "1.3.3"))
             self.setTitle(store_title)
             
             self.store_data = data["categories"]
@@ -8139,7 +8837,7 @@ class MohamedStore(Screen):
                     if self.categories_list_has_multicontent:
                         display_cats.append((cat, cat_clean_name, count))
                     else:
-                        display_cats.append("%s (%d)" % (cat_clean_name, count))
+                        display_cats.append("%s %d" % (cat_clean_name, count))
                         
                 self["categories_list"].setList(display_cats)
                 self.current_path = []
@@ -8230,6 +8928,171 @@ class MohamedStore(Screen):
 
         return info
 
+    def _ms_u(self, s):
+        try:
+            if isinstance(s, bytes):
+                return s.decode("utf-8", "ignore")
+            return u"%s" % s
+        except Exception:
+            return u""
+
+    def _nav_bounce(self, frame, maxoff):
+        period = maxoff * 2
+        if period <= 0:
+            return 0
+        p = frame % period
+        return p if p <= maxoff else period - p
+
+    def _nav_marker(self):
+        off = self._nav_bounce(getattr(self, "_nav_frame", 0), 3)
+        return (u" " * off) + u"\u00bb "
+
+    def _nav_pulse_color(self):
+        steps = 8
+        b = self._nav_bounce(getattr(self, "_nav_frame", 0), steps)
+        t = float(b) / float(steps)
+        # interpolate white -> light accent blue (ARGB)
+        c0 = (0xFF, 0xFF, 0xFF, 0xFF)
+        c1 = (0xFF, 0x4D, 0xB3, 0xFF)
+        a = int(c0[0] + (c1[0] - c0[0]) * t)
+        r = int(c0[1] + (c1[1] - c0[1]) * t)
+        g = int(c0[2] + (c1[2] - c0[2]) * t)
+        bl = int(c0[3] + (c1[3] - c0[3]) * t)
+        return (a << 24) | (r << 16) | (g << 8) | bl
+
+    def _mix_color(self, c0, c1, t):
+        a0 = (c0 >> 24) & 0xFF; r0 = (c0 >> 16) & 0xFF; g0 = (c0 >> 8) & 0xFF; b0 = c0 & 0xFF
+        a1 = (c1 >> 24) & 0xFF; r1 = (c1 >> 16) & 0xFF; g1 = (c1 >> 8) & 0xFF; b1 = c1 & 0xFF
+        a = int(a0 + (a1 - a0) * t); r = int(r0 + (r1 - r0) * t)
+        g = int(g0 + (g1 - g0) * t); b = int(b0 + (b1 - b0) * t)
+        return (a << 24) | (r << 16) | (g << 8) | b
+
+    def _brighten_color(self, c, t=0.5):
+        r = (c >> 16) & 0xFF; g = (c >> 8) & 0xFF; b = c & 0xFF
+        r = int(r + (255 - r) * t); g = int(g + (255 - g) * t); b = int(b + (255 - b) * t)
+        return (r << 16) | (g << 8) | b
+
+    def _cat_gradient_pair(self, category_id):
+        # Distinct VIVID color per category TYPE (matches the reference image):
+        # Plugins=blue, Skins=pink, Tools=amber, System Images=orange,
+        # Picons=sky, Channels=green, Softcam=teal, Novaler=purple.
+        try:
+            cat_lower = str(category_id).lower().replace("_", "").replace(" ", "")
+        except Exception:
+            cat_lower = ""
+
+        if "plugin" in cat_lower:
+            return (0xFF3B424A, 0xFF16191D)       # muted blue
+        if "skin" in cat_lower:
+            return (0xFF635357, 0xFF1C1618)       # muted pink / red
+        if "tool" in cat_lower:
+            return (0xFF746D60, 0xFF22201C)       # muted amber / gold
+        if "image" in cat_lower or "system" in cat_lower:
+            return (0xFF685C53, 0xFF1F1B18)       # muted orange
+        if "picon" in cat_lower:
+            return (0xFF525D63, 0xFF1B1F21)       # muted sky
+        if "channel" in cat_lower or "setting" in cat_lower:
+            return (0xFF536159, 0xFF181C1A)       # muted green
+        if "softcam" in cat_lower or "cam" in cat_lower or "emu" in cat_lower:
+            return (0xFF4D5B5A, 0xFF171B1B)       # muted teal
+        if "noval" in cat_lower or "nofla" in cat_lower:
+            return (0xFF544D5A, 0xFF18161B)       # muted purple
+
+        # Fallback: distinct SOFT/muted colors by position so any EXTRA
+        # category still gets its own color instead of repeating.
+        palette = [
+            (0xFF3B424A, 0xFF16191D),  # muted blue
+            (0xFF635357, 0xFF1C1618),  # muted pink
+            (0xFF746D60, 0xFF22201C),  # muted amber
+            (0xFF685C53, 0xFF1F1B18),  # muted orange
+            (0xFF525D63, 0xFF1B1F21),  # muted sky
+            (0xFF536159, 0xFF181C1A),  # muted green
+            (0xFF4D5B5A, 0xFF171B1B),  # muted teal
+            (0xFF544D5A, 0xFF18161B),  # muted purple
+        ]
+        idx = 0
+        try:
+            idx = list(self.categories).index(category_id)
+        except Exception:
+            try:
+                idx = abs(hash(str(category_id)))
+            except Exception:
+                idx = 0
+        return palette[idx % len(palette)]
+
+    def _nav_anim_start(self):
+        if not self._nav_anim_timer:
+            return
+        try:
+            self._nav_anim_timer.start(150, False)
+        except Exception:
+            pass
+
+    def _nav_anim_tick(self):
+        self._nav_frame = getattr(self, "_nav_frame", 0) + 1
+        try:
+            if self.active_focus == "categories":
+                lst = self["categories_list"]
+            else:
+                lst = self["items_list"]
+            idx = lst.getSelectionIndex()
+        except Exception:
+            return
+        key = (self.active_focus, idx)
+        old = getattr(self, "_nav_last_key", None)
+        if old != key:
+            if old:
+                try:
+                    of, oi = old
+                    ol = self["categories_list"] if of == "categories" else self["items_list"]
+                    if oi is not None and oi >= 0 and hasattr(ol, "l"):
+                        ol.l.invalidateEntry(oi)
+                except Exception:
+                    pass
+            self._nav_last_key = key
+        try:
+            if idx is not None and idx >= 0 and hasattr(lst, "l"):
+                lst.l.invalidateEntry(idx)
+        except Exception:
+            pass
+
+    # ================================================================
+    # AUTO-FIT ENGINE: keep the panel tidy on ANY skin.
+    # The panel draws its own layout, but it still uses the active
+    # skin's "Regular" font. Some skins ship a wider/heavier "Regular",
+    # which made long names overflow / overlap on those skins while
+    # looking fine on others. These two helpers make the lists adapt by
+    # themselves: read the REAL list width at runtime, then pick a font
+    # size that fits each name inside its own box (shrink only when
+    # needed, never enlarge), so nothing spills out of the list.
+    # ================================================================
+    def _autofit_lists(self):
+        # cache the REAL on-screen width of each list (whatever this skin
+        # /resolution gave it) so the build functions size text to it.
+        try:
+            inst = self["items_list"].instance
+            if inst and inst.size().width() > 0:
+                self._items_list_w = inst.size().width()
+        except Exception:
+            pass
+        try:
+            inst = self["categories_list"].instance
+            if inst and inst.size().width() > 0:
+                self._cat_list_w = inst.size().width()
+        except Exception:
+            pass
+        # redraw with the measured widths
+        try:
+            self.update_items_list()
+        except Exception:
+            pass
+
+    def _fit_font_index(self, text, box_w_px):
+        """Always use the full, fixed font size (index 0) like the original
+        build. The auto-shrink ladder is disabled so the text keeps the same
+        size on every skin and never renders tiny."""
+        return 0
+
     def build_category_entry(self, *args):
         try:
             category_id = "unknown"
@@ -8275,18 +9138,71 @@ class MohamedStore(Screen):
             icon_pos_y = scale_y(5)
             row_h = scale_y(80)
 
+            # One full-width blended "pill" per row. Draw order matters:
+            # 1) gradient box  2) icon  3) name  4) count  -> icon+text on top.
+            box_x = scale_x(4)
+            box_y = scale_y(8)
+            box_w = scale_x(356)
+            box_h = scale_y(64)
+
+            if HAS_MULTICONTENT and MultiContentEntryText:
+                try:
+                    c0, c1 = self._cat_gradient_pair(category_id)
+                    segs = 24
+                    for s in range(segs):
+                        t = (float(s) / float(segs - 1)) if segs > 1 else 0.0
+                        # opaque gradient (leading 0xFF alpha would be transparent)
+                        col = self._mix_color(c0, c1, t) & 0x00FFFFFF
+                        # softer highlight when the row is selected
+                        col_sel = self._brighten_color(col, 0.22) & 0x00FFFFFF
+                        # cover the FULL width (incl. the count) with no gaps
+                        x0 = box_x + int(box_w * s / segs)
+                        x1 = box_x + int(box_w * (s + 1) / segs)
+                        res.append(MultiContentEntryText(pos=(x0, box_y), size=(x1 - x0 + 1, box_h), font=0, flags=RT_HALIGN_LEFT, text="", backcolor=col, backcolor_sel=col_sel))
+                except Exception:
+                    pass
+
             if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
                 res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_w, icon_h), png=pixmap))
                 text_x = scale_x(86)
-                text_w = scale_x(200)
             else:
                 text_x = scale_x(15)
-                text_w = scale_x(270)
+            # widen the name box as far right as possible (up to just before
+            # the count) so long section names fit without shrinking the font.
+            text_w = scale_x(302) - text_x
+            if text_w < scale_x(60):
+                text_w = scale_x(60)
 
             if HAS_MULTICONTENT and MultiContentEntryText:
-                res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, row_h), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=str(display_name)))
-                count_str = "[%d]" % int(count)
-                res.append(MultiContentEntryText(pos=(scale_x(286), 0), size=(scale_x(74), row_h), font=0, flags=RT_HALIGN_RIGHT | RT_VALIGN_CENTER, text=count_str))
+                cat_disp = str(display_name)
+
+                # name text (white) with a dark outline/shadow so it is readable
+                # over ANY gradient color.
+                try:
+                    name_x = text_x
+                    name_w = text_w
+                    # auto-fit: shrink the font only if the name would overflow
+                    # its box on this skin's font (keeps it tidy everywhere).
+                    fidx = self._fit_font_index(cat_disp, name_w)
+                    # heavy dark outline => bold, premium look + readable on any gradient
+                    shadow_col = 0x00000000
+                    for dx, dy in ((1, 0), (2, 0), (3, 0), (0, 1), (0, 2), (0, 3), (1, 1), (2, 2), (3, 3), (2, 1), (1, 2), (3, 2), (2, 3), (1, 3), (3, 1)):
+                        res.append(MultiContentEntryText(pos=(name_x + dx, dy), size=(name_w, row_h), font=fidx, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=cat_disp, color=shadow_col, color_sel=shadow_col))
+                    # faux-bold: draw the colored name twice with a 1px shift
+                    name_col = 0x00CFFAFF
+                    name_col_sel = 0x00EFFFFF
+                    res.append(MultiContentEntryText(pos=(name_x + 1, 0), size=(name_w, row_h), font=fidx, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=cat_disp, color=name_col, color_sel=name_col_sel))
+                    res.append(MultiContentEntryText(pos=(name_x, 0), size=(name_w, row_h), font=fidx, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=cat_disp, color=name_col, color_sel=name_col_sel))
+                except Exception:
+                    res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, row_h), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=cat_disp))
+
+                count_str = "%d" % int(count)
+                # count (white) with dark shadow, on top of the gradient.
+                # wider field (starts earlier) so 3-digit counts like [123]
+                # don't get the leading "[" clipped.
+                for dx, dy in ((1, 0), (1, 1), (0, 1)):
+                    res.append(MultiContentEntryText(pos=(scale_x(306) + dx, dy), size=(scale_x(50), row_h), font=0, flags=RT_HALIGN_RIGHT | RT_VALIGN_CENTER, text=count_str, color=0x00000000, color_sel=0x00000000))
+                res.append(MultiContentEntryText(pos=(scale_x(306), 0), size=(scale_x(50), row_h), font=0, flags=RT_HALIGN_RIGHT | RT_VALIGN_CENTER, text=count_str, color=0x00FFFFFF, color_sel=0x00FFFFFF))
                 
             return res
         except Exception:
@@ -8331,17 +9247,74 @@ class MohamedStore(Screen):
             icon_pos_y = scale_y(10)
             row_h = scale_y(76)
 
+            # One full-width blended "pill" per item row, colored with the
+            # SAME gradient as its parent category/section so the files inside
+            # a section visually match that section's color. Draw order:
+            # 1) gradient box  2) icon  3) name  -> icon+text stay on top.
+            box_x = scale_x(4)
+            box_y = scale_y(6)
+            box_w = scale_x(760)
+            box_h = scale_y(64)
+
+            if HAS_MULTICONTENT and MultiContentEntryText:
+                try:
+                    c0, c1 = self._cat_gradient_pair(category_id)
+                    # Files use a SOFTER version of their section color: pull
+                    # each color toward its own grey (desaturate) and darken a
+                    # little, so the items are calmer than the section header.
+                    def _soft_item(c, desat=0.72, dark=0.15):
+                        r = (c >> 16) & 0xFF
+                        g = (c >> 8) & 0xFF
+                        b = c & 0xFF
+                        lum = 0.299 * r + 0.587 * g + 0.114 * b
+                        def mix(x):
+                            v = (x * (1.0 - desat) + lum * desat) * (1.0 - dark)
+                            if v < 0:
+                                v = 0
+                            if v > 255:
+                                v = 255
+                            return int(v)
+                        return (mix(r) << 16) | (mix(g) << 8) | mix(b)
+                    c0 = _soft_item(c0)
+                    c1 = _soft_item(c1)
+                    segs = 24
+                    for s in range(segs):
+                        t = (float(s) / float(segs - 1)) if segs > 1 else 0.0
+                        col = self._mix_color(c0, c1, t) & 0x00FFFFFF
+                        col_sel = self._brighten_color(col, 0.22) & 0x00FFFFFF
+                        x0 = box_x + int(box_w * s / segs)
+                        x1 = box_x + int(box_w * (s + 1) / segs)
+                        res.append(MultiContentEntryText(pos=(x0, box_y), size=(x1 - x0 + 1, box_h), font=0, flags=RT_HALIGN_LEFT, text="", backcolor=col, backcolor_sel=col_sel))
+                except Exception:
+                    pass
+
             if pixmap and HAS_MULTICONTENT and MultiContentEntryPixmapAlphaTest:
                 res.append(MultiContentEntryPixmapAlphaTest(pos=(icon_pos_x, icon_pos_y), size=(icon_w, icon_h), png=pixmap))
                 text_x = scale_x(78)
-                text_w = scale_x(670)
             else:
                 text_x = scale_x(15)
-                text_w = scale_x(740)
+            # size the name box to the REAL list width (measured at runtime),
+            # minus the icon gap and a small margin for the scrollbar, so the
+            # text box always ends exactly at the list edge on any skin.
+            list_w = getattr(self, "_items_list_w", 0) or scale_x(768)
+            text_w = list_w - text_x - scale_x(8)
+            if text_w < scale_x(80):
+                text_w = scale_x(80)
 
             if HAS_MULTICONTENT and MultiContentEntryText:
-                res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, row_h), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=str(display_text)))
-                
+                item_disp = str(display_text)
+                # auto-fit: shrink the font only when the name would overflow
+                # its box, so long package/file names never spill out of the
+                # list regardless of which skin's font is active.
+                fidx = self._fit_font_index(item_disp, text_w)
+                # dark outline/shadow so the name stays readable on any color
+                shadow_col = 0x00000000
+                for dx, dy in ((1, 0), (2, 0), (0, 1), (0, 2), (1, 1), (2, 2), (2, 1), (1, 2)):
+                    res.append(MultiContentEntryText(pos=(text_x + dx, dy), size=(text_w, row_h), font=fidx, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=item_disp, color=shadow_col, color_sel=shadow_col))
+                name_col = 0x00EAF2F7
+                name_col_sel = 0x00FFFFFF
+                res.append(MultiContentEntryText(pos=(text_x, 0), size=(text_w, row_h), font=fidx, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER, text=item_disp, color=name_col, color_sel=name_col_sel))
+
             return res
         except Exception:
             return [str(args[0]) if args else "Item"]
@@ -8457,6 +9430,7 @@ class MohamedStore(Screen):
                 return
             
             selected_cat = self.categories[idx]
+            self._sel_cat_id = selected_cat
             if selected_cat == "tools":
                 remote_tools = self.store_data.get("tools", [])
                 self.visible_items = BUILTIN_SYSTEM_TOOLS + remote_tools
@@ -8504,7 +9478,7 @@ class MohamedStore(Screen):
             for item in self.visible_items:
                 if "items" in item and isinstance(item["items"], list):
                     folder_count = count_items_recursive(item["items"])
-                    display_text = "> %s  (%d)" % (str(item.get("name", "Unknown Folder")), folder_count)
+                    display_text = "> %s  %d" % (str(item.get("name", "Unknown Folder")), folder_count)
                 elif item.get("type") == "tool":
                     display_text = str(item.get("name", "Unknown Tool"))
                 else:
@@ -8531,6 +9505,7 @@ class MohamedStore(Screen):
                 return
             
             item = self.visible_items[idx]
+            self._sel_item = item
             cat_idx = self["categories_list"].getSelectionIndex()
             cat_id = str(self.categories[cat_idx]).lower() if cat_idx >= 0 else ""
             cat_name = str(self.categories[cat_idx]).replace("_", " ").capitalize() if cat_idx >= 0 else "Unknown"
@@ -8772,6 +9747,14 @@ class MohamedStore(Screen):
                         self.session.open(BootLogoScreen)
                         return
 
+                    elif action == "softcam_keys_updater":
+                        self.session.open(SoftcamKeysUpdaterScreen)
+                        return
+
+                    elif action == "crash_analyzer":
+                        self.session.open(CrashLogAnalyzerScreen)
+                        return
+
                     cmd = item.get("cmd", "")
                     if cmd == "restart_gui":
                         if TryQuitMainloop:
@@ -8997,6 +9980,20 @@ class MohamedStore(Screen):
                 except Exception:
                     pass
 
+    def _ms_dl_comet(self, frame):
+        # A small slider that bounces back and forth (go & return).
+        # ASCII only, so it renders on every Enigma2 image/font.
+        width = 18
+        blk = 3
+        span = width - blk
+        period = span * 2
+        p = frame % period
+        start = p if p <= span else period - p
+        cells = ["-"] * width
+        for i in range(start, start + blk):
+            cells[i] = "="
+        return "[" + "".join(cells) + "]"
+
     def update_download_ui(self):
         if not self.download_in_progress:
             return
@@ -9037,7 +10034,17 @@ class MohamedStore(Screen):
         else:
             speed_str = "%.1f KB/s" % (self.download_current_speed / 1024)
         self["speed"].setText(speed_str)
-        
+
+        # --- animated download progress (text-based, all images + Py2/3) ---
+        if not self.download_completed and not self.download_error_msg:
+            try:
+                self._dl_anim_frame = getattr(self, "_dl_anim_frame", 0) + 1
+                base = u"\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644"
+                comet = self._ms_dl_comet(self._dl_anim_frame)
+                self["status"].setText(u"%s   %s" % (base, comet))
+            except Exception:
+                pass
+
         if self.download_completed:
             self.download_in_progress = False
             if self.download_timer:
