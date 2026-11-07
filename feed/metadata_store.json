@@ -13680,23 +13680,23 @@
         "description": "بايثون 3.12"
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-wireguard-vpn_16.2_all.ipk": {
-        "name": "enigma2-plugin-extensions-wireguard-vpn_16",
-        "description": "Plugin Extension"
+        "name": "wireguard-vpn_16.2",
+        "description": "بايثون 3.13"
     },
     "plugins/enigma2-plugin-extensions-wireguard-vpn_16.2_all.ipk": {
-        "name": "enigma2-plugin-extensions-wireguard-vpn_16",
-        "description": "Plugin Extension"
+        "name": "wireguard-vpn_16.2",
+        "description": "بايثون 3.13"
     },
     "enigma2-plugin-extensions-wireguard-vpn_16.2_all.ipk": {
-        "name": "enigma2-plugin-extensions-wireguard-vpn_16",
-        "description": "Plugin Extension"
+        "name": "wireguard-vpn_16.2",
+        "description": "بايثون 3.13"
     },
     "enigma2-plugin-extensions-wireguard-vpn_16": {
-        "name": "enigma2-plugin-extensions-wireguard-vpn_16",
-        "description": "Plugin Extension"
+        "name": "wireguard-vpn_16.2",
+        "description": "بايثون 3.13"
     },
     "plugins/plugins/enigma2-plugin-extensions-wireguard-vpn_16.2_all.ipk": {
-        "name": "enigma2-plugin-extensions-wireguard-vpn_16",
-        "description": "Plugin Extension"
+        "name": "wireguard-vpn_16.2",
+        "description": "بايثون 3.13"
     }
 }
