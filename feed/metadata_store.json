@@ -13642,5 +13642,25 @@
     "picons/v1.0/enigma2-plugin-picons-srp-full.220x132-190x102.dark.on.reflection_2026-10-29--21-45-07_all.1.ipk": {
         "name": "بيكونات اغلب الاقمار بتاريخ 2026-10-29",
         "description": "220x132 شعارات بحجم"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-wireguard-vpn_15.4_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "plugins/enigma2-plugin-extensions-wireguard-vpn_15.4_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-wireguard-vpn_15.4_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-wireguard-vpn_15": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/enigma2-plugin-extensions-wireguard-vpn_15.4_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
     }
 }
