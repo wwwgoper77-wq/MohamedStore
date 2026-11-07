@@ -304,8 +304,8 @@
                 "image": ""
             },
             {
-                "name": wireguard-vpn_15.4"",
-                "description": "بايثون 3.9",
+                "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+                "description": "Plugin Extension",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-wireguard-vpn_15.4_all.ipk",
                 "image": ""
             },
