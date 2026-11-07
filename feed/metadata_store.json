@@ -13662,5 +13662,21 @@
     "plugins/plugins/enigma2-plugin-extensions-wireguard-vpn_15.4_all.ipk": {
         "name": "enigma2-plugin-extensions-wireguard-vpn_15",
         "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-wireguard-vpn_15.9_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "plugins/enigma2-plugin-extensions-wireguard-vpn_15.9_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "enigma2-plugin-extensions-wireguard-vpn_15.9_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/enigma2-plugin-extensions-wireguard-vpn_15.9_all.ipk": {
+        "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+        "description": "Plugin Extension"
     }
 }

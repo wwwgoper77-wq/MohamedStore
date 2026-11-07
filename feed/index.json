@@ -310,6 +310,12 @@
                 "image": ""
             },
             {
+                "name": "enigma2-plugin-extensions-wireguard-vpn_15",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-wireguard-vpn_15.9_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "XC Plugin Forever",
                 "description": "مشغل اشتراكات الـ IPTV بنظام Xtream Codes",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-xcplugin-forever_2.2_all.ipk",
