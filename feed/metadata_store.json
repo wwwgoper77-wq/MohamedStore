@@ -12214,5 +12214,1061 @@
     "novaler/novaler/enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1.2_all.ipk": {
         "name": "enigma2-plugin-softcams-supcam-ncam-nova-novaler4k_v-1",
         "description": "Novaler Package"
+    },
+    "OpenBlack/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk": {
+        "name": "OpenBlack skin armynextgengradient.mod",
+        "description": "سكين OpenBlack skin armynextgengradient.mod عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "skins/OpenBlack/OpenBlack-skin-armynextgengradient.mod.fhroma_BlackHole.ipk": {
+        "name": "OpenBlack skin armynextgengradient.mod",
+        "description": "سكين OpenBlack skin armynextgengradient.mod عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "Audio/Fox&Anis.sh": {
+        "name": "Fox&Anis",
+        "description": "Audio Tool"
+    },
+    "tools/Audio/Fox&Anis.sh": {
+        "name": "Fox&Anis",
+        "description": "Audio Tool"
+    },
+    "Audio/Fox-Anis-ahmad yahia-Quran.sh": {
+        "name": "Fox-Anis-ahmad yahia-Quran",
+        "description": "Audio Tool"
+    },
+    "tools/Audio/Fox-Anis-ahmad yahia-Quran.sh": {
+        "name": "Fox-Anis-ahmad yahia-Quran",
+        "description": "Audio Tool"
+    },
+    "Portals/cord_cutter_portal.sh": {
+        "name": "cord_cutter_portal",
+        "description": "Portals Tool"
+    },
+    "tools/Portals/cord_cutter_portal.sh": {
+        "name": "cord_cutter_portal",
+        "description": "Portals Tool"
+    },
+    "Portals/fastopen_portal.sh": {
+        "name": "fastopen_portal",
+        "description": "Portals Tool"
+    },
+    "tools/Portals/fastopen_portal.sh": {
+        "name": "fastopen_portal",
+        "description": "Portals Tool"
+    },
+    "Portals/nocable_portal.sh": {
+        "name": "nocable_portal",
+        "description": "Portals Tool"
+    },
+    "tools/Portals/nocable_portal.sh": {
+        "name": "nocable_portal",
+        "description": "Portals Tool"
+    },
+    "Portals/remorize_soltan.sh": {
+        "name": "remorize_soltan",
+        "description": "Portals Tool"
+    },
+    "tools/Portals/remorize_soltan.sh": {
+        "name": "remorize_soltan",
+        "description": "Portals Tool"
+    },
+    "Portals/tvmate_portal_1.sh": {
+        "name": "tvmate_portal_1",
+        "description": "Portals Tool"
+    },
+    "tools/Portals/tvmate_portal_1.sh": {
+        "name": "tvmate_portal_1",
+        "description": "Portals Tool"
+    },
+    "Portals/tvmate_portal_2.sh": {
+        "name": "tvmate_portal_2",
+        "description": "Portals Tool"
+    },
+    "tools/Portals/tvmate_portal_2.sh": {
+        "name": "tvmate_portal_2",
+        "description": "Portals Tool"
+    },
+    "Backup/egami-11.0.r21-vuuno4kse-backup-20260725_2351_usb-by-enigma2.net.zip": {
+        "name": "Egami 11.0 - VU+ Uno 4K SE",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/Backup/egami-11.0.r21-vuuno4kse-backup-20260725_2351_usb-by-enigma2.net.zip": {
+        "name": "Egami 11.0 - VU+ Uno 4K SE",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "Egami/egami-10.5-r1-vuduo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Duo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/Egami/egami-10.5-r1-vuduo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Duo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "Egami/egami-10.5-r1-vuultimo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Ultimo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/Egami/egami-10.5-r1-vuultimo4k-20240125_usb.zip": {
+        "name": "Egami 10.5 - VU+ Ultimo 4K",
+        "description": "صورة نظام Egami 10.5 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "Egami/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip": {
+        "name": "Egami 10.6 - VU+ Zero 4K",
+        "description": "صورة نظام Egami 10.6 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/Egami/egami-10.6-r1-vuzero4k-20241114_E2Kings_S_usb.zip": {
+        "name": "Egami 10.6 - VU+ Zero 4K",
+        "description": "صورة نظام Egami 10.6 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "Egami/egami-11.0-r21-novaler4k-20260519_multi.zip": {
+        "name": "Egami 11.0 - Novaler 4K",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Novaler 4K (Multiboot)"
+    },
+    "system_images/Egami/egami-11.0-r21-novaler4k-20260519_multi.zip": {
+        "name": "Egami 11.0 - Novaler 4K",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Novaler 4K (Multiboot)"
+    },
+    "Egami/egami-11.0-r21-novaler4kpro-20260519_multi.zip": {
+        "name": "Egami 11.0 - Novaler 4K Pro",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Novaler 4K Pro (Multiboot)"
+    },
+    "system_images/Egami/egami-11.0-r21-novaler4kpro-20260519_multi.zip": {
+        "name": "Egami 11.0 - Novaler 4K Pro",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Novaler 4K Pro (Multiboot)"
+    },
+    "Egami/egami-11.0-r21-novaler4kse-20260519_multi.zip": {
+        "name": "Egami 11.0 - Novaler 4K SE",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Novaler 4K SE (Multiboot)"
+    },
+    "system_images/Egami/egami-11.0-r21-novaler4kse-20260519_multi.zip": {
+        "name": "Egami 11.0 - Novaler 4K SE",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Novaler 4K SE (Multiboot)"
+    },
+    "Egami/egami-11.0-r21-zgemmah17combo-20260519_multi.zip": {
+        "name": "Egami 11.0 - Zgemma H17 Combo",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Zgemma H17 Combo (Multiboot)"
+    },
+    "system_images/Egami/egami-11.0-r21-zgemmah17combo-20260519_multi.zip": {
+        "name": "Egami 11.0 - Zgemma H17 Combo",
+        "description": "صورة نظام Egami 11.0 الرسمية لجهاز Zgemma H17 Combo (Multiboot)"
+    },
+    "OpenATV/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Duo 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenATV/openatv-8.0.0-beta-vuduo4k-20260813_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Duo 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenATV/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Solo 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenATV/openatv-8.0.0-beta-vusolo4k-20260810_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Solo 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenATV/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/OpenATV/openatv-8.0.0-beta-vuultimo4k-20260812_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "OpenATV/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Uno 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenATV/openatv-8.0.0-beta-vuuno4k-20260812_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Uno 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenATV/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Zero 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenATV/openatv-8.0.0-beta-vuzero4k-20260811_system_imagesusb.zip": {
+        "name": "OpenATV 8.0.0 - VU+ Zero 4K",
+        "description": "صورة نظام OpenATV 8.0.0 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001.system_images-vuduo4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001.system_images-vuduo4kse-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenBH/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Solo 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001.system_images-vusolo4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Solo 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Uno 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001.system_images-vuuno4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Uno 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001.system_images-vuuno4kse-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "OpenBH/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Zero 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001.system_images-vuzero4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Zero 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.001system_images.-vuultimo4k-8c6baf54_usb.zip": {
+        "name": "OpenBH 6.0.001 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenBH 6.0.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuduo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuduo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuduo4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vusolo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Solo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vusolo2-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Solo 2",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vusolo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Solo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vusolo4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Solo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vusolose-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Solo SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vusolose-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Solo SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuultimo-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - openbh-6.0.002",
+        "description": "صورة نظام OpenBH 6.0.002 لأجهزة الإنيجما 2 (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuultimo-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - openbh-6.0.002",
+        "description": "صورة نظام OpenBH 6.0.002 لأجهزة الإنيجما 2 (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuultimo4k-db3b084d_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuultimo4k-db3b084d_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuuno4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Uno 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuuno4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Uno 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuuno4kse-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuzero-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Zero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuzero-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Zero",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "OpenBH/openbh-6.0.002.release-vuzero4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Zero 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenBH/openbh-6.0.002.release-vuzero4k-fc7b6ebc_usb.zip": {
+        "name": "OpenBH 6.0.002 - VU+ Zero 4K",
+        "description": "صورة نظام OpenBH 6.0.002 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenDroid/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip": {
+        "name": "OpenDroid 8.1.1 - Octagon SF4008 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "system_images/OpenDroid/opendroid-8.1.1-SF4008.4K.UHD-20260720_system_images.Octagon.usb.zip": {
+        "name": "OpenDroid 8.1.1 - Octagon SF4008 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "OpenDroid/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip": {
+        "name": "OpenDroid 8.1.1 - Octagon SF8008 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "system_images/OpenDroid/opendroid-8.1.1-SF8008.4K.UHD-20260720_mmc.zip": {
+        "name": "OpenDroid 8.1.1 - Octagon SF8008 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "OpenDroid/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip": {
+        "name": "OpenDroid 8.1.1 - Octagon SF8008 Mini",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز Octagon SF8008 Mini (MMC)"
+    },
+    "system_images/OpenDroid/opendroid-8.1.1-SF8008.MINI.4K.UHD-20260720_mmc.zip": {
+        "name": "OpenDroid 8.1.1 - Octagon SF8008 Mini",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز Octagon SF8008 Mini (MMC)"
+    },
+    "OpenDroid/opendroid-8.1.1-vusolo4k-20260720_usb.zip": {
+        "name": "OpenDroid 8.1.1 - VU+ Solo 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenDroid/opendroid-8.1.1-vusolo4k-20260720_usb.zip": {
+        "name": "OpenDroid 8.1.1 - VU+ Solo 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenDroid/opendroid-8.1.1-vuuno4k-20260720_usb.zip": {
+        "name": "OpenDroid 8.1.1 - VU+ Uno 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenDroid/opendroid-8.1.1-vuuno4k-20260720_usb.zip": {
+        "name": "OpenDroid 8.1.1 - VU+ Uno 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenDroid/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip": {
+        "name": "OpenDroid 8.1.1 - VU+ Zero 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenDroid/opendroid-8.1.1-vuzero4k-20260715_system_images.usb.zip": {
+        "name": "OpenDroid 8.1.1 - VU+ Zero 4K",
+        "description": "صورة نظام OpenDroid 8.1.1 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenHDF/openhdf-7.2-gbquad4k-13-20230501_usb.zip": {
+        "name": "OpenHDF 7.2 - GigaBlue Quad 4K",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز GigaBlue Quad 4K (USB)"
+    },
+    "system_images/OpenHDF/openhdf-7.2-gbquad4k-13-20230501_usb.zip": {
+        "name": "OpenHDF 7.2 - GigaBlue Quad 4K",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز GigaBlue Quad 4K (USB)"
+    },
+    "OpenHDF/openhdf-7.2-gbtrio4k-13-20230502_mmc.zip": {
+        "name": "OpenHDF 7.2 - GigaBlue Trio 4K",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز GigaBlue Trio 4K (MMC)"
+    },
+    "system_images/OpenHDF/openhdf-7.2-gbtrio4k-13-20230502_mmc.zip": {
+        "name": "OpenHDF 7.2 - GigaBlue Trio 4K",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز GigaBlue Trio 4K (MMC)"
+    },
+    "OpenHDF/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip": {
+        "name": "OpenHDF 7.2 - GigaBlue Trio 4K Pro",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز GigaBlue Trio 4K Pro (MMC)"
+    },
+    "system_images/OpenHDF/openhdf-7.2-gbtrio4kpro-13-20230502_mmc.zip": {
+        "name": "OpenHDF 7.2 - GigaBlue Trio 4K Pro",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز GigaBlue Trio 4K Pro (MMC)"
+    },
+    "OpenHDF/openhdf-7.2-sf3038-11-20230415_usb.zip": {
+        "name": "OpenHDF 7.2 - Octagon SF3038",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز Octagon SF3038 (USB)"
+    },
+    "system_images/OpenHDF/openhdf-7.2-sf3038-11-20230415_usb.zip": {
+        "name": "OpenHDF 7.2 - Octagon SF3038",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز Octagon SF3038 (USB)"
+    },
+    "OpenHDF/openhdf-7.2-sf4008-14-20230506_usb.zip": {
+        "name": "OpenHDF 7.2 - Octagon SF4008 4K",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "system_images/OpenHDF/openhdf-7.2-sf4008-14-20230506_usb.zip": {
+        "name": "OpenHDF 7.2 - Octagon SF4008 4K",
+        "description": "صورة نظام OpenHDF 7.2 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "OpenHDF/openhdf-7.5-sf8008-72-20260528_mmc.zip": {
+        "name": "OpenHDF 7.5 - Octagon SF8008 4K",
+        "description": "صورة نظام OpenHDF 7.5 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "system_images/OpenHDF/openhdf-7.5-sf8008-72-20260528_mmc.zip": {
+        "name": "OpenHDF 7.5 - Octagon SF8008 4K",
+        "description": "صورة نظام OpenHDF 7.5 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "OpenHDF/openhdf-7.5-sx88v2-72-20260528_mmc.zip": {
+        "name": "OpenHDF 7.5 - Octagon SX88 v2",
+        "description": "صورة نظام OpenHDF 7.5 الرسمية لجهاز Octagon SX88 v2 (MMC)"
+    },
+    "system_images/OpenHDF/openhdf-7.5-sx88v2-72-20260528_mmc.zip": {
+        "name": "OpenHDF 7.5 - Octagon SX88 v2",
+        "description": "صورة نظام OpenHDF 7.5 الرسمية لجهاز Octagon SX88 v2 (MMC)"
+    },
+    "OpenHDF/openhdf-7.5-sx988-72-20260528_mmc.zip": {
+        "name": "OpenHDF 7.5 - Octagon SX988 4K",
+        "description": "صورة نظام OpenHDF 7.5 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "system_images/OpenHDF/openhdf-7.5-sx988-72-20260528_mmc.zip": {
+        "name": "OpenHDF 7.5 - Octagon SX988 4K",
+        "description": "صورة نظام OpenHDF 7.5 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "OpenPLi/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip": {
+        "name": "OpenPLi - Multibox 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)"
+    },
+    "system_images/OpenPLi/Open.PLI-MULTIBOX.4K.PRO.ULTRA.HD.Wrynose.system_images.py3_emmc.zip": {
+        "name": "OpenPLi - Multibox 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Multibox 4K Pro (MMC)"
+    },
+    "OpenPLi/openpli-9.2-release-vuduo4kse-20260816_usb.zip": {
+        "name": "OpenPLi 9.2 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenPLi/openpli-9.2-release-vuduo4kse-20260816_usb.zip": {
+        "name": "OpenPLi 9.2 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenPLi/openpli-9.2-release-vuuno4kse-20260816_usb.zip": {
+        "name": "OpenPLi 9.2 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/OpenPLi/openpli-9.2-release-vuuno4kse-20260816_usb.zip": {
+        "name": "OpenPLi 9.2 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "OpenPLi/openpli-9.2-release-vuzero4k-20260816_usb.zip": {
+        "name": "OpenPLi 9.2 - VU+ Zero 4K",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenPLi/openpli-9.2-release-vuzero4k-20260816_usb.zip": {
+        "name": "OpenPLi 9.2 - VU+ Zero 4K",
+        "description": "صورة نظام OpenPLi 9.2 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenPLi/OpenPLi-wrynose-novaler4kpro-20260812_usb.zip": {
+        "name": "OpenPLi - Novaler 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Novaler 4K Pro (USB)"
+    },
+    "system_images/OpenPLi/OpenPLi-wrynose-novaler4kpro-20260812_usb.zip": {
+        "name": "OpenPLi - Novaler 4K Pro",
+        "description": "صورة نظام OpenPLi الرسمية لجهاز Novaler 4K Pro (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-sf208-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - openspa-8.7",
+        "description": "صورة نظام OpenSPA 8.7.001 لأجهزة الإنيجما 2 (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sf208-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - openspa-8.7",
+        "description": "صورة نظام OpenSPA 8.7.001 لأجهزة الإنيجما 2 (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-sf228-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - openspa-8.7",
+        "description": "صورة نظام OpenSPA 8.7.001 لأجهزة الإنيجما 2 (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sf228-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - openspa-8.7",
+        "description": "صورة نظام OpenSPA 8.7.001 لأجهزة الإنيجما 2 (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-sf3038-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF3038",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF3038 (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sf3038-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF3038",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF3038 (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-sf4008-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF4008 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sf4008-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF4008 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-sf8008-20260704_mmc.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF8008 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sf8008-20260704_mmc.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF8008 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "OpenSPA/openspa-8.7.001-sf8008m-20260704_mmc.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF8008m",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008m (MMC)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sf8008m-20260704_mmc.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SF8008m",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SF8008m (MMC)"
+    },
+    "OpenSPA/openspa-8.7.001-sfx6008-20260704_multi.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SFX6008",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sfx6008-20260704_multi.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SFX6008",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)"
+    },
+    "OpenSPA/openspa-8.7.001-sx988-20260704_mmc.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SX988 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-sx988-20260704_mmc.zip": {
+        "name": "OpenSPA 8.7.001 - Octagon SX988 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "OpenSPA/openspa-8.7.001-vuduo2-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Duo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuduo2-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Duo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vuduo4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Duo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuduo4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Duo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vusolo2-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Solo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vusolo2-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Solo 2",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vusolo4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Solo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vusolo4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Solo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vusolose-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Solo SE",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vusolose-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Solo SE",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vuultimo4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuultimo4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vuuno4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Uno 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuuno4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Uno 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vuuno4kse-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuuno4kse-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vuzero-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Zero",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuzero-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Zero",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "OpenSPA/openspa-8.7.001-vuzero4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Zero 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenSPA/openspa-8.7.001-vuzero4k-20260704_usb.zip": {
+        "name": "OpenSPA 8.7.001 - VU+ Zero 4K",
+        "description": "صورة نظام OpenSPA 8.7.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo2-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuduo4kse-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolo-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolo2-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo 2",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolo4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vusolose-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Solo SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - openvision-e2-develop-py3.11-13",
+        "description": "صورة نظام OpenVision 3.11 لأجهزة الإنيجما 2 (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuultimo-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - openvision-e2-develop-py3.11-13",
+        "description": "صورة نظام OpenVision 3.11 لأجهزة الإنيجما 2 (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuultimo4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - openvision-e2-develop-py3.11-13",
+        "description": "صورة نظام OpenVision 3.11 لأجهزة الإنيجما 2 (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuuno-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - openvision-e2-develop-py3.11-13",
+        "description": "صورة نظام OpenVision 3.11 لأجهزة الإنيجما 2 (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Uno 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuuno4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Uno 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuuno4kse-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Zero",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuzero-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Zero",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Zero 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenVision/openvision-e2-develop-py3.11-13.1-r549-vuzero4k-20230716_usb.zip": {
+        "name": "OpenVision 3.11 - VU+ Zero 4K",
+        "description": "صورة نظام OpenVision 3.11 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenViX/openvix-6.7.020.release-sx988_mmc.zip": {
+        "name": "OpenViX 6.7.020 - Octagon SX988 4K",
+        "description": "صورة نظام OpenViX 6.7.020 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "system_images/OpenViX/openvix-6.7.020.release-sx988_mmc.zip": {
+        "name": "OpenViX 6.7.020 - Octagon SX988 4K",
+        "description": "صورة نظام OpenViX 6.7.020 الرسمية لجهاز Octagon SX988 4K (MMC)"
+    },
+    "OpenViX/openvix-6.9.001.release-dm900_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Dreambox DM900",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Dreambox DM900 (MMC)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-dm900_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Dreambox DM900",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Dreambox DM900 (MMC)"
+    },
+    "OpenViX/openvix-6.9.001.release-dm920_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Dreambox DM920",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Dreambox DM920 (MMC)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-dm920_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Dreambox DM920",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Dreambox DM920 (MMC)"
+    },
+    "OpenViX/openvix-6.9.001.release-sf8008m_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Octagon SF8008m",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Octagon SF8008m (MMC)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-sf8008m_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Octagon SF8008m",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Octagon SF8008m (MMC)"
+    },
+    "OpenViX/openvix-6.9.001.release-sfx6008_multi.zip": {
+        "name": "OpenViX 6.9.001 - Octagon SFX6008",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-sfx6008_multi.zip": {
+        "name": "OpenViX 6.9.001 - Octagon SFX6008",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Octagon SFX6008 (Multiboot)"
+    },
+    "OpenViX/openvix-6.9.001.release-sx88v2_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Octagon SX88 v2",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Octagon SX88 v2 (MMC)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-sx88v2_mmc.zip": {
+        "name": "OpenViX 6.9.001 - Octagon SX88 v2",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Octagon SX88 v2 (MMC)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuduo2_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Duo 2",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuduo2_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Duo 2",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuduo4kse_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuduo4kse_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Duo 4K SE",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuduo4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Duo 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuduo4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Duo 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vusolo2_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Solo 2",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vusolo2_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Solo 2",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vusolo4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Solo 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vusolo4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Solo 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuultimo4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuultimo4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Ultimo 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuuno4kse_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuuno4kse_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Uno 4K SE",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuuno4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Uno 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuuno4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Uno 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuzero4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Zero 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuzero4k_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Zero 4K",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-vuzero_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Zero",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-vuzero_usb.zip": {
+        "name": "OpenViX 6.9.001 - VU+ Zero",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز VU+ Zero (USB)"
+    },
+    "OpenViX/openvix-6.9.001.release-zgemmah17combo_multi.zip": {
+        "name": "OpenViX 6.9.001 - Zgemma H17 Combo",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Zgemma H17 Combo (Multiboot)"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-zgemmah17combo_multi.zip": {
+        "name": "OpenViX 6.9.001 - Zgemma H17 Combo",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Zgemma H17 Combo (Multiboot)"
+    },
+    "OpenViX/openvix-6.9.001.release-zgemmah82h_nand.zip": {
+        "name": "OpenViX 6.9.001 - Zgemma H8.2H",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Zgemma H8.2H"
+    },
+    "system_images/OpenViX/openvix-6.9.001.release-zgemmah82h_nand.zip": {
+        "name": "OpenViX 6.9.001 - Zgemma H8.2H",
+        "description": "صورة نظام OpenViX 6.9.001 الرسمية لجهاز Zgemma H8.2H"
+    },
+    "Pure2/novaler4k-PurE2-7.6-20260816_multi.zip": {
+        "name": "PurE2 7.6 - Novaler 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Novaler 4K (Multiboot)"
+    },
+    "system_images/Pure2/novaler4k-PurE2-7.6-20260816_multi.zip": {
+        "name": "PurE2 7.6 - Novaler 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Novaler 4K (Multiboot)"
+    },
+    "Pure2/novaler4kpro-PurE2-7.6-20260816_multi.zip": {
+        "name": "PurE2 7.6 - Novaler 4K Pro",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Novaler 4K Pro (Multiboot)"
+    },
+    "system_images/Pure2/novaler4kpro-PurE2-7.6-20260816_multi.zip": {
+        "name": "PurE2 7.6 - Novaler 4K Pro",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Novaler 4K Pro (Multiboot)"
+    },
+    "Pure2/novaler4kse-PurE2-7.6-20260816_multi.zip": {
+        "name": "PurE2 7.6 - Novaler 4K SE",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Novaler 4K SE (Multiboot)"
+    },
+    "system_images/Pure2/novaler4kse-PurE2-7.6-20260816_multi.zip": {
+        "name": "PurE2 7.6 - Novaler 4K SE",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Novaler 4K SE (Multiboot)"
+    },
+    "Pure2/sf4008-PurE2-7.6-20260814_usb.zip": {
+        "name": "PurE2 7.6 - Octagon SF4008 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "system_images/Pure2/sf4008-PurE2-7.6-20260814_usb.zip": {
+        "name": "PurE2 7.6 - Octagon SF4008 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Octagon SF4008 4K (USB)"
+    },
+    "Pure2/sf8008-PurE2-7.6-20260816_mmc.zip": {
+        "name": "PurE2 7.6 - Octagon SF8008 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "system_images/Pure2/sf8008-PurE2-7.6-20260816_mmc.zip": {
+        "name": "PurE2 7.6 - Octagon SF8008 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز Octagon SF8008 4K (MMC)"
+    },
+    "Pure2/vuduo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Duo 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/Pure2/vuduo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Duo 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "Pure2/vuduo4kse-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Duo 4K SE",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/Pure2/vuduo4kse-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Duo 4K SE",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "Pure2/vusolo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Solo 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/Pure2/vusolo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Solo 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "Pure2/vuultimo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Ultimo 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/Pure2/vuultimo4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Ultimo 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "Pure2/vuuno4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Uno 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/Pure2/vuuno4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Uno 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "Pure2/vuzero4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Zero 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/Pure2/vuzero4k-PurE2-7.6-20260817_usb.zip": {
+        "name": "PurE2 7.6 - VU+ Zero 4K",
+        "description": "صورة نظام PurE2 7.6 الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "VTI/VTi_15-0-02_vuduo2_202212231310_usb.zip": {
+        "name": "VTi - VU+ Duo 2",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuduo2_202212231310_usb.zip": {
+        "name": "VTi - VU+ Duo 2",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Duo 2 (USB)"
+    },
+    "VTI/VTi_15-0-02_vuduo4kse_202212231255_usb.zip": {
+        "name": "VTi - VU+ Duo 4K SE",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuduo4kse_202212231255_usb.zip": {
+        "name": "VTi - VU+ Duo 4K SE",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Duo 4K SE (USB)"
+    },
+    "VTI/VTi_15-0-02_vuduo4k_202212231257_usb.zip": {
+        "name": "VTi - VU+ Duo 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuduo4k_202212231257_usb.zip": {
+        "name": "VTi - VU+ Duo 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Duo 4K (USB)"
+    },
+    "VTI/VTi_15-0-02_vusolo2_202212231312_usb.zip": {
+        "name": "VTi - VU+ Solo 2",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vusolo2_202212231312_usb.zip": {
+        "name": "VTi - VU+ Solo 2",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Solo 2 (USB)"
+    },
+    "VTI/VTi_15-0-02_vusolo4k_202212231308_usb.zip": {
+        "name": "VTi - VU+ Solo 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vusolo4k_202212231308_usb.zip": {
+        "name": "VTi - VU+ Solo 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Solo 4K (USB)"
+    },
+    "VTI/VTi_15-0-02_vusolose_202212231314_usb.zip": {
+        "name": "VTi - VU+ Solo SE",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vusolose_202212231314_usb.zip": {
+        "name": "VTi - VU+ Solo SE",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Solo SE (USB)"
+    },
+    "VTI/VTi_15-0-02_vuultimo4k_202212231304_usb.zip": {
+        "name": "VTi - VU+ Ultimo 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuultimo4k_202212231304_usb.zip": {
+        "name": "VTi - VU+ Ultimo 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Ultimo 4K (USB)"
+    },
+    "VTI/VTi_15-0-02_vuuno4kse_202212231259_usb.zip": {
+        "name": "VTi - VU+ Uno 4K SE",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuuno4kse_202212231259_usb.zip": {
+        "name": "VTi - VU+ Uno 4K SE",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Uno 4K SE (USB)"
+    },
+    "VTI/VTi_15-0-02_vuuno4k_202212231306_usb.zip": {
+        "name": "VTi - VU+ Uno 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuuno4k_202212231306_usb.zip": {
+        "name": "VTi - VU+ Uno 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Uno 4K (USB)"
+    },
+    "VTI/VTi_15-0-02_vuzero4k_202212231301_usb.zip": {
+        "name": "VTi - VU+ Zero 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Zero 4K (USB)"
+    },
+    "system_images/VTI/VTi_15-0-02_vuzero4k_202212231301_usb.zip": {
+        "name": "VTi - VU+ Zero 4K",
+        "description": "صورة نظام VTi الرسمية لجهاز VU+ Zero 4K (USB)"
     }
 }
