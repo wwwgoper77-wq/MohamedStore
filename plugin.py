@@ -161,7 +161,27 @@ def scale_skin_layout(xml_layout):
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
-PLUGIN_VERSION = "1.3.3"
+PLUGIN_VERSION = "1.5.0"
+
+def _ms_parse_version(v):
+    # Turn "1.5" / "1.3.3" into a comparable tuple of ints, e.g. (1,5) / (1,3,3).
+    try:
+        parts = re.findall(r"\d+", str(v))
+        return tuple(int(p) for p in parts) if parts else (0,)
+    except Exception:
+        return (0,)
+
+def _ms_version_is_newer(remote, local):
+    # True ONLY when the remote version is strictly greater than the local one.
+    try:
+        r = _ms_parse_version(remote)
+        l = _ms_parse_version(local)
+        n = max(len(r), len(l))
+        r = r + (0,) * (n - len(r))
+        l = l + (0,) * (n - len(l))
+        return r > l
+    except Exception:
+        return False
 
 try:
     PLUGIN_DIR = os.path.dirname(__file__)
@@ -169,6 +189,9 @@ except NameError:
     PLUGIN_DIR = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore"
 
 CACHE_FILE = os.path.join(PLUGIN_DIR, "store_cache.json")
+# Remembers the signature of the store content the subscriber has already seen,
+# so we can tell him "there is a new update" only when something actually changed.
+SEEN_FILE = os.path.join(PLUGIN_DIR, "store_seen.json")
 ICON_FOLDER = os.path.join(PLUGIN_DIR, "images", "Icons")
 FALLBACK_ICON_FOLDER = "/usr/lib/enigma2/python/Plugins/Extensions/MohamedStore/images/Icons"
 PROGRESS_PNG_PATH = os.path.join(PLUGIN_DIR, "images", "progress.png")
@@ -8556,11 +8579,26 @@ def load_json_network(url):
             except AttributeError:
                 context = None
         
-        req = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        # Cache-busting: GitHub's raw CDN (Fastly) caches files for up to ~5
+        # minutes and may keep serving an OLD copy of the feed right after an
+        # upload. We append a changing timestamp and send no-cache headers so
+        # every subscriber always pulls the FRESHEST index as soon as it is
+        # updated on GitHub.
+        try:
+            sep = "&" if ("?" in url) else "?"
+            fetch_url = url + sep + "nocache=" + str(int(time.time()))
+        except Exception:
+            fetch_url = url
+
+        req = urllib2.Request(fetch_url, headers={
+            'User-Agent': 'Mozilla/5.0',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+        })
         if context:
-            response = urllib2.urlopen(req, timeout=5, context=context)
+            response = urllib2.urlopen(req, timeout=20, context=context)
         else:
-            response = urllib2.urlopen(req, timeout=5)
+            response = urllib2.urlopen(req, timeout=20)
         data = response.read()
         if isinstance(data, bytes):
             data = data.decode('utf-8')
@@ -8899,6 +8937,14 @@ class MohamedStore(Screen):
         
         self.install_cmd = ""
         self.install_item_name = ""
+        # update-prompt state: the new store content is held here and shown
+        # only after the user answers Yes to the "there is an update" dialog.
+        self._update_prompt_pending = False
+        self._pending_store_data = None
+        self._pending_store_sig = None
+        # code-update (version.json) channel state
+        self._code_update_pending = False
+        self._pending_code_version = None
         
         self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"], {
             "cancel": self.go_back,
@@ -8990,16 +9036,109 @@ class MohamedStore(Screen):
         try:
             data = load_json_network(STORE_URL)
             if data and "categories" in data:
-                self.apply_store_data(data)
-                try:
-                    with open(CACHE_FILE, "w") as f:
-                        json.dump(data, f)
-                except Exception:
-                    pass
+                new_sig = self._compute_store_signature(data)
+                old_sig = self._read_seen_sig()
+
+                if old_sig is None:
+                    # First run on this box (or first run after upgrading to
+                    # this version): there is no "previous" state to compare
+                    # against, so just show the content and remember it
+                    # silently. No prompt on a fresh install.
+                    self.apply_store_data(data)
+                    self._write_store_cache(data)
+                    self._write_seen_sig(new_sig)
+                elif new_sig and new_sig != old_sig:
+                    # There IS an update. Do NOT show the new files yet.
+                    # Keep the old (cached) content on screen and ASK the user
+                    # first (Yes/No). The new files appear only if he says Yes.
+                    self._pending_store_data = data
+                    self._pending_store_sig = new_sig
+                    self._update_prompt_pending = True
+                else:
+                    # No change: keep the local cache fresh (content identical).
+                    self.apply_store_data(data)
+                    self._write_store_cache(data)
             elif not self.categories:
                 self["description"].setText("Failed to connect to GitHub feed.")
+
+            # --- separate channel: check the PANEL CODE version (version.json) ---
+            try:
+                vdata = load_json_network(VERSION_URL)
+                remote_ver = None
+                if isinstance(vdata, dict):
+                    remote_ver = vdata.get("version")
+                if remote_ver and _ms_version_is_newer(remote_ver, PLUGIN_VERSION):
+                    self._pending_code_version = str(remote_ver)
+                    self._code_update_pending = True
+            except Exception:
+                pass
         except Exception:
             pass
+
+    def _compute_store_signature(self, data):
+        # Build a stable fingerprint of the whole store content. Any added,
+        # removed or renamed item in ANY section changes this fingerprint.
+        try:
+            cats = data.get("categories", {}) if isinstance(data, dict) else {}
+            payload = json.dumps(cats, sort_keys=True, ensure_ascii=True)
+            if isinstance(payload, bytes):
+                payload = payload.decode("utf-8", "ignore")
+            return hashlib.md5(payload.encode("utf-8", "ignore")).hexdigest()
+        except Exception:
+            return None
+
+    def _read_seen_sig(self):
+        try:
+            if os.path.exists(SEEN_FILE):
+                with open(SEEN_FILE, "r") as f:
+                    return (json.load(f) or {}).get("sig")
+        except Exception:
+            pass
+        return None
+
+    def _write_seen_sig(self, sig):
+        try:
+            with open(SEEN_FILE, "w") as f:
+                json.dump({"sig": sig}, f)
+        except Exception:
+            pass
+
+    def _write_store_cache(self, data):
+        try:
+            with open(CACHE_FILE, "w") as f:
+                json.dump(data, f)
+        except Exception:
+            pass
+
+    def _apply_update_answer(self, answer):
+        # Callback from the Yes/No update dialog (runs on the main thread).
+        data = getattr(self, "_pending_store_data", None)
+        sig = getattr(self, "_pending_store_sig", None)
+        if answer and data:
+            # YES -> apply the new content, refresh the lists, remember it.
+            try:
+                self.apply_store_data(data)
+            except Exception:
+                pass
+            self._write_store_cache(data)
+            if sig:
+                self._write_seen_sig(sig)
+            try:
+                self["news_ticker"].setText(u"\u2705 \u062a\u0645 \u0627\u0644\u062a\u062d\u062f\u064a\u062b")
+            except Exception:
+                pass
+        # NO -> keep the old content and DO NOT remember the new signature,
+        # so the panel will ask again next time it is opened/refreshed.
+        self._pending_store_data = None
+        self._pending_store_sig = None
+
+    def _apply_code_update_answer(self, answer):
+        # Callback from the "new panel version" dialog. YES -> run install.sh.
+        if answer:
+            try:
+                self.start_script_update()
+            except Exception:
+                pass
 
     def apply_store_data(self, data):
         try:
@@ -9244,6 +9383,49 @@ class MohamedStore(Screen):
             pass
 
     def _news_tick(self):
+        # If the background sync found a NEWER PANEL CODE version (version.json),
+        # ask the user first; Yes runs the online install.sh and restarts.
+        try:
+            if getattr(self, "_code_update_pending", False):
+                self._code_update_pending = False
+                newv = getattr(self, "_pending_code_version", None) or "?"
+                try:
+                    self["news_ticker"].setText(u"\U0001F514 \u062a\u062d\u062f\u064a\u062b \u0646\u0638\u0627\u0645 \u0627\u0644\u0628\u0646\u0644 \u0645\u062a\u0648\u0641\u0631!")
+                except Exception:
+                    pass
+                try:
+                    msg = (u"\U0001F514 \u062a\u0648\u062c\u062f \u0646\u0633\u062e\u0629 \u062c\u062f\u064a\u062f\u0629 \u0645\u0646 \u0627\u0644\u0628\u0646\u0644 (v%s).\n\u0647\u0644 \u062a\u0631\u064a\u062f \u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0646\u0638\u0627\u0645 \u0627\u0644\u0622\u0646\u061f\n(\u0633\u064a\u062a\u0645 \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0648\u0627\u062c\u0647\u0629)") % newv
+                    self.session.openWithCallback(
+                        self._apply_code_update_answer,
+                        MessageBox,
+                        msg,
+                        MessageBox.TYPE_YESNO)
+                except Exception:
+                    pass
+                return
+        except Exception:
+            pass
+        # If the background sync found NEW store content, ask the user now
+        # (this runs on the enigma2 main loop, so a dialog is safe). The new
+        # files are shown ONLY if he answers Yes.
+        try:
+            if getattr(self, "_update_prompt_pending", False):
+                self._update_prompt_pending = False
+                try:
+                    self["news_ticker"].setText(u"\U0001F514 \u064a\u0648\u062c\u062f \u062a\u062d\u062f\u064a\u062b \u062c\u062f\u064a\u062f!")
+                except Exception:
+                    pass
+                try:
+                    self.session.openWithCallback(
+                        self._apply_update_answer,
+                        MessageBox,
+                        u"\U0001F514 \u064a\u0648\u062c\u062f \u062a\u062d\u062f\u064a\u062b \u062c\u062f\u064a\u062f \u0641\u064a \u0627\u0644\u0645\u062a\u062c\u0631.\n\u0647\u0644 \u062a\u0631\u064a\u062f \u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u0648\u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0645\u0644\u0641\u0627\u062a \u0627\u0644\u062c\u062f\u064a\u062f\u0629 \u0627\u0644\u0622\u0646\u061f",
+                        MessageBox.TYPE_YESNO)
+                except Exception:
+                    pass
+                return
+        except Exception:
+            pass
         # show ONE full message for a few seconds, then swap to the next.
         try:
             msgs = getattr(self, "_news_msgs", None)
