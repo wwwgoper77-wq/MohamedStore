@@ -292,6 +292,12 @@
                 "image": ""
             },
             {
+                "name": "enigma2-plugin-extensions-qweather_1.2",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk",
+                "image": ""
+            },
+            {
                 "name": "TiviMate E2",
                 "description": "مشغل اشتراكات الـ IPTV بواجهة تيفيمات الاحترافية والسريعة",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-tivimatee2_1.0.01_all.ipk",
