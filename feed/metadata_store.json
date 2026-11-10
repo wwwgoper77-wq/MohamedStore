@@ -13442,5 +13442,25 @@
     "skins/enigma2-plugin-skins-ultimate_0.8.5_all.ipk": {
         "name": "ultimate 0.8",
         "description": "سكين ultimate 0.8 عالي الدقة FHD بتصميم أنيق وخفيف"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyCams.sh": {
+        "name": "SimplyCams",
+        "description": "Plugin Extension"
+    },
+    "plugins/SimplyCams.sh": {
+        "name": "SimplyCams",
+        "description": "Plugin Extension"
+    },
+    "SimplyCams.sh": {
+        "name": "SimplyCams",
+        "description": "Plugin Extension"
+    },
+    "SimplyCams": {
+        "name": "SimplyCams",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/SimplyCams.sh": {
+        "name": "SimplyCams",
+        "description": "Plugin Extension"
     }
 }

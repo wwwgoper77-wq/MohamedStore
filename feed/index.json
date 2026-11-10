@@ -238,6 +238,12 @@
                 "image": ""
             },
             {
+                "name": "SimplyCams",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyCams.sh",
+                "image": ""
+            },
+            {
                 "name": "SimplyScores",
                 "description": "ملخصات مباريات كرة القدم، والأهداف، وأبرز اللقطات من قنوات TikTok",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyScores.sh",
