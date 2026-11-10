@@ -13324,23 +13324,23 @@
         "description": "شعارات light"
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk": {
-        "name": "enigma2-plugin-extensions-qweather_1.2",
-        "description": "Plugin Extension"
+        "name": "qweather",
+        "description": "الطقس"
     },
     "plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk": {
-        "name": "enigma2-plugin-extensions-qweather_1.2",
-        "description": "Plugin Extension"
+        "name": "qweather",
+        "description": "الطقس"
     },
     "enigma2-plugin-extensions-qweather_1.2.0_all.ipk": {
-        "name": "enigma2-plugin-extensions-qweather_1.2",
-        "description": "Plugin Extension"
+        "name": "qweather",
+        "description": "الطقس"
     },
     "enigma2-plugin-extensions-qweather_1.2": {
-        "name": "enigma2-plugin-extensions-qweather_1.2",
-        "description": "Plugin Extension"
+        "name": "qweather",
+        "description": "الطقس"
     },
     "plugins/plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk": {
-        "name": "enigma2-plugin-extensions-qweather_1.2",
-        "description": "Plugin Extension"
+        "name": "qweather",
+        "description": "الطقس"
     }
 }
