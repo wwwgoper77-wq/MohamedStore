@@ -239,7 +239,7 @@
             },
             {
                 "name": "SimplyCams",
-                "description": "Plugin Extension",
+                "description": "شاهد كاميرات منزلك",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyCams.sh",
                 "image": ""
             },
@@ -298,8 +298,8 @@
                 "image": ""
             },
             {
-                "name": "Picons Full Package (All Sats)",
-                "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية",
+                "name": "chocholousek-picons",
+                "description": "جلب وتثبيت شعارات القنوات التلفزيونية",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all%20%281%29.ipk",
                 "image": ""
             },
