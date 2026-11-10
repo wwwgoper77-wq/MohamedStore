@@ -292,6 +292,12 @@
                 "image": ""
             },
             {
+                "name": "Picons Full Package (All Sats)",
+                "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all%20%281%29.ipk",
+                "image": ""
+            },
+            {
                 "name": "qweather",
                 "description": "الطقس",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk",

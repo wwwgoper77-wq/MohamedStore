@@ -13362,5 +13362,29 @@
     "plugins/plugins/theweatherlet5.sh": {
         "name": "theweatherlet5",
         "description": "بلجن الطقس"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all%20%281%29.ipk": {
+        "name": "Picons Full Package (All Sats)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
+        "name": "Picons Full Package (All Sats)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+    },
+    "plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
+        "name": "Picons Full Package (All Sats)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+    },
+    "enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
+        "name": "Picons Full Package (All Sats)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+    },
+    "enigma2-plugin-extensions-chocholousek-picons_5.0": {
+        "name": "Picons Full Package (All Sats)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+    },
+    "plugins/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
+        "name": "Picons Full Package (All Sats)",
+        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
     }
 }
