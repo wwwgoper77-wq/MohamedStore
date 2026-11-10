@@ -364,6 +364,12 @@
                 "image": ""
             },
             {
+                "name": "theweatherlet5",
+                "description": "Plugin Extension",
+                "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/theweatherlet5.sh",
+                "image": ""
+            },
+            {
                 "name": "FootOnSat",
                 "description": "جدول مباريات اليوم والقنوات الناقلة والمعلقين والترددات مباشرة",
                 "file": "https://github.com/wwwgoper77-wq/MohamedStore/releases/download/v1.0/FootOnSat.plugin.zip",

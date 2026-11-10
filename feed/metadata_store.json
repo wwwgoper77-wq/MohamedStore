@@ -13342,5 +13342,25 @@
     "plugins/plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk": {
         "name": "qweather",
         "description": "الطقس"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/theweatherlet5.sh": {
+        "name": "theweatherlet5",
+        "description": "Plugin Extension"
+    },
+    "plugins/theweatherlet5.sh": {
+        "name": "theweatherlet5",
+        "description": "Plugin Extension"
+    },
+    "theweatherlet5.sh": {
+        "name": "theweatherlet5",
+        "description": "Plugin Extension"
+    },
+    "theweatherlet5": {
+        "name": "theweatherlet5",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/theweatherlet5.sh": {
+        "name": "theweatherlet5",
+        "description": "Plugin Extension"
     }
 }
