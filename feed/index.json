@@ -292,8 +292,8 @@
                 "image": ""
             },
             {
-                "name": "enigma2-plugin-extensions-qweather_1.2",
-                "description": "Plugin Extension",
+                "name": "qweather",
+                "description": "الطقس",
                 "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-qweather_1.2.0_all.ipk",
                 "image": ""
             },
