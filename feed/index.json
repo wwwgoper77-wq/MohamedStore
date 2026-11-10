@@ -824,7 +824,20 @@
             },
             {
                 "name": "OpenHDF",
-                "items": []
+                "items": [
+                    {
+                        "name": "anadol 1",
+                        "description": "سكين anadol 1 عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenHDF/enigma2-plugin-skins-anadol_1.4_all.ipk",
+                        "image": ""
+                    },
+                    {
+                        "name": "ultimate 0.8",
+                        "description": "سكين ultimate 0.8 عالي الدقة FHD بتصميم أنيق وخفيف",
+                        "file": "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenHDF/enigma2-plugin-skins-ultimate_0.8.5_all.ipk",
+                        "image": ""
+                    }
+                ]
             },
             {
                 "name": "OpenP",
