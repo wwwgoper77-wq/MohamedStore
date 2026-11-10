@@ -13364,28 +13364,28 @@
         "description": "بلجن الطقس"
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all%20%281%29.ipk": {
-        "name": "Picons Full Package (All Sats)",
-        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+        "name": "chocholousek-picons",
+        "description": "جلب وتثبيت شعارات القنوات التلفزيونية"
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
-        "name": "Picons Full Package (All Sats)",
-        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+        "name": "chocholousek-picons",
+        "description": "جلب وتثبيت شعارات القنوات التلفزيونية"
     },
     "plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
-        "name": "Picons Full Package (All Sats)",
-        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+        "name": "chocholousek-picons",
+        "description": "جلب وتثبيت شعارات القنوات التلفزيونية"
     },
     "enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
-        "name": "Picons Full Package (All Sats)",
-        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+        "name": "chocholousek-picons",
+        "description": "جلب وتثبيت شعارات القنوات التلفزيونية"
     },
     "enigma2-plugin-extensions-chocholousek-picons_5.0": {
-        "name": "Picons Full Package (All Sats)",
-        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+        "name": "chocholousek-picons",
+        "description": "جلب وتثبيت شعارات القنوات التلفزيونية"
     },
     "plugins/plugins/enigma2-plugin-extensions-chocholousek-picons_5.0.210523_all (1).ipk": {
-        "name": "Picons Full Package (All Sats)",
-        "description": "مجموعة شعارات القنوات الشاملة لمعظم الأقمار الفضائية"
+        "name": "chocholousek-picons",
+        "description": "جلب وتثبيت شعارات القنوات التلفزيونية"
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/skins/OpenHDF/enigma2-plugin-skins-anadol_1.4_all.ipk": {
         "name": "anadol 1",
@@ -13445,22 +13445,22 @@
     },
     "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/SimplyCams.sh": {
         "name": "SimplyCams",
-        "description": "Plugin Extension"
+        "description": "شاهد كاميرات منزلك"
     },
     "plugins/SimplyCams.sh": {
         "name": "SimplyCams",
-        "description": "Plugin Extension"
+        "description": "شاهد كاميرات منزلك"
     },
     "SimplyCams.sh": {
         "name": "SimplyCams",
-        "description": "Plugin Extension"
+        "description": "شاهد كاميرات منزلك"
     },
     "SimplyCams": {
         "name": "SimplyCams",
-        "description": "Plugin Extension"
+        "description": "شاهد كاميرات منزلك"
     },
     "plugins/plugins/SimplyCams.sh": {
         "name": "SimplyCams",
-        "description": "Plugin Extension"
+        "description": "شاهد كاميرات منزلك"
     }
 }
