@@ -161,7 +161,7 @@ def scale_skin_layout(xml_layout):
 VERSION_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/version.json"
 STORE_URL = "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/feed/index.json"
 UPDATE_SCRIPT_CMD = "wget -O - https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/install.sh | sh"
-PLUGIN_VERSION = "1.5.0"
+PLUGIN_VERSION = "1.5.1"
 
 def _ms_parse_version(v):
     # Turn "1.5" / "1.3.3" into a comparable tuple of ints, e.g. (1,5) / (1,3,3).
