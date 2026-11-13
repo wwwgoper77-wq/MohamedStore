@@ -13462,5 +13462,29 @@
     "plugins/plugins/SimplyCams.sh": {
         "name": "SimplyCams",
         "description": "شاهد كاميرات منزلك"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot%20v10.0-r1.sh": {
+        "name": "NeoBoot v10",
+        "description": "Plugin Extension"
+    },
+    "https://raw.githubusercontent.com/wwwgoper77-wq/MohamedStore/main/plugins/NeoBoot v10.0-r1.sh": {
+        "name": "NeoBoot v10",
+        "description": "Plugin Extension"
+    },
+    "plugins/NeoBoot v10.0-r1.sh": {
+        "name": "NeoBoot v10",
+        "description": "Plugin Extension"
+    },
+    "NeoBoot v10.0-r1.sh": {
+        "name": "NeoBoot v10",
+        "description": "Plugin Extension"
+    },
+    "NeoBoot v10": {
+        "name": "NeoBoot v10",
+        "description": "Plugin Extension"
+    },
+    "plugins/plugins/NeoBoot v10.0-r1.sh": {
+        "name": "NeoBoot v10",
+        "description": "Plugin Extension"
     }
 }
